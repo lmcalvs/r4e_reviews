@@ -18,7 +18,6 @@ import java.io.IOException;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public interface IFileSupportCommand {
 

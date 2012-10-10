@@ -29,27 +29,26 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceT
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 
 /**
- * The class <code>CommonTest</code> contains tests for the class {@link
- * <code>RWCommon</code>}
- *
+ * The class <code>CommonTest</code> contains tests for the class {@link <code>RWCommon</code>}
+ * 
  * @pattern JUnit Test Case
- *
  * @generatedBy CodePro at 04/11/10 9:17 AM
- *
  * @author Alvaro Sanchez-Leon
- *
  * @version $Revision$
  */
 public class CommonTest extends TestCase {
 
-	IModelWriter	fixture	= SerializeFactory.getWriter();
-	String		fTmpDir	= null;
-	String		fSep	= null;
+	IModelWriter fixture = SerializeFactory.getWriter();
+
+	String fTmpDir = null;
+
+	String fSep = null;
 
 	/**
 	 * Construct new test instance
-	 *
-	 * @param name the test name
+	 * 
+	 * @param name
+	 *            the test name
 	 */
 	public CommonTest(String name) {
 		super(name);
@@ -62,9 +61,8 @@ public class CommonTest extends TestCase {
 
 	/**
 	 * Perform pre-test initialization
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -75,9 +73,8 @@ public class CommonTest extends TestCase {
 
 	/**
 	 * Perform post-test clean up
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -124,8 +121,7 @@ public class CommonTest extends TestCase {
 		// review folder added
 		uriOut = fixture.createResourceURI(name, uriIn, ResourceType.REVIEW);
 		String ending = fTmpDir + folder + fSep + "abc_def____z_l" + fSep + "abc_def____z_l_review.xrer";
-		assertTrue(uriOut.toFileString() + " does not end with: " + ending, uriOut.toFileString()
-				.endsWith(ending));
+		assertTrue(uriOut.toFileString() + " does not end with: " + ending, uriOut.toFileString().endsWith(ending));
 
 		// review folder does not need to be added
 		uriOut = fixture.createResourceURI(name, uriIn, ResourceType.USER_COMMENT);

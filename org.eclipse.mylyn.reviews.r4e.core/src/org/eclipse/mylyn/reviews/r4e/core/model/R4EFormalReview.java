@@ -17,19 +17,17 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Formal Review</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Formal Review</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases <em>Phases</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases <em>Phases</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview()
  * @model
  * @generated
@@ -39,8 +37,8 @@ public interface R4EFormalReview extends R4EReview {
 	 * Returns the value of the '<em><b>Phase Owner</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Phase Owner</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Phase Owner</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Phase Owner</em>' reference.
@@ -53,8 +51,7 @@ public interface R4EFormalReview extends R4EReview {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Phase Owner</em>' reference.
 	 * @see #getPhaseOwner()
 	 * @generated
@@ -66,8 +63,8 @@ public interface R4EFormalReview extends R4EReview {
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Phases</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Phases</em>' containment reference list isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Phases</em>' containment reference list.
@@ -81,8 +78,8 @@ public interface R4EFormalReview extends R4EReview {
 	 * Returns the value of the '<em><b>Current</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Current</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Current</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Current</em>' reference.
@@ -95,8 +92,7 @@ public interface R4EFormalReview extends R4EReview {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Current</em>' reference.
 	 * @see #getCurrent()
 	 * @generated

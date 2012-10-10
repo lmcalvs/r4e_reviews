@@ -35,41 +35,42 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E File Context</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E File Context</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getDeltas <em>Deltas</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getBase <em>Base</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getInfoAtt <em>Info Att</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getDeltas <em>Deltas</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getBase <em>Base</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getTarget <em>Target</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getType <em>Type</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileContext {
 	/**
 	 * The cached value of the '{@link #getDeltas() <em>Deltas</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getDeltas()
 	 * @generated
 	 * @ordered
 	 */
 	protected EList<R4EDelta> deltas;
+
 	/**
 	 * The cached value of the '{@link #getBase() <em>Base</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getBase()
 	 * @generated
 	 * @ordered
 	 */
 	protected R4EFileVersion base;
+
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -79,36 +80,39 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * @ordered
 	 */
 	protected R4EFileVersion target;
+
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final R4EContextType TYPE_EDEFAULT = R4EContextType.R4E_UNDEFINED;
+
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
 	protected R4EContextType type = TYPE_EDEFAULT;
+
 	/**
-	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfoAtt()
 	 * @generated
 	 * @ordered
 	 */
 	protected EMap<String, String> infoAtt;
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EFileContextImpl() {
@@ -116,8 +120,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -126,8 +129,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EDelta> getDeltas() {
@@ -138,8 +140,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion getBase() {
@@ -161,8 +162,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion basicGetBase() {
@@ -170,8 +170,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetBase(R4EFileVersion newBase, NotificationChain msgs) {
@@ -185,8 +184,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setBase(R4EFileVersion newBase) {
@@ -204,8 +202,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion getTarget() {
@@ -227,8 +224,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion basicGetTarget() {
@@ -236,8 +232,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetTarget(R4EFileVersion newTarget, NotificationChain msgs) {
@@ -251,8 +246,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTarget(R4EFileVersion newTarget) {
@@ -270,8 +264,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContextType getType() {
@@ -279,8 +272,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setType(R4EContextType newType) {
@@ -291,8 +283,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getInfoAtt() {
@@ -303,8 +294,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -323,8 +313,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -348,8 +337,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -377,8 +365,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -404,8 +391,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -426,8 +412,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

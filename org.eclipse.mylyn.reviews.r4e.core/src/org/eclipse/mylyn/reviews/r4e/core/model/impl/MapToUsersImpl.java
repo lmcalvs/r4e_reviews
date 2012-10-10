@@ -30,9 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map To Users</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map To Users</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -46,8 +44,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<String,R4EUser> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -56,8 +54,8 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -66,8 +64,8 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -75,8 +73,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	protected R4EUser value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapToUsersImpl() {
@@ -84,8 +81,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -94,8 +90,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -103,8 +98,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
@@ -115,8 +109,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser getTypedValue() {
@@ -132,8 +125,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser basicGetTypedValue() {
@@ -141,8 +133,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(R4EUser newValue) {
@@ -153,8 +144,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -170,8 +160,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -188,8 +177,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -206,8 +194,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -222,8 +209,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -238,15 +224,13 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -258,8 +242,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -267,8 +250,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getKey() {
@@ -276,8 +258,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(String key) {
@@ -285,8 +266,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser getValue() {
@@ -294,8 +274,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser setValue(R4EUser value) {
@@ -305,8 +284,7 @@ public class MapToUsersImpl extends EObjectImpl implements BasicEMap.Entry<Strin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

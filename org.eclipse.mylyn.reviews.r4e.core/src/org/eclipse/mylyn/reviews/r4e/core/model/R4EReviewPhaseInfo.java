@@ -19,9 +19,8 @@ import java.util.Date;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Review Phase Info</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review Phase Info</b></em>'. <!--
+ * end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -42,8 +41,8 @@ public interface R4EReviewPhaseInfo extends EObject {
 	 * Returns the value of the '<em><b>End Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>End Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>End Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Date</em>' attribute.
@@ -56,8 +55,7 @@ public interface R4EReviewPhaseInfo extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>End Date</em>' attribute.
 	 * @see #getEndDate()
 	 * @generated
@@ -69,8 +67,7 @@ public interface R4EReviewPhaseInfo extends EObject {
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
@@ -84,8 +81,7 @@ public interface R4EReviewPhaseInfo extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase
 	 * @see #getType()
@@ -97,8 +93,8 @@ public interface R4EReviewPhaseInfo extends EObject {
 	 * Returns the value of the '<em><b>Phase Owner ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Phase Owner ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Phase Owner ID</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Phase Owner ID</em>' attribute.
@@ -111,8 +107,7 @@ public interface R4EReviewPhaseInfo extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getPhaseOwnerID <em>Phase Owner ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Phase Owner ID</em>' attribute.
 	 * @see #getPhaseOwnerID()
 	 * @generated
@@ -123,8 +118,8 @@ public interface R4EReviewPhaseInfo extends EObject {
 	 * Returns the value of the '<em><b>Start Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Start Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Start Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Date</em>' attribute.
@@ -137,8 +132,7 @@ public interface R4EReviewPhaseInfo extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Start Date</em>' attribute.
 	 * @see #getStartDate()
 	 * @generated

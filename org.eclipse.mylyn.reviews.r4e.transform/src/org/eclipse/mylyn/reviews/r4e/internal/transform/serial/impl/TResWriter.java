@@ -34,7 +34,7 @@ public class TResWriter extends R4EWriter implements IModelWriter {
 		super(aResState);
 		//TODO: Solution changed and there is no variation with default writer at the moment, 
 		//the instance is left to allow a variation of implementation at a later point.
-		
+
 		//From parent
 		// Build a lookup table to facilitate the selection of the proper resource tag
 //		fresTypeToTag.put(ResourceType.USER_COMMENT, IRWUserBasedRes.REVIEW_UCOMMENT_TAG);

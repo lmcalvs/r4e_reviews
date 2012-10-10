@@ -33,9 +33,8 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes
 import org.junit.Test;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Review Group Res</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Review Group Res</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class ReviewGroupResTest extends TestCase {
@@ -45,11 +44,12 @@ public class ReviewGroupResTest extends TestCase {
 	 * 
 	 * @generated
 	 */
-	protected ReviewGroupRes		fixture			= null;
+	protected ReviewGroupRes fixture = null;
+
 	// private final IModelReader fReader = SerializeFactory.getReader();
 	// private final IModelWriter fWriter = SerializeFactory.getWriter();
 
-	private final RModelFactoryExt	fFactory		= SerializeFactory.getModelExtension();
+	private final RModelFactoryExt fFactory = SerializeFactory.getModelExtension();
 
 	// private static final String fGroupPathStr = "outGroupX";
 	// private static URI fGroupPath = null;
@@ -62,8 +62,8 @@ public class ReviewGroupResTest extends TestCase {
 	// private File fRootTestDir = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -71,9 +71,8 @@ public class ReviewGroupResTest extends TestCase {
 	}
 
 	/**
-	 * Constructs a new Review Group Res test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Constructs a new Review Group Res test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ReviewGroupResTest(String name) {
@@ -81,9 +80,8 @@ public class ReviewGroupResTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Review Group Res test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Sets the fixture for this Review Group Res test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void setFixture(ReviewGroupRes fixture) {
@@ -91,9 +89,8 @@ public class ReviewGroupResTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Review Group Res test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the fixture for this Review Group Res test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReviewGroupRes getFixture() {
@@ -101,8 +98,8 @@ public class ReviewGroupResTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -119,8 +116,8 @@ public class ReviewGroupResTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */

@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Design Rule Rank</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Design Rule Rank</b></em>',
+ * and utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleRank()
  * @model
  * @generated
@@ -32,8 +30,7 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EDesignRuleRank implements Enumerator {
 	/**
 	 * The '<em><b>R4E RANK NONE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_RANK_NONE_VALUE
 	 * @generated
 	 * @ordered
@@ -42,8 +39,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E RANK MINOR</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_RANK_MINOR_VALUE
 	 * @generated
 	 * @ordered
@@ -52,16 +48,14 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E RANK MAJOR</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_RANK_MAJOR_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_RANK_MAJOR(2, "R4E_RANK_MAJOR", "R4E_RANK_MAJOR"), /**
 	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_RANK_DEPRECATED_VALUE
 	 * @generated
 	 * @ordered
@@ -72,8 +66,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * The '<em><b>R4E RANK NONE</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E RANK NONE</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK NONE</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_RANK_NONE
@@ -87,8 +81,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * The '<em><b>R4E RANK MINOR</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E RANK MINOR</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK MINOR</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_RANK_MINOR
@@ -102,8 +96,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * The '<em><b>R4E RANK MAJOR</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E RANK MAJOR</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK MAJOR</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_RANK_MAJOR
@@ -117,8 +111,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E RANK DEPRECATED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK DEPRECATED</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_RANK_DEPRECATED
@@ -129,13 +123,12 @@ public enum R4EDesignRuleRank implements Enumerator {
 	public static final int R4E_RANK_DEPRECATED_VALUE = 3;
 
 	/**
-	 * An array of all the '<em><b>R4E Design Rule Rank</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * An array of all the '<em><b>R4E Design Rule Rank</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
-	private static final R4EDesignRuleRank[] VALUES_ARRAY =
-		new R4EDesignRuleRank[] {
+	private static final R4EDesignRuleRank[] VALUES_ARRAY = new R4EDesignRuleRank[] {
 			R4E_RANK_NONE,
 			R4E_RANK_MINOR,
 			R4E_RANK_MAJOR,
@@ -152,8 +145,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Rank</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleRank get(String literal) {
@@ -168,8 +161,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Rank</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleRank getByName(String name) {
@@ -184,8 +177,8 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Rank</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleRank get(int value) {
@@ -199,30 +192,26 @@ public enum R4EDesignRuleRank implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EDesignRuleRank(int value, String name, String literal) {
@@ -232,8 +221,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -241,8 +229,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -250,8 +237,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -260,13 +246,13 @@ public enum R4EDesignRuleRank implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EDesignRuleRank

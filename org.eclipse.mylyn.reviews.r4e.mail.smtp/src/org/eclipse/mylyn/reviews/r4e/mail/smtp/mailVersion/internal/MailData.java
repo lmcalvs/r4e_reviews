@@ -14,7 +14,6 @@ package org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal;
 
 /**
  * @author Jacques Bouthillier
- *
  * @version $Revision: 1.0 $
  */
 public class MailData {
@@ -22,35 +21,42 @@ public class MailData {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fSubject.
 	 */
 	private final String fSubject;
+
 	/**
 	 * Field fBody.
 	 */
 	private final String fBody;
+
 	/**
 	 * Field fSendTo.
 	 */
 	private final String[] fSendTo;
+
 	/**
 	 * Field fAttachment.
 	 */
 	private final String fAttachment;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for MailData.
-	 * @param aSubject String
-	 * @param aBody String
-	 * @param aSendTo String[]
-	 * @param aAttachment String
+	 * 
+	 * @param aSubject
+	 *            String
+	 * @param aBody
+	 *            String
+	 * @param aSendTo
+	 *            String[]
+	 * @param aAttachment
+	 *            String
 	 */
 	public MailData(String aSubject, String aBody, String[] aSendTo, String aAttachment) {
 		fSubject = aSubject;
@@ -58,41 +64,44 @@ public class MailData {
 		fSendTo = aSendTo;
 		fAttachment = aAttachment;
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getSubject.
+	 * 
 	 * @return String
 	 */
-	public String getSubject () {
+	public String getSubject() {
 		return fSubject;
 	}
-	
+
 	/**
 	 * Method getBody.
+	 * 
 	 * @return String
 	 */
-	public String getBody () {
+	public String getBody() {
 		return fBody;
 	}
-	
+
 	/**
 	 * Method getSendTo.
+	 * 
 	 * @return String[]
 	 */
-	public String[] getSendTo () {
+	public String[] getSendTo() {
 		return fSendTo;
 	}
-	
+
 	/**
 	 * Method getAttachment.
+	 * 
 	 * @return String
 	 */
-	public String getAttachment () {
+	public String getAttachment() {
 		return fAttachment;
 	}
 }

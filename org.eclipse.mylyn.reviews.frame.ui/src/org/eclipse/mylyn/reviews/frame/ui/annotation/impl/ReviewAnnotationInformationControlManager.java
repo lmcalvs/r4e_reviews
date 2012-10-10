@@ -139,10 +139,11 @@ public class ReviewAnnotationInformationControlManager extends AnnotationBarHove
 			return true;
 		} catch (Throwable t) {
 			if (null != ReviewAnnotationConfigFactory.getPlugin()) {
-				ReviewAnnotationConfigFactory.getPlugin().getLog().log(
-					new Status(IStatus.ERROR, 
-							ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
-							IStatus.OK, t.getMessage(), t));
+				ReviewAnnotationConfigFactory.getPlugin()
+						.getLog()
+						.log(new Status(IStatus.ERROR, ReviewAnnotationConfigFactory.getPlugin()
+								.getBundle()
+								.getSymbolicName(), IStatus.OK, t.getMessage(), t));
 			}
 			return false;
 		}

@@ -26,24 +26,23 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map Name To Review</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map Name To Review</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl#getTypedValue <em>Value</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl#getTypedKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<String,R4EReview> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -52,8 +51,8 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -62,8 +61,8 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -71,8 +70,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	protected R4EReview value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapNameToReviewImpl() {
@@ -80,8 +78,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -90,8 +87,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -99,8 +95,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
@@ -111,8 +106,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview getTypedValue() {
@@ -128,8 +122,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview basicGetTypedValue() {
@@ -137,8 +130,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(R4EReview newValue) {
@@ -149,8 +141,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -166,8 +157,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -184,8 +174,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -202,8 +191,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -218,8 +206,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -234,15 +221,13 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -254,8 +239,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -263,8 +247,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getKey() {
@@ -272,8 +255,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(String key) {
@@ -281,8 +263,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview getValue() {
@@ -290,8 +271,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview setValue(R4EReview value) {
@@ -301,8 +281,7 @@ public class MapNameToReviewImpl extends EObjectImpl implements BasicEMap.Entry<
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

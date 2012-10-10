@@ -74,17 +74,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
  */
 public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Persistence.RModelFactoryExt {
-	private static RModelFactoryExt	factoryExtension	= SerializeFactory.getModelExtension();
+	private static RModelFactoryExt factoryExtension = SerializeFactory.getModelExtension();
 
 	/**
 	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static RModelFactory init() {
@@ -102,8 +99,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RModelFactoryImpl() {
@@ -111,8 +107,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -157,8 +152,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -186,8 +180,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -215,8 +208,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewGroup createR4EReviewGroup() {
@@ -225,8 +217,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview createR4EReview() {
@@ -235,8 +226,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly createR4EAnomaly() {
@@ -245,8 +235,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFormalReview createR4EFormalReview() {
@@ -255,8 +244,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4ETextPosition createR4ETextPosition() {
@@ -265,8 +253,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewDecision createR4EReviewDecision() {
@@ -275,8 +262,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser createR4EUser() {
@@ -285,8 +271,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EParticipant createR4EParticipant() {
@@ -295,8 +280,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EItem createR4EItem() {
@@ -305,8 +289,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4ETextContent createR4ETextContent() {
@@ -315,8 +298,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID createR4EID() {
@@ -325,8 +307,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyType createR4EAnomalyType() {
@@ -335,8 +316,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4ETaskReference createR4ETaskReference() {
@@ -345,8 +325,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewState createR4EReviewState() {
@@ -355,8 +334,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EComment createR4EComment() {
@@ -365,8 +343,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewComponent createR4EReviewComponent() {
@@ -375,8 +352,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileContext createR4EFileContext() {
@@ -385,8 +361,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDelta createR4EDelta() {
@@ -395,8 +370,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion createR4EFileVersion() {
@@ -405,8 +379,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<String, R4EReview> createMapNameToReview() {
@@ -415,8 +388,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<String, R4EUser> createMapToUsers() {
@@ -425,8 +397,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserReviews createR4EUserReviews() {
@@ -435,8 +406,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EIDComponent createR4EIDComponent() {
@@ -445,8 +415,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<R4EID, R4EIDComponent> createMapIDToComponent() {
@@ -455,8 +424,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<String, R4EUserReviews> createMapUserIDToUserReviews() {
@@ -465,8 +433,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyTextPosition createR4EAnomalyTextPosition() {
@@ -475,8 +442,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<Date, Integer> createMapDateToDuration() {
@@ -485,8 +451,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<String, String> createMapKeyToInfoAttributes() {
@@ -495,8 +460,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhaseInfo createR4EReviewPhaseInfo() {
@@ -505,8 +469,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EMeetingData createR4EMeetingData() {
@@ -515,8 +478,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4ECommentType createR4ECommentType() {
@@ -525,8 +487,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Map.Entry<String, R4EAnomalyType> createMapToAnomalyType() {
@@ -535,8 +496,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EPosition createR4EPosition() {
@@ -545,8 +505,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyState createR4EAnomalyState(String literal) {
@@ -556,8 +515,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyState createR4EAnomalyStateFromString(EDataType eDataType, String initialValue) {
@@ -565,8 +523,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EAnomalyState(R4EAnomalyState instanceValue) {
@@ -574,8 +531,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EAnomalyStateToString(EDataType eDataType, Object instanceValue) {
@@ -583,8 +539,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhase createR4EReviewPhase(String literal) {
@@ -594,8 +549,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhase createR4EReviewPhaseFromString(EDataType eDataType, String initialValue) {
@@ -603,8 +557,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EReviewPhase(R4EReviewPhase instanceValue) {
@@ -612,8 +565,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EReviewPhaseToString(EDataType eDataType, Object instanceValue) {
@@ -621,8 +573,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserRole createR4EUserRole(String literal) {
@@ -632,8 +583,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserRole createR4EUserRoleFromString(EDataType eDataType, String initialValue) {
@@ -641,8 +591,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EUserRole(R4EUserRole instanceValue) {
@@ -650,8 +599,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EUserRoleToString(EDataType eDataType, Object instanceValue) {
@@ -659,8 +607,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDecision createR4EDecision(String literal) {
@@ -670,8 +617,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDecision createR4EDecisionFromString(EDataType eDataType, String initialValue) {
@@ -679,8 +625,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EDecision(R4EDecision instanceValue) {
@@ -688,8 +633,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EDecisionToString(EDataType eDataType, Object instanceValue) {
@@ -697,8 +641,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewType createR4EReviewType(String literal) {
@@ -708,8 +651,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewType createR4EReviewTypeFromString(EDataType eDataType, String initialValue) {
@@ -717,8 +659,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EReviewType(R4EReviewType instanceValue) {
@@ -726,8 +667,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EReviewTypeToString(EDataType eDataType, Object instanceValue) {
@@ -735,8 +675,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContextType createR4EContextType(String literal) {
@@ -746,8 +685,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContextType createR4EContextTypeFromString(EDataType eDataType, String initialValue) {
@@ -755,8 +693,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EContextType(R4EContextType instanceValue) {
@@ -764,8 +701,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EContextTypeToString(EDataType eDataType, Object instanceValue) {
@@ -773,8 +709,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public IResource createIResource(String literal) {
@@ -782,8 +717,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public IResource createIResourceFromString(EDataType eDataType, String initialValue) {
@@ -791,8 +725,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertIResource(IResource instanceValue) {
@@ -800,8 +733,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertIResourceToString(EDataType eDataType, Object instanceValue) {
@@ -809,8 +741,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public IFileRevision createIFileRevision(String literal) {
@@ -827,8 +758,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertIFileRevision(IFileRevision instanceValue) {
@@ -836,8 +766,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertIFileRevisionToString(EDataType eDataType, Object instanceValue) {
@@ -845,8 +774,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public RModelPackage getRModelPackage() {
@@ -854,8 +782,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @deprecated
 	 * @generated
 	 */

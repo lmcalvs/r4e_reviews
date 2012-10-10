@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 
 /**
- * 
  * @author Alvaro Sanchez-Leon
  */
 public class MeetingData implements IMeetingData {
@@ -29,23 +28,23 @@ public class MeetingData implements IMeetingData {
 		return types;
 	}
 
-	private String	fCcustomID;
+	private String fCcustomID;
 
-	private String	fSubject;
+	private String fSubject;
 
-	private String	fBody;
+	private String fBody;
 
-	private String	fLocation;
+	private String fLocation;
 
-	private Long	fSartTime;
+	private Long fSartTime;
 
-	private Integer	fDuration;
+	private Integer fDuration;
 
-	private int		fSentCounter	= 0;
+	private int fSentCounter = 0;
 
-	private String		fSender;
+	private String fSender;
 
-	private final Set<String>	fReceivers		= new HashSet<String>();
+	private final Set<String> fReceivers = new HashSet<String>();
 
 	/**
 	 * @param aCustomId

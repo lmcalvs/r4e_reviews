@@ -24,30 +24,27 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 
 /**
- * The class <code>WindowPermissionTest</code> contains tests for the class
- * {@link <code>WindowPermission</code>}
- *
+ * The class <code>WindowPermissionTest</code> contains tests for the class {@link <code>WindowPermission</code>}
+ * 
  * @pattern JUnit Test Case
- *
  * @generatedBy CodePro at 18/11/10 8:22 AM
- *
  * @author Alvaro Sanchez-Leon
- *
  * @version $Revision$
  */
 public class OSPermissionTest extends TestCase {
 
 	/**
 	 * The object that is being tested.
-	 *
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.WindowPermission
 	 */
 	private IFileSupportCommand perm = FileSupportCommandFactory.getInstance();
 
 	/**
 	 * Construct new test instance
-	 *
-	 * @param name the test name
+	 * 
+	 * @param name
+	 *            the test name
 	 */
 	public OSPermissionTest(String name) {
 		super(name);
@@ -55,9 +52,8 @@ public class OSPermissionTest extends TestCase {
 
 	/**
 	 * Perform pre-test initialization
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -67,9 +63,8 @@ public class OSPermissionTest extends TestCase {
 
 	/**
 	 * Perform post-test clean up
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -85,7 +80,7 @@ public class OSPermissionTest extends TestCase {
 		if (!base.endsWith(File.separator)) {
 			base = base + File.separator;
 		}
-		
+
 		String dirStr = base + "PermDirTest" + File.separator;
 		File dir = new File(dirStr);
 		dir.mkdir();
@@ -104,13 +99,13 @@ public class OSPermissionTest extends TestCase {
 			fail("Exception");
 		}
 	}
-	
+
 	/**
 	 * Run the boolean changePermission(String) method test
 	 */
 	public void testChangePermissionFailed() {
 		// add test code here
-		String base =  System.getProperty("java.io.tmpdir");
+		String base = System.getProperty("java.io.tmpdir");
 		if (!base.endsWith(File.separator)) {
 			base = base + File.separator;
 		}

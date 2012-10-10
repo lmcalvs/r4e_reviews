@@ -36,27 +36,28 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Participant</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Participant</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getRoles <em>Roles</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getFocusArea <em>Focus Area</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#isIsPartOfDecision <em>Is Part Of Decision</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getReviewedContent <em>Reviewed Content</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getTimeLog <em>Time Log</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getRoles <em>Roles</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getFocusArea <em>Focus Area</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#isIsPartOfDecision <em>Is Part Of
+ * Decision</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getReviewedContent <em>Reviewed Content
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl#getTimeLog <em>Time Log</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	/**
 	 * The cached value of the '{@link #getRoles() <em>Roles</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getRoles()
 	 * @generated
 	 * @ordered
@@ -65,8 +66,8 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 
 	/**
 	 * The default value of the '{@link #getFocusArea() <em>Focus Area</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFocusArea()
 	 * @generated
 	 * @ordered
@@ -75,8 +76,8 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 
 	/**
 	 * The cached value of the '{@link #getFocusArea() <em>Focus Area</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFocusArea()
 	 * @generated
 	 * @ordered
@@ -84,9 +85,9 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	protected String focusArea = FOCUS_AREA_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isIsPartOfDecision() <em>Is Part Of Decision</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #isIsPartOfDecision() <em>Is Part Of Decision</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isIsPartOfDecision()
 	 * @generated
 	 * @ordered
@@ -94,9 +95,9 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	protected static final boolean IS_PART_OF_DECISION_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isIsPartOfDecision() <em>Is Part Of Decision</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #isIsPartOfDecision() <em>Is Part Of Decision</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isIsPartOfDecision()
 	 * @generated
 	 * @ordered
@@ -104,9 +105,9 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	protected boolean isPartOfDecision = IS_PART_OF_DECISION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReviewedContent() <em>Reviewed Content</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReviewedContent() <em>Reviewed Content</em>}' reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReviewedContent()
 	 * @generated
 	 * @ordered
@@ -114,9 +115,9 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	protected EList<R4EID> reviewedContent;
 
 	/**
-	 * The cached value of the '{@link #getTimeLog() <em>Time Log</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getTimeLog() <em>Time Log</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getTimeLog()
 	 * @generated
 	 * @ordered
@@ -124,8 +125,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	protected EMap<Date, Integer> timeLog;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EParticipantImpl() {
@@ -133,8 +133,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -143,8 +142,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EUserRole> getRoles() {
@@ -155,8 +153,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFocusArea() {
@@ -164,8 +161,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFocusArea(String newFocusArea) {
@@ -176,8 +172,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isIsPartOfDecision() {
@@ -185,8 +180,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setIsPartOfDecision(boolean newIsPartOfDecision) {
@@ -197,8 +191,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EID> getReviewedContent() {
@@ -209,8 +202,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<Date, Integer> getTimeLog() {
@@ -221,8 +213,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -235,8 +226,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -258,8 +248,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -288,8 +277,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -315,8 +303,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -337,8 +324,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

@@ -23,23 +23,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Anomaly Type</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Anomaly Type</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl#getType <em>Type</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyType {
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -47,9 +46,9 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	protected static final String TYPE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -57,8 +56,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	protected String type = TYPE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EAnomalyTypeImpl() {
@@ -66,8 +64,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -76,8 +73,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getType() {
@@ -85,8 +81,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setType(String newType) {
@@ -97,8 +92,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -111,8 +105,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -126,8 +119,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -141,8 +133,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -155,8 +146,7 @@ public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

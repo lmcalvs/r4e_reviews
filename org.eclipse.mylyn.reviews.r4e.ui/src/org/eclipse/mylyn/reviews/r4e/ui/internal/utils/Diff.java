@@ -41,26 +41,22 @@ import org.eclipse.swt.graphics.Point;
 public class Diff {
 
 	/**
-	 * Field CHANGE_TYPE_ADDITION.
-	 * (value is ""addition"")
+	 * Field CHANGE_TYPE_ADDITION. (value is ""addition"")
 	 */
 	public static final String CHANGE_TYPE_ADDITION = "addition"; //$NON-NLS-1$
 
 	/**
-	 * Field CHANGE_TYPE_DELETION.
-	 * (value is ""deletion"")
+	 * Field CHANGE_TYPE_DELETION. (value is ""deletion"")
 	 */
 	public static final String CHANGE_TYPE_DELETION = "deletion"; //$NON-NLS-1$
 
 	/**
-	 * Field CHANGE_TYPE_CHANGE.
-	 * (value is ""change"")
+	 * Field CHANGE_TYPE_CHANGE. (value is ""change"")
 	 */
 	public static final String CHANGE_TYPE_CHANGE = "change"; //$NON-NLS-1$
 
 	/**
-	 * Field DIFF_RANGE_CATEGORY.
-	 * (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
+	 * Field DIFF_RANGE_CATEGORY. (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
 	 */
 	private static final String DIFF_RANGE_CATEGORY = R4EUIPlugin.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
 
@@ -127,22 +123,39 @@ public class Diff {
 	 */
 	/**
 	 * Constructor for Diff.
-	 * @param parent Diff
-	 * @param dir int
-	 * @param ancestorDoc IDocument
-	 * @param aRange Position
-	 * @param ancestorStart int
-	 * @param ancestorEnd int
-	 * @param leftDoc IDocument
-	 * @param lRange Position
-	 * @param leftStart int
-	 * @param leftEnd int
-	 * @param rightDoc IDocument
-	 * @param rRange Position
-	 * @param rightStart int
-	 * @param rightEnd int
-	 * @param aThreeWay boolean
-	 * @param aConfig CompareConfiguration
+	 * 
+	 * @param parent
+	 *            Diff
+	 * @param dir
+	 *            int
+	 * @param ancestorDoc
+	 *            IDocument
+	 * @param aRange
+	 *            Position
+	 * @param ancestorStart
+	 *            int
+	 * @param ancestorEnd
+	 *            int
+	 * @param leftDoc
+	 *            IDocument
+	 * @param lRange
+	 *            Position
+	 * @param leftStart
+	 *            int
+	 * @param leftEnd
+	 *            int
+	 * @param rightDoc
+	 *            IDocument
+	 * @param rRange
+	 *            Position
+	 * @param rightStart
+	 *            int
+	 * @param rightEnd
+	 *            int
+	 * @param aThreeWay
+	 *            boolean
+	 * @param aConfig
+	 *            CompareConfiguration
 	 */
 	Diff(Diff parent, int dir, IDocument ancestorDoc, Position aRange, int ancestorStart, int ancestorEnd,
 			IDocument leftDoc, Position lRange, int leftStart, int leftEnd, IDocument rightDoc, Position rRange,
@@ -165,7 +178,9 @@ public class Diff {
 
 	/**
 	 * Method getPosition.
-	 * @param type char
+	 * 
+	 * @param type
+	 *            char
 	 * @return Position
 	 */
 	public Position getPosition(char type) {
@@ -183,7 +198,9 @@ public class Diff {
 
 	/**
 	 * Method getDocument.
-	 * @param type char
+	 * 
+	 * @param type
+	 *            char
 	 * @return IDocument
 	 */
 	public IDocument getDocument(char type) {
@@ -202,8 +219,11 @@ public class Diff {
 
 	/**
 	 * Method isInRange.
-	 * @param type char
-	 * @param pos int
+	 * 
+	 * @param type
+	 *            char
+	 * @param pos
+	 *            int
 	 * @return boolean
 	 */
 	boolean isInRange(char type, int pos) {
@@ -213,6 +233,7 @@ public class Diff {
 
 	/**
 	 * Method changeType.
+	 * 
 	 * @return String
 	 */
 	public String changeType() {
@@ -239,6 +260,7 @@ public class Diff {
 
 	/**
 	 * Method getImage.
+	 * 
 	 * @return Image
 	 */
 	public Image getImage() {
@@ -264,10 +286,15 @@ public class Diff {
 
 	/**
 	 * Method createPosition.
-	 * @param doc IDocument
-	 * @param range Position
-	 * @param start int
-	 * @param end int
+	 * 
+	 * @param doc
+	 *            IDocument
+	 * @param range
+	 *            Position
+	 * @param start
+	 *            int
+	 * @param end
+	 *            int
 	 * @return Position
 	 */
 	Position createPosition(IDocument doc, Position range, int start, int end) {
@@ -306,7 +333,9 @@ public class Diff {
 
 	/**
 	 * Method add.
-	 * @param d Diff
+	 * 
+	 * @param d
+	 *            Diff
 	 */
 	void add(Diff d) {
 		if (null == fDiffs) {
@@ -317,6 +346,7 @@ public class Diff {
 
 	/**
 	 * Method isDeleted.
+	 * 
 	 * @return boolean
 	 */
 	public boolean isDeleted() {
@@ -328,7 +358,9 @@ public class Diff {
 
 	/**
 	 * Method setResolved.
-	 * @param r boolean
+	 * 
+	 * @param r
+	 *            boolean
 	 */
 	void setResolved(boolean r) {
 		fResolved = r;
@@ -339,6 +371,7 @@ public class Diff {
 
 	/**
 	 * Method isResolved.
+	 * 
 	 * @return boolean
 	 */
 	public boolean isResolved() {
@@ -357,7 +390,9 @@ public class Diff {
 
 	/**
 	 * Method getPosition.
-	 * @param contributor int
+	 * 
+	 * @param contributor
+	 *            int
 	 * @return Position
 	 */
 	Position getPosition(int contributor) {
@@ -378,10 +413,15 @@ public class Diff {
 	 */
 	/**
 	 * Method overlaps.
-	 * @param contributor int
-	 * @param start int
-	 * @param end int
-	 * @param docLength int
+	 * 
+	 * @param contributor
+	 *            int
+	 * @param start
+	 *            int
+	 * @param end
+	 *            int
+	 * @param docLength
+	 *            int
 	 * @return boolean
 	 */
 	public boolean overlaps(int contributor, int start, int end, int docLength) {
@@ -401,6 +441,7 @@ public class Diff {
 
 	/**
 	 * Method getMaxDiffHeight.
+	 * 
 	 * @return int
 	 */
 	public int getMaxDiffHeight() {
@@ -414,6 +455,7 @@ public class Diff {
 
 	/**
 	 * Method getAncestorHeight.
+	 * 
 	 * @return int
 	 */
 	public int getAncestorHeight() {
@@ -423,6 +465,7 @@ public class Diff {
 
 	/**
 	 * Method getLeftHeight.
+	 * 
 	 * @return int
 	 */
 	public int getLeftHeight() {
@@ -432,6 +475,7 @@ public class Diff {
 
 	/**
 	 * Method getRightHeight.
+	 * 
 	 * @return int
 	 */
 	public int getRightHeight() {
@@ -441,8 +485,11 @@ public class Diff {
 
 	/**
 	 * Method getChangeDiffs.
-	 * @param contributor int
-	 * @param region IRegion
+	 * 
+	 * @param contributor
+	 *            int
+	 * @param region
+	 *            IRegion
 	 * @return Diff[]
 	 */
 	public Diff[] getChangeDiffs(int contributor, IRegion region) {
@@ -461,8 +508,11 @@ public class Diff {
 
 	/**
 	 * Method intersectsRegion.
-	 * @param contributor int
-	 * @param region IRegion
+	 * 
+	 * @param contributor
+	 *            int
+	 * @param region
+	 *            IRegion
 	 * @return boolean
 	 */
 	private boolean intersectsRegion(int contributor, IRegion region) {
@@ -475,6 +525,7 @@ public class Diff {
 
 	/**
 	 * Method hasChildren.
+	 * 
 	 * @return boolean
 	 */
 	public boolean hasChildren() {
@@ -483,6 +534,7 @@ public class Diff {
 
 	/**
 	 * Method getKind.
+	 * 
 	 * @return int
 	 */
 	public int getKind() {
@@ -491,6 +543,7 @@ public class Diff {
 
 	/**
 	 * Method isToken.
+	 * 
 	 * @return boolean
 	 */
 	public boolean isToken() {
@@ -499,6 +552,7 @@ public class Diff {
 
 	/**
 	 * Method getParent.
+	 * 
 	 * @return Diff
 	 */
 	public Diff getParent() {
@@ -507,6 +561,7 @@ public class Diff {
 
 	/**
 	 * Method childIterator.
+	 * 
 	 * @return Iterator<Diff>
 	 */
 	public Iterator<Diff> childIterator() {
@@ -522,9 +577,13 @@ public class Diff {
 	 */
 	/**
 	 * Method getLineRange.
-	 * @param doc IDocument
-	 * @param p Position
-	 * @param region Point
+	 * 
+	 * @param doc
+	 *            IDocument
+	 * @param p
+	 *            Position
+	 * @param region
+	 *            Point
 	 * @return Point
 	 */
 	protected Point getLineRange(IDocument doc, Position p, Point region) {

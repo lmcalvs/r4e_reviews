@@ -39,33 +39,36 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportComman
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  * @version $Revision: 1.0 $
  */
 public class ChangeResController implements Persistence.ResourceUpdater {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static final String					LOCK_EXT		= ".lck";
-	protected static final Long						INACTIVE_BOOKING	= -1L;
+	private static final String LOCK_EXT = ".lck";
+
+	protected static final Long INACTIVE_BOOKING = -1L;
+
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
 	/**
 	 * Field checkedOutMap.
 	 */
-	protected final Map<Long, UpdateContext>	checkedOutMap	= new HashMap<Long, UpdateContext>();
+	protected final Map<Long, UpdateContext> checkedOutMap = new HashMap<Long, UpdateContext>();
+
 	/**
 	 * Field fcount.
 	 */
-	protected Long								fcount			= 0L;
+	protected Long fcount = 0L;
+
 	// private R4EReader fReader = SerializeFactory.getReader();
 	/**
 	 * Field fWriter.
 	 */
-	protected IModelWriter							fWriter			= SerializeFactory.getWriter();
+	protected IModelWriter fWriter = SerializeFactory.getWriter();
 
-	protected Persistence.IResSerializationState	fResState		= null;
+	protected Persistence.IResSerializationState fResState = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -86,11 +89,15 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 */
 	/**
 	 * Method checkOut.
-	 * @param aEObject EObject
-	 * @param participant R4EParticipant
+	 * 
+	 * @param aEObject
+	 *            EObject
+	 * @param participant
+	 *            R4EParticipant
 	 * @return Long
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence$ResourceUpdater#checkOut(EObject, R4EParticipant)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence$ResourceUpdater#checkOut(EObject,
+	 *      R4EParticipant)
 	 */
 	public Long checkOut(EObject aEObject, String usrLoginID) throws ResourceHandlingException {
 		//Validate
@@ -103,7 +110,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 			} else if (aEObject.eResource().getURI() == null) {
 				sb.append(", The URI associated to the Element's Resource is null, Element: " + aEObject.toString());
 			}
-			
+
 			throw new ResourceHandlingException(sb.toString());
 		}
 
@@ -133,7 +140,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		checkedOutMap.put(fcount, newContext);
 
 		Activator.fTracer.traceDebug("Checkout Num: " + fcount + ", Object: " + aEObject.toString());
-		
+
 		// return booking number
 		return fcount;
 	}
@@ -174,7 +181,9 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 */
 	/**
 	 * Method checkIn.
-	 * @param aBookingNumber Long
+	 * 
+	 * @param aBookingNumber
+	 *            Long
 	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence$ResourceUpdater#checkIn(Long)
 	 */
@@ -216,7 +225,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 
 		URI resUri = aResource.getURI();
 		File file = new File(URI.decode(resUri.devicePath()));
-		
+
 		if (!file.exists()) {
 			throw new ResourceHandlingException("Not able to lock file: " + file.getAbsolutePath()
 					+ ". file does not exist");
@@ -230,8 +239,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 				// TODO: Preference.
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				Activator.fTracer.traceDebug(new StringBuilder("Interrupter exception while waiting to lock resource")
-						.toString());
+				Activator.fTracer.traceDebug(new StringBuilder("Interrupter exception while waiting to lock resource").toString());
 			}
 
 			// Try a second time, if lock file does not longer exists continue
@@ -248,10 +256,8 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 							line = breader.readLine();
 						}
 					} catch (IOException e) {
-						Activator.fTracer
-								.traceDebug(new StringBuilder("IOException while reading lock file").toString());
-					}
-					finally {
+						Activator.fTracer.traceDebug(new StringBuilder("IOException while reading lock file").toString());
+					} finally {
 						if (breader != null) {
 							try {
 								breader.close();
@@ -291,7 +297,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		} finally {
 			writer.close();
 		}
-		
+
 		Activator.fTracer.traceDebug("Checkout lock created " + file.getAbsolutePath());
 	}
 
@@ -373,14 +379,19 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	/**
 	 */
 	static class UpdateContext {
-		private String	fUser;
-		private EObject		fEObject;
-		private Long		fBookingNum	= null;
+		private String fUser;
+
+		private EObject fEObject;
+
+		private Long fBookingNum = null;
 
 		/**
 		 * Constructor for UpdateContext.
-		 * @param aEObject EObject
-		 * @param aUser R4EUser
+		 * 
+		 * @param aEObject
+		 *            EObject
+		 * @param aUser
+		 *            R4EUser
 		 */
 		UpdateContext(EObject aEObject, String aUser) {
 			fEObject = aEObject;
@@ -389,6 +400,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 
 		/**
 		 * Method getResource.
+		 * 
 		 * @return Resource
 		 */
 		public Resource getResource() {
@@ -397,6 +409,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 
 		/**
 		 * Method getUser.
+		 * 
 		 * @return R4EUser
 		 */
 		public String getUser() {
@@ -405,6 +418,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 
 		/**
 		 * Method getBookingNum.
+		 * 
 		 * @return Long
 		 */
 		public Long getBookingNum() {
@@ -413,7 +427,9 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 
 		/**
 		 * Method setBookingNum.
-		 * @param aBookingNum Long
+		 * 
+		 * @param aBookingNum
+		 *            Long
 		 */
 		public void setBookingNum(Long aBookingNum) {
 			fBookingNum = aBookingNum;
@@ -426,7 +442,9 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		 */
 		/**
 		 * Method equals.
-		 * @param o Object
+		 * 
+		 * @param o
+		 *            Object
 		 * @return boolean
 		 */
 		public boolean equals(Object o) {
@@ -462,6 +480,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		 */
 		/**
 		 * Method hashCode.
+		 * 
 		 * @return int
 		 */
 		public int hashCode() {
@@ -470,4 +489,3 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		}
 	}
 }
-	

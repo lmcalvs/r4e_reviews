@@ -22,24 +22,22 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E File Version</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E File Version</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI <em>Platform URI</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID <em>Version ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getInfoAtt <em>Info Att</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI <em>Platform URI</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID <em>Version ID</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileVersion()
  * @model
  * @generated
@@ -49,8 +47,8 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Platform URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Platform URI</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Platform URI</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Platform URI</em>' attribute.
@@ -63,8 +61,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI <em>Platform URI</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Platform URI</em>' attribute.
 	 * @see #getPlatformURI()
 	 * @generated
@@ -75,8 +72,8 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Version ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Version ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Version ID</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Version ID</em>' attribute.
@@ -89,8 +86,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID <em>Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Version ID</em>' attribute.
 	 * @see #getVersionID()
 	 * @generated
@@ -101,8 +97,8 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Repository Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Repository Path</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Repository Path</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Repository Path</em>' attribute.
@@ -115,8 +111,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Repository Path</em>' attribute.
 	 * @see #getRepositoryPath()
 	 * @generated
@@ -127,8 +122,7 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
@@ -141,8 +135,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -153,8 +146,8 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Resource</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Resource</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Resource</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resource</em>' attribute.
@@ -167,8 +160,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Resource</em>' attribute.
 	 * @see #getResource()
 	 * @generated
@@ -179,8 +171,8 @@ public interface R4EFileVersion extends EObject {
 	 * Returns the value of the '<em><b>Local Version ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Local Version ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Local Version ID</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Local Version ID</em>' attribute.
@@ -193,8 +185,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Local Version ID</em>' attribute.
 	 * @see #getLocalVersionID()
 	 * @generated
@@ -202,26 +193,26 @@ public interface R4EFileVersion extends EObject {
 	void setLocalVersionID(String value);
 
 	/**
-	 * Returns the value of the '<em><b>File Revision</b></em>' attribute.
-	 * The default value is <code>""</code>.
-	 * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>File Revision</b></em>' attribute. The default value is <code>""</code>. <!--
+	 * begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File Revision</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>File Revision</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>File Revision</em>' attribute.
 	 * @see #setFileRevision(IFileRevision)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileVersion_FileRevision()
-	 * @model default="" dataType="org.eclipse.mylyn.reviews.r4e.core.model.IFileRevision" transient="true" derived="true"
+	 * @model default="" dataType="org.eclipse.mylyn.reviews.r4e.core.model.IFileRevision" transient="true"
+	 *        derived="true"
 	 * @generated
 	 */
 	IFileRevision getFileRevision();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>File Revision</em>' attribute.
 	 * @see #getFileRevision()
 	 * @generated
@@ -234,8 +225,7 @@ public interface R4EFileVersion extends EObject {
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Info Att</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Info Att</em>' map isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Att</em>' map.

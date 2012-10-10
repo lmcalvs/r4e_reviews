@@ -21,9 +21,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Anomaly</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Anomaly</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -52,8 +50,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>State</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>State</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>State</em>' attribute.
@@ -67,8 +65,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getState <em>State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>State</em>' attribute.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState
 	 * @see #getState()
@@ -80,8 +77,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Due Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Due Date</em>' attribute.
@@ -94,8 +91,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDueDate <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Due Date</em>' attribute.
 	 * @see #getDueDate()
 	 * @generated
@@ -107,8 +103,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Rank</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Rank</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rank</em>' attribute.
@@ -122,8 +117,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRank <em>Rank</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Rank</em>' attribute.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank
 	 * @see #getRank()
@@ -135,8 +129,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Rule</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Rule</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Rule</em>' reference isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rule</em>' reference.
@@ -149,8 +142,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRule <em>Rule</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Rule</em>' reference.
 	 * @see #getRule()
 	 * @generated
@@ -161,8 +153,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Not Accepted Reason</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Not Accepted Reason</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Not Accepted Reason</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Not Accepted Reason</em>' attribute.
@@ -175,8 +167,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getNotAcceptedReason <em>Not Accepted Reason</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Not Accepted Reason</em>' attribute.
 	 * @see #getNotAcceptedReason()
 	 * @generated
@@ -187,8 +178,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Is Imported</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Is Imported</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Is Imported</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Imported</em>' attribute.
@@ -201,8 +192,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#isIsImported <em>Is Imported</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Imported</em>' attribute.
 	 * @see #isIsImported()
 	 * @generated
@@ -213,8 +203,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Fixed In Version</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Fixed In Version</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Fixed In Version</em>' reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Fixed In Version</em>' reference.
@@ -227,8 +217,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion <em>Fixed In Version</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Fixed In Version</em>' reference.
 	 * @see #getFixedInVersion()
 	 * @generated
@@ -239,8 +228,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Rule ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Rule ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Rule ID</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rule ID</em>' attribute.
@@ -253,8 +242,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRuleID <em>Rule ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Rule ID</em>' attribute.
 	 * @see #getRuleID()
 	 * @generated
@@ -265,8 +253,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Decided By ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Decided By ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Decided By ID</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Decided By ID</em>' attribute.
@@ -279,8 +267,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedByID <em>Decided By ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Decided By ID</em>' attribute.
 	 * @see #getDecidedByID()
 	 * @generated
@@ -291,8 +278,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Fixed By ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Fixed By ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Fixed By ID</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Fixed By ID</em>' attribute.
@@ -305,8 +292,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Fixed By ID</em>' attribute.
 	 * @see #getFixedByID()
 	 * @generated
@@ -317,8 +303,8 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * Returns the value of the '<em><b>Follow Up By ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Follow Up By ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Follow Up By ID</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Follow Up By ID</em>' attribute.
@@ -331,8 +317,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID <em>Follow Up By ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Follow Up By ID</em>' attribute.
 	 * @see #getFollowUpByID()
 	 * @generated

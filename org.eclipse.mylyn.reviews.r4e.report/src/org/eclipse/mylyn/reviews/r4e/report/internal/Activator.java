@@ -13,7 +13,6 @@
  ********************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.report.internal;
 
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -33,18 +32,18 @@ public class Activator extends AbstractUIPlugin {
 	// Constants
 	// ------------------------------------------------------------------------
 	// The plug-in ID
-	public static final String	FPLUGIN_ID	= "org.eclipse.mylyn.reviews.r4e.report"; //$NON-NLS-1$
+	public static final String FPLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.report"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
 	// The shared instance
-	private static Activator	FPlugin;
+	private static Activator FPlugin;
 
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer		FTracer;
+	public static Tracer FTracer;
 
 	// ------------------------------------------------------------------------
 	// Constructors

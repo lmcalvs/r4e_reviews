@@ -116,10 +116,10 @@ public abstract class ReviewSingleEditorInputListener extends ReviewEditorInputL
 		hoverManager.set(fSourceViewer, reviewInformationControlManager);
 		reviewInformationControlManager.install(ruler.getControl());
 		if (ReviewAnnotationConfigFactory.getUseInformationControlReplacer()) {
-		reviewInformationControlManager.getInternalAccessor().setInformationControlReplacer(
-				new StickyHoverManager((SourceViewer) fSourceViewer));
+			reviewInformationControlManager.getInternalAccessor().setInformationControlReplacer(
+					new StickyHoverManager((SourceViewer) fSourceViewer));
 		}
-		
+
 		//Finally add back annotations showing
 		fSourceViewer.showAnnotations(true);
 	}

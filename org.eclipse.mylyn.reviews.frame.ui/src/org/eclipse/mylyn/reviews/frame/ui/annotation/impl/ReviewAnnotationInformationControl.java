@@ -47,7 +47,6 @@ public abstract class ReviewAnnotationInformationControl extends AbstractInforma
 	 */
 	protected ReviewAnnotationHoverInput fInput = null;
 
-
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------

@@ -33,11 +33,10 @@ public class TestUtils {
 
 	/**
 	 * Create a "temporary" directory
-	 *
+	 * 
 	 * @param name
 	 *            the name of the directory
-	 * @return a directory as child of a "temporary" folder in the user home
-	 *         directory; may or may not exist
+	 * @return a directory as child of a "temporary" folder in the user home directory; may or may not exist
 	 * @throws IOException
 	 */
 	public File createTempDir(String name) throws IOException {
@@ -51,7 +50,7 @@ public class TestUtils {
 
 	/**
 	 * Cleanup: delete the "temporary" folder and all children
-	 *
+	 * 
 	 * @throws IOException
 	 */
 	public void deleteTempDirs() throws IOException {
@@ -63,7 +62,7 @@ public class TestUtils {
 
 	/**
 	 * Read the stream into a String
-	 *
+	 * 
 	 * @param inputStream
 	 * @return the contents of the stream
 	 * @throws IOException
@@ -83,7 +82,7 @@ public class TestUtils {
 
 	/**
 	 * Add a file to an existing project
-	 *
+	 * 
 	 * @param project
 	 *            the project
 	 * @param path
@@ -94,8 +93,7 @@ public class TestUtils {
 	 * @throws Exception
 	 *             if the file can not be created
 	 */
-	public IFile addFileToProject(IProject project, String path, String content)
-			throws Exception {
+	public IFile addFileToProject(IProject project, String path, String content) throws Exception {
 		IPath filePath = new Path(path);
 		IFolder folder = null;
 		for (int i = 0; i < filePath.segmentCount() - 1; i++) {
@@ -108,30 +106,27 @@ public class TestUtils {
 				folder.create(false, true, null);
 		}
 		IFile file = project.getFile(filePath);
-		file.create(new ByteArrayInputStream(content.getBytes(project
-				.getDefaultCharset())), true, null);
+		file.create(new ByteArrayInputStream(content.getBytes(project.getDefaultCharset())), true, null);
 		return file;
 	}
 
 	/**
 	 * Change the content of a file
-	 *
+	 * 
 	 * @param project
 	 * @param file
 	 * @param newContent
 	 * @return the file
 	 * @throws Exception
 	 */
-	public IFile changeContentOfFile(IProject project, IFile file, String newContent)
-			throws Exception {
-		file.setContents(new ByteArrayInputStream(newContent.getBytes(project
-				.getDefaultCharset())), 0, null);
+	public IFile changeContentOfFile(IProject project, IFile file, String newContent) throws Exception {
+		file.setContents(new ByteArrayInputStream(newContent.getBytes(project.getDefaultCharset())), 0, null);
 		return file;
 	}
 
 	/**
 	 * Create a project in the local file system
-	 *
+	 * 
 	 * @param parentFile
 	 *            the parent
 	 * @param projectName
@@ -139,10 +134,8 @@ public class TestUtils {
 	 * @return the project with a location pointing to the local file system
 	 * @throws Exception
 	 */
-	public IProject createProjectInLocalFileSystem(File parentFile,
-			String projectName) throws Exception {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectName);
+	public IProject createProjectInLocalFileSystem(File parentFile, String projectName) throws Exception {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 		if (project.exists()) {
 			project.delete(true, null);
 		}
@@ -150,8 +143,7 @@ public class TestUtils {
 		if (testFile.exists())
 			FileUtils.delete(testFile, FileUtils.RECURSIVE | FileUtils.RETRY);
 
-		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription(projectName);
+		IProjectDescription desc = ResourcesPlugin.getWorkspace().newProjectDescription(projectName);
 		desc.setLocation(new Path(new File(parentFile, projectName).getPath()));
 		project.create(desc, null);
 		project.open(null);

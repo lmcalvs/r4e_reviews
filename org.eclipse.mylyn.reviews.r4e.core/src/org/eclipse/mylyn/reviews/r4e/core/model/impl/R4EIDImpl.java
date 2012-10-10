@@ -24,9 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4EID</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4EID</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -40,8 +38,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EIDImpl extends EObjectImpl implements R4EID {
 	/**
 	 * The default value of the '{@link #getSequenceID() <em>Sequence ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSequenceID()
 	 * @generated
 	 * @ordered
@@ -50,8 +48,8 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 
 	/**
 	 * The cached value of the '{@link #getSequenceID() <em>Sequence ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSequenceID()
 	 * @generated
 	 * @ordered
@@ -60,8 +58,8 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 
 	/**
 	 * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getUserID()
 	 * @generated
 	 * @ordered
@@ -70,8 +68,8 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 
 	/**
 	 * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getUserID()
 	 * @generated
 	 * @ordered
@@ -79,8 +77,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	protected String userID = USER_ID_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EIDImpl() {
@@ -88,8 +85,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -98,8 +94,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getSequenceID() {
@@ -107,8 +102,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSequenceID(int newSequenceID) {
@@ -119,8 +113,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getUserID() {
@@ -128,8 +121,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setUserID(String newUserID) {
@@ -140,8 +132,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -156,8 +147,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -174,8 +164,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -192,8 +181,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -208,8 +196,7 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

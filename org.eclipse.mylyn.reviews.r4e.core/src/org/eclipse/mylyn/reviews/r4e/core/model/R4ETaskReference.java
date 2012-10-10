@@ -17,11 +17,9 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Task Reference</b></em>'.
- * <!-- end-user-doc -->
- *
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Task Reference</b></em>'. <!-- end-user-doc
+ * -->
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4ETaskReference()
  * @model
  * @generated

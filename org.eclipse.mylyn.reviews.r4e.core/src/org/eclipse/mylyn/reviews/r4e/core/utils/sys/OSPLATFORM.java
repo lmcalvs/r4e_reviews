@@ -64,7 +64,7 @@ public final class OSPLATFORM {
 				return type;
 			}
 		};
-		
+
 		protected abstract OSTYPE match(String name);
 
 		/**
@@ -107,7 +107,7 @@ public final class OSPLATFORM {
 		public boolean isSolarisOS() {
 			return this == SOLARIS;
 		}
-		
+
 		/**
 		 * @return boolean
 		 */
@@ -132,7 +132,6 @@ public final class OSPLATFORM {
 
 	public static final String FILE_ELEMENT_SEPARATOR_PORTABLE = new String("/");
 
-	public static final boolean IS_FILE_ELEMENT_SEPARATOR_PORTABLE = FILE_ELEMENT_SEPARATOR_PORTABLE
-			.equals(FILE_ELEMENT_SEPARATOR);
+	public static final boolean IS_FILE_ELEMENT_SEPARATOR_PORTABLE = FILE_ELEMENT_SEPARATOR_PORTABLE.equals(FILE_ELEMENT_SEPARATOR);
 
 }

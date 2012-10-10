@@ -31,40 +31,42 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactory
 //import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.
 
 /**
- * The class <code>ChangeResControllerTest</code> contains tests for the class
- * {@link <code>ChangeResController</code>}
- *
+ * The class <code>ChangeResControllerTest</code> contains tests for the class {@link <code>ChangeResController</code>}
+ * 
  * @pattern JUnit Test Case
- *
  * @generatedBy CodePro at 22/11/10 8:47 AM
- *
  * @author Alvaro Sanchez-Leon
- *
  * @version $Revision$
  */
 public class ChangeResControllerTest extends TestCase {
 
 	/**
 	 * The object that is being tested.
-	 *
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ChangeResController
 	 */
-	private final ChangeResController	fResCont			= new ChangeResController(
-																	new InactiveSerializationRegistry());
-	private final RModelFactoryExt		fFactory			= SerializeFactory.getModelExtension();
-	private final static String	TEST_DIR	= "dir";
-	private final static String	USER1		= "userX";
-	private final static String	USER2		= "userY";
-	private final static String	GROUP_NAME	= "Test Group";
+	private final ChangeResController fResCont = new ChangeResController(new InactiveSerializationRegistry());
+
+	private final RModelFactoryExt fFactory = SerializeFactory.getModelExtension();
+
+	private final static String TEST_DIR = "dir";
+
+	private final static String USER1 = "userX";
+
+	private final static String USER2 = "userY";
+
+	private final static String GROUP_NAME = "Test Group";
 
 	//
-	private Long				fBookingNumber		= 0L;
-	private R4EReviewGroup		fResourceElement	= null;
+	private Long fBookingNumber = 0L;
+
+	private R4EReviewGroup fResourceElement = null;
 
 	/**
 	 * Construct new test instance
-	 *
-	 * @param aName the test name
+	 * 
+	 * @param aName
+	 *            the test name
 	 */
 	public ChangeResControllerTest(String aName) {
 		super(aName);
@@ -72,9 +74,8 @@ public class ChangeResControllerTest extends TestCase {
 
 	/**
 	 * Perform pre-test initialization
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -98,9 +99,8 @@ public class ChangeResControllerTest extends TestCase {
 
 	/**
 	 * Perform post-test clean up
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -146,9 +146,9 @@ public class ChangeResControllerTest extends TestCase {
 		}
 
 		//booking shall not take place
-		assertTrue(0L==newBookingNum);
+		assertTrue(0L == newBookingNum);
 	}
-	
+
 	/**
 	 * Null Resource
 	 */
@@ -163,10 +163,10 @@ public class ChangeResControllerTest extends TestCase {
 		}
 
 		//booking shall not take place
-		assertTrue(0L==newBookingNum);
+		assertTrue(0L == newBookingNum);
 
 	}
-	
+
 	/**
 	 * Invalid Resource URI
 	 */
@@ -186,11 +186,10 @@ public class ChangeResControllerTest extends TestCase {
 		}
 
 		//booking shall not take place
-		assertTrue(0L==newBookingNum);
+		assertTrue(0L == newBookingNum);
 
 	}
-	
-	
+
 	/**
 	 * Attempt to checkout a resource already checkout by a different user shall not got through and shal be reported to
 	 * the ui

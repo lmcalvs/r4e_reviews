@@ -20,9 +20,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Comment</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Comment</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -43,8 +41,8 @@ public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent 
 	 * Returns the value of the '<em><b>Created On</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Created On</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Created On</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Created On</em>' attribute.
@@ -57,8 +55,7 @@ public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent 
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getCreatedOn <em>Created On</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Created On</em>' attribute.
 	 * @see #getCreatedOn()
 	 * @generated
@@ -69,8 +66,8 @@ public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent 
 	 * Returns the value of the '<em><b>Anomaly</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Anomaly</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Anomaly</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Anomaly</em>' reference.
@@ -83,8 +80,7 @@ public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent 
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getAnomaly <em>Anomaly</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Anomaly</em>' reference.
 	 * @see #getAnomaly()
 	 * @generated
@@ -97,8 +93,7 @@ public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent 
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Info Att</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Info Att</em>' map isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Att</em>' map.

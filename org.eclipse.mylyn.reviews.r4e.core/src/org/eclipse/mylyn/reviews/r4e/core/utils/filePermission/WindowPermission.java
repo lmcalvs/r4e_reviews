@@ -24,12 +24,11 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.cmd.BaseSupportCommand;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
-public class WindowPermission extends BaseSupportCommand implements
-		IFileSupportCommand {
+public class WindowPermission extends BaseSupportCommand implements IFileSupportCommand {
 
-	private static final String	SUCCESS_MSG	= "Failed processing 0";
+	private static final String SUCCESS_MSG = "Failed processing 0";
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -54,8 +53,7 @@ public class WindowPermission extends BaseSupportCommand implements
 			command.add("/T"); // Change ACLs recursively
 		}
 
-		String ret = executeWithStringReturned(null, command, true /* wait */,
-				true /* ignore error */);
+		String ret = executeWithStringReturned(null, command, true /* wait */, true /* ignore error */);
 		// Activator.Tracer.traceInfo("changePermission() ret: " + ret);
 		Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);
 		if (ret.length() > 0 && ret.contains(SUCCESS_MSG)) {

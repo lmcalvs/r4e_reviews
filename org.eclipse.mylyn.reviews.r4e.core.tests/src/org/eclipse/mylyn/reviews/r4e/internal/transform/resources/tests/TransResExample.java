@@ -33,36 +33,33 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackag
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.util.TransResResourceFactoryImpl;
 
 /**
- * <!-- begin-user-doc -->
- * A sample utility for the '<em><b>resources</b></em>' package.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A sample utility for the '<em><b>resources</b></em>' package. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class TransResExample {
 	/**
-	 * <!-- begin-user-doc -->
-	 * Load all the argument file paths or URIs as instances of the model.
-	 * <!-- end-user-doc -->
-	 * @param args the file paths or URIs.
+	 * <!-- begin-user-doc --> Load all the argument file paths or URIs as instances of the model. <!-- end-user-doc -->
+	 * 
+	 * @param args
+	 *            the file paths or URIs.
 	 * @generated
 	 */
 	public static void main(String[] args) {
 		// Create a resource set to hold the resources.
 		//
 		ResourceSet resourceSet = new ResourceSetImpl();
-		
+
 		// Register the appropriate resource factory to handle all file extensions.
 		//
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-			(Resource.Factory.Registry.DEFAULT_EXTENSION, 
-			 new TransResResourceFactoryImpl());
+		resourceSet.getResourceFactoryRegistry()
+				.getExtensionToFactoryMap()
+				.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new TransResResourceFactoryImpl());
 
 		// Register the package to ensure it is available during loading.
 		//
-		resourceSet.getPackageRegistry().put
-			(TransResPackage.eNS_URI, 
-			 TransResPackage.eINSTANCE);
-        
+		resourceSet.getPackageRegistry().put(TransResPackage.eNS_URI, TransResPackage.eINSTANCE);
+
 		// If there are no arguments, emit an appropriate usage message.
 		//
 		if (args.length == 0) {
@@ -72,12 +69,10 @@ public class TransResExample {
 				ReviewGroupRes root = TransResFactory.eINSTANCE.createReviewGroupRes();
 				resource.getContents().add(root);
 				resource.save(System.out, null);
-			}
-			catch (IOException exception) {
+			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			// Iterate over all the arguments.
 			//
 			for (int i = 0; i < args.length; ++i) {
@@ -86,7 +81,7 @@ public class TransResExample {
 				// Otherwise, it's directly treated as a URL.
 				//
 				File file = new File(args[i]);
-				URI uri = file.isFile() ? URI.createFileURI(file.getAbsolutePath()): URI.createURI(args[i]);
+				URI uri = file.isFile() ? URI.createFileURI(file.getAbsolutePath()) : URI.createURI(args[i]);
 
 				try {
 					// Demand load resource for this file.
@@ -102,21 +97,21 @@ public class TransResExample {
 							printDiagnostic(diagnostic, "");
 						}
 					}
-				}
-				catch (RuntimeException exception) {
+				} catch (RuntimeException exception) {
 					System.out.println("Problem loading " + uri);
 					exception.printStackTrace();
 				}
 			}
 		}
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * Prints diagnostics with indentation.
-	 * <!-- end-user-doc -->
-	 * @param diagnostic the diagnostic to print.
-	 * @param indent the indentation for printing.
+	 * <!-- begin-user-doc --> Prints diagnostics with indentation. <!-- end-user-doc -->
+	 * 
+	 * @param diagnostic
+	 *            the diagnostic to print.
+	 * @param indent
+	 *            the indentation for printing.
 	 * @generated
 	 */
 	protected static void printDiagnostic(Diagnostic diagnostic, String indent) {

@@ -30,20 +30,24 @@ public class StreamThread extends Thread {
 	private InputStream stream;
 
 	private List<String> lines;
-	
+
 	private boolean fin = false;
 
 	public StreamThread() {
 	}
-	
+
 	// Filtered out unwanted separation characters
 	// from Java.process
 	String strTwoDblQuoteLine = "^(\"+)";
+
 	String strSingleQuoteline = "^(\"$)";
+
 	Pattern pattRegex = Pattern.compile(strTwoDblQuoteLine);
+
 	Pattern pattVis = Pattern.compile(strSingleQuoteline);
+
 	Matcher match;
-	
+
 	public StreamThread(InputStream stream) {
 		this.stream = stream;
 		//this.setPriority(Thread.MAX_PRIORITY);
@@ -56,7 +60,7 @@ public class StreamThread extends Thread {
 	public List<String> getLines() {
 		return lines;
 	}
-	
+
 	public boolean completed() {
 		return fin;
 	}
@@ -87,7 +91,7 @@ public class StreamThread extends Thread {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-		
+
 		fin = true;
 		// Debug.print.println("StreamThread.run() " + getName() + " lines="
 		// + lines.size());

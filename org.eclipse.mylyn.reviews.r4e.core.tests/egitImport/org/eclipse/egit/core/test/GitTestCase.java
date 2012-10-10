@@ -42,12 +42,14 @@ public abstract class GitTestCase {
 		Activator.getDefault().getRepositoryCache().clear();
 		MockSystemReader mockSystemReader = new MockSystemReader();
 		SystemReader.setInstance(mockSystemReader);
-		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
-				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
-						.getAbsoluteFile().toString());
+		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY, ResourcesPlugin.getWorkspace()
+				.getRoot()
+				.getLocation()
+				.toFile()
+				.getAbsoluteFile()
+				.toString());
 		project = new TestProject(true);
-		gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), Constants.DOT_GIT);
+		gitDir = new File(project.getProject().getWorkspace().getRoot().getRawLocation().toFile(), Constants.DOT_GIT);
 		if (gitDir.exists())
 			FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
@@ -59,7 +61,8 @@ public abstract class GitTestCase {
 			FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
 
-	protected ObjectId createFile(Repository repository, IProject actProject, String name, String content) throws IOException {
+	protected ObjectId createFile(Repository repository, IProject actProject, String name, String content)
+			throws IOException {
 		File file = new File(actProject.getProject().getLocation().toFile(), name);
 		FileWriter fileWriter = new FileWriter(file);
 		fileWriter.write(content);
@@ -75,12 +78,11 @@ public abstract class GitTestCase {
 		}
 	}
 
-	protected ObjectId createFileCorruptShort(Repository repository,
-			IProject actProject, String name, String content)
+	protected ObjectId createFileCorruptShort(Repository repository, IProject actProject, String name, String content)
 			throws IOException {
 		ObjectId id = createFile(repository, actProject, name, content);
-		File file = new File(repository.getDirectory(), "objects/"
-				+ id.name().substring(0, 2) + "/" + id.name().substring(2));
+		File file = new File(repository.getDirectory(), "objects/" + id.name().substring(0, 2) + "/"
+				+ id.name().substring(2));
 		byte[] readFully = IO.readFully(file);
 		FileUtils.delete(file);
 		FileOutputStream fileOutputStream = new FileOutputStream(file);

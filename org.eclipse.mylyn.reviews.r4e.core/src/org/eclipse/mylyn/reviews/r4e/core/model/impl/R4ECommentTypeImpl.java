@@ -24,23 +24,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Comment Type</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Comment Type</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl#getType <em>Type</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentType {
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -48,9 +47,9 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	protected static final R4EDesignRuleClass TYPE_EDEFAULT = R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -58,8 +57,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	protected R4EDesignRuleClass type = TYPE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4ECommentTypeImpl() {
@@ -67,8 +65,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -77,8 +74,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleClass getType() {
@@ -86,8 +82,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setType(R4EDesignRuleClass newType) {
@@ -98,8 +93,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -112,8 +106,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -127,8 +120,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -142,8 +134,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -156,8 +147,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

@@ -25,7 +25,7 @@ public class SampleR4EModel {
 	// Fields
 	// ------------------------------------------------------------------------
 	// private final String fUserName;
-	private static ResourceUpdater	fSetUpdater	= SerializeFactory.getResourceSetUpdater();
+	private static ResourceUpdater fSetUpdater = SerializeFactory.getResourceSetUpdater();
 
 	// private final R4EWriter fWriter = SerializeFactory.getWriter();
 

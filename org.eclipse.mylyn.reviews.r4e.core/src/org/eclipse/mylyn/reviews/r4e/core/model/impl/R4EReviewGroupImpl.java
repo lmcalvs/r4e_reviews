@@ -40,26 +40,31 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
 import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Review Group</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAssignedTo <em>Assigned To</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getFolder <em>Folder</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDefaultEntryCriteria <em>Default Entry Criteria</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableProjects <em>Available Projects</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableComponents <em>Available Components</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDesignRuleLocations <em>Design Rule Locations</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableAnomalyTypes <em>Available Anomaly Types</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAnomalyTypeKeyToReference <em>Anomaly Type Key To Reference</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getReviewsMap <em>Reviews Map</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getUserReviews <em>User Reviews</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAssignedTo <em>Assigned To</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getFolder <em>Folder</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDefaultEntryCriteria <em>Default Entry
+ * Criteria</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableProjects <em>Available
+ * Projects</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableComponents <em>Available
+ * Components</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDesignRuleLocations <em>Design Rule
+ * Locations</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableAnomalyTypes <em>Available
+ * Anomaly Types</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAnomalyTypeKeyToReference <em>Anomaly
+ * Type Key To Reference</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getReviewsMap <em>Reviews Map</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getUserReviews <em>User Reviews</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGroup {
@@ -74,9 +79,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected EList<String> assignedTo;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -84,9 +89,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -95,8 +100,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The default value of the '{@link #getFolder() <em>Folder</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFolder()
 	 * @generated
 	 * @ordered
@@ -105,8 +110,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The cached value of the '{@link #getFolder() <em>Folder</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFolder()
 	 * @generated
 	 * @ordered
@@ -114,9 +119,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected String folder = FOLDER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getDefaultEntryCriteria() <em>Default Entry Criteria</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getDefaultEntryCriteria() <em>Default Entry Criteria</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDefaultEntryCriteria()
 	 * @generated
 	 * @ordered
@@ -124,9 +129,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected static final String DEFAULT_ENTRY_CRITERIA_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getDefaultEntryCriteria() <em>Default Entry Criteria</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getDefaultEntryCriteria() <em>Default Entry Criteria</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDefaultEntryCriteria()
 	 * @generated
 	 * @ordered
@@ -134,9 +139,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected String defaultEntryCriteria = DEFAULT_ENTRY_CRITERIA_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAvailableProjects() <em>Available Projects</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAvailableProjects() <em>Available Projects</em>}' attribute list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAvailableProjects()
 	 * @generated
 	 * @ordered
@@ -144,9 +149,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected EList<String> availableProjects;
 
 	/**
-	 * The cached value of the '{@link #getAvailableComponents() <em>Available Components</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAvailableComponents() <em>Available Components</em>}' attribute list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAvailableComponents()
 	 * @generated
 	 * @ordered
@@ -154,9 +159,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected EList<String> availableComponents;
 
 	/**
-	 * The cached value of the '{@link #getDesignRuleLocations() <em>Design Rule Locations</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getDesignRuleLocations() <em>Design Rule Locations</em>}' attribute list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDesignRuleLocations()
 	 * @generated
 	 * @ordered
@@ -165,8 +170,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The cached value of the '{@link #getAvailableAnomalyTypes() <em>Available Anomaly Types</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getAvailableAnomalyTypes()
 	 * @generated
 	 * @ordered
@@ -175,8 +179,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The cached value of the '{@link #getAnomalyTypeKeyToReference() <em>Anomaly Type Key To Reference</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getAnomalyTypeKeyToReference()
 	 * @generated
 	 * @ordered
@@ -185,8 +188,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The cached value of the '{@link #getReviewsMap() <em>Reviews Map</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getReviewsMap()
 	 * @generated
 	 * @ordered
@@ -195,8 +198,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 
 	/**
 	 * The cached value of the '{@link #getUserReviews() <em>User Reviews</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getUserReviews()
 	 * @generated
 	 * @ordered
@@ -204,8 +207,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	protected EMap<String, R4EUserReviews> userReviews;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EReviewGroupImpl() {
@@ -213,8 +215,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -223,8 +224,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -235,8 +235,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -244,8 +243,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -256,8 +254,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFolder() {
@@ -265,8 +262,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFolder(String newFolder) {
@@ -277,8 +273,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getDefaultEntryCriteria() {
@@ -286,8 +281,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDefaultEntryCriteria(String newDefaultEntryCriteria) {
@@ -298,8 +292,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAvailableProjects() {
@@ -310,8 +303,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAvailableComponents() {
@@ -322,8 +314,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getDesignRuleLocations() {
@@ -334,8 +325,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EAnomalyType> getAvailableAnomalyTypes() {
@@ -346,8 +336,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, R4EAnomalyType> getAnomalyTypeKeyToReference() {
@@ -358,8 +347,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, R4EReview> getReviewsMap() {
@@ -370,8 +358,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, R4EUserReviews> getUserReviews() {
@@ -382,8 +369,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -402,8 +388,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -439,8 +424,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -490,8 +474,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -535,8 +518,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -569,8 +551,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -585,8 +566,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -601,8 +581,7 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

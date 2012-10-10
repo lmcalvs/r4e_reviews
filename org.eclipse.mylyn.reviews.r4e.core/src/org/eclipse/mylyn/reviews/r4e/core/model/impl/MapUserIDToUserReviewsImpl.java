@@ -30,9 +30,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map User ID To User Reviews</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map User ID To User Reviews</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -46,8 +45,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap.Entry<String,R4EUserReviews> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,8 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -66,8 +65,8 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -75,8 +74,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	protected R4EUserReviews value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapUserIDToUserReviewsImpl() {
@@ -84,8 +82,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -94,8 +91,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -103,8 +99,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
@@ -115,8 +110,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserReviews getTypedValue() {
@@ -132,8 +126,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserReviews basicGetTypedValue() {
@@ -141,8 +134,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(R4EUserReviews newValue) {
@@ -153,8 +145,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -170,8 +161,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -188,8 +178,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -206,8 +195,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -222,8 +210,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -238,15 +225,13 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -258,8 +243,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -267,8 +251,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getKey() {
@@ -276,8 +259,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(String key) {
@@ -285,8 +267,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserReviews getValue() {
@@ -294,8 +275,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUserReviews setValue(R4EUserReviews value) {
@@ -305,8 +285,7 @@ public class MapUserIDToUserReviewsImpl extends EObjectImpl implements BasicEMap
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

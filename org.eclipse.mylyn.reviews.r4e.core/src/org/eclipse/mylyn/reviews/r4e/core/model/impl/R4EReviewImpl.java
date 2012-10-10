@@ -45,9 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
 import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Review</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -86,9 +84,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected EList<String> assignedTo;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -96,9 +94,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -107,8 +105,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getProject() <em>Project</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getProject()
 	 * @generated
 	 * @ordered
@@ -117,8 +115,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getProject() <em>Project</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getProject()
 	 * @generated
 	 * @ordered
@@ -157,8 +155,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getExtraNotes() <em>Extra Notes</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getExtraNotes()
 	 * @generated
 	 * @ordered
@@ -167,8 +165,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getExtraNotes() <em>Extra Notes</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getExtraNotes()
 	 * @generated
 	 * @ordered
@@ -177,8 +175,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getObjectives() <em>Objectives</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getObjectives()
 	 * @generated
 	 * @ordered
@@ -187,8 +185,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getObjectives() <em>Objectives</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getObjectives()
 	 * @generated
 	 * @ordered
@@ -196,9 +194,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected String objectives = OBJECTIVES_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getReferenceMaterial() <em>Reference Material</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getReferenceMaterial() <em>Reference Material</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReferenceMaterial()
 	 * @generated
 	 * @ordered
@@ -206,9 +204,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected static final String REFERENCE_MATERIAL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getReferenceMaterial() <em>Reference Material</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReferenceMaterial() <em>Reference Material</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReferenceMaterial()
 	 * @generated
 	 * @ordered
@@ -227,8 +225,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartDate()
 	 * @generated
 	 * @ordered
@@ -237,8 +235,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartDate()
 	 * @generated
 	 * @ordered
@@ -247,8 +245,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getEndDate() <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndDate()
 	 * @generated
 	 * @ordered
@@ -257,8 +255,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getEndDate() <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndDate()
 	 * @generated
 	 * @ordered
@@ -267,8 +265,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The default value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDueDate()
 	 * @generated
 	 * @ordered
@@ -277,8 +275,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDueDate()
 	 * @generated
 	 * @ordered
@@ -286,9 +284,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected Date dueDate = DUE_DATE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAnomalyTemplate() <em>Anomaly Template</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAnomalyTemplate() <em>Anomaly Template</em>}' containment reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAnomalyTemplate()
 	 * @generated
 	 * @ordered
@@ -296,9 +294,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected R4EAnomaly anomalyTemplate;
 
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -306,9 +304,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected static final R4EReviewType TYPE_EDEFAULT = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -317,8 +315,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getUsersMap() <em>Users Map</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getUsersMap()
 	 * @generated
 	 * @ordered
@@ -327,8 +325,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 
 	/**
 	 * The cached value of the '{@link #getCreatedBy() <em>Created By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCreatedBy()
 	 * @generated
 	 * @ordered
@@ -336,9 +334,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected R4EUser createdBy;
 
 	/**
-	 * The cached value of the '{@link #getIdsMap() <em>Ids Map</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getIdsMap() <em>Ids Map</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getIdsMap()
 	 * @generated
 	 * @ordered
@@ -346,9 +344,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected EMap<R4EID, R4EIDComponent> idsMap;
 
 	/**
-	 * The cached value of the '{@link #getActiveMeeting() <em>Active Meeting</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getActiveMeeting() <em>Active Meeting</em>}' containment reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getActiveMeeting()
 	 * @generated
 	 * @ordered
@@ -356,8 +354,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	protected R4EMeetingData activeMeeting;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EReviewImpl() {
@@ -365,8 +362,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -375,8 +371,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -387,8 +382,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -396,8 +390,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -408,8 +401,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getProject() {
@@ -417,8 +409,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setProject(String newProject) {
@@ -429,8 +420,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getComponents() {
@@ -441,8 +431,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getEntryCriteria() {
@@ -450,8 +439,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setEntryCriteria(String newEntryCriteria) {
@@ -462,8 +450,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getExtraNotes() {
@@ -471,8 +458,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setExtraNotes(String newExtraNotes) {
@@ -483,8 +469,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getObjectives() {
@@ -492,8 +477,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setObjectives(String newObjectives) {
@@ -504,8 +488,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getReferenceMaterial() {
@@ -513,8 +496,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReferenceMaterial(String newReferenceMaterial) {
@@ -525,8 +507,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewDecision getDecision() {
@@ -548,8 +529,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewDecision basicGetDecision() {
@@ -557,8 +537,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetDecision(R4EReviewDecision newDecision, NotificationChain msgs) {
@@ -572,8 +551,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDecision(R4EReviewDecision newDecision) {
@@ -591,8 +569,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getStartDate() {
@@ -600,8 +577,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStartDate(Date newStartDate) {
@@ -612,8 +588,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getEndDate() {
@@ -621,8 +596,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setEndDate(Date newEndDate) {
@@ -633,8 +607,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getDueDate() {
@@ -642,8 +615,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDueDate(Date newDueDate) {
@@ -654,8 +626,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly getAnomalyTemplate() {
@@ -677,8 +648,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly basicGetAnomalyTemplate() {
@@ -686,8 +656,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetAnomalyTemplate(R4EAnomaly newAnomalyTemplate, NotificationChain msgs) {
@@ -701,8 +670,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAnomalyTemplate(R4EAnomaly newAnomalyTemplate) {
@@ -720,8 +688,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewType getType() {
@@ -729,8 +696,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setType(R4EReviewType newType) {
@@ -741,8 +707,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, R4EUser> getUsersMap() {
@@ -753,8 +718,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<R4EID, R4EIDComponent> getIdsMap() {
@@ -765,8 +729,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EMeetingData getActiveMeeting() {
@@ -788,8 +751,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EMeetingData basicGetActiveMeeting() {
@@ -797,8 +759,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetActiveMeeting(R4EMeetingData newActiveMeeting, NotificationChain msgs) {
@@ -812,8 +773,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setActiveMeeting(R4EMeetingData newActiveMeeting) {
@@ -831,8 +791,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser getCreatedBy() {
@@ -848,8 +807,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EUser basicGetCreatedBy() {
@@ -857,8 +815,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setCreatedBy(R4EUser newCreatedBy) {
@@ -869,8 +826,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -891,8 +847,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -945,8 +900,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -1014,8 +968,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1080,8 +1033,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1128,8 +1080,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1144,8 +1095,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1160,8 +1110,7 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

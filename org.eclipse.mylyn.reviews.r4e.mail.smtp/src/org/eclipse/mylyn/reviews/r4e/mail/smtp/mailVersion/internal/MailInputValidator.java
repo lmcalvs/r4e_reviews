@@ -23,14 +23,17 @@ public class MailInputValidator implements IInputValidator {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method isEmpty.
-	 * @param aNewText String
+	 * 
+	 * @param aNewText
+	 *            String
 	 * @return String
 	 */
 	public String isValid(String aNewText) {
-		if (null == aNewText || 0 == aNewText.length()) return SMTPHostString.getString("no_input_given");
+		if (null == aNewText || 0 == aNewText.length())
+			return SMTPHostString.getString("no_input_given");
 		return null;
 	}
 

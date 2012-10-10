@@ -71,7 +71,6 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.UserPermission;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
@@ -79,8 +78,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	// Fields
 	// ------------------------------------------------------------------------
 
-	IModelWriter	fWriter	= SerializeFactory.getWriter();
-	IModelReader	fReader	= SerializeFactory.getReader();
+	IModelWriter fWriter = SerializeFactory.getWriter();
+
+	IModelReader fReader = SerializeFactory.getReader();
 
 	// ------------------------------------------------------------------------
 	// GROUP Resource Methods
@@ -189,8 +189,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	}
 
 	private void validateCompatibility(Roots aRoot, String aName, String aFragmentVersionInDisk,
-			String appVersionLevel, SubModelRoot root)
-			throws CompatibilityException {
+			String appVersionLevel, SubModelRoot root) throws CompatibilityException {
 		int compatibility = VersionUtils.compareVersions(appVersionLevel, aFragmentVersionInDisk);
 		if (compatibility < 0) {
 			// Not able to continue, not forward compatible
@@ -205,11 +204,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 			// Attempting to load a serialised model with a higher model version than the current one supported by the
 			// application
-			StringBuilder sb = new StringBuilder(
-					"The "
-							+ aRoot.getName()
-							+ " \""
-							+ aName
+			StringBuilder sb = new StringBuilder("The " + aRoot.getName() + " \"" + aName
 					+ "\" is using a newer data format, please upgrade the application to the latest version");
 			sb.append("\n\"" + aName + "\" meta-data version: " + aFragmentVersionInDisk
 					+ ", Application meta-data version: " + appVersionLevel);
@@ -459,7 +454,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			uReviews = RModelFactory.eINSTANCE.createR4EUserReviews();
 			//create a user URI
 			URI uri = defineParticipantResURI(aCreatedByUser, groupFilePath);
-		
+
 			ureviewsRes = resSet.createResource(uri);
 			ureviewsRes.getContents().add(uReviews);
 			uReviews.setName(participant.getId());
@@ -480,8 +475,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	}
 
 	/**
-	 * Makes sure an existing resource file is not removed e.g. when having user
-	 * id's with different string case e.g. All capitals
+	 * Makes sure an existing resource file is not removed e.g. when having user id's with different string case e.g.
+	 * All capitals
 	 * 
 	 * @param aCreatedByUser
 	 * @param groupFilePath
@@ -489,7 +484,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 */
 	private URI defineParticipantResURI(String aCreatedByUser, URI groupFilePath) {
 		String userSuffix = "";
-		
+
 		URI uri = fWriter.createResourceURI(aCreatedByUser, groupFilePath, ResourceType.USER_GROUP);
 		File file = new File(uri.devicePath());
 		int i = 0;
@@ -499,7 +494,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			uri = fWriter.createResourceURI(aCreatedByUser + "_" + userSuffix, groupFilePath, ResourceType.USER_GROUP);
 			file = new File(uri.devicePath());
 		}
-		
+
 		return uri;
 	}
 
@@ -535,7 +530,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		try {
 			for (URI uri : usrFiles) {
 				loadUsrData(review, uri);
-			}			
+			}
 		} catch (ResourceHandlingException e) {
 			//try to close the partly opened review
 			closeR4EReview(review);
@@ -870,7 +865,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		resource.getContents().add(fileContext);
 
 		R4EUser user = (R4EUser) item.eContainer();
-		
+
 		// Create an R4EID for the context
 		R4EID contextID = RModelFactoryExt.eINSTANCE.createR4EID();
 		contextID.setSequenceID(user.getSequenceIDCounterNext());
@@ -1476,12 +1471,12 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			throws ResourceHandlingException {
 
 		URI fileGroupURI = fWriter.createResourceURI(aRuleCollectionName, aFolderPath, ResourceType.DRULE_SET);
-		
+
 		// create a new ResourceSet and resource for the given group
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
 		R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
 		resource.getContents().add(ruleSet);
-		
+
 		// Set the revision level fragment and sub model version start at the same level
 		ruleSet.setFragmentVersion(Roots.RULESET.getVersion());
 
@@ -1510,7 +1505,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		URI resUri = ruleSet.eResource().getURI().trimSegments(1);
 		// update the transient value of folder
 		ruleSet.setFolder(URI.decode(resUri.devicePath().toString()));
-		
+
 		// read the rule set meta-data version just loaded
 		String fragmentVersion = ruleSet.getFragmentVersion();
 		String appVersionLevel = Roots.RULESET.getVersion();
@@ -1576,7 +1571,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// Associate the design rule area to the t resource
 		aRuleCollection.getAreas().add(darea);
 		aRuleCollection.eResource().getContents().add(darea);
-		
+
 		// Save the resource
 		fWriter.saveResource(darea.eResource());
 
@@ -1611,7 +1606,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		fWriter.saveResource(drViolation.eResource());
 
 		return drViolation;
-		
+
 	}
 
 	/*
@@ -1635,7 +1630,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 		// Associate the design rule to the context resource
 		aViolation.getRules().add(dRule);
-		
+
 		// Save the resource
 		aViolation.eResource().getContents().add(dRule);
 		fWriter.saveResource(dRule.eResource());

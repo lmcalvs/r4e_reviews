@@ -48,12 +48,12 @@ public abstract class ReviewSingleAnnotationSupport extends ReviewAnnotationSupp
 	 * @param aViewer
 	 *            ISourceViewer
 	 * @param aAnnotationModel
-	 *            IReviewAnnotationModel   
+	 *            IReviewAnnotationModel
 	 * @return IEditorInputListener
 	 */
 	public abstract IEditorInputListener createEditorInputListener(final ISourceViewer aViewer,
 			final IReviewAnnotationModel aAnnotationModel);
-	
+
 	/**
 	 * Method install.
 	 * 

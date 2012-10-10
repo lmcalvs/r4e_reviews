@@ -35,13 +35,12 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class NotificationsCore {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	public static final String	PLUGIN_ID	= "org.eclipse.mylyn.reviews.notifications";	//$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.notifications"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -135,7 +134,7 @@ public class NotificationsCore {
 		if (connector != null) {
 			return connector;
 		}
-		
+
 		if (!result.isOK()) {
 			StatusHandler.log(result);
 		}

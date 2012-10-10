@@ -18,18 +18,19 @@ package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class OutOfSyncException extends Exception {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
+
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
-	private Boolean				fGroupOutOfSynch	= false;
-	private Boolean				fReviewOutOfSynch	= false;
+	private Boolean fGroupOutOfSynch = false;
+
+	private Boolean fReviewOutOfSynch = false;
 
 	// ------------------------------------------------------------------------
 	// Constructors

@@ -22,10 +22,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E User Role</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E User Role</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EUserRole()
  * @model
  * @generated
@@ -33,32 +31,29 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EUserRole implements Enumerator {
 	/**
 	 * The '<em><b>R4E ROLE REVIEWER</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ROLE_REVIEWER_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_ROLE_REVIEWER(0, "R4E_ROLE_REVIEWER", "R4E_ROLE_REVIEWER"), /**
 	 * The '<em><b>R4E ROLE LEAD</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ROLE_LEAD_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_ROLE_LEAD(1, "R4E_ROLE_LEAD", "R4E_ROLE_LEAD"), /**
-	 * The '<em><b>R4E ROLE AUTHOR</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The '<em><b>R4E ROLE AUTHOR</b></em>' literal object. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #R4E_ROLE_AUTHOR_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_ROLE_AUTHOR(2, "R4E_ROLE_AUTHOR", "R4E_ROLE_AUTHOR"), /**
 	 * The '<em><b>R4E ROLE ORGANIZER</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ROLE_ORGANIZER_VALUE
 	 * @generated
 	 * @ordered
@@ -69,8 +64,8 @@ public enum R4EUserRole implements Enumerator {
 	 * The '<em><b>R4E ROLE REVIEWER</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE REVIEWER</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ROLE REVIEWER</b></em>' literal object isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ROLE_REVIEWER
@@ -84,8 +79,8 @@ public enum R4EUserRole implements Enumerator {
 	 * The '<em><b>R4E ROLE LEAD</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE LEAD</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ROLE LEAD</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ROLE_LEAD
@@ -99,8 +94,8 @@ public enum R4EUserRole implements Enumerator {
 	 * The '<em><b>R4E ROLE AUTHOR</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE AUTHOR</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ROLE AUTHOR</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ROLE_AUTHOR
@@ -114,8 +109,8 @@ public enum R4EUserRole implements Enumerator {
 	 * The '<em><b>R4E ROLE ORGANIZER</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE ORGANIZER</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ROLE ORGANIZER</b></em>' literal object isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ROLE_ORGANIZER
@@ -127,12 +122,10 @@ public enum R4EUserRole implements Enumerator {
 
 	/**
 	 * An array of all the '<em><b>R4E User Role</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final R4EUserRole[] VALUES_ARRAY =
-		new R4EUserRole[] {
+	private static final R4EUserRole[] VALUES_ARRAY = new R4EUserRole[] {
 			R4E_ROLE_REVIEWER,
 			R4E_ROLE_LEAD,
 			R4E_ROLE_AUTHOR,
@@ -141,8 +134,8 @@ public enum R4EUserRole implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>R4E User Role</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static final List<R4EUserRole> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -165,8 +158,8 @@ public enum R4EUserRole implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E User Role</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EUserRole getByName(String name) {
@@ -196,30 +189,26 @@ public enum R4EUserRole implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EUserRole(int value, String name, String literal) {
@@ -229,8 +218,7 @@ public enum R4EUserRole implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -238,8 +226,7 @@ public enum R4EUserRole implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -247,8 +234,7 @@ public enum R4EUserRole implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -257,13 +243,13 @@ public enum R4EUserRole implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EUserRole

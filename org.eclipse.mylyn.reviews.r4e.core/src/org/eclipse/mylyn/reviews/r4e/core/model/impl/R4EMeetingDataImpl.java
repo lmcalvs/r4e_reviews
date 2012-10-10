@@ -28,31 +28,29 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Meeting Data</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Meeting Data</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSubject <em>Subject</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getLocation <em>Location</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getStartTime <em>Start Time</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getDuration <em>Duration</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSentCount <em>Sent Count</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSender <em>Sender</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getReceivers <em>Receivers</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getBody <em>Body</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSubject <em>Subject</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getLocation <em>Location</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getStartTime <em>Start Time</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getDuration <em>Duration</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSentCount <em>Sent Count</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSender <em>Sender</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getReceivers <em>Receivers</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -61,8 +59,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -71,8 +68,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getSubject() <em>Subject</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSubject()
 	 * @generated
 	 * @ordered
@@ -81,8 +78,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getSubject() <em>Subject</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSubject()
 	 * @generated
 	 * @ordered
@@ -91,8 +88,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
@@ -101,8 +98,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
@@ -111,8 +108,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getStartTime() <em>Start Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartTime()
 	 * @generated
 	 * @ordered
@@ -121,8 +118,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getStartTime() <em>Start Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartTime()
 	 * @generated
 	 * @ordered
@@ -131,8 +128,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getDuration() <em>Duration</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDuration()
 	 * @generated
 	 * @ordered
@@ -141,8 +138,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getDuration() <em>Duration</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDuration()
 	 * @generated
 	 * @ordered
@@ -151,8 +148,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getSentCount() <em>Sent Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSentCount()
 	 * @generated
 	 * @ordered
@@ -161,8 +158,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getSentCount() <em>Sent Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSentCount()
 	 * @generated
 	 * @ordered
@@ -171,8 +168,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The default value of the '{@link #getSender() <em>Sender</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSender()
 	 * @generated
 	 * @ordered
@@ -181,8 +178,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getSender() <em>Sender</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSender()
 	 * @generated
 	 * @ordered
@@ -191,8 +188,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 
 	/**
 	 * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getReceivers()
 	 * @generated
 	 * @ordered
@@ -200,9 +197,9 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	protected EList<String> receivers;
 
 	/**
-	 * The default value of the '{@link #getBody() <em>Body</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getBody() <em>Body</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getBody()
 	 * @generated
 	 * @ordered
@@ -210,9 +207,9 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	protected static final String BODY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getBody()
 	 * @generated
 	 * @ordered
@@ -220,8 +217,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	protected String body = BODY_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EMeetingDataImpl() {
@@ -229,8 +225,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -239,8 +234,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getId() {
@@ -248,8 +242,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setId(String newId) {
@@ -260,8 +253,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getSubject() {
@@ -269,8 +261,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSubject(String newSubject) {
@@ -281,8 +272,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLocation() {
@@ -290,8 +280,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLocation(String newLocation) {
@@ -302,8 +291,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public long getStartTime() {
@@ -311,8 +299,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStartTime(long newStartTime) {
@@ -323,8 +310,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getDuration() {
@@ -332,8 +318,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDuration(int newDuration) {
@@ -344,8 +329,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getSentCount() {
@@ -353,8 +337,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSentCount(int newSentCount) {
@@ -365,8 +348,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getSender() {
@@ -374,8 +356,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSender(String newSender) {
@@ -386,8 +367,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getReceivers() {
@@ -398,8 +378,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getBody() {
@@ -407,8 +386,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setBody(String newBody) {
@@ -419,8 +397,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -449,8 +426,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -490,8 +466,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -529,8 +504,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -559,8 +533,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

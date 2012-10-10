@@ -21,7 +21,6 @@ import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public interface IRFSRegistry {
 
@@ -46,8 +45,7 @@ public interface IRFSRegistry {
 	 * @return - The stream shall be closed by the receiver
 	 * @throws ReviewsFileStorageException
 	 */
-	public abstract InputStream getBlobContent(IProgressMonitor monitor, String id)
-			throws ReviewsFileStorageException;
+	public abstract InputStream getBlobContent(IProgressMonitor monitor, String id) throws ReviewsFileStorageException;
 
 	/**
 	 * @param monitor

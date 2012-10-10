@@ -41,10 +41,13 @@ public class GoldenStubHandler extends TestCase {
 	 * 
 	 * @generated
 	 */
-	protected R4EReviewGroup				fixture		= null;
-	private static final RModelFactoryExt	fFactory	= SerializeFactory.getModelExtension();
-	private static File						fGroupDir	= null;
-	private static URI						fGroupPath	= null;
+	protected R4EReviewGroup fixture = null;
+
+	private static final RModelFactoryExt fFactory = SerializeFactory.getModelExtension();
+
+	private static File fGroupDir = null;
+
+	private static URI fGroupPath = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -92,7 +95,7 @@ public class GoldenStubHandler extends TestCase {
 		init();
 	}
 
-	private static  void init() {
+	private static void init() {
 		TstGeneral.activateTracer();
 		//get a base temporary directory ending with file separator e.g. /tmp/
 		String basePath = System.getProperty("java.io.tmpdir");
@@ -100,11 +103,10 @@ public class GoldenStubHandler extends TestCase {
 			//e.g. Linux
 			basePath = basePath + File.separator;
 		}
-		fGroupDir	= new File(basePath
-				+ TstGeneral.GROUP_PATH_STR + File.separator);
-		fGroupPath	= URI.createFileURI(fGroupDir.getAbsolutePath());		
+		fGroupDir = new File(basePath + TstGeneral.GROUP_PATH_STR + File.separator);
+		fGroupPath = URI.createFileURI(fGroupDir.getAbsolutePath());
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -138,9 +140,9 @@ public class GoldenStubHandler extends TestCase {
 		// NOTE: No Clean up, for creation of golden test stub
 	}
 
-
 	/**
 	 * Creating a sample model stub
+	 * 
 	 * @return
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException

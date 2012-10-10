@@ -25,10 +25,9 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class RFSRegistryFactory {
-	private static final Map<R4EReviewGroup, ReviewsRFSProxy>	fOpenStore	= new HashMap<R4EReviewGroup, ReviewsRFSProxy>();
+	private static final Map<R4EReviewGroup, ReviewsRFSProxy> fOpenStore = new HashMap<R4EReviewGroup, ReviewsRFSProxy>();
 
 	public static IRFSRegistry getRegistry(R4EReview aReview) throws ReviewsFileStorageException {
 

@@ -22,18 +22,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class SerializeFactory {
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
-	private static R4EReader		reader				= null;
-	private static R4EWriter		writer				= null;
-	private static RModelFactoryExt	fFactoryExtension	= null;
-	private static ResourceUpdater	fResUpdater			= null;
-	private static ResourceUpdater	fResSetUpdater		= null;
-	private static final Persistence.IResSerializationRegistry	fResSerializeRegistry	= new InactiveSerializationRegistry();
+	private static R4EReader reader = null;
+
+	private static R4EWriter writer = null;
+
+	private static RModelFactoryExt fFactoryExtension = null;
+
+	private static ResourceUpdater fResUpdater = null;
+
+	private static ResourceUpdater fResSetUpdater = null;
+
+	private static final Persistence.IResSerializationRegistry fResSerializeRegistry = new InactiveSerializationRegistry();
 
 	// ------------------------------------------------------------------------
 	// Constructors

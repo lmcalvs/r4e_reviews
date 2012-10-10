@@ -15,8 +15,6 @@
  *   
  *******************************************************************************/
 
-
-
 package org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
@@ -29,15 +27,16 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method initializeDefaultPreferences.
+	 * 
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
 		//final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		
+
 		// Default Host Information
 		//store.setDefault(PreferenceConstants.FP_SMTP_SERVER_LIST_ID, F_HOST_LIST);
 

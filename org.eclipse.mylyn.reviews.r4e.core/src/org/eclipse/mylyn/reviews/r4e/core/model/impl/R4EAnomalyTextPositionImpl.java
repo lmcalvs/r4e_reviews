@@ -27,9 +27,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Anomaly Text Position</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Anomaly Text Position</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -42,8 +41,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R4EAnomalyTextPosition {
 	/**
 	 * The cached value of the '{@link #getFile() <em>File</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFile()
 	 * @generated
 	 * @ordered
@@ -51,8 +50,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	protected R4EFileVersion file;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EAnomalyTextPositionImpl() {
@@ -60,8 +58,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -70,8 +67,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion getFile() {
@@ -93,8 +89,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion basicGetFile() {
@@ -102,8 +97,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetFile(R4EFileVersion newFile, NotificationChain msgs) {
@@ -117,8 +111,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFile(R4EFileVersion newFile) {
@@ -136,8 +129,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -150,8 +142,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -165,8 +156,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -180,8 +170,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -195,8 +184,7 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

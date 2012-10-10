@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Anomaly State</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Anomaly State</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomalyState()
  * @model
  * @generated
@@ -32,8 +30,7 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EAnomalyState implements Enumerator {
 	/**
 	 * The '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_CREATED_VALUE
 	 * @generated
 	 * @ordered
@@ -42,8 +39,7 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_ASSIGNED_VALUE
 	 * @generated
 	 * @ordered
@@ -52,8 +48,7 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_ACCEPTED_VALUE
 	 * @generated
 	 * @ordered
@@ -62,8 +57,7 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_FIXED_VALUE
 	 * @generated
 	 * @ordered
@@ -72,8 +66,7 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_DUPLICATED_VALUE
 	 * @generated
 	 * @ordered
@@ -82,8 +75,7 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_REJECTED_VALUE
 	 * @generated
 	 * @ordered
@@ -92,16 +84,14 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_DEFERRED_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_ANOMALY_STATE_DEFERRED(3, "R4E_ANOMALY_STATE_DEFERRED", "R4E_ANOMALY_STATE_DEFERRED"), /**
 	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_VERIFIED_VALUE
 	 * @generated
 	 * @ordered
@@ -112,8 +102,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_CREATED
@@ -127,8 +117,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_ASSIGNED
@@ -142,8 +132,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_ACCEPTED
@@ -157,8 +147,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_FIXED
@@ -172,8 +162,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_DUPLICATED
@@ -187,8 +177,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_REJECTED
@@ -202,8 +192,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_DEFERRED
@@ -217,8 +207,8 @@ public enum R4EAnomalyState implements Enumerator {
 	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ANOMALY_STATE_VERIFIED
@@ -229,13 +219,12 @@ public enum R4EAnomalyState implements Enumerator {
 	public static final int R4E_ANOMALY_STATE_VERIFIED_VALUE = 6;
 
 	/**
-	 * An array of all the '<em><b>R4E Anomaly State</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * An array of all the '<em><b>R4E Anomaly State</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
-	private static final R4EAnomalyState[] VALUES_ARRAY =
-		new R4EAnomalyState[] {
+	private static final R4EAnomalyState[] VALUES_ARRAY = new R4EAnomalyState[] {
 			R4E_ANOMALY_STATE_CREATED,
 			R4E_ANOMALY_STATE_ASSIGNED,
 			R4E_ANOMALY_STATE_ACCEPTED,
@@ -248,8 +237,8 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>R4E Anomaly State</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static final List<R4EAnomalyState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -272,8 +261,8 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Anomaly State</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EAnomalyState getByName(String name) {
@@ -307,30 +296,26 @@ public enum R4EAnomalyState implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EAnomalyState(int value, String name, String literal) {
@@ -340,8 +325,7 @@ public enum R4EAnomalyState implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -349,8 +333,7 @@ public enum R4EAnomalyState implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -358,8 +341,7 @@ public enum R4EAnomalyState implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -368,13 +350,13 @@ public enum R4EAnomalyState implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EAnomalyState

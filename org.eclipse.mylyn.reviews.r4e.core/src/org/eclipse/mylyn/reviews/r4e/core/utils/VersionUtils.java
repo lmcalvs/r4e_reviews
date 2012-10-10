@@ -13,7 +13,6 @@ package org.eclipse.mylyn.reviews.r4e.core.utils;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class VersionUtils {
 	// ------------------------------------------------------------------------
@@ -38,17 +37,17 @@ public class VersionUtils {
 		if ((versionSegsA.length != expectedSegments) || (versionSegsB.length != expectedSegments)) {
 			return result;
 		}
-		
+
 		int a = Integer.valueOf(versionSegsA[0]).intValue();
 		int b = Integer.valueOf(versionSegsA[1]).intValue();
 		int c = Integer.valueOf(versionSegsA[2]).intValue();
 
 		VersionId baseVersion = new VersionId(a, b, c);
-		
+
 		a = Integer.valueOf(versionSegsB[0]).intValue();
 		b = Integer.valueOf(versionSegsB[1]).intValue();
 		c = Integer.valueOf(versionSegsB[2]).intValue();
-		
+
 		VersionId targetVersion = new VersionId(a, b, c);
 
 		return baseVersion.compareTo(targetVersion);

@@ -28,9 +28,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Review Phase Info</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review Phase Info</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -46,8 +45,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhaseInfo {
 	/**
 	 * The default value of the '{@link #getEndDate() <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndDate()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 
 	/**
 	 * The cached value of the '{@link #getEndDate() <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndDate()
 	 * @generated
 	 * @ordered
@@ -65,9 +64,9 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	protected Date endDate = END_DATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -75,9 +74,9 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	protected static final R4EReviewPhase TYPE_EDEFAULT = R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getType()
 	 * @generated
 	 * @ordered
@@ -106,8 +105,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 
 	/**
 	 * The default value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartDate()
 	 * @generated
 	 * @ordered
@@ -116,8 +115,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 
 	/**
 	 * The cached value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartDate()
 	 * @generated
 	 * @ordered
@@ -125,8 +124,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	protected Date startDate = START_DATE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EReviewPhaseInfoImpl() {
@@ -134,8 +132,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -144,8 +141,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getEndDate() {
@@ -153,8 +149,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setEndDate(Date newEndDate) {
@@ -165,8 +160,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhase getType() {
@@ -174,8 +168,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setType(R4EReviewPhase newType) {
@@ -186,8 +179,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getPhaseOwnerID() {
@@ -195,8 +187,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setPhaseOwnerID(String newPhaseOwnerID) {
@@ -207,8 +198,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getStartDate() {
@@ -216,8 +206,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStartDate(Date newStartDate) {
@@ -228,8 +217,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -248,8 +236,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -272,8 +259,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -296,8 +282,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -316,8 +301,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

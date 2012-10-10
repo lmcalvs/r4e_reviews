@@ -23,9 +23,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map To Anomaly Type</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map To Anomaly Type</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -39,8 +38,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry<String,R4EAnomalyType> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -49,8 +48,8 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -59,8 +58,8 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -68,8 +67,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	protected R4EAnomalyType value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapToAnomalyTypeImpl() {
@@ -77,8 +75,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -87,8 +84,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -96,8 +92,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
@@ -108,8 +103,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyType getTypedValue() {
@@ -125,8 +119,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyType basicGetTypedValue() {
@@ -134,8 +127,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(R4EAnomalyType newValue) {
@@ -146,8 +138,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -163,8 +154,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -181,8 +171,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -199,8 +188,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -215,8 +203,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -231,15 +218,13 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -251,8 +236,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -260,8 +244,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getKey() {
@@ -269,8 +252,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(String key) {
@@ -278,8 +260,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyType getValue() {
@@ -287,8 +268,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyType setValue(R4EAnomalyType value) {
@@ -298,8 +278,7 @@ public class MapToAnomalyTypeImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

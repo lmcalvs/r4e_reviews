@@ -19,24 +19,22 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResFactory;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Review Res</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Review Res</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class ReviewResTest extends TestCase {
 
 	/**
-	 * The fixture for this Review Res test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The fixture for this Review Res test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReviewRes fixture = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -44,9 +42,8 @@ public class ReviewResTest extends TestCase {
 	}
 
 	/**
-	 * Constructs a new Review Res test case with the given name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Constructs a new Review Res test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ReviewResTest(String name) {
@@ -54,9 +51,8 @@ public class ReviewResTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Review Res test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Sets the fixture for this Review Res test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void setFixture(ReviewRes fixture) {
@@ -64,9 +60,8 @@ public class ReviewResTest extends TestCase {
 	}
 
 	/**
-	 * Returns the fixture for this Review Res test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the fixture for this Review Res test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReviewRes getFixture() {
@@ -74,8 +69,8 @@ public class ReviewResTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 * @generated
 	 */
@@ -85,8 +80,8 @@ public class ReviewResTest extends TestCase {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 * @generated
 	 */

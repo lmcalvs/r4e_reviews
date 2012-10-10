@@ -34,7 +34,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.RWCommon;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class R4EReader extends RWCommon implements IModelReader {
 
@@ -263,4 +262,3 @@ public class R4EReader extends RWCommon implements IModelReader {
 	}
 
 }
-	

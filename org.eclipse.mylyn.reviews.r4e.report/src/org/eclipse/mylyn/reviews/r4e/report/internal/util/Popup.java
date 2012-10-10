@@ -20,17 +20,15 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class Popup {
 
 	// ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
-	private static final String[]	FWarningButtonLabels	= { "Continue" };
+	private static final String[] FWarningButtonLabels = { "Continue" };
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -44,8 +42,7 @@ public class Popup {
 	 *            : String to be displayed
 	 */
 	public static void info(Shell aParent, String aMessage) {
-		MessageDialog.openInformation(aParent, R4EReportString
-				.getString("Popup.infoTitle"), //$NON-NLS-1$
+		MessageDialog.openInformation(aParent, R4EReportString.getString("Popup.infoTitle"), //$NON-NLS-1$
 				aMessage); //$NON-NLS-1$
 	}
 
@@ -64,8 +61,7 @@ public class Popup {
 		Runnable runnable = new Runnable() {
 
 			public void run() {
-				MessageDialog.openError(aParent, R4EReportString
-						.getString("Popup.errorTitle"), //$NON-NLS-1$
+				MessageDialog.openError(aParent, R4EReportString.getString("Popup.errorTitle"), //$NON-NLS-1$
 						aMessage); //$NON-NLS-1$
 			}
 		};
@@ -81,8 +77,7 @@ public class Popup {
 	 *            : String to be displayed
 	 */
 	public static void warning(Shell aParent, String aMessage) {
-		MessageDialog.openWarning(aParent, R4EReportString
-				.getString("Popup.warningTitle"), //$NON-NLS-1$
+		MessageDialog.openWarning(aParent, R4EReportString.getString("Popup.warningTitle"), //$NON-NLS-1$
 				aMessage); //$NON-NLS-1$
 	}
 
@@ -93,11 +88,9 @@ public class Popup {
 	 *            : window shell
 	 * @param message
 	 *            : String to be displayed
-	 * 
 	 */
 	public static void displayMessage(Shell aParent, String aMessage) {
-		MessageDialog.openInformation(aParent, R4EReportString
-				.getString("Popup.messageTitle"), //$NON-NLS-1$
+		MessageDialog.openInformation(aParent, R4EReportString.getString("Popup.messageTitle"), //$NON-NLS-1$
 				aMessage); //$NON-NLS-1$
 	}
 
@@ -141,17 +134,16 @@ public class Popup {
 	/**
 	 * Warning dialog running under a runnable
 	 * 
-	 * @param parent:
-	 *            window shell
-	 * @param message:
-	 *            String to display
+	 * @param parent
+	 *            : window shell
+	 * @param message
+	 *            : String to display
 	 */
 	public static void warningRunnable(final Shell aParent, final String aMessage) {
 		Runnable runnable = new Runnable() {
 
 			public void run() {
-				MessageDialog.openWarning(aParent, R4EReportString
-						.getString("Popup.warningTitle"), //$NON-NLS-1$
+				MessageDialog.openWarning(aParent, R4EReportString.getString("Popup.warningTitle"), //$NON-NLS-1$
 						aMessage); //$NON-NLS-1$
 			}
 		};

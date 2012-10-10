@@ -23,14 +23,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Package</b> for the model.
- * It contains accessors for the meta objects to represent
+ * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  * <ul>
- *   <li>each class,</li>
- *   <li>each feature of each class,</li>
- *   <li>each enum,</li>
- *   <li>and each data type</li>
+ * <li>each class,</li>
+ * <li>each feature of each class,</li>
+ * <li>each enum,</li>
+ * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory
@@ -40,40 +38,35 @@ import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 public interface RModelPackage extends EPackage {
 	/**
 	 * The package name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNAME = "model";
 
 	/**
 	 * The package namespace URI.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_URI = "http://org.eclipse.mylyn.reviews.r4e.core.model/";
 
 	/**
 	 * The package namespace name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_PREFIX = "r4ecore";
 
 	/**
 	 * The singleton instance of the package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	RModelPackage eINSTANCE = org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl <em>R4E Review Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewGroup()
 	 * @generated
@@ -82,17 +75,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW_GROUP__ENABLED = ModelPackage.REVIEW_GROUP__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -100,17 +92,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW_GROUP__COMPATIBILITY = ModelPackage.REVIEW_GROUP__COMPATIBILITY;
 
 	/**
-	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -118,8 +109,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Reviews</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -127,8 +118,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Group Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -136,17 +127,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW_GROUP__DESCRIPTION = ModelPackage.REVIEW_GROUP__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -154,8 +144,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -163,8 +152,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Folder</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -172,8 +160,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Default Entry Criteria</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -181,8 +169,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Available Projects</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -190,8 +178,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Available Components</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -199,8 +187,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Design Rule Locations</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -208,8 +196,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Available Anomaly Types</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -217,8 +205,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Type Key To Reference</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -226,8 +214,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Reviews Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -235,8 +222,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>User Reviews</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -244,8 +230,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Review Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -253,8 +239,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl <em>R4E Review</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReview()
 	 * @generated
@@ -263,17 +248,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__ENABLED = ModelPackage.REVIEW__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -281,17 +265,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__COMPATIBILITY = ModelPackage.REVIEW__COMPATIBILITY;
 
 	/**
-	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -299,17 +282,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__TOPICS = ModelPackage.REVIEW__TOPICS;
 
 	/**
-	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Review Items</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -317,26 +299,26 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__REVIEW_TASK = ModelPackage.REVIEW__REVIEW_TASK;
 
 	/**
-	 * The feature id for the '<em><b>State</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>State</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__STATE = ModelPackage.REVIEW__STATE;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -344,8 +326,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -353,8 +334,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -362,8 +342,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Components</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -371,8 +350,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Entry Criteria</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -380,8 +358,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Extra Notes</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -389,17 +366,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Objectives</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__OBJECTIVES = ModelPackage.REVIEW_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Reference Material</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Reference Material</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -407,8 +383,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Decision</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -416,8 +392,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -425,8 +400,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -434,8 +408,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -443,8 +416,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -452,8 +425,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -461,8 +433,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -470,8 +441,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -479,8 +449,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -488,17 +457,17 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 17;
 
 	/**
-	 * The number of structural features of the '<em>R4E Review</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Review</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -506,8 +475,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl <em>R4E Anomaly</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomaly()
 	 * @generated
@@ -516,8 +484,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -525,17 +492,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>User</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__USER = ModelPackage.TOPIC__USER;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Type</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -543,17 +509,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__DESCRIPTION = ModelPackage.TOPIC__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Task</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -561,8 +526,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -570,8 +535,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Comments</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -579,8 +543,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -588,17 +551,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Title</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__TITLE = ModelPackage.TOPIC__TITLE;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -606,8 +568,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -615,8 +576,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created On</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -624,8 +584,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -633,8 +592,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -642,8 +600,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -651,8 +608,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -660,8 +616,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -669,17 +624,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 8;
 
 	/**
-	 * The feature id for the '<em><b>Not Accepted Reason</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Not Accepted Reason</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -687,17 +641,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Is Imported</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 10;
 
 	/**
-	 * The feature id for the '<em><b>Fixed In Version</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Fixed In Version</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -705,8 +658,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Rule ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -714,8 +666,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Decided By ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -723,8 +674,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fixed By ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -732,17 +682,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Follow Up By ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 15;
 
 	/**
-	 * The number of structural features of the '<em>R4E Anomaly</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Anomaly</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -750,8 +699,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl <em>R4E Formal Review</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFormalReview()
 	 * @generated
@@ -760,17 +708,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__ENABLED = R4E_REVIEW__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -778,17 +725,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__COMPATIBILITY = R4E_REVIEW__COMPATIBILITY;
 
 	/**
-	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -796,17 +742,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__TOPICS = R4E_REVIEW__TOPICS;
 
 	/**
-	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Review Items</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -814,26 +759,26 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__REVIEW_TASK = R4E_REVIEW__REVIEW_TASK;
 
 	/**
-	 * The feature id for the '<em><b>State</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>State</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__STATE = R4E_REVIEW__STATE;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -841,8 +786,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -850,8 +794,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -859,8 +802,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Components</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -868,8 +810,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Entry Criteria</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -877,8 +818,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Extra Notes</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -886,17 +826,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Objectives</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__OBJECTIVES = R4E_REVIEW__OBJECTIVES;
 
 	/**
-	 * The feature id for the '<em><b>Reference Material</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Reference Material</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -904,8 +843,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Decision</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -913,8 +852,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -922,8 +860,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -931,8 +868,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -940,8 +876,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -949,8 +885,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -958,8 +893,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -967,8 +901,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -976,8 +909,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -985,8 +917,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -994,8 +926,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Phase Owner</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1003,8 +934,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Phases</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1012,8 +943,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Current</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1021,8 +951,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Formal Review</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1030,8 +960,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EPositionImpl <em>R4E Position</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EPositionImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EPosition()
 	 * @generated
@@ -1039,9 +968,9 @@ public interface RModelPackage extends EPackage {
 	int R4E_POSITION = 21;
 
 	/**
-	 * The number of structural features of the '<em>R4E Position</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Position</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1049,8 +978,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl <em>R4E Text Position</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETextPosition()
 	 * @generated
@@ -1059,8 +987,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1068,8 +995,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Length</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1077,8 +1003,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Line</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1086,8 +1011,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Line</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1095,8 +1019,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Text Position</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1104,8 +1028,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewDecisionImpl <em>R4E Review Decision</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewDecisionImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewDecision()
 	 * @generated
@@ -1114,8 +1037,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Spent Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1123,8 +1045,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1132,8 +1053,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Review Decision</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1141,8 +1062,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl <em>R4E User</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUser()
 	 * @generated
@@ -1151,8 +1071,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1160,8 +1079,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Email</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1169,35 +1087,34 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_USER__ENABLED = ModelPackage.USER_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_USER__ASSIGNED_TO = ModelPackage.USER_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_USER__GROUP_PATHS = ModelPackage.USER_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Sequence ID Counter</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Sequence ID Counter</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1205,8 +1122,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added Comments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1214,8 +1131,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added Items</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1223,8 +1140,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Created By Me</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1232,17 +1149,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Instance</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_USER__REVIEW_INSTANCE = ModelPackage.USER_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Review Completed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Review Completed</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1250,8 +1166,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Completed Code</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1259,8 +1175,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E User</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1268,8 +1183,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl <em>R4E Participant</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EParticipant()
 	 * @generated
@@ -1278,8 +1192,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1287,8 +1200,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Email</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1296,35 +1208,34 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__ENABLED = R4E_USER__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__ASSIGNED_TO = R4E_USER__ASSIGNED_TO;
 
 	/**
-	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__GROUP_PATHS = R4E_USER__GROUP_PATHS;
 
 	/**
-	 * The feature id for the '<em><b>Sequence ID Counter</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Sequence ID Counter</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1332,8 +1243,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added Comments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1341,8 +1252,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added Items</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1350,8 +1261,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Created By Me</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1359,17 +1270,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Instance</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__REVIEW_INSTANCE = R4E_USER__REVIEW_INSTANCE;
 
 	/**
-	 * The feature id for the '<em><b>Review Completed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Review Completed</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1377,8 +1287,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Completed Code</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1386,8 +1296,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Roles</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1395,17 +1304,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Focus Area</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__FOCUS_AREA = R4E_USER_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Is Part Of Decision</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Is Part Of Decision</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1413,8 +1321,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Reviewed Content</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1422,8 +1330,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Time Log</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1431,8 +1338,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Participant</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1440,8 +1347,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl <em>R4E Item</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EItem()
 	 * @generated
@@ -1450,8 +1356,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl <em>R4E Content</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContent()
 	 * @generated
@@ -1460,8 +1365,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl <em>R4E Text Content</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETextContent()
 	 * @generated
@@ -1470,8 +1374,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDImpl <em>R4EID</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EID()
 	 * @generated
@@ -1480,8 +1383,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl <em>R4E Anomaly Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyType()
 	 * @generated
@@ -1490,8 +1392,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl <em>R4E Task Reference</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETaskReference()
 	 * @generated
@@ -1500,8 +1401,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl <em>R4E Review State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewState()
 	 * @generated
@@ -1510,8 +1410,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl <em>R4E Comment</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EComment()
 	 * @generated
@@ -1520,8 +1419,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewComponentImpl <em>R4E Review Component</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewComponentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewComponent()
 	 * @generated
@@ -1530,17 +1428,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW_COMPONENT__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1548,8 +1445,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Review Component</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1557,8 +1454,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl <em>R4EID Component</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EIDComponent()
 	 * @generated
@@ -1567,17 +1463,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4EID_COMPONENT__ENABLED = R4E_REVIEW_COMPONENT__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1585,8 +1480,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1594,8 +1488,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4EID Component</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1603,17 +1497,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ITEM__ENABLED = R4EID_COMPONENT__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1621,8 +1514,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1630,8 +1522,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1639,8 +1530,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1648,8 +1538,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1657,8 +1546,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Added By Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1675,17 +1563,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Repository Ref</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ITEM__REPOSITORY_REF = R4EID_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Project UR Is</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Project UR Is</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1693,8 +1580,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Author Rep</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1702,8 +1588,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Submitted</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1711,8 +1596,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1720,8 +1604,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Item</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1729,8 +1612,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1738,17 +1621,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_CONTENT__INFO = ModelPackage.LOCATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>R4E Content</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Content</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1756,8 +1638,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1765,8 +1647,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1774,8 +1655,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Content</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1783,8 +1663,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Text Content</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1792,8 +1672,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Sequence ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1801,8 +1680,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>User ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1810,8 +1688,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4EID</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1819,8 +1696,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1828,8 +1704,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Anomaly Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1837,8 +1713,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1846,8 +1721,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Task Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1855,17 +1729,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Repository URL</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_TASK_REFERENCE__REPOSITORY_URL = ModelPackage.TASK_REFERENCE__REPOSITORY_URL;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1873,8 +1746,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Task Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1882,8 +1755,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1891,8 +1763,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1900,8 +1771,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Review State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1909,8 +1780,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1918,17 +1788,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>User</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_COMMENT__USER = ModelPackage.COMMENT__USER;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Type</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1936,17 +1805,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_COMMENT__DESCRIPTION = ModelPackage.COMMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1954,8 +1822,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1963,8 +1830,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created On</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1972,8 +1838,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1981,17 +1846,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_COMMENT__INFO_ATT = ModelPackage.COMMENT_FEATURE_COUNT + 4;
 
 	/**
-	 * The number of structural features of the '<em>R4E Comment</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Comment</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1999,8 +1863,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl <em>R4E File Context</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFileContext()
 	 * @generated
@@ -2009,17 +1872,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FILE_CONTEXT__ENABLED = R4EID_COMPONENT__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2027,8 +1889,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2036,26 +1897,26 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Deltas</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FILE_CONTEXT__DELTAS = R4EID_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Base</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Base</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FILE_CONTEXT__BASE = R4EID_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Target</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2063,8 +1924,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2072,8 +1932,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2081,8 +1940,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E File Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2090,8 +1949,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EDeltaImpl <em>R4E Delta</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EDeltaImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDelta()
 	 * @generated
@@ -2100,17 +1958,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_DELTA__ENABLED = R4EID_COMPONENT__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2118,35 +1975,34 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_DELTA__ID = R4EID_COMPONENT__ID;
 
 	/**
-	 * The feature id for the '<em><b>Base</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Base</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_DELTA__BASE = R4EID_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Target</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_DELTA__TARGET = R4EID_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>R4E Delta</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>R4E Delta</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2154,8 +2010,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl <em>R4E Comment Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentType()
 	 * @generated
@@ -2164,8 +2019,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2173,8 +2027,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Comment Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2182,8 +2036,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToAnomalyTypeImpl <em>Map To Anomaly Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToAnomalyTypeImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapToAnomalyType()
 	 * @generated
@@ -2192,8 +2045,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2201,8 +2053,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2210,8 +2061,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Map To Anomaly Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2219,8 +2070,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl <em>R4E File Version</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFileVersion()
 	 * @generated
@@ -2229,8 +2079,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Platform URI</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2238,8 +2087,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Version ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2247,8 +2095,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Repository Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2256,8 +2103,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2265,17 +2111,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Resource</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FILE_VERSION__RESOURCE = 4;
 
 	/**
-	 * The feature id for the '<em><b>Local Version ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Local Version ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2283,8 +2128,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>File Revision</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2292,8 +2136,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2301,8 +2144,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E File Version</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2310,8 +2153,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl <em>Map Name To Review</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapNameToReview()
 	 * @generated
@@ -2320,8 +2162,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2329,8 +2170,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2338,8 +2178,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Map Name To Review</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2347,8 +2187,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToUsersImpl <em>Map To Users</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToUsersImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapToUsers()
 	 * @generated
@@ -2357,8 +2196,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2366,17 +2204,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int MAP_TO_USERS__VALUE = 1;
 
 	/**
-	 * The number of structural features of the '<em>Map To Users</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Map To Users</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2384,8 +2221,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl <em>R4E User Reviews</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserReviews()
 	 * @generated
@@ -2394,8 +2230,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2403,8 +2238,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Invited To Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2412,8 +2246,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2421,8 +2254,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created Reviews</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2430,8 +2263,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E User Reviews</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2439,8 +2272,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapIDToComponentImpl <em>Map ID To Component</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapIDToComponentImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapIDToComponent()
 	 * @generated
@@ -2449,8 +2281,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2458,8 +2289,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2467,8 +2297,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Map ID To Component</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2476,8 +2306,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapUserIDToUserReviewsImpl <em>Map User ID To User Reviews</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapUserIDToUserReviewsImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapUserIDToUserReviews()
 	 * @generated
@@ -2486,8 +2315,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2495,8 +2323,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2513,8 +2340,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTextPositionImpl <em>R4E Anomaly Text Position</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTextPositionImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyTextPosition()
 	 * @generated
@@ -2523,8 +2349,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2532,8 +2357,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Length</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2541,8 +2365,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Line</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2550,17 +2373,16 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Line</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_ANOMALY_TEXT_POSITION__END_LINE = R4E_TEXT_POSITION__END_LINE;
 
 	/**
-	 * The feature id for the '<em><b>File</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>File</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -2568,8 +2390,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Anomaly Text Position</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2577,8 +2399,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapDateToDurationImpl <em>Map Date To Duration</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapDateToDurationImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapDateToDuration()
 	 * @generated
@@ -2587,8 +2408,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2596,8 +2416,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2605,8 +2424,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Map Date To Duration</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2614,8 +2433,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapKeyToInfoAttributesImpl <em>Map Key To Info Attributes</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapKeyToInfoAttributesImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapKeyToInfoAttributes()
 	 * @generated
@@ -2624,8 +2442,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2633,8 +2450,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2651,8 +2467,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl <em>R4E Review Phase Info</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhaseInfo()
 	 * @generated
@@ -2661,8 +2476,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2670,8 +2484,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2679,8 +2492,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Phase Owner ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2688,8 +2500,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2697,8 +2508,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Review Phase Info</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2706,8 +2517,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl <em>R4E Meeting Data</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EMeetingData()
 	 * @generated
@@ -2716,8 +2526,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2725,8 +2534,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Subject</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2734,8 +2542,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2743,8 +2550,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2752,8 +2558,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Duration</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2761,8 +2566,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Sent Count</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2770,8 +2574,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Sender</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2779,8 +2582,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Receivers</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2788,8 +2590,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2797,8 +2598,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>R4E Meeting Data</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -2806,8 +2607,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyState()
 	 * @generated
@@ -2816,8 +2616,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhase()
 	 * @generated
@@ -2826,8 +2625,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserRole()
 	 * @generated
@@ -2836,8 +2634,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDecision()
 	 * @generated
@@ -2846,8 +2643,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewType()
 	 * @generated
@@ -2856,8 +2652,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContextType()
 	 * @generated
@@ -2866,30 +2661,25 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '<em>IResource</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.core.resources.IResource
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 	 * @generated
 	 */
 	int IRESOURCE = 40;
 
-
 	/**
 	 * The meta object id for the '<em>URI</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.emf.common.util.URI
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 	 * @generated
 	 */
 	int URI = 41;
 
-
 	/**
 	 * The meta object id for the '<em>IFile Revision</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.team.core.history.IFileRevision
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 	 * @generated
@@ -2898,8 +2688,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review Group</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup
 	 * @generated
@@ -2919,8 +2708,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getFolder <em>Folder</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Folder</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getFolder()
 	 * @see #getR4EReviewGroup()
@@ -2930,8 +2719,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDefaultEntryCriteria <em>Default Entry Criteria</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Default Entry Criteria</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDefaultEntryCriteria()
 	 * @see #getR4EReviewGroup()
@@ -2941,8 +2729,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableProjects <em>Available Projects</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Available Projects</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableProjects()
 	 * @see #getR4EReviewGroup()
@@ -2952,8 +2739,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableComponents <em>Available Components</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Available Components</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableComponents()
 	 * @see #getR4EReviewGroup()
@@ -2963,8 +2749,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDesignRuleLocations <em>Design Rule Locations</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Design Rule Locations</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDesignRuleLocations()
 	 * @see #getR4EReviewGroup()
@@ -2974,8 +2759,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableAnomalyTypes <em>Available Anomaly Types</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Available Anomaly Types</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableAnomalyTypes()
 	 * @see #getR4EReviewGroup()
@@ -2985,8 +2769,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAnomalyTypeKeyToReference <em>Anomaly Type Key To Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Anomaly Type Key To Reference</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAnomalyTypeKeyToReference()
 	 * @see #getR4EReviewGroup()
@@ -2995,9 +2778,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EReviewGroup_AnomalyTypeKeyToReference();
 
 	/**
-	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap <em>Reviews Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the map '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap <em>Reviews Map</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the map '<em>Reviews Map</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap()
 	 * @see #getR4EReviewGroup()
@@ -3006,9 +2790,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EReviewGroup_ReviewsMap();
 
 	/**
-	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getUserReviews <em>User Reviews</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the map '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getUserReviews <em>User Reviews</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the map '<em>User Reviews</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getUserReviews()
 	 * @see #getR4EReviewGroup()
@@ -3018,8 +2803,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview <em>R4E Review</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview
 	 * @generated
@@ -3028,8 +2812,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getName()
 	 * @see #getR4EReview()
@@ -3039,8 +2822,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getProject <em>Project</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Project</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getProject()
 	 * @see #getR4EReview()
@@ -3049,9 +2831,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_Project();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getComponents <em>Components</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getComponents <em>Components</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Components</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getComponents()
 	 * @see #getR4EReview()
@@ -3060,9 +2843,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_Components();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEntryCriteria <em>Entry Criteria</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEntryCriteria <em>Entry Criteria</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Entry Criteria</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEntryCriteria()
 	 * @see #getR4EReview()
@@ -3071,9 +2855,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_EntryCriteria();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getExtraNotes <em>Extra Notes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getExtraNotes <em>Extra Notes</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Extra Notes</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getExtraNotes()
 	 * @see #getR4EReview()
@@ -3082,9 +2867,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_ExtraNotes();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getObjectives <em>Objectives</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getObjectives <em>Objectives</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Objectives</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getObjectives()
 	 * @see #getR4EReview()
@@ -3094,8 +2880,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getReferenceMaterial <em>Reference Material</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Reference Material</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getReferenceMaterial()
 	 * @see #getR4EReview()
@@ -3105,8 +2890,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision <em>Decision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Decision</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision()
 	 * @see #getR4EReview()
@@ -3116,8 +2901,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Start Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate()
 	 * @see #getR4EReview()
@@ -3127,8 +2912,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>End Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate()
 	 * @see #getR4EReview()
@@ -3138,8 +2922,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Due Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate()
 	 * @see #getR4EReview()
@@ -3148,9 +2931,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_DueDate();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference '<em>Anomaly Template</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate()
 	 * @see #getR4EReview()
@@ -3160,8 +2944,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType()
 	 * @see #getR4EReview()
@@ -3171,8 +2954,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Users Map</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap()
 	 * @see #getR4EReview()
@@ -3182,8 +2964,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getIdsMap <em>Ids Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Ids Map</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getIdsMap()
 	 * @see #getR4EReview()
@@ -3192,9 +2973,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EReview_IdsMap();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference '<em>Active Meeting</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting()
 	 * @see #getR4EReview()
@@ -3204,8 +2986,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Created By</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy()
 	 * @see #getR4EReview()
@@ -3215,8 +2997,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly <em>R4E Anomaly</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Anomaly</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly
 	 * @generated
@@ -3225,8 +3006,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getState <em>State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>State</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getState()
 	 * @see #getR4EAnomaly()
@@ -3236,8 +3016,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDueDate <em>Due Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Due Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDueDate()
 	 * @see #getR4EAnomaly()
@@ -3247,8 +3026,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRank <em>Rank</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Rank</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRank()
 	 * @see #getR4EAnomaly()
@@ -3258,8 +3036,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Rule</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRule()
 	 * @see #getR4EAnomaly()
@@ -3269,8 +3046,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getNotAcceptedReason <em>Not Accepted Reason</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Not Accepted Reason</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getNotAcceptedReason()
 	 * @see #getR4EAnomaly()
@@ -3279,9 +3055,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_NotAcceptedReason();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#isIsImported <em>Is Imported</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#isIsImported <em>Is Imported</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Is Imported</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#isIsImported()
 	 * @see #getR4EAnomaly()
@@ -3290,9 +3067,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_IsImported();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion <em>Fixed In Version</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion <em>Fixed In Version</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Fixed In Version</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion()
 	 * @see #getR4EAnomaly()
@@ -3302,8 +3080,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRuleID <em>Rule ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Rule ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRuleID()
 	 * @see #getR4EAnomaly()
@@ -3312,9 +3089,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_RuleID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedByID <em>Decided By ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedByID <em>Decided By ID</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Decided By ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedByID()
 	 * @see #getR4EAnomaly()
@@ -3323,9 +3101,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_DecidedByID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Fixed By ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID()
 	 * @see #getR4EAnomaly()
@@ -3334,9 +3113,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_FixedByID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID <em>Follow Up By ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID <em>Follow Up By ID</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Follow Up By ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID()
 	 * @see #getR4EAnomaly()
@@ -3346,8 +3126,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview <em>R4E Formal Review</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Formal Review</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview
 	 * @generated
@@ -3355,9 +3134,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EFormalReview();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Phase Owner</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner()
 	 * @see #getR4EFormalReview()
@@ -3367,8 +3147,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases <em>Phases</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Phases</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases()
 	 * @see #getR4EFormalReview()
@@ -3377,9 +3157,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EFormalReview_Phases();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Current</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent()
 	 * @see #getR4EFormalReview()
@@ -3389,8 +3170,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition <em>R4E Text Position</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Text Position</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition
 	 * @generated
@@ -3398,9 +3178,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4ETextPosition();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition <em>Start Position</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition <em>Start Position</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Start Position</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition()
 	 * @see #getR4ETextPosition()
@@ -3410,8 +3191,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getLength <em>Length</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Length</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getLength()
 	 * @see #getR4ETextPosition()
@@ -3420,9 +3201,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4ETextPosition_Length();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine <em>Start Line</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine <em>Start Line</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Start Line</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine()
 	 * @see #getR4ETextPosition()
@@ -3431,9 +3213,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4ETextPosition_StartLine();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine <em>End Line</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine <em>End Line</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>End Line</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine()
 	 * @see #getR4ETextPosition()
@@ -3443,8 +3226,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision <em>R4E Review Decision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review Decision</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision
 	 * @generated
@@ -3452,9 +3234,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EReviewDecision();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision#getSpentTime <em>Spent Time</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision#getSpentTime <em>Spent Time</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Spent Time</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision#getSpentTime()
 	 * @see #getR4EReviewDecision()
@@ -3464,8 +3247,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision#getValue()
 	 * @see #getR4EReviewDecision()
@@ -3475,8 +3258,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser <em>R4E User</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E User</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser
 	 * @generated
@@ -3485,8 +3267,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getGroupPaths <em>Group Paths</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Group Paths</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getGroupPaths()
 	 * @see #getR4EUser()
@@ -3495,9 +3277,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EUser_GroupPaths();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getSequenceIDCounter <em>Sequence ID Counter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getSequenceIDCounter <em>Sequence ID Counter</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Sequence ID Counter</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getSequenceIDCounter()
 	 * @see #getR4EUser()
@@ -3506,9 +3289,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EUser_SequenceIDCounter();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedComments <em>Added Comments</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedComments <em>Added Comments</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Added Comments</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedComments()
 	 * @see #getR4EUser()
@@ -3518,8 +3302,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedItems <em>Added Items</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Added Items</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedItems()
 	 * @see #getR4EUser()
@@ -3528,9 +3312,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EUser_AddedItems();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCreatedByMe <em>Review Created By Me</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCreatedByMe <em>Review Created By Me</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Review Created By Me</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCreatedByMe()
 	 * @see #getR4EUser()
@@ -3539,9 +3324,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EUser_ReviewCreatedByMe();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewInstance <em>Review Instance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewInstance <em>Review Instance</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Review Instance</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewInstance()
 	 * @see #getR4EUser()
@@ -3550,9 +3336,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EUser_ReviewInstance();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCompleted <em>Review Completed</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCompleted <em>Review Completed</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Review Completed</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCompleted()
 	 * @see #getR4EUser()
@@ -3562,8 +3349,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewCompletedCode <em>Review Completed Code</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Review Completed Code</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewCompletedCode()
 	 * @see #getR4EUser()
@@ -3573,8 +3359,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant <em>R4E Participant</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Participant</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant
 	 * @generated
@@ -3593,9 +3378,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EParticipant_Roles();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getFocusArea <em>Focus Area</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getFocusArea <em>Focus Area</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Focus Area</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getFocusArea()
 	 * @see #getR4EParticipant()
@@ -3605,8 +3391,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#isIsPartOfDecision <em>Is Part Of Decision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Part Of Decision</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#isIsPartOfDecision()
 	 * @see #getR4EParticipant()
@@ -3616,8 +3401,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getReviewedContent <em>Reviewed Content</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Reviewed Content</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getReviewedContent()
 	 * @see #getR4EParticipant()
@@ -3627,8 +3411,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getTimeLog <em>Time Log</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Time Log</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getTimeLog()
 	 * @see #getR4EParticipant()
@@ -3638,8 +3421,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem <em>R4E Item</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Item</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem
 	 * @generated
@@ -3647,9 +3429,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EItem();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getDescription <em>Description</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Description</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getDescription()
 	 * @see #getR4EItem()
@@ -3659,8 +3442,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAddedById <em>Added By Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Added By Id</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAddedById()
 	 * @see #getR4EItem()
@@ -3669,9 +3451,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EItem_AddedById();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getFileContextList <em>File Context List</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getFileContextList <em>File Context List</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>File Context List</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getFileContextList()
 	 * @see #getR4EItem()
@@ -3680,9 +3463,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EItem_FileContextList();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getRepositoryRef <em>Repository Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getRepositoryRef <em>Repository Ref</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Repository Ref</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getRepositoryRef()
 	 * @see #getR4EItem()
@@ -3691,9 +3475,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EItem_RepositoryRef();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getProjectURIs <em>Project UR Is</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getProjectURIs <em>Project UR Is</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Project UR Is</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getProjectURIs()
 	 * @see #getR4EItem()
@@ -3703,8 +3488,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep <em>Author Rep</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Author Rep</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep()
 	 * @see #getR4EItem()
@@ -3714,8 +3498,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted <em>Submitted</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Submitted</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted()
 	 * @see #getR4EItem()
@@ -3725,8 +3508,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getInfoAtt <em>Info Att</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Info Att</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getInfoAtt()
 	 * @see #getR4EItem()
@@ -3736,8 +3518,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent <em>R4E Text Content</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Text Content</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent
 	 * @generated
@@ -3746,8 +3527,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent#getContent <em>Content</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Content</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent#getContent()
 	 * @see #getR4ETextContent()
@@ -3756,9 +3537,9 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4ETextContent_Content();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID <em>R4EID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID <em>R4EID</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>R4EID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EID
 	 * @generated
@@ -3767,8 +3548,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getSequenceID <em>Sequence ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Sequence ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getSequenceID()
 	 * @see #getR4EID()
@@ -3778,8 +3558,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getUserID <em>User ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>User ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getUserID()
 	 * @see #getR4EID()
@@ -3789,8 +3568,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType <em>R4E Anomaly Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Anomaly Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType
 	 * @generated
@@ -3810,8 +3588,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference <em>R4E Task Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Task Reference</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference
 	 * @generated
@@ -3820,8 +3597,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState <em>R4E Review State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review State</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState
 	 * @generated
@@ -3841,8 +3617,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment <em>R4E Comment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Comment</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EComment
 	 * @generated
@@ -3850,9 +3625,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EComment();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getCreatedOn <em>Created On</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getCreatedOn <em>Created On</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Created On</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getCreatedOn()
 	 * @see #getR4EComment()
@@ -3862,8 +3638,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getAnomaly <em>Anomaly</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Anomaly</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getAnomaly()
 	 * @see #getR4EComment()
@@ -3873,8 +3648,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getInfoAtt <em>Info Att</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Info Att</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getInfoAtt()
 	 * @see #getR4EComment()
@@ -3884,8 +3658,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent <em>R4E Review Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review Component</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent
 	 * @generated
@@ -3893,9 +3666,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EReviewComponent();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent#getAssignedTo <em>Assigned To</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent#getAssignedTo <em>Assigned To</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Assigned To</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent#getAssignedTo()
 	 * @see #getR4EReviewComponent()
@@ -3905,8 +3679,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext <em>R4E File Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E File Context</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext
 	 * @generated
@@ -3915,8 +3688,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getDeltas <em>Deltas</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Deltas</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getDeltas()
 	 * @see #getR4EFileContext()
@@ -3937,8 +3710,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Target</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getTarget()
 	 * @see #getR4EFileContext()
@@ -3959,8 +3732,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getInfoAtt <em>Info Att</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Info Att</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getInfoAtt()
 	 * @see #getR4EFileContext()
@@ -3970,8 +3742,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta <em>R4E Delta</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Delta</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta
 	 * @generated
@@ -3980,8 +3751,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta#getBase <em>Base</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Base</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta#getBase()
 	 * @see #getR4EDelta()
@@ -4002,8 +3773,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType <em>R4E Comment Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Comment Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType
 	 * @generated
@@ -4023,8 +3793,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map To Anomaly Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Map To Anomaly Type</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
@@ -4057,8 +3827,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContent <em>R4E Content</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Content</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContent
 	 * @generated
@@ -4067,8 +3836,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getLocation <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Location</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getLocation()
 	 * @see #getR4EContent()
@@ -4078,8 +3847,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getInfo <em>Info</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Info</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getInfo()
 	 * @see #getR4EContent()
@@ -4089,8 +3857,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition <em>R4E Position</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Position</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition
 	 * @generated
@@ -4099,8 +3866,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion <em>R4E File Version</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E File Version</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion
 	 * @generated
@@ -4108,9 +3874,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EFileVersion();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI <em>Platform URI</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI <em>Platform URI</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Platform URI</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getPlatformURI()
 	 * @see #getR4EFileVersion()
@@ -4119,9 +3886,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EFileVersion_PlatformURI();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID <em>Version ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID <em>Version ID</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Version ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getVersionID()
 	 * @see #getR4EFileVersion()
@@ -4130,9 +3898,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EFileVersion_VersionID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Repository Path</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath()
 	 * @see #getR4EFileVersion()
@@ -4152,9 +3921,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EFileVersion_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Resource</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource()
 	 * @see #getR4EFileVersion()
@@ -4164,8 +3934,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Local Version ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID()
 	 * @see #getR4EFileVersion()
@@ -4174,9 +3943,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EFileVersion_LocalVersionID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>File Revision</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision()
 	 * @see #getR4EFileVersion()
@@ -4186,8 +3956,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getInfoAtt <em>Info Att</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>Info Att</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getInfoAtt()
 	 * @see #getR4EFileVersion()
@@ -4197,8 +3966,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map Name To Review</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Map Name To Review</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
@@ -4265,8 +4034,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews <em>R4E User Reviews</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E User Reviews</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews
 	 * @generated
@@ -4285,9 +4053,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EUserReviews_Name();
 
 	/**
-	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getInvitedToMap <em>Invited To Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the map '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getInvitedToMap <em>Invited To Map</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the map '<em>Invited To Map</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getInvitedToMap()
 	 * @see #getR4EUserReviews()
@@ -4307,9 +4076,10 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EUserReviews_Group();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getCreatedReviews <em>Created Reviews</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getCreatedReviews <em>Created Reviews</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Created Reviews</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getCreatedReviews()
 	 * @see #getR4EUserReviews()
@@ -4319,8 +4089,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent <em>R4EID Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4EID Component</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent
 	 * @generated
@@ -4329,8 +4098,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Id</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent#getId()
 	 * @see #getR4EIDComponent()
@@ -4340,8 +4109,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map ID To Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Map ID To Component</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyType="org.eclipse.mylyn.reviews.r4e.core.model.R4EID" keyRequired="true"
@@ -4373,9 +4142,9 @@ public interface RModelPackage extends EPackage {
 	EReference getMapIDToComponent_Value();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map User ID To User Reviews</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map User ID To User Reviews</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Map User ID To User Reviews</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
@@ -4408,8 +4177,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition <em>R4E Anomaly Text Position</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Anomaly Text Position</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition
 	 * @generated
@@ -4417,9 +4185,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EAnomalyTextPosition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile <em>File</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile <em>File</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference '<em>File</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile()
 	 * @see #getR4EAnomalyTextPosition()
@@ -4428,13 +4197,12 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EAnomalyTextPosition_File();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map Date To Duration</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map Date To Duration</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Map Date To Duration</em>'.
 	 * @see java.util.Map.Entry
-	 * @model keyDataType="org.eclipse.emf.ecore.EDate"
-	 *        valueDataType="org.eclipse.emf.ecore.EIntegerObject"
+	 * @model keyDataType="org.eclipse.emf.ecore.EDate" valueDataType="org.eclipse.emf.ecore.EIntegerObject"
 	 * @generated
 	 */
 	EClass getMapDateToDuration();
@@ -4462,13 +4230,12 @@ public interface RModelPackage extends EPackage {
 	EAttribute getMapDateToDuration_Value();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map Key To Info Attributes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Map Key To Info Attributes</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Map Key To Info Attributes</em>'.
 	 * @see java.util.Map.Entry
-	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueDataType="org.eclipse.emf.ecore.EString"
+	 * @model keyDataType="org.eclipse.emf.ecore.EString" valueDataType="org.eclipse.emf.ecore.EString"
 	 * @generated
 	 */
 	EClass getMapKeyToInfoAttributes();
@@ -4497,8 +4264,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo <em>R4E Review Phase Info</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Review Phase Info</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo
 	 * @generated
@@ -4506,9 +4272,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EReviewPhaseInfo();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate <em>End Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate <em>End Date</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>End Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate()
 	 * @see #getR4EReviewPhaseInfo()
@@ -4518,8 +4285,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getType()
 	 * @see #getR4EReviewPhaseInfo()
@@ -4529,8 +4296,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getPhaseOwnerID <em>Phase Owner ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Phase Owner ID</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getPhaseOwnerID()
 	 * @see #getR4EReviewPhaseInfo()
@@ -4539,9 +4305,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReviewPhaseInfo_PhaseOwnerID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate <em>Start Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate <em>Start Date</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Start Date</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate()
 	 * @see #getR4EReviewPhaseInfo()
@@ -4551,8 +4318,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData <em>R4E Meeting Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>R4E Meeting Data</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData
 	 * @generated
@@ -4561,8 +4327,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getId()
 	 * @see #getR4EMeetingData()
@@ -4572,8 +4337,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSubject <em>Subject</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Subject</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSubject()
 	 * @see #getR4EMeetingData()
@@ -4582,9 +4347,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_Subject();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation <em>Location</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Location</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation()
 	 * @see #getR4EMeetingData()
@@ -4593,9 +4359,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_Location();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime <em>Start Time</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime <em>Start Time</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Start Time</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime()
 	 * @see #getR4EMeetingData()
@@ -4604,9 +4371,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_StartTime();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Duration</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration()
 	 * @see #getR4EMeetingData()
@@ -4615,9 +4383,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_Duration();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Sent Count</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount()
 	 * @see #getR4EMeetingData()
@@ -4627,8 +4396,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender <em>Sender</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Sender</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender()
 	 * @see #getR4EMeetingData()
@@ -4637,9 +4406,10 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_Sender();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers <em>Receivers</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers <em>Receivers</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Receivers</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers()
 	 * @see #getR4EMeetingData()
@@ -4660,8 +4430,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E Anomaly State</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState
 	 * @generated
@@ -4670,8 +4439,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E Review Phase</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase
 	 * @generated
@@ -4680,8 +4448,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E User Role</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole
 	 * @generated
@@ -4690,8 +4457,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E Decision</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision
 	 * @generated
@@ -4700,8 +4466,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E Review Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType
 	 * @generated
@@ -4710,8 +4475,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>R4E Context Type</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType
 	 * @generated
@@ -4719,9 +4483,9 @@ public interface RModelPackage extends EPackage {
 	EEnum getR4EContextType();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.core.resources.IResource <em>IResource</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for data type '{@link org.eclipse.core.resources.IResource <em>IResource</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for data type '<em>IResource</em>'.
 	 * @see org.eclipse.core.resources.IResource
 	 * @model instanceClass="org.eclipse.core.resources.IResource"
@@ -4731,8 +4495,8 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>URI</em>'.
 	 * @see org.eclipse.emf.common.util.URI
 	 * @model instanceClass="org.eclipse.emf.common.util.URI" serializeable="false"
@@ -4742,8 +4506,7 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.team.core.history.IFileRevision <em>IFile Revision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>IFile Revision</em>'.
 	 * @see org.eclipse.team.core.history.IFileRevision
 	 * @model instanceClass="org.eclipse.team.core.history.IFileRevision"
@@ -4753,21 +4516,19 @@ public interface RModelPackage extends EPackage {
 
 	/**
 	 * Returns the factory that creates the instances of the model.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
 	RModelFactory getRModelFactory();
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * Defines literals for the meta objects that represent
+	 * <!-- begin-user-doc --> Defines literals for the meta objects that represent
 	 * <ul>
-	 *   <li>each class,</li>
-	 *   <li>each feature of each class,</li>
-	 *   <li>each enum,</li>
-	 *   <li>and each data type</li>
+	 * <li>each class,</li>
+	 * <li>each feature of each class,</li>
+	 * <li>each enum,</li>
+	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -4775,8 +4536,7 @@ public interface RModelPackage extends EPackage {
 	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl <em>R4E Review Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewGroup()
 		 * @generated
@@ -4785,88 +4545,86 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__NAME = eINSTANCE.getR4EReviewGroup_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Folder</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__FOLDER = eINSTANCE.getR4EReviewGroup_Folder();
 
 		/**
-		 * The meta object literal for the '<em><b>Default Entry Criteria</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Default Entry Criteria</b></em>' attribute feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__DEFAULT_ENTRY_CRITERIA = eINSTANCE.getR4EReviewGroup_DefaultEntryCriteria();
 
 		/**
-		 * The meta object literal for the '<em><b>Available Projects</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Available Projects</b></em>' attribute list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__AVAILABLE_PROJECTS = eINSTANCE.getR4EReviewGroup_AvailableProjects();
 
 		/**
-		 * The meta object literal for the '<em><b>Available Components</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Available Components</b></em>' attribute list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__AVAILABLE_COMPONENTS = eINSTANCE.getR4EReviewGroup_AvailableComponents();
 
 		/**
-		 * The meta object literal for the '<em><b>Design Rule Locations</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Design Rule Locations</b></em>' attribute list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS = eINSTANCE.getR4EReviewGroup_DesignRuleLocations();
 
 		/**
 		 * The meta object literal for the '<em><b>Available Anomaly Types</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES = eINSTANCE.getR4EReviewGroup_AvailableAnomalyTypes();
 
 		/**
-		 * The meta object literal for the '<em><b>Anomaly Type Key To Reference</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Anomaly Type Key To Reference</b></em>' map feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE = eINSTANCE.getR4EReviewGroup_AnomalyTypeKeyToReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Reviews Map</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW_GROUP__REVIEWS_MAP = eINSTANCE.getR4EReviewGroup_ReviewsMap();
 
 		/**
 		 * The meta object literal for the '<em><b>User Reviews</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW_GROUP__USER_REVIEWS = eINSTANCE.getR4EReviewGroup_UserReviews();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl <em>R4E Review</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReview()
 		 * @generated
@@ -4875,16 +4633,16 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__NAME = eINSTANCE.getR4EReview_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Project</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__PROJECT = eINSTANCE.getR4EReview_Project();
@@ -4907,112 +4665,111 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Extra Notes</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__EXTRA_NOTES = eINSTANCE.getR4EReview_ExtraNotes();
 
 		/**
 		 * The meta object literal for the '<em><b>Objectives</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__OBJECTIVES = eINSTANCE.getR4EReview_Objectives();
 
 		/**
 		 * The meta object literal for the '<em><b>Reference Material</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__REFERENCE_MATERIAL = eINSTANCE.getR4EReview_ReferenceMaterial();
 
 		/**
 		 * The meta object literal for the '<em><b>Decision</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW__DECISION = eINSTANCE.getR4EReview_Decision();
 
 		/**
 		 * The meta object literal for the '<em><b>Start Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__START_DATE = eINSTANCE.getR4EReview_StartDate();
 
 		/**
 		 * The meta object literal for the '<em><b>End Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__END_DATE = eINSTANCE.getR4EReview_EndDate();
 
 		/**
 		 * The meta object literal for the '<em><b>Due Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__DUE_DATE = eINSTANCE.getR4EReview_DueDate();
 
 		/**
-		 * The meta object literal for the '<em><b>Anomaly Template</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Anomaly Template</b></em>' containment reference feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_REVIEW__ANOMALY_TEMPLATE = eINSTANCE.getR4EReview_AnomalyTemplate();
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__TYPE = eINSTANCE.getR4EReview_Type();
 
 		/**
 		 * The meta object literal for the '<em><b>Users Map</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW__USERS_MAP = eINSTANCE.getR4EReview_UsersMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Ids Map</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW__IDS_MAP = eINSTANCE.getR4EReview_IdsMap();
 
 		/**
-		 * The meta object literal for the '<em><b>Active Meeting</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Active Meeting</b></em>' containment reference feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_REVIEW__ACTIVE_MEETING = eINSTANCE.getR4EReview_ActiveMeeting();
 
 		/**
 		 * The meta object literal for the '<em><b>Created By</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_REVIEW__CREATED_BY = eINSTANCE.getR4EReview_CreatedBy();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl <em>R4E Anomaly</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomaly()
 		 * @generated
@@ -5021,48 +4778,48 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>State</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__STATE = eINSTANCE.getR4EAnomaly_State();
 
 		/**
 		 * The meta object literal for the '<em><b>Due Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__DUE_DATE = eINSTANCE.getR4EAnomaly_DueDate();
 
 		/**
 		 * The meta object literal for the '<em><b>Rank</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__RANK = eINSTANCE.getR4EAnomaly_Rank();
 
 		/**
 		 * The meta object literal for the '<em><b>Rule</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_ANOMALY__RULE = eINSTANCE.getR4EAnomaly_Rule();
 
 		/**
 		 * The meta object literal for the '<em><b>Not Accepted Reason</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__NOT_ACCEPTED_REASON = eINSTANCE.getR4EAnomaly_NotAcceptedReason();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Imported</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__IS_IMPORTED = eINSTANCE.getR4EAnomaly_IsImported();
@@ -5077,8 +4834,8 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Rule ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__RULE_ID = eINSTANCE.getR4EAnomaly_RuleID();
@@ -5093,8 +4850,8 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Fixed By ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY__FIXED_BY_ID = eINSTANCE.getR4EAnomaly_FixedByID();
@@ -5109,8 +4866,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl <em>R4E Formal Review</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFormalReview()
 		 * @generated
@@ -5119,32 +4875,31 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Phase Owner</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FORMAL_REVIEW__PHASE_OWNER = eINSTANCE.getR4EFormalReview_PhaseOwner();
 
 		/**
-		 * The meta object literal for the '<em><b>Phases</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Phases</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_FORMAL_REVIEW__PHASES = eINSTANCE.getR4EFormalReview_Phases();
 
 		/**
 		 * The meta object literal for the '<em><b>Current</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FORMAL_REVIEW__CURRENT = eINSTANCE.getR4EFormalReview_Current();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl <em>R4E Text Position</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETextPosition()
 		 * @generated
@@ -5161,32 +4916,31 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Length</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_TEXT_POSITION__LENGTH = eINSTANCE.getR4ETextPosition_Length();
 
 		/**
 		 * The meta object literal for the '<em><b>Start Line</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_TEXT_POSITION__START_LINE = eINSTANCE.getR4ETextPosition_StartLine();
 
 		/**
 		 * The meta object literal for the '<em><b>End Line</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_TEXT_POSITION__END_LINE = eINSTANCE.getR4ETextPosition_EndLine();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewDecisionImpl <em>R4E Review Decision</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewDecisionImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewDecision()
 		 * @generated
@@ -5195,24 +4949,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Spent Time</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_DECISION__SPENT_TIME = eINSTANCE.getR4EReviewDecision_SpentTime();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_DECISION__VALUE = eINSTANCE.getR4EReviewDecision_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl <em>R4E User</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUser()
 		 * @generated
@@ -5229,32 +4982,32 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Sequence ID Counter</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_USER__SEQUENCE_ID_COUNTER = eINSTANCE.getR4EUser_SequenceIDCounter();
 
 		/**
-		 * The meta object literal for the '<em><b>Added Comments</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Added Comments</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_USER__ADDED_COMMENTS = eINSTANCE.getR4EUser_AddedComments();
 
 		/**
-		 * The meta object literal for the '<em><b>Added Items</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Added Items</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_USER__ADDED_ITEMS = eINSTANCE.getR4EUser_AddedItems();
 
 		/**
 		 * The meta object literal for the '<em><b>Review Created By Me</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_USER__REVIEW_CREATED_BY_ME = eINSTANCE.getR4EUser_ReviewCreatedByMe();
@@ -5276,17 +5029,16 @@ public interface RModelPackage extends EPackage {
 		EAttribute R4E_USER__REVIEW_COMPLETED = eINSTANCE.getR4EUser_ReviewCompleted();
 
 		/**
-		 * The meta object literal for the '<em><b>Review Completed Code</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Review Completed Code</b></em>' attribute feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute R4E_USER__REVIEW_COMPLETED_CODE = eINSTANCE.getR4EUser_ReviewCompletedCode();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl <em>R4E Participant</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EParticipant()
 		 * @generated
@@ -5295,48 +5047,47 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Roles</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_PARTICIPANT__ROLES = eINSTANCE.getR4EParticipant_Roles();
 
 		/**
 		 * The meta object literal for the '<em><b>Focus Area</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_PARTICIPANT__FOCUS_AREA = eINSTANCE.getR4EParticipant_FocusArea();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Part Of Decision</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_PARTICIPANT__IS_PART_OF_DECISION = eINSTANCE.getR4EParticipant_IsPartOfDecision();
 
 		/**
-		 * The meta object literal for the '<em><b>Reviewed Content</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Reviewed Content</b></em>' reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_PARTICIPANT__REVIEWED_CONTENT = eINSTANCE.getR4EParticipant_ReviewedContent();
 
 		/**
 		 * The meta object literal for the '<em><b>Time Log</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_PARTICIPANT__TIME_LOG = eINSTANCE.getR4EParticipant_TimeLog();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl <em>R4E Item</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EItem()
 		 * @generated
@@ -5345,24 +5096,24 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ITEM__DESCRIPTION = eINSTANCE.getR4EItem_Description();
 
 		/**
 		 * The meta object literal for the '<em><b>Added By Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ITEM__ADDED_BY_ID = eINSTANCE.getR4EItem_AddedById();
 
 		/**
-		 * The meta object literal for the '<em><b>File Context List</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>File Context List</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_ITEM__FILE_CONTEXT_LIST = eINSTANCE.getR4EItem_FileContextList();
@@ -5377,40 +5128,39 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Project UR Is</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ITEM__PROJECT_UR_IS = eINSTANCE.getR4EItem_ProjectURIs();
 
 		/**
 		 * The meta object literal for the '<em><b>Author Rep</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ITEM__AUTHOR_REP = eINSTANCE.getR4EItem_AuthorRep();
 
 		/**
 		 * The meta object literal for the '<em><b>Submitted</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ITEM__SUBMITTED = eINSTANCE.getR4EItem_Submitted();
 
 		/**
 		 * The meta object literal for the '<em><b>Info Att</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_ITEM__INFO_ATT = eINSTANCE.getR4EItem_InfoAtt();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl <em>R4E Text Content</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETextContent()
 		 * @generated
@@ -5419,16 +5169,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Content</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_TEXT_CONTENT__CONTENT = eINSTANCE.getR4ETextContent_Content();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDImpl <em>R4EID</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EID()
 		 * @generated
@@ -5437,24 +5186,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Sequence ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4EID__SEQUENCE_ID = eINSTANCE.getR4EID_SequenceID();
 
 		/**
 		 * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4EID__USER_ID = eINSTANCE.getR4EID_UserID();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl <em>R4E Anomaly Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTypeImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyType()
 		 * @generated
@@ -5463,16 +5211,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_ANOMALY_TYPE__TYPE = eINSTANCE.getR4EAnomalyType_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl <em>R4E Task Reference</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ETaskReference()
 		 * @generated
@@ -5481,8 +5228,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl <em>R4E Review State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewState()
 		 * @generated
@@ -5491,16 +5237,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>State</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_STATE__STATE = eINSTANCE.getR4EReviewState_State();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl <em>R4E Comment</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EComment()
 		 * @generated
@@ -5509,32 +5254,31 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Created On</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_COMMENT__CREATED_ON = eINSTANCE.getR4EComment_CreatedOn();
 
 		/**
 		 * The meta object literal for the '<em><b>Anomaly</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_COMMENT__ANOMALY = eINSTANCE.getR4EComment_Anomaly();
 
 		/**
 		 * The meta object literal for the '<em><b>Info Att</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_COMMENT__INFO_ATT = eINSTANCE.getR4EComment_InfoAtt();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewComponentImpl <em>R4E Review Component</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewComponentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewComponent()
 		 * @generated
@@ -5551,8 +5295,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl <em>R4E File Context</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFileContext()
 		 * @generated
@@ -5560,9 +5303,9 @@ public interface RModelPackage extends EPackage {
 		EClass R4E_FILE_CONTEXT = eINSTANCE.getR4EFileContext();
 
 		/**
-		 * The meta object literal for the '<em><b>Deltas</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Deltas</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference R4E_FILE_CONTEXT__DELTAS = eINSTANCE.getR4EFileContext_Deltas();
@@ -5577,32 +5320,31 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FILE_CONTEXT__TARGET = eINSTANCE.getR4EFileContext_Target();
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_FILE_CONTEXT__TYPE = eINSTANCE.getR4EFileContext_Type();
 
 		/**
 		 * The meta object literal for the '<em><b>Info Att</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FILE_CONTEXT__INFO_ATT = eINSTANCE.getR4EFileContext_InfoAtt();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EDeltaImpl <em>R4E Delta</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EDeltaImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDelta()
 		 * @generated
@@ -5619,16 +5361,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_DELTA__TARGET = eINSTANCE.getR4EDelta_Target();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl <em>R4E Comment Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentTypeImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentType()
 		 * @generated
@@ -5637,16 +5378,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_COMMENT_TYPE__TYPE = eINSTANCE.getR4ECommentType_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToAnomalyTypeImpl <em>Map To Anomaly Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToAnomalyTypeImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapToAnomalyType()
 		 * @generated
@@ -5655,24 +5395,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_TO_ANOMALY_TYPE__KEY = eINSTANCE.getMapToAnomalyType_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_TO_ANOMALY_TYPE__VALUE = eINSTANCE.getMapToAnomalyType_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl <em>R4E Content</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContent()
 		 * @generated
@@ -5681,24 +5420,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Location</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_CONTENT__LOCATION = eINSTANCE.getR4EContent_Location();
 
 		/**
 		 * The meta object literal for the '<em><b>Info</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_CONTENT__INFO = eINSTANCE.getR4EContent_Info();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EPositionImpl <em>R4E Position</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EPositionImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EPosition()
 		 * @generated
@@ -5707,8 +5445,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl <em>R4E File Version</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EFileVersion()
 		 * @generated
@@ -5725,8 +5462,8 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Version ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_FILE_VERSION__VERSION_ID = eINSTANCE.getR4EFileVersion_VersionID();
@@ -5741,16 +5478,16 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_FILE_VERSION__NAME = eINSTANCE.getR4EFileVersion_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Resource</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_FILE_VERSION__RESOURCE = eINSTANCE.getR4EFileVersion_Resource();
@@ -5773,16 +5510,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Info Att</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FILE_VERSION__INFO_ATT = eINSTANCE.getR4EFileVersion_InfoAtt();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl <em>Map Name To Review</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapNameToReviewImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapNameToReview()
 		 * @generated
@@ -5791,24 +5527,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_NAME_TO_REVIEW__KEY = eINSTANCE.getMapNameToReview_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_NAME_TO_REVIEW__VALUE = eINSTANCE.getMapNameToReview_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToUsersImpl <em>Map To Users</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapToUsersImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapToUsers()
 		 * @generated
@@ -5817,24 +5552,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_TO_USERS__KEY = eINSTANCE.getMapToUsers_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_TO_USERS__VALUE = eINSTANCE.getMapToUsers_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl <em>R4E User Reviews</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserReviews()
 		 * @generated
@@ -5843,40 +5577,39 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_USER_REVIEWS__NAME = eINSTANCE.getR4EUserReviews_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Invited To Map</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_USER_REVIEWS__INVITED_TO_MAP = eINSTANCE.getR4EUserReviews_InvitedToMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Group</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_USER_REVIEWS__GROUP = eINSTANCE.getR4EUserReviews_Group();
 
 		/**
 		 * The meta object literal for the '<em><b>Created Reviews</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_USER_REVIEWS__CREATED_REVIEWS = eINSTANCE.getR4EUserReviews_CreatedReviews();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl <em>R4EID Component</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EIDComponent()
 		 * @generated
@@ -5893,8 +5626,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapIDToComponentImpl <em>Map ID To Component</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapIDToComponentImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapIDToComponent()
 		 * @generated
@@ -5903,24 +5635,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_ID_TO_COMPONENT__KEY = eINSTANCE.getMapIDToComponent_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_ID_TO_COMPONENT__VALUE = eINSTANCE.getMapIDToComponent_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapUserIDToUserReviewsImpl <em>Map User ID To User Reviews</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapUserIDToUserReviewsImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapUserIDToUserReviews()
 		 * @generated
@@ -5929,24 +5660,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_USER_ID_TO_USER_REVIEWS__KEY = eINSTANCE.getMapUserIDToUserReviews_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_USER_ID_TO_USER_REVIEWS__VALUE = eINSTANCE.getMapUserIDToUserReviews_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTextPositionImpl <em>R4E Anomaly Text Position</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyTextPositionImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyTextPosition()
 		 * @generated
@@ -5963,8 +5693,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapDateToDurationImpl <em>Map Date To Duration</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapDateToDurationImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapDateToDuration()
 		 * @generated
@@ -5973,24 +5702,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_DATE_TO_DURATION__KEY = eINSTANCE.getMapDateToDuration_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_DATE_TO_DURATION__VALUE = eINSTANCE.getMapDateToDuration_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.MapKeyToInfoAttributesImpl <em>Map Key To Info Attributes</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.MapKeyToInfoAttributesImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMapKeyToInfoAttributes()
 		 * @generated
@@ -5999,24 +5727,23 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_KEY_TO_INFO_ATTRIBUTES__KEY = eINSTANCE.getMapKeyToInfoAttributes_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAP_KEY_TO_INFO_ATTRIBUTES__VALUE = eINSTANCE.getMapKeyToInfoAttributes_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl <em>R4E Review Phase Info</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhaseInfo()
 		 * @generated
@@ -6025,16 +5752,16 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>End Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_PHASE_INFO__END_DATE = eINSTANCE.getR4EReviewPhaseInfo_EndDate();
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_PHASE_INFO__TYPE = eINSTANCE.getR4EReviewPhaseInfo_Type();
@@ -6049,16 +5776,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Start Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_PHASE_INFO__START_DATE = eINSTANCE.getR4EReviewPhaseInfo_StartDate();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl <em>R4E Meeting Data</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EMeetingData()
 		 * @generated
@@ -6067,56 +5793,56 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__ID = eINSTANCE.getR4EMeetingData_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Subject</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__SUBJECT = eINSTANCE.getR4EMeetingData_Subject();
 
 		/**
 		 * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__LOCATION = eINSTANCE.getR4EMeetingData_Location();
 
 		/**
 		 * The meta object literal for the '<em><b>Start Time</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__START_TIME = eINSTANCE.getR4EMeetingData_StartTime();
 
 		/**
 		 * The meta object literal for the '<em><b>Duration</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__DURATION = eINSTANCE.getR4EMeetingData_Duration();
 
 		/**
 		 * The meta object literal for the '<em><b>Sent Count</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__SENT_COUNT = eINSTANCE.getR4EMeetingData_SentCount();
 
 		/**
 		 * The meta object literal for the '<em><b>Sender</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__SENDER = eINSTANCE.getR4EMeetingData_Sender();
@@ -6131,16 +5857,15 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Body</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__BODY = eINSTANCE.getR4EMeetingData_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyState()
 		 * @generated
@@ -6149,8 +5874,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhase()
 		 * @generated
@@ -6159,8 +5883,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserRole()
 		 * @generated
@@ -6169,8 +5892,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDecision()
 		 * @generated
@@ -6179,8 +5901,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewType()
 		 * @generated
@@ -6189,8 +5910,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContextType()
 		 * @generated
@@ -6199,8 +5919,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em>IResource</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.core.resources.IResource
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 		 * @generated
@@ -6209,8 +5928,7 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em>URI</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.emf.common.util.URI
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 		 * @generated
@@ -6219,8 +5937,8 @@ public interface RModelPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em>IFile Revision</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @see org.eclipse.team.core.history.IFileRevision
 		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 		 * @generated

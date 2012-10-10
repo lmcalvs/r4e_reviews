@@ -22,17 +22,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Jacques Bouthillier
- *
  */
 public interface IR4EReport {
 
 	// Report type to be generated
 	public final String INSPECTION_RECORD_TYPE = "Inspection Record";
+
 	public final String GLOBAL_REPORT_TYPE = "Global Report";
+
 	public final String SINGLE_REPORT_TYPE = "List Single Report";
-	
+
 	// Report extension file
 	public final String HTML_EXTENSION = "html";
+
 	public final String PDF_EXTENSION = "pdf";
 
 	/**
@@ -41,7 +43,7 @@ public interface IR4EReport {
 	 * @param aReportType
 	 */
 	public void setReportType(String aReportType);
-	
+
 	/**
 	 * Set the output format to generate the report
 	 * 
@@ -49,32 +51,37 @@ public interface IR4EReport {
 	 *            aFormatOutput
 	 */
 	public void setOuputFormat(String aFormatOutput);
-	
+
 	/**
 	 * Register the list of selected reviews
-	 * @param File[] aListSelectedReview
+	 * 
+	 * @param File
+	 *            [] aListSelectedReview
 	 */
 	public void setReviewListSelection(File[] aListSelectedReview);
-	
+
 	/**
 	 * Generate the selected report
-	 * @param String agroupFile File of the Group
-	 * @param IProgressMonitor aMonitor File of the Group
+	 * 
+	 * @param String
+	 *            agroupFile File of the Group
+	 * @param IProgressMonitor
+	 *            aMonitor File of the Group
 	 */
 	public void handleReportGeneration(final String agroupFile, IProgressMonitor aMonitor);
-	
+
 	/**
 	 * Test if the report type selected is an inspection record
 	 * 
 	 * @return Boolean
 	 */
 	public Boolean isInspectionRecord();
-	
+
 	/**
 	 * Count the number of selected review
 	 * 
 	 * @return int
 	 */
 	public int selectedReviewNumber();
-	
+
 }

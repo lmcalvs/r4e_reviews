@@ -22,15 +22,12 @@ import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 
 /**
- * 
- * 
  * @author Jacques Bouthillier
  * @version $Revision: 1.0 $
  */
 public class SMTPHostString {
 	/**
-	 * Field FBUNDLE_NAME.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.mail.smtp.R4EString"")
+	 * Field FBUNDLE_NAME. (value is ""org.eclipse.mylyn.reviews.r4e.mail.smtp.R4EString"")
 	 */
 	private static final String FBUNDLE_NAME = "org.eclipse.mylyn.reviews.r4e.mail.smtp.SMTPHostString";
 
@@ -49,8 +46,10 @@ public class SMTPHostString {
 	/**
 	 * Gets the key from the value, or 'value' if not found.
 	 * 
-	 * @param key the value to search value.
-	 * @return the key from the value, or 'value' if not found. */
+	 * @param key
+	 *            the value to search value.
+	 * @return the key from the value, or 'value' if not found.
+	 */
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
@@ -88,7 +87,8 @@ public class SMTPHostString {
 	 * 
 	 * @param key
 	 *            String
-	 * @param args String[]
+	 * @param args
+	 *            String[]
 	 * @return the key from the value, or 'value' if not found.
 	 */
 	public static String getFormattedString(String key, String[] args) {

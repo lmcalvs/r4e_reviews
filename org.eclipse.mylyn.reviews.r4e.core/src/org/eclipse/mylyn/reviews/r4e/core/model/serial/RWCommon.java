@@ -26,11 +26,11 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
  * @author Alvaro Sanchez-Leon
  */
 public class RWCommon {
-	
+
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
-	protected Map<String, Object>	fOptions	= null;
+	protected Map<String, Object> fOptions = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -45,7 +45,8 @@ public class RWCommon {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		// Register the appropriate resource factory to handle all file
 		// extensions.
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+		resourceSet.getResourceFactoryRegistry()
+				.getExtensionToFactoryMap()
 				.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl() {
 					public Resource createResource(URI uri) {
 						return new XMIResourceImpl(uri) {
@@ -55,7 +56,7 @@ public class RWCommon {
 						};
 					}
 				});
-		
+
 		Activator.fTracer.traceDebug("new Resourceset created: " + resourceSet);
 		return resourceSet;
 	}
@@ -100,4 +101,3 @@ public class RWCommon {
 	// return groupResource;
 	// }
 }
-	

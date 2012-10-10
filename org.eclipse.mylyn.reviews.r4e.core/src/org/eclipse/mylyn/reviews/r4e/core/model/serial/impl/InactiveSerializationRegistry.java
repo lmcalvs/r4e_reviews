@@ -21,14 +21,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class InactiveSerializationRegistry implements Persistence.IResSerializationRegistry {
 
 	// ------------------------------------------------------------------------
 	// Instance Variables
 	// ------------------------------------------------------------------------
-	public final Set<Resource>	fInactiveSerResources	= new HashSet<Resource>();
+	public final Set<Resource> fInactiveSerResources = new HashSet<Resource>();
 
 	// ------------------------------------------------------------------------
 	// Methods

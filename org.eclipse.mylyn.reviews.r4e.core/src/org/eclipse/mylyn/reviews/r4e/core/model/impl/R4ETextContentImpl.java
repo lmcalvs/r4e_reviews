@@ -22,23 +22,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Text Content</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Text Content</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl#getContent <em>Content</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextContentImpl#getContent <em>Content</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent {
 	/**
 	 * The default value of the '{@link #getContent() <em>Content</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getContent()
 	 * @generated
 	 * @ordered
@@ -47,8 +46,8 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 
 	/**
 	 * The cached value of the '{@link #getContent() <em>Content</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getContent()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	protected String content = CONTENT_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4ETextContentImpl() {
@@ -65,8 +63,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -75,8 +72,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getContent() {
@@ -84,8 +80,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setContent(String newContent) {
@@ -96,8 +91,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -110,8 +104,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -125,8 +118,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -140,8 +132,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -154,8 +145,7 @@ public class R4ETextContentImpl extends R4EContentImpl implements R4ETextContent
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

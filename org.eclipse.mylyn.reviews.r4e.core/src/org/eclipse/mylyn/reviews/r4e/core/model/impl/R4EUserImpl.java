@@ -37,9 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E User</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E User</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -61,8 +59,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EUserImpl extends UserImpl implements R4EUser {
 	/**
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -71,8 +69,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 
 	/**
 	 * The cached value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -100,18 +98,19 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected EList<String> groupPaths;
 
 	/**
-	 * The default value of the '{@link #getSequenceIDCounter() <em>Sequence ID Counter</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getSequenceIDCounter() <em>Sequence ID Counter</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSequenceIDCounter()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final int SEQUENCE_ID_COUNTER_EDEFAULT = 0;
+
 	/**
-	 * The cached value of the '{@link #getSequenceIDCounter() <em>Sequence ID Counter</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getSequenceIDCounter() <em>Sequence ID Counter</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSequenceIDCounter()
 	 * @generated
 	 * @ordered
@@ -119,9 +118,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected int sequenceIDCounter = SEQUENCE_ID_COUNTER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAddedComments() <em>Added Comments</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAddedComments() <em>Added Comments</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAddedComments()
 	 * @generated
 	 * @ordered
@@ -129,9 +128,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected EList<R4EComment> addedComments;
 
 	/**
-	 * The cached value of the '{@link #getAddedItems() <em>Added Items</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAddedItems() <em>Added Items</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAddedItems()
 	 * @generated
 	 * @ordered
@@ -139,9 +138,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected EList<R4EItem> addedItems;
 
 	/**
-	 * The default value of the '{@link #isReviewCreatedByMe() <em>Review Created By Me</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #isReviewCreatedByMe() <em>Review Created By Me</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isReviewCreatedByMe()
 	 * @generated
 	 * @ordered
@@ -149,9 +148,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected static final boolean REVIEW_CREATED_BY_ME_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isReviewCreatedByMe() <em>Review Created By Me</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #isReviewCreatedByMe() <em>Review Created By Me</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isReviewCreatedByMe()
 	 * @generated
 	 * @ordered
@@ -160,8 +159,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 
 	/**
 	 * The cached value of the '{@link #getReviewInstance() <em>Review Instance</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getReviewInstance()
 	 * @generated
 	 * @ordered
@@ -170,8 +169,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 
 	/**
 	 * The default value of the '{@link #isReviewCompleted() <em>Review Completed</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #isReviewCompleted()
 	 * @generated
 	 * @ordered
@@ -180,8 +179,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 
 	/**
 	 * The cached value of the '{@link #isReviewCompleted() <em>Review Completed</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #isReviewCompleted()
 	 * @generated
 	 * @ordered
@@ -189,9 +188,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected boolean reviewCompleted = REVIEW_COMPLETED_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getReviewCompletedCode() <em>Review Completed Code</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getReviewCompletedCode() <em>Review Completed Code</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReviewCompletedCode()
 	 * @generated
 	 * @ordered
@@ -199,9 +198,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected static final int REVIEW_COMPLETED_CODE_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getReviewCompletedCode() <em>Review Completed Code</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReviewCompletedCode() <em>Review Completed Code</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReviewCompletedCode()
 	 * @generated
 	 * @ordered
@@ -209,8 +208,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	protected int reviewCompletedCode = REVIEW_COMPLETED_CODE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EUserImpl() {
@@ -218,8 +216,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -228,8 +225,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isEnabled() {
@@ -237,8 +233,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setEnabled(boolean newEnabled) {
@@ -249,8 +244,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -261,8 +255,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getGroupPaths() {
@@ -273,8 +266,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getSequenceIDCounter() {
@@ -282,8 +274,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSequenceIDCounter(int newSequenceIDCounter) {
@@ -294,8 +285,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EComment> getAddedComments() {
@@ -306,8 +296,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EItem> getAddedItems() {
@@ -318,8 +307,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isReviewCreatedByMe() {
@@ -327,8 +315,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReviewCreatedByMe(boolean newReviewCreatedByMe) {
@@ -339,8 +326,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview getReviewInstance() {
@@ -356,8 +342,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReview basicGetReviewInstance() {
@@ -365,8 +350,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReviewInstance(R4EReview newReviewInstance) {
@@ -377,8 +361,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isReviewCompleted() {
@@ -386,8 +369,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReviewCompleted(boolean newReviewCompleted) {
@@ -398,8 +380,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getReviewCompletedCode() {
@@ -407,8 +388,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReviewCompletedCode(int newReviewCompletedCode) {
@@ -419,8 +399,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -446,8 +425,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -479,8 +457,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -526,8 +503,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -568,8 +544,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -600,8 +575,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -622,8 +596,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -644,8 +617,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

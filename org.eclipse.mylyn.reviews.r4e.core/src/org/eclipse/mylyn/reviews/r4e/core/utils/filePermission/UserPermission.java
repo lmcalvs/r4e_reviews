@@ -21,7 +21,6 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class UserPermission {
 	// ------------------------------------------------------------------------
@@ -42,8 +41,7 @@ public class UserPermission {
 			file.createNewFile();
 			Activator.fTracer.traceInfo("Create a file is allowed: " + fileSt);
 		} catch (IOException e) {
-			Activator.fTracer.traceInfo("UserPermission.canWrite() Create a  file is NOT allow: "
-							+ e.getMessage());
+			Activator.fTracer.traceInfo("UserPermission.canWrite() Create a  file is NOT allow: " + e.getMessage());
 			ok = false;
 		}
 
@@ -51,8 +49,7 @@ public class UserPermission {
 		if (file.exists()) {
 			Boolean del;
 			del = file.delete();
-			Activator.fTracer.traceInfo("UserPermission Temp file " + file.getAbsolutePath()
-					+ " deleted: " + del);
+			Activator.fTracer.traceInfo("UserPermission Temp file " + file.getAbsolutePath() + " deleted: " + del);
 		}
 		return ok;
 	}
@@ -62,15 +59,12 @@ public class UserPermission {
 	 */
 	public static void main(String[] args) {
 		// Test to write in a specific directory
-		String[] dir = { "C:aa.txt",
-				"E:/R4EStorage/R4ERevs2/r4eGroup/testFile",
-				"E:/R4EStorage/testFile", "E:/R4EStorage/R4ERevs/testFile",
-				"E:/R4EStorage/June2008/testFile", "C:/allo.tst" };
+		String[] dir = { "C:aa.txt", "E:/R4EStorage/R4ERevs2/r4eGroup/testFile", "E:/R4EStorage/testFile",
+				"E:/R4EStorage/R4ERevs/testFile", "E:/R4EStorage/June2008/testFile", "C:/allo.tst" };
 		for (int index = 0; index < dir.length; index++) {
 			System.out.println("---------------------------------------");
 			Boolean b = UserPermission.canWrite(dir[index]);
-			System.out.println("UserPermision dir: " + dir[index]
-					+ "\n\t canWrite: " + b);
+			System.out.println("UserPermision dir: " + dir[index] + "\n\t canWrite: " + b);
 		}
 	}
 

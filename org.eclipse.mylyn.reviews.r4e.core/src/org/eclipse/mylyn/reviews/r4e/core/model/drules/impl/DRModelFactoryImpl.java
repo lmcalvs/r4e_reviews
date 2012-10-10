@@ -26,16 +26,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
  * @generated
  */
 public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	/**
 	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static DRModelFactory init() {
@@ -53,8 +50,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 
 	/**
 	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public DRModelFactoryImpl() {
@@ -62,8 +58,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -79,8 +74,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -96,8 +90,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -113,8 +106,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleCollection createR4EDesignRuleCollection() {
@@ -123,8 +115,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRule createR4EDesignRule() {
@@ -133,8 +124,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleArea createR4EDesignRuleArea() {
@@ -143,8 +133,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleViolation createR4EDesignRuleViolation() {
@@ -153,8 +142,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleRank createR4EDesignRuleRankFromString(EDataType eDataType, String initialValue) {
@@ -164,8 +152,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EDesignRuleRankToString(EDataType eDataType, Object instanceValue) {
@@ -173,8 +160,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleClass createR4EDesignRuleClassFromString(EDataType eDataType, String initialValue) {
@@ -184,8 +170,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String convertR4EDesignRuleClassToString(EDataType eDataType, Object instanceValue) {
@@ -193,8 +178,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public DRModelPackage getDRModelPackage() {
@@ -202,8 +186,7 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @deprecated
 	 * @generated
 	 */

@@ -30,9 +30,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map Date To Duration</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map Date To Duration</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -46,8 +45,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entry<Date,Integer> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,8 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -66,8 +65,8 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 
 	/**
 	 * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -76,8 +75,8 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -85,8 +84,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	protected Integer value = VALUE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapDateToDurationImpl() {
@@ -94,8 +92,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -104,8 +101,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getTypedKey() {
@@ -113,8 +109,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(Date newKey) {
@@ -125,8 +120,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Integer getTypedValue() {
@@ -134,8 +128,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(Integer newValue) {
@@ -146,8 +139,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -162,8 +154,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -180,8 +171,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -198,8 +188,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -214,8 +203,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -232,15 +220,13 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -252,8 +238,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -261,8 +246,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getKey() {
@@ -270,8 +254,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(Date key) {
@@ -279,8 +262,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Integer getValue() {
@@ -288,8 +270,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Integer setValue(Integer value) {
@@ -299,8 +280,7 @@ public class MapDateToDurationImpl extends EObjectImpl implements BasicEMap.Entr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

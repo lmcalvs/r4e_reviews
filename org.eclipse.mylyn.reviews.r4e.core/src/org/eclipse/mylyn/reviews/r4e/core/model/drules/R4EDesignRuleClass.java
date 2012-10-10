@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Design Rule Class</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Design Rule Class</b></em>',
+ * and utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleClass()
  * @model
  * @generated
@@ -32,8 +30,7 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EDesignRuleClass implements Enumerator {
 	/**
 	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_ERRONEOUS_VALUE
 	 * @generated
 	 * @ordered
@@ -42,16 +39,14 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_SUPERFLUOUS_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_CLASS_SUPERFLUOUS(1, "R4E_CLASS_SUPERFLUOUS", "R4E_CLASS_SUPERFLUOUS"), /**
 	 * The '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_IMPROVEMENT_VALUE
 	 * @generated
 	 * @ordered
@@ -60,24 +55,21 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E CLASS QUESTION</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_QUESTION_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_CLASS_QUESTION(3, "R4E_CLASS_QUESTION", "R4E_CLASS_QUESTION"), /**
 	 * The '<em><b>R4E CLASS COMMENT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_COMMENT_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_CLASS_COMMENT(4, "R4E_CLASS_COMMENT", "R4E_CLASS_COMMENT"), /**
 	 * The '<em><b>R4E CLASS MISSING</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_CLASS_MISSING_VALUE
 	 * @generated
 	 * @ordered
@@ -88,8 +80,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_ERRONEOUS
@@ -103,8 +95,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_SUPERFLUOUS
@@ -118,8 +110,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_IMPROVEMENT
@@ -133,8 +125,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS QUESTION</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS QUESTION</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS QUESTION</b></em>' literal object isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_QUESTION
@@ -148,8 +140,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS COMMENT</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS COMMENT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS COMMENT</b></em>' literal object isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_COMMENT
@@ -163,8 +155,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * The '<em><b>R4E CLASS MISSING</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS MISSING</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E CLASS MISSING</b></em>' literal object isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_CLASS_MISSING
@@ -176,12 +168,11 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * An array of all the '<em><b>R4E Design Rule Class</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
-	private static final R4EDesignRuleClass[] VALUES_ARRAY =
-		new R4EDesignRuleClass[] {
+	private static final R4EDesignRuleClass[] VALUES_ARRAY = new R4EDesignRuleClass[] {
 			R4E_CLASS_ERRONEOUS,
 			R4E_CLASS_SUPERFLUOUS,
 			R4E_CLASS_IMPROVEMENT,
@@ -200,8 +191,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleClass get(String literal) {
@@ -216,8 +207,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleClass getByName(String name) {
@@ -232,8 +223,8 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDesignRuleClass get(int value) {
@@ -249,30 +240,26 @@ public enum R4EDesignRuleClass implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EDesignRuleClass(int value, String name, String literal) {
@@ -282,8 +269,7 @@ public enum R4EDesignRuleClass implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -291,8 +277,7 @@ public enum R4EDesignRuleClass implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -300,8 +285,7 @@ public enum R4EDesignRuleClass implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -310,13 +294,13 @@ public enum R4EDesignRuleClass implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EDesignRuleClass

@@ -19,7 +19,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.IResSerializa
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class ChangeResSetController extends ChangeResController {
 	// ------------------------------------------------------------------------
@@ -60,6 +59,4 @@ public class ChangeResSetController extends ChangeResController {
 		}
 	}
 
-
 }
-	

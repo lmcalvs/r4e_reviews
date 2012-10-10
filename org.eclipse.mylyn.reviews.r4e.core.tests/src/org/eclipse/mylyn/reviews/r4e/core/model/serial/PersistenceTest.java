@@ -43,24 +43,28 @@ import org.junit.Before;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class PersistenceTest extends TestCase {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static final URI		fGoldenGroup	= TstGeneral.GOLDEN_GROUP_FILE;
-	private static File				fTestDir;
+	private static final URI fGoldenGroup = TstGeneral.GOLDEN_GROUP_FILE;
+
+	private static File fTestDir;
 
 	// ------------------------------------------------------------------------
 	// Instance Variables
 	// ------------------------------------------------------------------------
-	private final RModelFactoryExt	fResFactory		= SerializeFactory.getModelExtension();
-	private final ResourceUpdater	fUpdater		= SerializeFactory.getResourceSetUpdater();
-	private R4EReviewGroup			fGroup			= null;
-	private static File				fRootTestDir	= null;
-	private final String			fSep			= File.separator;
+	private final RModelFactoryExt fResFactory = SerializeFactory.getModelExtension();
+
+	private final ResourceUpdater fUpdater = SerializeFactory.getResourceSetUpdater();
+
+	private R4EReviewGroup fGroup = null;
+
+	private static File fRootTestDir = null;
+
+	private final String fSep = File.separator;
 
 	// ------------------------------------------------------------------------
 	// RWCommon
@@ -75,7 +79,7 @@ public class PersistenceTest extends TestCase {
 		if (!base.endsWith(File.separator)) {
 			base = base + File.separator;
 		}
-		
+
 		fRootTestDir = new File(base + "r4eTst");
 
 		// Resolve golden group storage dir
@@ -145,7 +149,6 @@ public class PersistenceTest extends TestCase {
 			e.printStackTrace();
 			fail("Exception");
 		}
-
 
 		// Modify element
 		int spentTime = 100;

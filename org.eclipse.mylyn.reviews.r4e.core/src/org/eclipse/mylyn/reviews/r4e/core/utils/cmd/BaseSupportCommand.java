@@ -21,7 +21,6 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class BaseSupportCommand {
 
@@ -88,16 +87,15 @@ public class BaseSupportCommand {
 			}
 
 			if (errorStream.isAlive()) {
-				str.append("\nerrorStream is alive: Java Process exit value: "
-						+ exitValue);
+				str.append("\nerrorStream is alive: Java Process exit value: " + exitValue);
 				Activator.fTracer.traceInfo(str.toString());
 			}
 		}
 
 		if (exitValue == 0) {
-			results = outputStream.getLines();			
+			results = outputStream.getLines();
 		} else {
-			results = errorStream.getLines();			
+			results = errorStream.getLines();
 		}
 
 		// Print errors, if any

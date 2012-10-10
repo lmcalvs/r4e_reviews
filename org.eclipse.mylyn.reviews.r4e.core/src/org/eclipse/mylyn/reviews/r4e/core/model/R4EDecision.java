@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Decision</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Decision</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EDecision()
  * @model
  * @generated
@@ -32,8 +30,7 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EDecision implements Enumerator {
 	/**
 	 * The '<em><b>R4E REVIEW DECISION NONE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_NONE_VALUE
 	 * @generated
 	 * @ordered
@@ -42,8 +39,7 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_ACCEPTED_VALUE
 	 * @generated
 	 * @ordered
@@ -52,18 +48,18 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP(2, "R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP", "R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP"),
+	R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP(2, "R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP",
+			"R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP"),
 
 	/**
 	 * The '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_REJECTED_VALUE
 	 * @generated
 	 * @ordered
@@ -74,8 +70,8 @@ public enum R4EDecision implements Enumerator {
 	 * The '<em><b>R4E REVIEW DECISION NONE</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW DECISION NONE</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW DECISION NONE</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_NONE
@@ -89,8 +85,8 @@ public enum R4EDecision implements Enumerator {
 	 * The '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_ACCEPTED
@@ -104,8 +100,8 @@ public enum R4EDecision implements Enumerator {
 	 * The '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal object isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP
@@ -119,8 +115,8 @@ public enum R4EDecision implements Enumerator {
 	 * The '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_DECISION_REJECTED
@@ -132,12 +128,10 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * An array of all the '<em><b>R4E Decision</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final R4EDecision[] VALUES_ARRAY =
-		new R4EDecision[] {
+	private static final R4EDecision[] VALUES_ARRAY = new R4EDecision[] {
 			R4E_REVIEW_DECISION_NONE,
 			R4E_REVIEW_DECISION_ACCEPTED,
 			R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP,
@@ -146,16 +140,16 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>R4E Decision</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static final List<R4EDecision> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
 	 * Returns the '<em><b>R4E Decision</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDecision get(String literal) {
@@ -170,8 +164,8 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Decision</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDecision getByName(String name) {
@@ -186,8 +180,8 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Decision</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EDecision get(int value) {
@@ -201,30 +195,26 @@ public enum R4EDecision implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EDecision(int value, String name, String literal) {
@@ -234,8 +224,7 @@ public enum R4EDecision implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -243,8 +232,7 @@ public enum R4EDecision implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -252,8 +240,7 @@ public enum R4EDecision implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -262,13 +249,13 @@ public enum R4EDecision implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EDecision

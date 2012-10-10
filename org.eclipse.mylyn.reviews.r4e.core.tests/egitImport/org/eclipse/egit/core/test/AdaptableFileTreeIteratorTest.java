@@ -48,33 +48,28 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 		fileWriter.write("aaaaaaaaaaa");
 		fileWriter.close();
 
-		final ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject(), gitDir);
+		final ConnectProviderOperation operation = new ConnectProviderOperation(project.getProject(), gitDir);
 		operation.execute(null);
 	}
 
 	@Test
 	public void testFileTreeToContainerAdaptation() throws IOException {
-		final IWorkspaceRoot root = project.getProject().getWorkspace()
-				.getRoot();
+		final IWorkspaceRoot root = project.getProject().getWorkspace().getRoot();
 
 		final TreeWalk treeWalk = new TreeWalk(repository);
 		treeWalk.addTree(new AdaptableFileTreeIterator(repository, root));
 		treeWalk.setRecursive(true);
 
 		final IFile eclipseFile = project.getProject().getFile(file.getName());
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(eclipseFile);
-		final Set<String> repositoryPaths = Collections.singleton(mapping
-				.getRepoRelativePath(eclipseFile));
+		final RepositoryMapping mapping = RepositoryMapping.getMapping(eclipseFile);
+		final Set<String> repositoryPaths = Collections.singleton(mapping.getRepoRelativePath(eclipseFile));
 
 		assertTrue(repositoryPaths.size() == 1);
 		treeWalk.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
 
 		assertTrue(treeWalk.next());
 
-		final WorkingTreeIterator iterator = treeWalk.getTree(0,
-				WorkingTreeIterator.class);
+		final WorkingTreeIterator iterator = treeWalk.getTree(0, WorkingTreeIterator.class);
 		assertTrue(iterator instanceof ContainerTreeIterator);
 	}
 }

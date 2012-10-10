@@ -26,20 +26,16 @@ public abstract class DualRepositoryTestCase {
 
 	protected IProject testProject;
 
-	protected IProject importProject(TestRepository repo, String projectName)
-			throws Exception {
-		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectName);
+	protected IProject importProject(TestRepository repo, String projectName) throws Exception {
+		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 		if (firstProject.exists())
 			firstProject.delete(false, null);
-		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription(projectName);
+		IProjectDescription desc = ResourcesPlugin.getWorkspace().newProjectDescription(projectName);
 		File parentFile = repo.getRepository().getWorkTree();
 		desc.setLocation(new Path(new File(parentFile, projectName).getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
-		ConnectProviderOperation cop = new ConnectProviderOperation(
-				firstProject, repo.getRepository().getDirectory());
+		ConnectProviderOperation cop = new ConnectProviderOperation(firstProject, repo.getRepository().getDirectory());
 		cop.execute(null);
 		return firstProject;
 	}

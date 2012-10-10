@@ -19,26 +19,29 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Review Group</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getFolder <em>Folder</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDefaultEntryCriteria <em>Default Entry Criteria</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableProjects <em>Available Projects</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableComponents <em>Available Components</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDesignRuleLocations <em>Design Rule Locations</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableAnomalyTypes <em>Available Anomaly Types</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAnomalyTypeKeyToReference <em>Anomaly Type Key To Reference</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap <em>Reviews Map</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getUserReviews <em>User Reviews</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getFolder <em>Folder</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDefaultEntryCriteria <em>Default Entry Criteria
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableProjects <em>Available Projects</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableComponents <em>Available Components
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDesignRuleLocations <em>Design Rule Locations
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableAnomalyTypes <em>Available Anomaly
+ * Types</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAnomalyTypeKeyToReference <em>Anomaly Type Key
+ * To Reference</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap <em>Reviews Map</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getUserReviews <em>User Reviews</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReviewGroup()
  * @model extendedMetaData="name='R4EReviewGroup'"
  * @generated
@@ -48,8 +51,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
@@ -62,8 +64,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -74,8 +75,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Folder</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Folder</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Folder</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Folder</em>' attribute.
@@ -88,8 +89,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getFolder <em>Folder</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Folder</em>' attribute.
 	 * @see #getFolder()
 	 * @generated
@@ -100,8 +100,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Default Entry Criteria</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Default Entry Criteria</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Default Entry Criteria</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Default Entry Criteria</em>' attribute.
@@ -114,8 +114,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDefaultEntryCriteria <em>Default Entry Criteria</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Default Entry Criteria</em>' attribute.
 	 * @see #getDefaultEntryCriteria()
 	 * @generated
@@ -127,8 +126,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Available Projects</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Available Projects</em>' attribute list isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Available Projects</em>' attribute list.
@@ -143,8 +142,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Available Components</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Available Components</em>' attribute list isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Available Components</em>' attribute list.
@@ -159,8 +158,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Design Rule Locations</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Design Rule Locations</em>' attribute list isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Design Rule Locations</em>' attribute list.
@@ -175,8 +174,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Available Anomaly Types</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Available Anomaly Types</em>' attribute list isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Available Anomaly Types</em>' containment reference list.
@@ -192,8 +191,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Anomaly Type Key To Reference</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Anomaly Type Key To Reference</em>' map isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Anomaly Type Key To Reference</em>' map.
@@ -209,8 +208,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Reviews Map</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Reviews Map</em>' map isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reviews Map</em>' map.
@@ -226,8 +225,8 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>User Reviews</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>User Reviews</em>' map isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>User Reviews</em>' map.

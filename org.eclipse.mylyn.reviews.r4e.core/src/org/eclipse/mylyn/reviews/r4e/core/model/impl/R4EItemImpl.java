@@ -38,9 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Item</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Item</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -62,8 +60,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	/**
 	 * The cached value of the '{@link #getAddedBy() <em>Added By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAddedBy()
 	 * @generated
 	 * @ordered
@@ -72,8 +70,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getReview() <em>Review</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getReview()
 	 * @generated
 	 * @ordered
@@ -82,8 +80,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -92,8 +90,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -102,8 +100,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The default value of the '{@link #getAddedById() <em>Added By Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAddedById()
 	 * @generated
 	 * @ordered
@@ -112,8 +110,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getAddedById() <em>Added By Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAddedById()
 	 * @generated
 	 * @ordered
@@ -122,8 +120,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getFileContextList() <em>File Context List</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getFileContextList()
 	 * @generated
 	 * @ordered
@@ -152,8 +149,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getProjectURIs() <em>Project UR Is</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getProjectURIs()
 	 * @generated
 	 * @ordered
@@ -162,8 +159,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The default value of the '{@link #getAuthorRep() <em>Author Rep</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAuthorRep()
 	 * @generated
 	 * @ordered
@@ -172,8 +169,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getAuthorRep() <em>Author Rep</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAuthorRep()
 	 * @generated
 	 * @ordered
@@ -182,8 +179,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The default value of the '{@link #getSubmitted() <em>Submitted</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSubmitted()
 	 * @generated
 	 * @ordered
@@ -192,8 +189,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 
 	/**
 	 * The cached value of the '{@link #getSubmitted() <em>Submitted</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSubmitted()
 	 * @generated
 	 * @ordered
@@ -201,9 +198,9 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	protected Date submitted = SUBMITTED_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfoAtt()
 	 * @generated
 	 * @ordered
@@ -211,8 +208,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	protected EMap<String, String> infoAtt;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EItemImpl() {
@@ -220,8 +216,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -230,8 +225,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public User getAddedBy() {
@@ -247,8 +241,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public User basicGetAddedBy() {
@@ -256,8 +249,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAddedBy(User newAddedBy) {
@@ -268,8 +260,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Review getReview() {
@@ -285,8 +276,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Review basicGetReview() {
@@ -294,8 +284,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setReview(Review newReview) {
@@ -306,8 +295,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getDescription() {
@@ -315,8 +303,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDescription(String newDescription) {
@@ -327,8 +314,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getAddedById() {
@@ -336,8 +322,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAddedById(String newAddedById) {
@@ -348,8 +333,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EFileContext> getFileContextList() {
@@ -360,8 +344,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getRepositoryRef() {
@@ -369,8 +352,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRepositoryRef(String newRepositoryRef) {
@@ -381,8 +363,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getProjectURIs() {
@@ -393,8 +374,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getAuthorRep() {
@@ -402,8 +382,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAuthorRep(String newAuthorRep) {
@@ -414,8 +393,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getSubmitted() {
@@ -423,8 +401,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSubmitted(Date newSubmitted) {
@@ -435,8 +412,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getInfoAtt() {
@@ -447,8 +423,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -463,8 +438,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -498,8 +472,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -543,8 +516,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -585,8 +557,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -617,8 +588,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -634,8 +604,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -651,8 +620,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

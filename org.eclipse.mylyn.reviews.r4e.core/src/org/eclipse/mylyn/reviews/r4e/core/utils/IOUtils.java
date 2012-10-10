@@ -20,7 +20,6 @@ import org.eclipse.jgit.util.IO;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class IOUtils {
 	// ------------------------------------------------------------------------

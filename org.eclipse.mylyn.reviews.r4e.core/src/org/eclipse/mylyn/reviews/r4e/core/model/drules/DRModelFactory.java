@@ -17,26 +17,23 @@ package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Factory</b> for the model.
- * It provides a create method for each non-abstract class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
+ * the model. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage
  * @generated
  */
 public interface DRModelFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	DRModelFactory eINSTANCE = org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.DRModelFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>R4E Design Rule Collection</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns a new object of class '<em>R4E Design Rule Collection</em>'. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @return a new object of class '<em>R4E Design Rule Collection</em>'.
 	 * @generated
 	 */
@@ -44,8 +41,7 @@ public interface DRModelFactory extends EFactory {
 
 	/**
 	 * Returns a new object of class '<em>R4E Design Rule</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Design Rule</em>'.
 	 * @generated
 	 */
@@ -53,8 +49,7 @@ public interface DRModelFactory extends EFactory {
 
 	/**
 	 * Returns a new object of class '<em>R4E Design Rule Area</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Design Rule Area</em>'.
 	 * @generated
 	 */
@@ -62,8 +57,7 @@ public interface DRModelFactory extends EFactory {
 
 	/**
 	 * Returns a new object of class '<em>R4E Design Rule Violation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Design Rule Violation</em>'.
 	 * @generated
 	 */
@@ -71,8 +65,7 @@ public interface DRModelFactory extends EFactory {
 
 	/**
 	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

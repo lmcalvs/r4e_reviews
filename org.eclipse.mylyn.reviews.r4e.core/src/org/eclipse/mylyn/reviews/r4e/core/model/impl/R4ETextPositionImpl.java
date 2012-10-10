@@ -24,19 +24,19 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Text Position</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Text Position</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getStartPosition <em>Start Position</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getLength <em>Length</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getStartLine <em>Start Line</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getEndLine <em>End Line</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getStartPosition <em>Start Position
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getLength <em>Length</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getStartLine <em>Start Line</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl#getEndLine <em>End Line</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosition {
@@ -62,8 +62,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The default value of the '{@link #getLength() <em>Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getLength()
 	 * @generated
 	 * @ordered
@@ -72,8 +72,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The cached value of the '{@link #getLength() <em>Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getLength()
 	 * @generated
 	 * @ordered
@@ -82,8 +82,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The default value of the '{@link #getStartLine() <em>Start Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartLine()
 	 * @generated
 	 * @ordered
@@ -92,8 +92,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The cached value of the '{@link #getStartLine() <em>Start Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getStartLine()
 	 * @generated
 	 * @ordered
@@ -102,8 +102,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The default value of the '{@link #getEndLine() <em>End Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndLine()
 	 * @generated
 	 * @ordered
@@ -112,8 +112,8 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 
 	/**
 	 * The cached value of the '{@link #getEndLine() <em>End Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getEndLine()
 	 * @generated
 	 * @ordered
@@ -121,8 +121,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	protected int endLine = END_LINE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4ETextPositionImpl() {
@@ -130,8 +129,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -140,8 +138,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getStartPosition() {
@@ -149,8 +146,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStartPosition(int newStartPosition) {
@@ -161,8 +157,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getLength() {
@@ -170,8 +165,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLength(int newLength) {
@@ -182,8 +176,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getStartLine() {
@@ -191,8 +184,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStartLine(int newStartLine) {
@@ -203,8 +195,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getEndLine() {
@@ -212,8 +203,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setEndLine(int newEndLine) {
@@ -224,8 +214,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -244,8 +233,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -268,8 +256,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -292,8 +279,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -312,8 +298,7 @@ public class R4ETextPositionImpl extends R4EPositionImpl implements R4ETextPosit
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

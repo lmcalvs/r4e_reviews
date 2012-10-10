@@ -30,9 +30,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Design Rule Area</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Design Rule Area</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -45,9 +44,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
  */
 public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDesignRuleArea {
 	/**
-	 * The cached value of the '{@link #getViolations() <em>Violations</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getViolations() <em>Violations</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getViolations()
 	 * @generated
 	 * @ordered
@@ -55,9 +54,9 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	protected EList<R4EDesignRuleViolation> violations;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -65,9 +64,9 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -75,8 +74,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EDesignRuleAreaImpl() {
@@ -84,8 +82,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -94,8 +91,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EDesignRuleViolation> getViolations() {
@@ -106,8 +102,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -115,8 +110,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -127,8 +121,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -141,8 +134,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -157,8 +149,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -177,8 +168,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -195,8 +185,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -211,8 +200,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

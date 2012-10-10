@@ -65,7 +65,8 @@ public abstract class ReviewCompareEditorInputListener extends ReviewEditorInput
 	 * @param aAnnotationModel
 	 *            IReviewAnnotationModel
 	 */
-	public ReviewCompareEditorInputListener(MergeSourceViewer aMergeSourceViewer, IReviewAnnotationModel aAnnotationModel) {
+	public ReviewCompareEditorInputListener(MergeSourceViewer aMergeSourceViewer,
+			IReviewAnnotationModel aAnnotationModel) {
 		super(ReviewAnnotationSupport.getSourceViewer(aMergeSourceViewer), aAnnotationModel);
 		fMergeSourceViewer = aMergeSourceViewer;
 	}
@@ -125,10 +126,10 @@ public abstract class ReviewCompareEditorInputListener extends ReviewEditorInput
 		hoverManager.set(fSourceViewer, reviewInformationControlManager);
 		reviewInformationControlManager.install(ruler.getControl());
 		if (ReviewAnnotationConfigFactory.getUseInformationControlReplacer()) {
-		reviewInformationControlManager.getInternalAccessor().setInformationControlReplacer(
-				new StickyHoverManager((SourceViewer) fSourceViewer));
+			reviewInformationControlManager.getInternalAccessor().setInformationControlReplacer(
+					new StickyHoverManager((SourceViewer) fSourceViewer));
 		}
-		
+
 		//This creates the extra vertical ruler that will be used to display the annotations
 		boolean hasDecorator = false;
 		final Iterator<?> iter = (ruler).getDecoratorIterator();

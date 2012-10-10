@@ -17,9 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Content</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Content</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -38,8 +36,8 @@ public interface R4EContent extends Location {
 	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Location</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Location</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Location</em>' containment reference.
@@ -52,8 +50,7 @@ public interface R4EContent extends Location {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getLocation <em>Location</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Location</em>' containment reference.
 	 * @see #getLocation()
 	 * @generated
@@ -64,8 +61,7 @@ public interface R4EContent extends Location {
 	 * Returns the value of the '<em><b>Info</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Info</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Info</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info</em>' attribute.
@@ -78,8 +74,7 @@ public interface R4EContent extends Location {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContent#getInfo <em>Info</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Info</em>' attribute.
 	 * @see #getInfo()
 	 * @generated

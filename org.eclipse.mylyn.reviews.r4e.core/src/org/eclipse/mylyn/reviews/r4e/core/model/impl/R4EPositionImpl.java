@@ -20,9 +20,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Position</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Position</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
  *
@@ -30,8 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  */
 public class R4EPositionImpl extends EObjectImpl implements R4EPosition {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EPositionImpl() {
@@ -39,8 +36,7 @@ public class R4EPositionImpl extends EObjectImpl implements R4EPosition {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

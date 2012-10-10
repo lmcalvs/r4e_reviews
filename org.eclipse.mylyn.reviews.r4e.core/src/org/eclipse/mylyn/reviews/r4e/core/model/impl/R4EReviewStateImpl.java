@@ -24,32 +24,32 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Review State</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review State</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl#getState <em>State</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl#getState <em>State</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewState {
 	/**
 	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getState()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final R4EReviewPhase STATE_EDEFAULT = R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
+
 	/**
-	 * The cached value of the '{@link #getState() <em>State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getState() <em>State</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getState()
 	 * @generated
 	 * @ordered
@@ -57,8 +57,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	protected R4EReviewPhase state = STATE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EReviewStateImpl() {
@@ -66,8 +65,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -76,8 +74,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhase getState() {
@@ -85,8 +82,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setState(R4EReviewPhase newState) {
@@ -97,8 +93,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -111,8 +106,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -126,8 +120,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -141,8 +134,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -155,8 +147,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

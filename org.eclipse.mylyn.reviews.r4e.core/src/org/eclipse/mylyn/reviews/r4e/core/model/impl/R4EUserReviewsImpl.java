@@ -38,26 +38,26 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E User Reviews</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E User Reviews</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getInvitedToMap <em>Invited To Map</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getGroup <em>Group</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getCreatedReviews <em>Created Reviews</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getInvitedToMap <em>Invited To Map</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getGroup <em>Group</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getCreatedReviews <em>Created Reviews
+ * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -65,9 +65,9 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -76,8 +76,8 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 
 	/**
 	 * The cached value of the '{@link #getInvitedToMap() <em>Invited To Map</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getInvitedToMap()
 	 * @generated
 	 * @ordered
@@ -85,9 +85,9 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	protected EMap<String, R4EReview> invitedToMap;
 
 	/**
-	 * The cached value of the '{@link #getGroup() <em>Group</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getGroup() <em>Group</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getGroup()
 	 * @generated
 	 * @ordered
@@ -95,9 +95,9 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	protected R4EReviewGroup group;
 
 	/**
-	 * The cached value of the '{@link #getCreatedReviews() <em>Created Reviews</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getCreatedReviews() <em>Created Reviews</em>}' attribute list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getCreatedReviews()
 	 * @generated
 	 * @ordered
@@ -105,8 +105,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	protected EList<String> createdReviews;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EUserReviewsImpl() {
@@ -114,8 +113,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -124,8 +122,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -133,8 +130,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -145,8 +141,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, R4EReview> getInvitedToMap() {
@@ -157,8 +152,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewGroup getGroup() {
@@ -174,8 +168,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewGroup basicGetGroup() {
@@ -183,8 +176,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setGroup(R4EReviewGroup newGroup) {
@@ -195,8 +187,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getCreatedReviews() {
@@ -207,8 +198,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -221,8 +211,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -243,8 +232,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -269,8 +257,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -293,8 +280,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -313,8 +299,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

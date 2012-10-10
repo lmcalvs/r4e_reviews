@@ -18,31 +18,28 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Review Res</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Review Res</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes#getUsersRes <em>Users Res</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes#getUsersRes <em>Users Res</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage#getReviewRes()
  * @model
  * @generated
  */
 public interface ReviewRes extends R4EFormalReview {
 	/**
-	 * Returns the value of the '<em><b>Users Res</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser}.
-	 * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Users Res</b></em>' containment reference list. The list contents are of type
+	 * {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser}. <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Users Res</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Users Res</em>' containment reference list isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Users Res</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage#getReviewRes_UsersRes()
 	 * @model containment="true" resolveProxies="true"

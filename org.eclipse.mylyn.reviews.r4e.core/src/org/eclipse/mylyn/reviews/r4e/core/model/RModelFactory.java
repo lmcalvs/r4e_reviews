@@ -20,27 +20,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Factory</b> for the model.
- * It provides a create method for each non-abstract class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
+ * the model. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage
  */
 public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	/**
 	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	RModelFactory eINSTANCE = org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
 
-
-
 	/**
 	 * Returns a new object of class '<em>R4E Review Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review Group</em>'.
 	 * @generated
 	 */
@@ -48,8 +43,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Review</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review</em>'.
 	 * @generated
 	 */
@@ -57,8 +51,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Anomaly</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Anomaly</em>'.
 	 * @generated
 	 */
@@ -66,8 +59,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Formal Review</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Formal Review</em>'.
 	 * @generated
 	 */
@@ -75,8 +67,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Text Position</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Text Position</em>'.
 	 * @generated
 	 */
@@ -84,8 +75,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Review Decision</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review Decision</em>'.
 	 * @generated
 	 */
@@ -93,8 +83,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E User</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E User</em>'.
 	 * @generated
 	 */
@@ -102,8 +91,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Participant</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Participant</em>'.
 	 * @generated
 	 */
@@ -111,8 +99,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Item</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Item</em>'.
 	 * @generated
 	 */
@@ -120,8 +107,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Text Content</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Text Content</em>'.
 	 * @generated
 	 */
@@ -129,8 +115,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4EID</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4EID</em>'.
 	 * @generated
 	 */
@@ -138,8 +123,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Anomaly Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Anomaly Type</em>'.
 	 * @generated
 	 */
@@ -147,8 +131,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Task Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Task Reference</em>'.
 	 * @generated
 	 */
@@ -156,8 +139,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Review State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review State</em>'.
 	 * @generated
 	 */
@@ -165,8 +147,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Comment</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Comment</em>'.
 	 * @generated
 	 */
@@ -174,8 +155,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Review Component</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review Component</em>'.
 	 * @generated
 	 */
@@ -183,8 +163,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E File Context</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E File Context</em>'.
 	 * @generated
 	 */
@@ -192,8 +171,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Delta</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Delta</em>'.
 	 * @generated
 	 */
@@ -201,8 +179,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Comment Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Comment Type</em>'.
 	 * @generated
 	 */
@@ -210,8 +187,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Position</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Position</em>'.
 	 * @generated
 	 */
@@ -219,8 +195,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E File Version</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E File Version</em>'.
 	 * @generated
 	 */
@@ -228,8 +203,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E User Reviews</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E User Reviews</em>'.
 	 * @generated
 	 */
@@ -237,8 +211,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4EID Component</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4EID Component</em>'.
 	 * @generated
 	 */
@@ -246,8 +219,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Anomaly Text Position</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Anomaly Text Position</em>'.
 	 * @generated
 	 */
@@ -255,8 +227,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Review Phase Info</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Review Phase Info</em>'.
 	 * @generated
 	 */
@@ -264,18 +235,18 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a new object of class '<em>R4E Meeting Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return a new object of class '<em>R4E Meeting Data</em>'.
 	 * @generated
 	 */
 	R4EMeetingData createR4EMeetingData();
 
 	/**
-	 * Returns an instance of data type '<em>R4E Anomaly State</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param literal a literal of the data type.
+	 * Returns an instance of data type '<em>R4E Anomaly State</em>' corresponding the given literal. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @param literal
+	 *            a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
 	 */
@@ -283,8 +254,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a literal representation of an instance of data type '<em>R4E Anomaly State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param instanceValue an instance value of the data type.
 	 * @return a literal representation of the instance value.
 	 * @generated
@@ -293,8 +264,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns an instance of data type '<em>R4E Review Phase</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
@@ -313,8 +284,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns an instance of data type '<em>R4E User Role</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
@@ -353,8 +324,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns an instance of data type '<em>R4E Review Type</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
@@ -373,8 +344,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns an instance of data type '<em>R4E Context Type</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
@@ -403,8 +374,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns a literal representation of an instance of data type '<em>IResource</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @param instanceValue an instance value of the data type.
 	 * @return a literal representation of the instance value.
 	 * @generated
@@ -413,8 +384,8 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns an instance of data type '<em>IFile Revision</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
@@ -433,8 +404,7 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 
 	/**
 	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

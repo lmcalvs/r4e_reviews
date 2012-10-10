@@ -30,6 +30,7 @@ import org.eclipse.jface.text.IRegion;
  * <p>
  * A <code>DocLineComparator</code> doesn't know anything about line separators because its notion of lines is solely
  * defined in the underlying <code>IDocument</code>.
+ * 
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
@@ -106,7 +107,6 @@ public class DocLineComparator implements ITokenComparator {
 	/**
 	 * Returns the number of lines in the document.
 	 * 
-	
 	 * @return number of lines * @see org.eclipse.compare.rangedifferencer.IRangeComparator#getRangeCount()
 	 */
 	public int getRangeCount() {
@@ -118,7 +118,9 @@ public class DocLineComparator implements ITokenComparator {
 	 */
 	/**
 	 * Method getTokenStart.
-	 * @param line int
+	 * 
+	 * @param line
+	 *            int
 	 * @return int
 	 * @see org.eclipse.compare.contentmergeviewer.ITokenComparator#getTokenStart(int)
 	 */
@@ -137,7 +139,9 @@ public class DocLineComparator implements ITokenComparator {
 	 */
 	/**
 	 * Method getTokenLength.
-	 * @param line int
+	 * 
+	 * @param line
+	 *            int
 	 * @return int
 	 * @see org.eclipse.compare.contentmergeviewer.ITokenComparator#getTokenLength(int)
 	 */
@@ -155,8 +159,8 @@ public class DocLineComparator implements ITokenComparator {
 	 *            the range comparator to compare this with
 	 * @param otherIndex
 	 *            the number of the line within the other comparator
-	
-	 * @return <code>true</code> if the lines are equal * @see org.eclipse.compare.rangedifferencer.IRangeComparator#rangesEqual(int, IRangeComparator, int)
+	 * @return <code>true</code> if the lines are equal * @see
+	 *         org.eclipse.compare.rangedifferencer.IRangeComparator#rangesEqual(int, IRangeComparator, int)
 	 */
 	public boolean rangesEqual(int thisIndex, IRangeComparator otherComparator, int otherIndex) {
 
@@ -190,8 +194,8 @@ public class DocLineComparator implements ITokenComparator {
 	 *            another number on which to base the decision whether to return <code>true</code> or <code>false</code>
 	 * @param other
 	 *            the other <code>IRangeComparator</code> to compare with
-	
-	 * @return <code>true</code> to avoid a too lengthy range comparison * @see org.eclipse.compare.rangedifferencer.IRangeComparator#skipRangeComparison(int, int, IRangeComparator)
+	 * @return <code>true</code> to avoid a too lengthy range comparison * @see
+	 *         org.eclipse.compare.rangedifferencer.IRangeComparator#skipRangeComparison(int, int, IRangeComparator)
 	 */
 	public boolean skipRangeComparison(int length, int maxLength, IRangeComparator other) {
 		return false;
@@ -204,8 +208,8 @@ public class DocLineComparator implements ITokenComparator {
 	 * 
 	 * @param line
 	 *            the number of the line to extract
-	
-	 * @return the contents of the line as a String */
+	 * @return the contents of the line as a String
+	 */
 	private String extract(int line) {
 		if (line < fLineCount) {
 			try {
@@ -220,8 +224,11 @@ public class DocLineComparator implements ITokenComparator {
 
 	/**
 	 * Method compare.
-	 * @param s1 String
-	 * @param s2 String
+	 * 
+	 * @param s1
+	 *            String
+	 * @param s2
+	 *            String
 	 * @return boolean
 	 */
 	private boolean compare(String s1, String s2) {

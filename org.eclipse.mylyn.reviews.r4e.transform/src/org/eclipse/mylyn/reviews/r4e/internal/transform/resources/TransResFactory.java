@@ -14,44 +14,39 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources;
 import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Factory</b> for the model.
- * It provides a create method for each non-abstract class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
+ * the model. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage
  * @generated
  */
 public interface TransResFactory extends EFactory {
 	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	TransResFactory eINSTANCE = org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Review Group Res</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns a new object of class '<em>Review Group Res</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return a new object of class '<em>Review Group Res</em>'.
 	 * @generated
 	 */
 	ReviewGroupRes createReviewGroupRes();
 
 	/**
-	 * Returns a new object of class '<em>Review Res</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns a new object of class '<em>Review Res</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return a new object of class '<em>Review Res</em>'.
 	 * @generated
 	 */
 	ReviewRes createReviewRes();
 
 	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

@@ -25,9 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Content</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Content</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -50,18 +48,19 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	protected R4EPosition location;
 
 	/**
-	 * The default value of the '{@link #getInfo() <em>Info</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getInfo() <em>Info</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfo()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String INFO_EDEFAULT = null;
+
 	/**
-	 * The cached value of the '{@link #getInfo() <em>Info</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfo() <em>Info</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfo()
 	 * @generated
 	 * @ordered
@@ -69,8 +68,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	protected String info = INFO_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EContentImpl() {
@@ -78,8 +76,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -88,8 +85,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EPosition getLocation() {
@@ -111,8 +107,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EPosition basicGetLocation() {
@@ -120,8 +115,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetLocation(R4EPosition newLocation, NotificationChain msgs) {
@@ -135,8 +129,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLocation(R4EPosition newLocation) {
@@ -154,8 +147,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getInfo() {
@@ -163,8 +155,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setInfo(String newInfo) {
@@ -175,8 +166,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -189,8 +179,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -206,8 +195,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -224,8 +212,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -242,8 +229,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -258,8 +244,7 @@ public abstract class R4EContentImpl extends LocationImpl implements R4EContent 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

@@ -50,22 +50,25 @@ public class R4EReviewGroupTest extends TestCase {
 	 * 
 	 * @generated
 	 */
-	protected R4EReviewGroup		fixture			= null;
-	private final IModelReader		fReader			= SerializeFactory.getReader();
-	private final IModelWriter		fWriter			= SerializeFactory.getWriter();
+	protected R4EReviewGroup fixture = null;
 
-	private final RModelFactoryExt	fFactory		= SerializeFactory.getModelExtension();
+	private final IModelReader fReader = SerializeFactory.getReader();
 
-	private static final String		fGroupPathStr	= "outGroupX";
-	private static URI				fGroupPath		= null;
+	private final IModelWriter fWriter = SerializeFactory.getWriter();
 
-	private static final String		GROUP_NAME		= "Group One";
-	private static final String		REVIEW_NAME1	= "Alpha 1";
+	private final RModelFactoryExt fFactory = SerializeFactory.getModelExtension();
 
-	private static final String		fUser1			= "au 1";
-	private File					fRootTestDir	= null;
+	private static final String fGroupPathStr = "outGroupX";
 
+	private static URI fGroupPath = null;
 
+	private static final String GROUP_NAME = "Group One";
+
+	private static final String REVIEW_NAME1 = "Alpha 1";
+
+	private static final String fUser1 = "au 1";
+
+	private File fRootTestDir = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -485,7 +488,7 @@ public class R4EReviewGroupTest extends TestCase {
 
 		// Action: Close the review
 		fFactory.closeR4EReview(oReview);
-		
+
 		try {
 			nReview = fFactory.openR4EReview(loadedGroup, dReviewName);
 		} catch (ResourceHandlingException e) {
@@ -495,7 +498,7 @@ public class R4EReviewGroupTest extends TestCase {
 			e.printStackTrace();
 			fail("Exception");
 		}
-		
+
 		assertNotNull("Opened Review is null", nReview);
 
 		// A new instance of the review should have been created

@@ -14,7 +14,6 @@ package org.eclipse.mylyn.reviews.notifications.core;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public interface IMeetingData {
 
@@ -53,6 +52,7 @@ public interface IMeetingData {
 	 * @param aBody
 	 */
 	public abstract void setBody(String aBody);
+
 	/**
 	 * Physical location information e.g. room details
 	 * 
@@ -64,6 +64,7 @@ public interface IMeetingData {
 	 * @param aLocation
 	 */
 	public abstract void setLocation(String aLocation);
+
 	/**
 	 * recommended to reflect a UTC value
 	 * 
@@ -87,6 +88,7 @@ public interface IMeetingData {
 	 * @param aDuration
 	 */
 	public abstract void setDuration(Integer aDuration);
+
 	/**
 	 * The organiser of the meeting (e-mail address)
 	 * 
@@ -141,6 +143,5 @@ public interface IMeetingData {
 	 * Reset the sent counter
 	 */
 	public abstract void clearSentCounter();
-
 
 }

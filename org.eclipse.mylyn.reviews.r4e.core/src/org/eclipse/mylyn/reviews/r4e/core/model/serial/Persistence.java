@@ -49,7 +49,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public interface Persistence {
 	// ------------------------------------------------------------------------
@@ -58,8 +57,9 @@ public interface Persistence {
 	public enum Roots {
 		GROUP("Group", "0.8.0"), REVIEW("Review", "0.12.0"), RULESET("RuleSet", "0.8.0");
 
-		private final String	fName;
-		private final String	fVersion;
+		private final String fName;
+
+		private final String fVersion;
 
 		Roots(String aName, String aVersion) {
 			fName = aName;
@@ -121,8 +121,8 @@ public interface Persistence {
 				CompatibilityException;
 
 		/**
-		 * The review group structure shall unload the associated resources and remove any references, the application is
-		 * responsible to remove any other references to this review group structure <br>
+		 * The review group structure shall unload the associated resources and remove any references, the application
+		 * is responsible to remove any other references to this review group structure <br>
 		 * 
 		 * @param aReviewGroup
 		 * @return
@@ -134,8 +134,9 @@ public interface Persistence {
 	public interface ReviewResFactory {
 
 		/**
-		 * Creates an R4EReview and its EMF Resource associated to the same ResourceSet as the one in the reviewGroup Uses a
-		 * locking mechanism before updating the EMF Resource associated to the R4EReviewGroup adminState of Review -> Open<br>
+		 * Creates an R4EReview and its EMF Resource associated to the same ResourceSet as the one in the reviewGroup
+		 * Uses a locking mechanism before updating the EMF Resource associated to the R4EReviewGroup adminState of
+		 * Review -> Open<br>
 		 * It also creates the first participant with the default role and its associated resource.
 		 * 
 		 * @param aReviewGroup
@@ -204,12 +205,12 @@ public interface Persistence {
 		public String closeR4EReview(R4EReview aReview);
 
 		/**
-		 * <b>Delete process Example</b> <list><li>Close the review</li><li>Mark the review as disabled</li> <li>Remove the
-		 * review entry from the EMF Resource associated to the R4EReviewGroup</li><br>
-		 * 
+		 * <b>Delete process Example</b> <list><li>Close the review</li><li>Mark the review as disabled</li> <li>Remove
+		 * the review entry from the EMF Resource associated to the R4EReviewGroup</li><br>
 		 * <br>
-		 * <b>if aDeleteOnDisk = true</b> <list> <li>The R4EGroup resource shall be updated and saved without the reference
-		 * to this review</li> <li>The Resources associated to this review shall be removed from the disk</li> </list>
+		 * <b>if aDeleteOnDisk = true</b> <list> <li>The R4EGroup resource shall be updated and saved without the
+		 * reference to this review</li> <li>The Resources associated to this review shall be removed from the disk</li>
+		 * </list>
 		 * 
 		 * @param aReview
 		 * @param aDeleteOnDisk
@@ -343,7 +344,6 @@ public interface Persistence {
 		 */
 		public R4EAnomaly createR4EAnomaly(R4EParticipant aParticipant) throws ResourceHandlingException;
 
-
 		/**
 		 * Creates a new ReviewComment entry for the given participant, the user is expected to be already associated to
 		 * a Review <br>
@@ -363,16 +363,14 @@ public interface Persistence {
 		 * @return
 		 * @throws ResourceHandlingException
 		 */
-		public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content)
-				throws ResourceHandlingException;
+		public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException;
 
 		/**
 		 * @param txtPosition
 		 * @return
 		 * @throws ResourceHandlingException
 		 */
-		public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition txtPosition)
-				throws ResourceHandlingException;
+		public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition txtPosition) throws ResourceHandlingException;
 
 		/**
 		 * Soft delete a previously created review comment,
@@ -392,7 +390,7 @@ public interface Persistence {
 		public void deleteR4EAnomaly(R4EAnomaly aAnomaly, boolean aDeleteOnDisk) throws ResourceHandlingException;
 
 	}
-	
+
 	public interface ResourceUpdater {
 		/**
 		 * Reserve Resource, Reload and update new references<br>
@@ -506,19 +504,17 @@ public interface Persistence {
 	 * Limit visibility to the methods related to construction for Persistence
 	 * 
 	 * @author Alvaro Sanchez-Leon
-	 * 
 	 */
 	public interface RModelFactoryExt extends Persistence, Persistence.GroupResFactory, Persistence.ReviewResFactory,
 			Persistence.UserItemResFactory, Persistence.UserCommentResFactory, Persistence.DRulesFactory,
 			Persistence.ModelAdapter {
-		RModelFactory	eINSTANCE	= org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
+		RModelFactory eINSTANCE = org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
 	}
 
 	/**
 	 * Interface to resolve the Resource serialization state (Active, Inactive)
 	 * 
 	 * @author Alvaro Sanchez-Leon
-	 * 
 	 */
 	interface IResSerializationState {
 		public boolean isSerializationInactive(Resource resource);
@@ -528,7 +524,6 @@ public interface Persistence {
 	 * Interface to control a registry list of resources with serialization state set to inactive
 	 * 
 	 * @author Alvaro Sanchez-Leon
-	 * 
 	 */
 	interface IResSerializationRegistry extends IResSerializationState {
 		public void addSerializationInactive(Resource resource);
@@ -539,4 +534,3 @@ public interface Persistence {
 	}
 
 }
-	

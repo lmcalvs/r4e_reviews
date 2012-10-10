@@ -26,56 +26,57 @@ import org.eclipse.jface.text.Position;
 public interface IReviewAnnotation {
 
 	/**
-	 * Method getPosition.  Get the position for the Annotation
+	 * Method getPosition. Get the position for the Annotation
 	 * 
 	 * @return Position - the annotation Position
 	 */
 	Position getPosition();
 
 	/**
-	 * Method getText.  Get the Annotation text
+	 * Method getText. Get the Annotation text
 	 * 
 	 * @return String - the annotation text
 	 */
 	String getText();
 
 	/**
-	 * Method getId.  Get the Annotation ID
+	 * Method getId. Get the Annotation ID
 	 * 
 	 * @return Object - the Annotation ID
 	 */
 	Object getId();
 
 	/**
-	 * Method getParent.  Get the annotation parent (if any)
+	 * Method getParent. Get the annotation parent (if any)
 	 * 
 	 * @return Object - the Annotation parent
 	 */
 	Object getParent();
 
 	/**
-	 * Method getChildren.  Get The Annotation children (if any)
+	 * Method getChildren. Get The Annotation children (if any)
 	 * 
 	 * @return Object[] - the Anotation children
 	 */
 	Object[] getChildren();
 
 	/**
-	 * Method hasChildren.  Returns whether this Annotation has children
+	 * Method hasChildren. Returns whether this Annotation has children
 	 * 
 	 * @return boolean - true if the Annotation has children, false otherwise
 	 */
 	boolean hasChildren();
 
 	/**
-	 * Method setParentInput.  Set the parent input from the Annotation Hover input information
+	 * Method setParentInput. Set the parent input from the Annotation Hover input information
 	 * 
-	 * @param aAnnotationHoverInput -the Annotation Hover input information
+	 * @param aAnnotationHoverInput
+	 *            -the Annotation Hover input information
 	 */
 	void setParentInput(IAnnotationHoverInput aAnnotationHoverInput);
 
 	/**
-	 * Method getParentInput.  Get the parent input from the Annotation Hover input information
+	 * Method getParentInput. Get the parent input from the Annotation Hover input information
 	 * 
 	 * @return IAnnotationHoverInput - the Annotation Hover input information
 	 */

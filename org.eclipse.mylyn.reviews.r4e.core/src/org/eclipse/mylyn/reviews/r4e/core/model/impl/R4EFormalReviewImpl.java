@@ -31,25 +31,24 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Formal Review</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Formal Review</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhaseOwner <em>Phase Owner</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhases <em>Phases</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getCurrent <em>Current</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhaseOwner <em>Phase Owner</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhases <em>Phases</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getCurrent <em>Current</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalReview {
 	/**
 	 * The cached value of the '{@link #getPhaseOwner() <em>Phase Owner</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getPhaseOwner()
 	 * @generated
 	 * @ordered
@@ -58,8 +57,8 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 
 	/**
 	 * The cached value of the '{@link #getPhases() <em>Phases</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getPhases()
 	 * @generated
 	 * @ordered
@@ -68,8 +67,8 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 
 	/**
 	 * The cached value of the '{@link #getCurrent() <em>Current</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCurrent()
 	 * @generated
 	 * @ordered
@@ -77,8 +76,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	protected R4EReviewPhaseInfo current;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EFormalReviewImpl() {
@@ -86,8 +84,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -96,8 +93,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EParticipant getPhaseOwner() {
@@ -113,8 +109,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EParticipant basicGetPhaseOwner() {
@@ -122,8 +117,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setPhaseOwner(R4EParticipant newPhaseOwner) {
@@ -134,8 +128,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EReviewPhaseInfo> getPhases() {
@@ -146,8 +139,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhaseInfo getCurrent() {
@@ -163,8 +155,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EReviewPhaseInfo basicGetCurrent() {
@@ -172,8 +163,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setCurrent(R4EReviewPhaseInfo newCurrent) {
@@ -184,8 +174,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -198,8 +187,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -218,8 +206,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -241,8 +228,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -262,8 +248,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

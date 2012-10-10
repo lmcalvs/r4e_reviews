@@ -23,10 +23,8 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.cmd.BaseSupportCommand;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
-public class UnixPermission extends BaseSupportCommand implements
-		IFileSupportCommand {
+public class UnixPermission extends BaseSupportCommand implements IFileSupportCommand {
 
 	/**
 	 * Method to change permission on a directory
@@ -44,14 +42,13 @@ public class UnixPermission extends BaseSupportCommand implements
 		command.add("-R");
 		command.add("0774");
 		command.add(dir);
-		
-		String ret = executeWithStringReturned(null, command, true /* wait */,
-				false /* ignore error */);
+
+		String ret = executeWithStringReturned(null, command, true /* wait */, false /* ignore error */);
 		Activator.fTracer.traceInfo("changePermission() ret: " + ret);
 		if (ret.length() == 0) {
 			b = true;
 		} else {
-			Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);			
+			Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);
 		}
 
 		return b;

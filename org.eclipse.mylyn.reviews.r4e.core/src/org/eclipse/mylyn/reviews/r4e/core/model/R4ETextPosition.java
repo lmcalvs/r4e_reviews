@@ -14,22 +14,19 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Text Position</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Text Position</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition <em>Start Position</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getLength <em>Length</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine <em>Start Line</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine <em>End Line</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition <em>Start Position</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getLength <em>Length</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine <em>Start Line</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine <em>End Line</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4ETextPosition()
  * @model
  * @generated
@@ -39,8 +36,8 @@ public interface R4ETextPosition extends R4EPosition {
 	 * Returns the value of the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Start Position</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Start Position</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Position</em>' attribute.
@@ -53,8 +50,7 @@ public interface R4ETextPosition extends R4EPosition {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartPosition <em>Start Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Start Position</em>' attribute.
 	 * @see #getStartPosition()
 	 * @generated
@@ -65,8 +61,8 @@ public interface R4ETextPosition extends R4EPosition {
 	 * Returns the value of the '<em><b>Length</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Length</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Length</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Length</em>' attribute.
@@ -79,8 +75,7 @@ public interface R4ETextPosition extends R4EPosition {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getLength <em>Length</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Length</em>' attribute.
 	 * @see #getLength()
 	 * @generated
@@ -91,8 +86,8 @@ public interface R4ETextPosition extends R4EPosition {
 	 * Returns the value of the '<em><b>Start Line</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Start Line</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Start Line</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Line</em>' attribute.
@@ -105,8 +100,7 @@ public interface R4ETextPosition extends R4EPosition {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getStartLine <em>Start Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Start Line</em>' attribute.
 	 * @see #getStartLine()
 	 * @generated
@@ -117,8 +111,8 @@ public interface R4ETextPosition extends R4EPosition {
 	 * Returns the value of the '<em><b>End Line</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>End Line</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>End Line</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Line</em>' attribute.
@@ -131,8 +125,7 @@ public interface R4ETextPosition extends R4EPosition {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition#getEndLine <em>End Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>End Line</em>' attribute.
 	 * @see #getEndLine()
 	 * @generated

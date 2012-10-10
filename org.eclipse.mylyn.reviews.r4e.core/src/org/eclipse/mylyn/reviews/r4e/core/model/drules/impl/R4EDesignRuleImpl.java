@@ -24,27 +24,26 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Design Rule</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Design Rule</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getRank <em>Rank</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getClass_ <em>Class</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getTitle <em>Title</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getDescription <em>Description</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getRank <em>Rank</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getClass_ <em>Class</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getTitle <em>Title</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl#getDescription <em>Description
+ * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignRule {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -53,8 +52,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -62,9 +60,9 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	protected String id = ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getRank()
 	 * @generated
 	 * @ordered
@@ -72,9 +70,9 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.R4E_RANK_NONE;
 
 	/**
-	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getRank()
 	 * @generated
 	 * @ordered
@@ -83,8 +81,8 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The default value of the '{@link #getClass_() <em>Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getClass_()
 	 * @generated
 	 * @ordered
@@ -93,8 +91,8 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The cached value of the '{@link #getClass_() <em>Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getClass_()
 	 * @generated
 	 * @ordered
@@ -103,8 +101,8 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -112,9 +110,9 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	protected static final String TITLE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -123,8 +121,8 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -133,8 +131,8 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 
 	/**
 	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDescription()
 	 * @generated
 	 * @ordered
@@ -142,8 +140,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EDesignRuleImpl() {
@@ -151,8 +148,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -161,8 +157,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getId() {
@@ -170,8 +165,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setId(String newId) {
@@ -182,8 +176,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleRank getRank() {
@@ -191,8 +184,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRank(R4EDesignRuleRank newRank) {
@@ -203,8 +195,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleClass getClass_() {
@@ -212,8 +203,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setClass(R4EDesignRuleClass newClass) {
@@ -224,8 +214,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTitle() {
@@ -233,8 +222,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTitle(String newTitle) {
@@ -245,8 +233,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getDescription() {
@@ -254,8 +241,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDescription(String newDescription) {
@@ -266,8 +252,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -288,8 +273,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -315,8 +299,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -342,8 +325,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -364,8 +346,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

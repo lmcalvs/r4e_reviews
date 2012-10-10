@@ -22,30 +22,30 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationControlCreatorFactory;
 
-
 /**
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class ReviewAnnotationConfigFactory {
-	
+
 	/**
 	 * Field fFactory.
 	 */
 	private static IReviewAnnotationControlCreatorFactory FFactory = null;
-	
+
 	/**
 	 * Field fUseInformationControlReplacer.
 	 */
 	private static boolean FUseInformationControlReplacer = false;
-	
+
 	/**
 	 * Field Fplugin.
 	 */
 	private static Plugin Fplugin = null;
-		
+
 	/**
 	 * Method getPlugin.
+	 * 
 	 * @return Plugin
 	 */
 	public static Plugin getPlugin() {
@@ -54,43 +54,51 @@ public class ReviewAnnotationConfigFactory {
 
 	/**
 	 * Method setPlugin.
-	 * @param aPlugin - Plugin
+	 * 
+	 * @param aPlugin
+	 *            - Plugin
 	 */
 	public static void setPlugin(Plugin aPlugin) {
 		Fplugin = aPlugin;
 	}
-	
+
 	/**
 	 * Method registerFactory.
-	 * @param aFactory IReviewAnnotationControlCreatorFactory
+	 * 
+	 * @param aFactory
+	 *            IReviewAnnotationControlCreatorFactory
 	 */
 	public static void registerFactory(IReviewAnnotationControlCreatorFactory aFactory) {
 		FFactory = aFactory;
 	}
-	
+
 	/**
 	 * Method setUseInformationControlReplacer.
-	 * @param aValue boolean
+	 * 
+	 * @param aValue
+	 *            boolean
 	 */
 	public static void setUseInformationControlReplacer(boolean aValue) {
 		FUseInformationControlReplacer = aValue;
 	}
-	
+
 	/**
 	 * Method getUseInformationControlReplacer.
-	
-	 * @return boolean */
+	 * 
+	 * @return boolean
+	 */
 	public static boolean getUseInformationControlReplacer() {
 		return FUseInformationControlReplacer;
 	}
-	
+
 	/**
 	 * Method createInformationControlCreator.
-	
-	 * @return IInformationControlCreator */
+	 * 
+	 * @return IInformationControlCreator
+	 */
 	public static IInformationControlCreator createInformationControlCreator() {
 		if (null != FFactory) {
-			return FFactory.createInformationControlCreator(); 
+			return FFactory.createInformationControlCreator();
 		}
 		return null;
 	}

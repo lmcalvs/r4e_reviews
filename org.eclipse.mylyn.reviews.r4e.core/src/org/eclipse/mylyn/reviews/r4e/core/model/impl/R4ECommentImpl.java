@@ -38,9 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Comment</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Comment</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -64,37 +62,41 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	 * @ordered
 	 */
 	protected EList<String> assignedTo;
+
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
 	protected R4EID id;
+
 	/**
 	 * The default value of the '{@link #getCreatedOn() <em>Created On</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCreatedOn()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final Date CREATED_ON_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getCreatedOn() <em>Created On</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCreatedOn()
 	 * @generated
 	 * @ordered
 	 */
 	protected Date createdOn = CREATED_ON_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getAnomaly() <em>Anomaly</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAnomaly()
 	 * @generated
 	 * @ordered
@@ -102,9 +104,9 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	protected R4EAnomaly anomaly;
 
 	/**
-	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfoAtt()
 	 * @generated
 	 * @ordered
@@ -112,8 +114,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	protected EMap<String, String> infoAtt;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4ECommentImpl() {
@@ -121,8 +122,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -131,8 +131,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -143,8 +142,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getCreatedOn() {
@@ -152,8 +150,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setCreatedOn(Date newCreatedOn) {
@@ -164,8 +161,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly getAnomaly() {
@@ -181,8 +177,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly basicGetAnomaly() {
@@ -190,8 +185,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAnomaly(R4EAnomaly newAnomaly) {
@@ -202,8 +196,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getInfoAtt() {
@@ -214,8 +207,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID getId() {
@@ -237,8 +229,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID basicGetId() {
@@ -246,8 +237,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetId(R4EID newId, NotificationChain msgs) {
@@ -261,8 +251,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setId(R4EID newId) {
@@ -280,8 +269,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -296,8 +284,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -321,8 +308,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -350,8 +336,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -377,8 +362,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -399,8 +383,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -421,8 +404,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -443,8 +425,7 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

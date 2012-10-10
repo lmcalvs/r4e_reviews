@@ -60,18 +60,20 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 		this.fTargetAnnotationModel = createAnnotationModel(aSourceFile);
 		this.fTargetAnnotationModel.setFile(aSourceFile);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createAnnotationModel.
-	 * @param aSourceFile Object
+	 * 
+	 * @param aSourceFile
+	 *            Object
 	 * @return IReviewAnnotationModel
 	 */
 	protected abstract IReviewAnnotationModel createAnnotationModel(Object aSourceFile);
-	
+
 	/**
 	 * Method install.
 	 * 
@@ -79,7 +81,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 *            ISourceViewer
 	 */
 	protected abstract void install(Object aSourceViewer);
-	
+
 	/**
 	 * Method getTargetEditor.
 	 * 
@@ -129,7 +131,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 			fTargetAnnotationModel.refreshAnnotations();
 		}
 	}
-	
+
 	/**
 	 * Method addAnnotation.
 	 * 
@@ -210,7 +212,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 		result = (prime * result) + ((fTargetAnnotationModel == null) ? 0 : fTargetAnnotationModel.hashCode());
 		return result;
 	}
-	
+
 	/**
 	 * Method getSourceViewer.
 	 * 
@@ -222,7 +224,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 		if (SourceViewer.class.isInstance(aMergeViewer)) {
 			return SourceViewer.class.cast(aMergeViewer);
 		}
-		
+
 		final Object returnValue;
 		try {
 			final Method getSourceViewerRefl = MergeSourceViewer.class.getDeclaredMethod("getSourceViewer");
@@ -232,7 +234,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 				return (SourceViewer) returnValue;
 			}
 		} catch (Exception e) {
-				// ignore
+			// ignore
 		}
 		return null;
 	}

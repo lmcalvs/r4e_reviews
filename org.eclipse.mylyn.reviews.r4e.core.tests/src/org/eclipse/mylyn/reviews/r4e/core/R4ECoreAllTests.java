@@ -26,16 +26,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.tests.ModelTests;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.OSPermissionTest;
 
 /**
- * <!-- begin-user-doc -->
- * A test suite for the '<em><b>R4e</b></em>' model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test suite for the '<em><b>R4e</b></em>' model. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class R4ECoreAllTests extends TestSuite {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static void main(String[] args) {
@@ -43,8 +42,8 @@ public class R4ECoreAllTests extends TestSuite {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static Test suite() {
@@ -58,8 +57,8 @@ public class R4ECoreAllTests extends TestSuite {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4ECoreAllTests(String name) {

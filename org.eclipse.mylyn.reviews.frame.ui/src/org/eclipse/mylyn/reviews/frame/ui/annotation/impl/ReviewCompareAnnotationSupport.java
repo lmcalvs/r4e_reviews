@@ -29,7 +29,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IEditorInputListener;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 
-
 /**
  * Manages annotation models for compare viewers.
  * 
@@ -63,7 +62,7 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 		fBaseAnnotationModel = createAnnotationModel(null);
 		install(aViewer);
 	}
-	
+
 	/**
 	 * Method createEditorInputListener.
 	 * 
@@ -75,7 +74,7 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 	 */
 	public abstract IEditorInputListener createEditorInputListener(final MergeSourceViewer aViewer,
 			final IReviewAnnotationModel aAnnotationModel);
-	
+
 	/**
 	 * Method install.
 	 * 
@@ -101,10 +100,11 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 			} catch (Throwable t) {
 				//do nothing for now
 				if (null != ReviewAnnotationConfigFactory.getPlugin()) {
-					ReviewAnnotationConfigFactory.getPlugin().getLog().log(
-						new Status(IStatus.ERROR, 
-								ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
-								IStatus.OK, t.getMessage(), t));
+					ReviewAnnotationConfigFactory.getPlugin()
+							.getLog()
+							.log(new Status(IStatus.ERROR, ReviewAnnotationConfigFactory.getPlugin()
+									.getBundle()
+									.getSymbolicName(), IStatus.OK, t.getMessage(), t));
 				}
 			}
 		}

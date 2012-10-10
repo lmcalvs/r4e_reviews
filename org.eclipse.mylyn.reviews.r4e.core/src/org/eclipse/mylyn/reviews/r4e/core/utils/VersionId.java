@@ -13,13 +13,14 @@ package org.eclipse.mylyn.reviews.r4e.core.utils;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class VersionId implements Comparable<VersionId> {
 
-	private int	fMajor	= 0;
-	private int	fMinor	= 0;
-	private int	fMicro	= 0;
+	private int fMajor = 0;
+
+	private int fMinor = 0;
+
+	private int fMicro = 0;
 
 	// ------------------------------------------------------------------------
 	// Constructors

@@ -78,7 +78,6 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class ReportGeneration implements IR4EReport {
 
@@ -86,12 +85,13 @@ public class ReportGeneration implements IR4EReport {
 	// private Level fBIRT_LEVEL = Level.ALL; //Use the debug level desired
 	// Level.OFF by default
 	private Level fBIRT_LEVEL = Level.OFF; // Use the debug level desired
+
 	// Level.OFF by default
 	private String fLogConfigdir = "C:/R4EDebug"; // Put a directory to log
+
 	// the debug from BIRT
 	// Test variable
 	String fDesignName = "C:/git/r4eSecond/r4e/org.eclipse.mylyn.reviews.r4e.report/design/globalReport.rptdesign";
-
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -100,48 +100,61 @@ public class ReportGeneration implements IR4EReport {
 
 	// Use the definition of the report Data Source
 	private final String fGROUP_DATA_SOURCE = "Merged_group";
+
 	private final String fREVIEW_DATA_SOURCE = "Merged_review";
 
 	//Report design template
 	private final String fInspectionRecordFileName = "inspectionRecord.rptdesign";
+
 	private final String fGlobalReportFileName = "globalReport.rptdesign";
-	
+
 	// REPORT NAME
 	private final String fR4E_GLOBAL_REPORT = "R4E_REPORT";
+
 	private final String fINSPECT_RECORD = "InspectionRecord";
+
 	private final String fNO_NAME = "NoNameYet";
 
 	private final String fREVIEW_END = "_review";
+
 	private final String fGROUP_END = "_group_root";
+
 	private final String fEXTENSION = ".xrer";
 
 	// Variable used for the report
 	private final String fSOURCE_PREFIX = "Merged";
-	private final String fPROJECT_REPORT_DIR = "Reports";
-	private final String fPROJECT_WORKING_DIR = "r4e_work";
-	private final String fGROUP_FILE = fSOURCE_PREFIX + fGROUP_END + fEXTENSION;
-	private final String fFILE_SEP = "_";
-	
 
+	private final String fPROJECT_REPORT_DIR = "Reports";
+
+	private final String fPROJECT_WORKING_DIR = "r4e_work";
+
+	private final String fGROUP_FILE = fSOURCE_PREFIX + fGROUP_END + fEXTENSION;
+
+	private final String fFILE_SEP = "_";
 
 	// Report extension file
 	private final String fEXTENSION_SEPARATOR = ".";
+
 	public final String fHTML_EXTENSION = HTML_EXTENSION;
+
 	public final String fPDF_EXTENSION = PDF_EXTENSION;
 
 	// Report type to be generated
 	public final String fINSPECTION_RECORD_TYPE = INSPECTION_RECORD_TYPE;
+
 	public final String fGLOBAL_REPORT_TYPE = GLOBAL_REPORT_TYPE;
+
 	public final String fSINGLE_REPORT_TYPE = SINGLE_REPORT_TYPE;
+
 	private final int fGLOBAL_REPORT_NUM = 0;
+
 	private final int fINSPECTION_RECORD_NUM = 1;
+
 	private final int fSINGLE_REPORT_NUM = 2;
 
-
 	// Format the date
-	private final SimpleDateFormat fDATE_FORMAT = new SimpleDateFormat(
-			"dd-MMM-yyyy_hhmmss", new Locale("eng", "US"));
-	
+	private final SimpleDateFormat fDATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy_hhmmss", new Locale("eng", "US"));
+
 	//Folder to find the report design
 	private final String fFOLDER = "src/org/eclipse/mylyn/reviews/r4e/report/internal/design";
 
@@ -149,24 +162,30 @@ public class ReportGeneration implements IR4EReport {
 	// Variables
 	// ------------------------------------------------------------------------
 	private String fR4E_REPORT = "R4E_REPORT";
+
 	private InputStream fInputDesignName = null;
+
 	private String fDesignFileName = "globalReport.rptdesign"; //Default value
 
 	// Variable to test if the file to generate the report exist
 	private Boolean fPROPERTY_FILE_CREATED = false;
+
 	private Composite fCompositeParent = null;
-	
 
 	private File fReportDir = null;
+
 	private String fReportName = "";
 
 	private int fCurrent_report_num = -1;
 
 	private File[] fReviewNameList = null;
+
 	private String fOutputFormat = fHTML_EXTENSION; //Set HTML as default value
-	
+
 	private R4EReviewGroup floadedGroup = null;
-	private final RModelFactoryExt	fFactory		= SerializeFactory.getModelExtension();
+
+	private final RModelFactoryExt fFactory = SerializeFactory.getModelExtension();
+
 	private String fGroupFile = "";
 
 	// ------------------------------------------------------------------------
@@ -210,9 +229,8 @@ public class ReportGeneration implements IR4EReport {
 			setReportName(fR4E_GLOBAL_REPORT);
 			fCurrent_report_num = fSINGLE_REPORT_NUM;
 		}
-		Activator.FTracer.traceInfo("ReportGeneration.setReportType() design file name: "
-				+ fDesignFileName + "\t\t cur number report: "
-				+ fCurrent_report_num);
+		Activator.FTracer.traceInfo("ReportGeneration.setReportType() design file name: " + fDesignFileName
+				+ "\t\t cur number report: " + fCurrent_report_num);
 	}
 
 	/**
@@ -228,14 +246,17 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Generate the selected report
-	 * @param String agroupFile File of the Group
-	 * @param IProgressMonitor aMonitor File of the Group
+	 * 
+	 * @param String
+	 *            agroupFile File of the Group
+	 * @param IProgressMonitor
+	 *            aMonitor File of the Group
 	 */
 	public void handleReportGeneration(final String agroupFile, IProgressMonitor aMonitor) {
-		
+
 		//Keep a copy of the original group file
 		setGroupFile(agroupFile);
-		
+
 		// Get the file directory of the selected review
 		final File groupFile = new File(agroupFile);
 		File rootDir = groupFile.getParentFile();
@@ -243,11 +264,12 @@ public class ReportGeneration implements IR4EReport {
 			prepareReport(rootDir, aMonitor);
 		}
 	}
-		
 
 	/**
 	 * Register the list of selected reviews
-	 * @param File[] aListSelectedReview
+	 * 
+	 * @param File
+	 *            [] aListSelectedReview
 	 */
 	public void setReviewListSelection(File[] aListSelectedReview) {
 		fReviewNameList = aListSelectedReview;
@@ -274,7 +296,7 @@ public class ReportGeneration implements IR4EReport {
 
 		return nbReview;
 	}
-	
+
 	/****************************************/
 	/*                                      */
 	/*       PRIVATE METHOD                 */
@@ -292,6 +314,7 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Set the configuration to allow BIRT to log information
+	 * 
 	 * @param aEngineConf
 	 * @return
 	 */
@@ -304,8 +327,7 @@ public class ReportGeneration implements IR4EReport {
 			if (fLogConfigdir != null) {
 				File f = new File(fLogConfigdir);
 				File newFile = createReportDir(f, "");
-				Activator.FTracer.traceInfo("ReportGeneration.createBirtDebug() created:"
-						+ newFile.getAbsolutePath());
+				Activator.FTracer.traceInfo("ReportGeneration.createBirtDebug() created:" + newFile.getAbsolutePath());
 				if (!fBIRT_LEVEL.equals(Level.OFF)) {
 					aEngineConf.setLogConfig(newFile.getAbsolutePath(), fBIRT_LEVEL);
 				}
@@ -324,31 +346,31 @@ public class ReportGeneration implements IR4EReport {
 		String inspectionFileName = "";
 		StringBuilder sb = new StringBuilder();
 		File[] reviewFile = getReviewListSelection();
-		if (reviewFile != null ) {
+		if (reviewFile != null) {
 			if (reviewFile.length == 1) {
 				sb.append(fINSPECT_RECORD);
 				sb.append(fFILE_SEP);
 				sb.append(reviewFile[0].getName());
 				inspectionFileName = sb.toString();
 			}
-			
+
 		} else {
 			sb.append(fINSPECT_RECORD);
 			sb.append(fFILE_SEP);
 			sb.append(fNO_NAME);
-			inspectionFileName = sb.toString();		
+			inspectionFileName = sb.toString();
 		}
 		Activator.FTracer.traceInfo("buildInspectionReportName() :" + inspectionFileName);
 
 		//Validate the report name with valid characters
 		inspectionFileName = validReportName(inspectionFileName);
-		Activator.FTracer.traceInfo("buildInspectionReportName() After VALID NAME: " + inspectionFileName );					
+		Activator.FTracer.traceInfo("buildInspectionReportName() After VALID NAME: " + inspectionFileName);
 		return inspectionFileName;
 	}
 
-
 	/**
 	 * Convert any char to be an alpha-numerical value for the report name
+	 * 
 	 * @param aStValue
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.IModelWriter#toValidFileName(java.lang.String)
@@ -373,16 +395,15 @@ public class ReportGeneration implements IR4EReport {
 		return result;
 	}
 
-
 	private File[] getReviewListSelection() {
 		if (fReviewNameList != null) {
 			for (int i = 0; i < fReviewNameList.length; i++) {
 				Activator.FTracer.traceInfo("getReviewListSelection() [" + i + " ] : "
 						+ fReviewNameList[i].getAbsolutePath());
-			}			
+			}
 		} else {
 			//Display a pop-up when no review
-			String message = R4EReportString.getString("Popup.noReview" );
+			String message = R4EReportString.getString("Popup.noReview");
 			Popup.warningRunnable(null, message);
 		}
 		return fReviewNameList;
@@ -390,16 +411,16 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Keep a copy of the original group file
+	 * 
 	 * @param aGroupFile
 	 */
-	private void setGroupFile (String aGroupFile ) {
+	private void setGroupFile(String aGroupFile) {
 		fGroupFile = aGroupFile;
 	}
-	
-	private String getGroupFile () {
+
+	private String getGroupFile() {
 		return fGroupFile;
 	}
-	
 
 	/** *************************** */
 	/*                              */
@@ -408,8 +429,7 @@ public class ReportGeneration implements IR4EReport {
 	/** *************************** */
 
 	/**
-	 * Set the design template to generate a report
-	 * i.e. Global report or Inspection report
+	 * Set the design template to generate a report i.e. Global report or Inspection report
 	 */
 	private void setDesignReportTemplate() {
 		//Test 
@@ -420,21 +440,17 @@ public class ReportGeneration implements IR4EReport {
 		rptDesign.append(fFOLDER);
 		rptDesign.append(fFILE_SEPARATOR);
 		rptDesign.append(fDesignFileName);
-		
-		
-		IPath path = new Path (rptDesign.toString());
+
+		IPath path = new Path(rptDesign.toString());
 		try {
 			fInputDesignName = FileLocator.openStream(bdl, path, false);
 		} catch (IOException e) {
 			e.printStackTrace();
-			Activator.FTracer.traceInfo
-			("ReportGeneration.setDesignReportTemplate() Input stream ioException: "
-					+ e);
+			Activator.FTracer.traceInfo("ReportGeneration.setDesignReportTemplate() Input stream ioException: " + e);
 		}
-		
+
 		if (fInputDesignName == null) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.setDesignReportTemplate() Did not find the design input stream");
+			Activator.FTracer.traceInfo("ReportGeneration.setDesignReportTemplate() Did not find the design input stream");
 			return;
 		}
 	}
@@ -449,8 +465,7 @@ public class ReportGeneration implements IR4EReport {
 	}
 
 	/**
-	 * Clean the temporary report directory and notify the end-user hat he
-	 * cannot save the report
+	 * Clean the temporary report directory and notify the end-user hat he cannot save the report
 	 * 
 	 * @param aWorkDir
 	 *            Temporary directory to generate a report
@@ -458,8 +473,7 @@ public class ReportGeneration implements IR4EReport {
 	 *            parent directory for the report
 	 */
 	private void cleanAndNotify(File aWorkDir, File aRootDir) {
-		Activator.FTracer.traceInfo
-				("ReportGeneration.cleanAndNotify() has no permission, no report created");
+		Activator.FTracer.traceInfo("ReportGeneration.cleanAndNotify() has no permission, no report created");
 		cleanReportDirectory(aWorkDir);
 		String reportParent = "";
 
@@ -468,14 +482,12 @@ public class ReportGeneration implements IR4EReport {
 		} else {
 			// Build the report directory having no privileges
 			if (aRootDir != null) {
-				File fileReport = new File(aRootDir.getParentFile()
-						.getAbsoluteFile().toString()
-						+ fFILE_SEPARATOR + fPROJECT_REPORT_DIR);
+				File fileReport = new File(aRootDir.getParentFile().getAbsoluteFile().toString() + fFILE_SEPARATOR
+						+ fPROJECT_REPORT_DIR);
 				reportParent = fileReport.getAbsolutePath();
 			}
 		}
-		String message = R4EReportString.getFormattedString(
-				"Popup.accessDenied", reportParent);
+		String message = R4EReportString.getFormattedString("Popup.accessDenied", reportParent);
 		Popup.warningRunnable(null, message);
 
 	}
@@ -491,9 +503,7 @@ public class ReportGeneration implements IR4EReport {
 	@SuppressWarnings("restriction")
 	private void prepareReport(File aRootDir, IProgressMonitor aMonitor) {
 		File workingDir = aRootDir;
-		Activator.FTracer.traceInfo
-				("ReportGeneration.prepareReport() Parent report Directory: "
-						+ workingDir);
+		Activator.FTracer.traceInfo("ReportGeneration.prepareReport() Parent report Directory: " + workingDir);
 		// Build a unique string for the temporary working directory
 		Date d = new Date();
 		long ti = d.getTime();
@@ -523,8 +533,8 @@ public class ReportGeneration implements IR4EReport {
 		}
 
 		if (workingDir == null) {
-			
-			String message = R4EReportString.getString("Popup.noReportDir" );
+
+			String message = R4EReportString.getString("Popup.noReportDir");
 			Popup.error(null, message);
 			return;
 		}
@@ -542,8 +552,7 @@ public class ReportGeneration implements IR4EReport {
 			// //Get the selected review Name
 			File[] selectedReview = getReviewListSelection();
 			int nbReview = selectedReview.length;
-			
-			
+
 			//Set the default  report type based on the number of review selected
 			if (nbReview == 1) {
 				//Select the Inspection Record
@@ -552,66 +561,60 @@ public class ReportGeneration implements IR4EReport {
 			} else {
 				//Select the Global report
 				aMonitor.subTask("Preparing Global Report...");
-				setReportType(fGLOBAL_REPORT_TYPE);				
+				setReportType(fGLOBAL_REPORT_TYPE);
 			}
 			//Need to set the template in case it is different for the default
 			setDesignReportTemplate();
-			
+
 			// runnable = engine.openReportDesign(fDesignName);
 			// runnable = engine.openReportDesign(inputDesignName);
 			runnable = engine.openReportDesign(getDesignReportTemplate());
-			ModuleHandle reportDesignHandle = runnable.getDesignHandle()
-			.getModuleHandle();
+			ModuleHandle reportDesignHandle = runnable.getDesignHandle().getModuleHandle();
 
 			//Build the file needed for the report
 			prepareReportSourceFiles(workingDir, selectedReview);
 
 			File[] destFile = workingDir.listFiles();
-			
+
 			//Should get the Group here
 			for (int count = 0; count < destFile.length; count++) {
-				Activator.FTracer.traceInfo("List reportFile: " +
-						destFile[count].getName());	
+				Activator.FTracer.traceInfo("List reportFile: " + destFile[count].getName());
 				if (destFile[count].isFile()) {
 					//Register the Group file for the report
 					aMonitor.subTask("Processing file " + destFile[count].getName());
 					prepareDataSource(destFile[count], reportDesignHandle, workingDir);
 				}
-				File [] revFile = destFile[count].listFiles();
-				
+				File[] revFile = destFile[count].listFiles();
+
 				for (int i = 0; revFile != null && i < revFile.length; i++) {
 					//Now we should have one file for each Data Source
 					// Set the data source for the report
 					prepareDataSource(revFile[i], reportDesignHandle, workingDir);
 				}
 			}
-			
+
 			// Prepare the report output
 			// Decide here if we generate HTML or PDF format report
 			aMonitor.subTask("Preparing Output File...");
-			IRunAndRenderTask renderTask = prepareOutputFile(runnable,
-					engine, fOutputFormat);
+			IRunAndRenderTask renderTask = prepareOutputFile(runnable, engine, fOutputFormat);
 			// Execute the preparation of the report
 			renderTask.run();
 
 		} catch (EngineException aEngineEx) {
 			aEngineEx.printStackTrace();
-			Activator.FTracer.traceInfo
-					("ReportGeneration.prepareReport() Generate Report.run() EngineException : "
-							+ aEngineEx);
+			Activator.FTracer.traceInfo("ReportGeneration.prepareReport() Generate Report.run() EngineException : "
+					+ aEngineEx);
 
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
-			Activator.FTracer.traceInfo
-			("ReportGeneration.prepareReport() ResourceHandlingException : "
-					+ e);
+			Activator.FTracer.traceInfo("ReportGeneration.prepareReport() ResourceHandlingException : " + e);
 		} catch (CompatibilityException e) {
 			e.printStackTrace();
 			Activator.FTracer.traceInfo("ReportGeneration.prepareReport() CompatibilityException : " + e);
 		}
 		// Need to destroy the engine
 		engine.destroy();
-		
+
 		// Clean the directory maintaining the data used for the report
 		// after the report is generated
 		cleanReportDirectory(workingDir);
@@ -634,7 +637,6 @@ public class ReportGeneration implements IR4EReport {
 		URI origURI = URI.createFileURI(getGroupFile());
 		floadedGroup = fFactory.openR4EReviewGroup(origURI);
 
-		
 		// //Get the selected review Name
 		int nbReview = aSelectedReview.length;
 
@@ -644,12 +646,12 @@ public class ReportGeneration implements IR4EReport {
 		ReviewGroupRes destGroup = null;
 		try {
 			// Use temporary group name 
-			destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, floadedGroup.getName(), fSOURCE_PREFIX);
+			destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, floadedGroup.getName(),
+					fSOURCE_PREFIX);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			//fail("Exception");
 		}
-
 
 		R4EReview dReview = null;
 		URI destURI = destGroup.eResource().getURI();
@@ -665,9 +667,9 @@ public class ReportGeneration implements IR4EReport {
 			}
 
 		}
-		return destGroup;	
+		return destGroup;
 	}
-	
+
 	/** ********************************** */
 	/* Handling the creation for the */
 	/* necessary report file to generate */
@@ -690,8 +692,7 @@ public class ReportGeneration implements IR4EReport {
 	 * @param aReportEngine
 	 * @return
 	 */
-	private IRunAndRenderTask prepareOutputFile(IReportRunnable aRunnable,
-			IReportEngine aReportEngine, String aFormat) {
+	private IRunAndRenderTask prepareOutputFile(IReportRunnable aRunnable, IReportEngine aReportEngine, String aFormat) {
 
 		IRenderOption options = new RenderOption();
 		options.setOutputFormat(aFormat);
@@ -757,10 +758,8 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Main method which will prepare the Data source for the report
-	 * 
 	 */
-	private void prepareDataSource(File aFile, ModuleHandle aReportDesignHandle,
-			File aReportDir) {
+	private void prepareDataSource(File aFile, ModuleHandle aReportDesignHandle, File aReportDir) {
 
 		// Remove the file extension
 		String[] sta = aFile.getName().split(fEXTENSION);
@@ -778,13 +777,13 @@ public class ReportGeneration implements IR4EReport {
 	}
 
 	/**
-	 * Create the report filename which is: - path of the group review directory
-	 * - r4e_ - user name creating the report - Date the report is created -
-	 * file extension - ex: c:/report/R4E_Report_Jacques Bouthillier_19-Jun-2008_0955.html
+	 * Create the report filename which is: - path of the group review directory - r4e_ - user name creating the report
+	 * - Date the report is created - file extension - ex: c:/report/R4E_Report_Jacques
+	 * Bouthillier_19-Jun-2008_0955.html
 	 * 
 	 * @return report name being created
 	 */
-	private String createReportName(String aExtension ) {
+	private String createReportName(String aExtension) {
 		Date d = new Date();
 		String user = getLocalUser();
 		StringBuilder filename = new StringBuilder();
@@ -802,7 +801,6 @@ public class ReportGeneration implements IR4EReport {
 		return fReportName;
 	}
 
-
 	/**
 	 * Prepare the setup for the review property file
 	 * 
@@ -810,13 +808,11 @@ public class ReportGeneration implements IR4EReport {
 	 * @param aReportDesignHandle
 	 * @param aReportDir
 	 */
-	private void propertyReviewSetup(File aFile, ModuleHandle aReportDesignHandle,
-			File aReportDir) {
+	private void propertyReviewSetup(File aFile, ModuleHandle aReportDesignHandle, File aReportDir) {
 
 		setDataSourceFile(aFile, aReportDesignHandle, fREVIEW_DATA_SOURCE);
 		setPropertyFileCreated(true);
 	}
-
 
 	/**
 	 * Prepare the setup for the group (Department) file
@@ -838,44 +834,31 @@ public class ReportGeneration implements IR4EReport {
 	 * @param aFile
 	 * @param aReportDesignHandle
 	 */
-	private void setDataSourceFile(File aFile, ModuleHandle aReportDesignHandle,
-			String data_source) {
+	private void setDataSourceFile(File aFile, ModuleHandle aReportDesignHandle, String data_source) {
 
 		DataSourceHandle dso = aReportDesignHandle.findDataSource(data_source);
 
 		// Test if we found or not the appropriate data source
 		if (dso == null) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.setDataSourceFile() DataSourceHandle is NULL");
+			Activator.FTracer.traceInfo("ReportGeneration.setDataSourceFile() DataSourceHandle is NULL");
 		} else {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.setDataSourceFile() DataSourceHandle : "
-							+ dso.getFullName()
-							+ "\n\t XPath: "
-							+ dso.getXPath()
-							+ "\n\t module: "
-							+ dso.getModule().getFileName()
-							+ "\n\t BeforeOpen: "
-							+ dso.getElement().toString()
-							+ "\n\t ElementFactory: "
-							+ dso.getElementFactory().toString());
+			Activator.FTracer.traceInfo("ReportGeneration.setDataSourceFile() DataSourceHandle : " + dso.getFullName()
+					+ "\n\t XPath: " + dso.getXPath() + "\n\t module: " + dso.getModule().getFileName()
+					+ "\n\t BeforeOpen: " + dso.getElement().toString() + "\n\t ElementFactory: "
+					+ dso.getElementFactory().toString());
 
 			try {
 
-				Activator.FTracer.traceInfo
-						("ReportGeneration.setDataSourceFile() DSO before open OK ");
+				Activator.FTracer.traceInfo("ReportGeneration.setDataSourceFile() DSO before open OK ");
 
 				// Set the new file name for the data source
 				dso.setProperty("FILELIST", aFile.getAbsolutePath());
 			} catch (SemanticException e) {
 				e.printStackTrace();
-				Activator.FTracer.traceInfo
-						("ReportGeneration.setDataSourceFile() DSO before open EXCEPTION: "
-								+ e);
+				Activator.FTracer.traceInfo("ReportGeneration.setDataSourceFile() DSO before open EXCEPTION: " + e);
 			}
 		}
 	}
-
 
 	/** ********************************* */
 	/*                                    */
@@ -884,21 +867,17 @@ public class ReportGeneration implements IR4EReport {
 	/** ********************************* */
 
 	/**
-	 * Method used to create the temporary directory holding the files to
-	 * generate the report
+	 * Method used to create the temporary directory holding the files to generate the report
 	 * 
 	 * @param aReportDir
-	 *            Directory from which we refer to define the destination report
-	 *            directory
-	 * @param aDirSt 
-	 * 				
+	 *            Directory from which we refer to define the destination report directory
+	 * @param aDirSt
 	 * @return directory File
 	 */
 	private File createReportDir(File aReportDir, String aDirSt) {
 		// File parent = new File(reportDir.getAbsoluteFile().toString()
 		// + FFILE_SEPARATOR + PROJECT_WORKING_DIR);
-		File parent = new File(aReportDir.getAbsoluteFile().toString()
-				+ fFILE_SEPARATOR + aDirSt);
+		File parent = new File(aReportDir.getAbsoluteFile().toString() + fFILE_SEPARATOR + aDirSt);
 		if (parent.exists()) {
 //			Activator.FTracer.traceInfo
 //					("ReportGeneration.createReportDir() Directory exists already.");
@@ -910,7 +889,7 @@ public class ReportGeneration implements IR4EReport {
 				// Set the report directory permission
 				//ReviewHeader.setFilePermission(parent.getAbsolutePath());
 				//setFilePermission (parent.getAbsolutePath());
-				} else {
+			} else {
 				Activator.FTracer.traceInfo("ReportGeneration.createReportDir() ERROR");
 				return null;
 			}
@@ -928,11 +907,9 @@ public class ReportGeneration implements IR4EReport {
 	private void cleanReportDirectory(File aReportDir) {
 		// Verify if the directory exist
 		if (aReportDir != null) {
-			Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory(): "
-					+ aReportDir.getAbsolutePath());
+			Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory(): " + aReportDir.getAbsolutePath());
 			if (aReportDir.exists()) {
-				Activator.FTracer.traceInfo
-						("ReportGeneration.cleanReportDirectory() Directory exists already.");
+				Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory() Directory exists already.");
 				Boolean b;
 				for (File f : aReportDir.listFiles()) {
 					if (f.isDirectory()) {
@@ -941,19 +918,15 @@ public class ReportGeneration implements IR4EReport {
 						}
 					}
 					b = f.delete();
-					Activator.FTracer.traceInfo
-							("ReportGeneration.cleanReportDirectory() Files to delete: "
-									+ f + "\t deleted: " + b);
+					Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory() Files to delete: " + f
+							+ "\t deleted: " + b);
 				}
 				b = aReportDir.delete();
-				Activator.FTracer.traceInfo
-						("ReportGeneration.cleanReportDirectory() removing Directory: "
-								+ aReportDir + "\t : " + b);
+				Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory() removing Directory: " + aReportDir
+						+ "\t : " + b);
 			} else {
-				Activator.FTracer.traceInfo
-						("ReportGeneration.cleanReportDirectory() Directory "
-								+ aReportDir.getAbsolutePath()
-								+ " DO not exist.");
+				Activator.FTracer.traceInfo("ReportGeneration.cleanReportDirectory() Directory "
+						+ aReportDir.getAbsolutePath() + " DO not exist.");
 			}
 		}
 
@@ -962,8 +935,7 @@ public class ReportGeneration implements IR4EReport {
 	}
 
 	/**
-	 * Build a directory to maintain the report If the directory already exist,
-	 * no creation occurs
+	 * Build a directory to maintain the report If the directory already exist, no creation occurs
 	 * 
 	 * @param aRootDir
 	 *            directory for the current review
@@ -998,8 +970,7 @@ public class ReportGeneration implements IR4EReport {
 	private boolean verifyWritePermission(File aDir) {
 		boolean b = true;
 		if (aDir != null) {
-			Activator.FTracer.traceInfo("ReportGeneration.verifyWritePermission() BEGIN:  "
-					+ aDir.getAbsolutePath());
+			Activator.FTracer.traceInfo("ReportGeneration.verifyWritePermission() BEGIN:  " + aDir.getAbsolutePath());
 			String test = "test.txt";
 			StringBuilder sb = new StringBuilder();
 			sb.append(aDir.toString());
@@ -1010,15 +981,13 @@ public class ReportGeneration implements IR4EReport {
 				f.createNewFile();
 				//Activator.FTracer.traceInfo("Create a Report file is allow here");
 			} catch (IOException e) {
-				Activator.FTracer.traceInfo("Create a Report file is NOT allow: "
-						+ e.getMessage());
+				Activator.FTracer.traceInfo("Create a Report file is NOT allow: " + e.getMessage());
 				b = false;
 			}
 			if (f.exists()) {
 				Boolean del;
 				del = f.delete();
-				Activator.FTracer.traceInfo("Temp file " + f.getAbsolutePath() + " deleted: "
-						+ del);
+				Activator.FTracer.traceInfo("Temp file " + f.getAbsolutePath() + " deleted: " + del);
 			}
 
 		} else {
@@ -1035,8 +1004,7 @@ public class ReportGeneration implements IR4EReport {
 	 * @return Boolean
 	 */
 	private File createSaveDirectory(final File aReportDir) {
-		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(
-				fCompositeParent.getShell());
+		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(fCompositeParent.getShell());
 		Runnable runnable = new Runnable() {
 
 			public void run() {
@@ -1060,8 +1028,7 @@ public class ReportGeneration implements IR4EReport {
 		Display.getDefault().syncExec(runnable);
 		File fi = dirSelect.getReportDirectory();
 		if (fi != null) {
-			Activator.FTracer.traceInfo("File return from directory selection: "
-					+ fi.getAbsolutePath());
+			Activator.FTracer.traceInfo("File return from directory selection: " + fi.getAbsolutePath());
 		} else {
 			Activator.FTracer.traceInfo("File return from directory selection: NULL ");
 		}
@@ -1078,18 +1045,17 @@ public class ReportGeneration implements IR4EReport {
 	}
 
 	/**
-	 * Method notifying the user the generation of the report is completed, and
-	 * open the report in the workbench editor
+	 * Method notifying the user the generation of the report is completed, and open the report in the workbench editor
 	 */
 	private void displayReport() {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				String[] buttonLabels = {"OK"};
+				String[] buttonLabels = { "OK" };
 				final MessageDialog dialog = new MessageDialog(null, "Report Generated", null,
-						"The following report has been generated: \n" + getReportName(),
-						MessageDialog.INFORMATION, buttonLabels, 0);
+						"The following report has been generated: \n" + getReportName(), MessageDialog.INFORMATION,
+						buttonLabels, 0);
 				dialog.open();
-				
+
 				// To open in the workspace file editor
 				openFile();
 			}
@@ -1107,29 +1073,24 @@ public class ReportGeneration implements IR4EReport {
 		IWorkbench workbench = Activator.getDefault().getWorkbench();
 		IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 
-		IFileStore fileStore = EFS.getLocalFileSystem().getStore(
-				new Path(filename));
-		IWorkbenchPage page = workbench.getActiveWorkbenchWindow()
-				.getActivePage();
+		IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(filename));
+		IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
 
 		// fileStore = fileStore.getChild("a file name);
-		Activator.FTracer.traceInfo("ReportGeneration.openFile() " + fileStore.getName()
-				+ " Directory=" + fileStore.fetchInfo().isDirectory()
-				+ " Exist=" + fileStore.fetchInfo().exists());
+		Activator.FTracer.traceInfo("ReportGeneration.openFile() " + fileStore.getName() + " Directory="
+				+ fileStore.fetchInfo().isDirectory() + " Exist=" + fileStore.fetchInfo().exists());
 		if (fileStore.fetchInfo().isDirectory()) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.openFile() File is a directory or does not exist. "
-							+ fileStore.getName());
+			Activator.FTracer.traceInfo("ReportGeneration.openFile() File is a directory or does not exist. "
+					+ fileStore.getName());
 
 		} else {
 			if (fileStore.fetchInfo().exists()) {
-				Activator.FTracer.traceInfo("ReportGeneration.openFile() File ( "
-						+ fileStore.getName() + " ) exist, just handle it now");
+				Activator.FTracer.traceInfo("ReportGeneration.openFile() File ( " + fileStore.getName()
+						+ " ) exist, just handle it now");
 			}
 		}
 
-		if (!fileStore.fetchInfo().isDirectory()
-				&& fileStore.fetchInfo().exists()) {
+		if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
 
 			String editorId = getEditorId(fileStore);
 			try {
@@ -1138,45 +1099,38 @@ public class ReportGeneration implements IR4EReport {
 				// Create the new file to display in the eclipse editor
 				IEditorInput input = new FileStoreEditorInput(fileStore);
 				if (fep != null) {
-					String strConvert = fep.getTitleToolTip()
-							.replace("\\", "/");
-					Activator.FTracer.traceInfo("ReportGeneration.openFile() find "
-							+ "editorpart return: " + fep.toString()
-							+ "\n\t tooltip value: " + fep.getTitleToolTip()
-							+ "\n\t FileName: " + filename
-							+ "\n\t tooltip string converted: " + strConvert);
+					String strConvert = fep.getTitleToolTip().replace("\\", "/");
+					Activator.FTracer.traceInfo("ReportGeneration.openFile() find " + "editorpart return: "
+							+ fep.toString() + "\n\t tooltip value: " + fep.getTitleToolTip() + "\n\t FileName: "
+							+ filename + "\n\t tooltip string converted: " + strConvert);
 					// If the editor already display the file
 					if (filename.equals(strConvert)) {
-						Activator.FTracer.traceInfo
-								("ReportGeneration.OpenFile() current editor already display the file: "
-										+ fep.getTitleToolTip());
+						Activator.FTracer.traceInfo("ReportGeneration.OpenFile() current editor already display the file: "
+								+ fep.getTitleToolTip());
 					} else {
-						Activator.FTracer.traceInfo
-								("ReportGeneration.openFile() need refresh to the right file: "
-										+ filename);
+						Activator.FTracer.traceInfo("ReportGeneration.openFile() need refresh to the right file: "
+								+ filename);
 						// Need to change the editor part
 						fep = page.openEditor(input, editorId);
 					}
 
 				} else {
-					Activator.FTracer.traceInfo
-							("ReportGeneration.openFile() find editorpart return NULL");
+					Activator.FTracer.traceInfo("ReportGeneration.openFile() find editorpart return NULL");
 					// Need to change the editor part
 					// input cannot be null here
 					fep = page.openEditor(input, editorId);
 				}
 
-			} catch (PartInitException e) {	
+			} catch (PartInitException e) {
 				String str = R4EReportString.getString("messageError1");
-				Activator.getDefault().logError(str,e);
-				String msg = str +" : "+ fileStore.getName();
+				Activator.getDefault().logError(str, e);
+				String msg = str + " : " + fileStore.getName();
 				MessageDialog.openError(window.getShell(), str, msg);
 			}
 
 		} else {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.openFile() File is a directory or does not exist. "
-							+ fileStore.getName());
+			Activator.FTracer.traceInfo("ReportGeneration.openFile() File is a directory or does not exist. "
+					+ fileStore.getName());
 		}
 
 	}
@@ -1190,29 +1144,21 @@ public class ReportGeneration implements IR4EReport {
 
 		IEditorRegistry editorRegistry = workbench.getEditorRegistry();
 
-		IEditorDescriptor descriptor = editorRegistry.getDefaultEditor(aFileStore
-				.getName(), null);
+		IEditorDescriptor descriptor = editorRegistry.getDefaultEditor(aFileStore.getName(), null);
 		// check the OS for in-place editor (OLE on Win32)
-		if (descriptor == null
-				&& editorRegistry
-						.isSystemInPlaceEditorAvailable(aFileStore.getName())) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.getEditorId() SYSTEM_INPLACE_EDITOR_ID");
-			descriptor = editorRegistry
-					.findEditor(IEditorRegistry.SYSTEM_INPLACE_EDITOR_ID);
+		if (descriptor == null && editorRegistry.isSystemInPlaceEditorAvailable(aFileStore.getName())) {
+			Activator.FTracer.traceInfo("ReportGeneration.getEditorId() SYSTEM_INPLACE_EDITOR_ID");
+			descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_INPLACE_EDITOR_ID);
 		}
 
 		// check the OS for external editor
-		if (descriptor == null
-				&& editorRegistry.isSystemExternalEditorAvailable(aFileStore
-						.getName())) {
-			descriptor = editorRegistry
-					.findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
+		if (descriptor == null && editorRegistry.isSystemExternalEditorAvailable(aFileStore.getName())) {
+			descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
 		}
 
 		if (descriptor != null) {
-			Activator.FTracer.traceInfo("ReportGeneration.getEditorId() editor id "
-					+ descriptor.getId() + " " + descriptor.getLabel());
+			Activator.FTracer.traceInfo("ReportGeneration.getEditorId() editor id " + descriptor.getId() + " "
+					+ descriptor.getLabel());
 			return descriptor.getId();
 		}
 
@@ -1230,9 +1176,7 @@ public class ReportGeneration implements IR4EReport {
 		File workingDir = null;
 		File origWorkingDir = aRootDir.getParentFile();
 		IReportEngine engine = null;
-		Activator.FTracer.traceInfo
-				("ReportGeneration.prepareMultiReport() Parent report Directory: "
-						+ workingDir);
+		Activator.FTracer.traceInfo("ReportGeneration.prepareMultiReport() Parent report Directory: " + workingDir);
 		// Build the report directory
 		Boolean ok = BuildReportDir(aRootDir);
 
@@ -1281,31 +1225,26 @@ public class ReportGeneration implements IR4EReport {
 			setDesignReportTemplate();
 			try {
 				runnable = engine.openReportDesign(getDesignReportTemplate());
-				Activator.FTracer.traceInfo
-						("ReportGeneration.prepareReport()Engine getconfig: "
-								+ engine.getConfig()
-								+ "\n\t author:"
-								+ runnable.getProperty(IReportRunnable.AUTHOR));
-				ModuleHandle reportDesignHandle = runnable.getDesignHandle()
-						.getModuleHandle();
+				Activator.FTracer.traceInfo("ReportGeneration.prepareReport()Engine getconfig: " + engine.getConfig()
+						+ "\n\t author:" + runnable.getProperty(IReportRunnable.AUTHOR));
+				ModuleHandle reportDesignHandle = runnable.getDesignHandle().getModuleHandle();
 
 				// *************************************
 				//Build the file needed for the report
 				File[] selRev = new File[1];
 				selRev[0] = selectedReview[countReview];
-				ReviewGroupRes destGroup = prepareReportSourceFiles (workingDir, selRev);
+				ReviewGroupRes destGroup = prepareReportSourceFiles(workingDir, selRev);
 
 				File[] destFile = workingDir.listFiles();
 				//Should get the Group here
 				for (int count = 0; count < destFile.length; count++) {
-					Activator.FTracer.traceInfo("List reportFile: " +
-							destFile[count].getName());	
+					Activator.FTracer.traceInfo("List reportFile: " + destFile[count].getName());
 					if (destFile[count].isFile()) {
 						//Register the Group file for the report
 						prepareDataSource(destFile[count], reportDesignHandle, workingDir);
 					}
-					File [] revFile = destFile[count].listFiles();
-					
+					File[] revFile = destFile[count].listFiles();
+
 					for (int i = 0; revFile != null && i < revFile.length; i++) {
 						//Now we should have one file for each Data Source
 						// Set the data source for the report
@@ -1313,13 +1252,11 @@ public class ReportGeneration implements IR4EReport {
 					}
 				}
 
-
-					// Prepare the report output
-					// Decide here if we generate HTML or PDF format report
-					IRunAndRenderTask renderTask = prepareOutputFile(runnable,
-							engine, fOutputFormat);
-					// Execute the preparation of the report
-					renderTask.run();
+				// Prepare the report output
+				// Decide here if we generate HTML or PDF format report
+				IRunAndRenderTask renderTask = prepareOutputFile(runnable, engine, fOutputFormat);
+				// Execute the preparation of the report
+				renderTask.run();
 
 				// Clean the directory maintaining the data used for the report
 				// after the report is generated
@@ -1327,16 +1264,13 @@ public class ReportGeneration implements IR4EReport {
 
 			} catch (EngineException e) {
 				String str = R4EReportString.getString("messageError2");
-				Activator.getDefault().logError(str,e);
-				Activator.FTracer.traceInfo
-						("ReportGeneration.prepareReport() Generate Report.run() EngineException : "
-								+ e);
+				Activator.getDefault().logError(str, e);
+				Activator.FTracer.traceInfo("ReportGeneration.prepareReport() Generate Report.run() EngineException : "
+						+ e);
 			} catch (ResourceHandlingException e) {
 				e.printStackTrace();
-				Activator.FTracer.traceInfo
-				("ReportGeneration.prepareReport() ResourceHandlingException : "
-						+ e);
-			
+				Activator.FTracer.traceInfo("ReportGeneration.prepareReport() ResourceHandlingException : " + e);
+
 			} catch (CompatibilityException e) {
 				e.printStackTrace();
 				Activator.FTracer.traceInfo("ReportGeneration.prepareReport() CompatibilityException : " + e);
@@ -1411,28 +1345,24 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Read the current user
+	 * 
 	 * @return String
 	 */
 	private String getLocalUser() {
 		String localUser = new String(System.getProperty("user.name"));
 		return localUser.toLowerCase();
 	}
-	
 
 //=================================================================
 //
 //      TO DELETE AFTER THIS LINE
 //
 //=================================================================	
-	
-	
+
 	//For Progress BAR if needed later
 //	public void setReviewNameTableModel(final ReviewNameTableModel aRevNameTable) {
 //		fReviewNameTableModel = aRevNameTable;
 //	}
-
-
-	
 
 	/**
 	 * @param args
@@ -1440,10 +1370,10 @@ public class ReportGeneration implements IR4EReport {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		String[] strReviews = {"C:\\temp\\openTest\\Formal-3"};
-		String[] strReviews = {"C:/temp/openTest/Formal-3"};
-		
+		String[] strReviews = { "C:/temp/openTest/Formal-3" };
+
 		File[] listSelectReviews = new File[strReviews.length];
-		for (int i = 0; i < strReviews.length;i++) {
+		for (int i = 0; i < strReviews.length; i++) {
 			//Create a file out of the reviews name string
 			listSelectReviews[i] = new File(strReviews[i]);
 		}

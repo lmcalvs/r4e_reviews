@@ -17,9 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Position</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Position</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EPosition()

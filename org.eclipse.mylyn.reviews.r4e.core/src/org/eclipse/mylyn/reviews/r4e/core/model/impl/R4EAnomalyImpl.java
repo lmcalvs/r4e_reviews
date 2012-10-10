@@ -41,9 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Anomaly</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Anomaly</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -81,8 +79,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -91,8 +89,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #getCreatedOn() <em>Created On</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCreatedOn()
 	 * @generated
 	 * @ordered
@@ -101,8 +99,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getCreatedOn() <em>Created On</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getCreatedOn()
 	 * @generated
 	 * @ordered
@@ -111,8 +109,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getAnomaly() <em>Anomaly</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAnomaly()
 	 * @generated
 	 * @ordered
@@ -120,9 +118,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected R4EAnomaly anomaly;
 
 	/**
-	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfoAtt()
 	 * @generated
 	 * @ordered
@@ -131,8 +129,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getState()
 	 * @generated
 	 * @ordered
@@ -140,9 +138,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected static final R4EAnomalyState STATE_EDEFAULT = R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
 
 	/**
-	 * The cached value of the '{@link #getState() <em>State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getState() <em>State</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getState()
 	 * @generated
 	 * @ordered
@@ -151,8 +149,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDueDate()
 	 * @generated
 	 * @ordered
@@ -161,8 +159,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getDueDate()
 	 * @generated
 	 * @ordered
@@ -170,9 +168,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected Date dueDate = DUE_DATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getRank()
 	 * @generated
 	 * @ordered
@@ -180,9 +178,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.R4E_RANK_NONE;
 
 	/**
-	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getRank()
 	 * @generated
 	 * @ordered
@@ -190,9 +188,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected R4EDesignRuleRank rank = RANK_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getRule() <em>Rule</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getRule() <em>Rule</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getRule()
 	 * @generated
 	 * @ordered
@@ -200,9 +198,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected R4EDesignRule rule;
 
 	/**
-	 * The default value of the '{@link #getNotAcceptedReason() <em>Not Accepted Reason</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getNotAcceptedReason() <em>Not Accepted Reason</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getNotAcceptedReason()
 	 * @generated
 	 * @ordered
@@ -210,9 +208,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected static final String NOT_ACCEPTED_REASON_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getNotAcceptedReason() <em>Not Accepted Reason</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getNotAcceptedReason() <em>Not Accepted Reason</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getNotAcceptedReason()
 	 * @generated
 	 * @ordered
@@ -221,8 +219,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #isIsImported() <em>Is Imported</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #isIsImported()
 	 * @generated
 	 * @ordered
@@ -231,8 +229,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #isIsImported() <em>Is Imported</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #isIsImported()
 	 * @generated
 	 * @ordered
@@ -241,8 +239,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getFixedInVersion() <em>Fixed In Version</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getFixedInVersion()
 	 * @generated
 	 * @ordered
@@ -251,8 +249,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #getRuleID() <em>Rule ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getRuleID()
 	 * @generated
 	 * @ordered
@@ -261,8 +259,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getRuleID() <em>Rule ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getRuleID()
 	 * @generated
 	 * @ordered
@@ -291,8 +289,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The default value of the '{@link #getFixedByID() <em>Fixed By ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFixedByID()
 	 * @generated
 	 * @ordered
@@ -301,8 +299,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 
 	/**
 	 * The cached value of the '{@link #getFixedByID() <em>Fixed By ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFixedByID()
 	 * @generated
 	 * @ordered
@@ -330,8 +328,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected String followUpByID = FOLLOW_UP_BY_ID_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EAnomalyImpl() {
@@ -339,8 +336,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -349,8 +345,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -361,8 +356,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getCreatedOn() {
@@ -370,8 +364,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setCreatedOn(Date newCreatedOn) {
@@ -382,8 +375,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly getAnomaly() {
@@ -399,8 +391,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomaly basicGetAnomaly() {
@@ -408,8 +399,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setAnomaly(R4EAnomaly newAnomaly) {
@@ -420,8 +410,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getInfoAtt() {
@@ -432,8 +421,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EAnomalyState getState() {
@@ -441,8 +429,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setState(R4EAnomalyState newState) {
@@ -453,8 +440,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Date getDueDate() {
@@ -462,8 +448,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDueDate(Date newDueDate) {
@@ -474,8 +459,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRuleRank getRank() {
@@ -483,8 +467,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRank(R4EDesignRuleRank newRank) {
@@ -495,8 +478,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRule getRule() {
@@ -512,8 +494,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDesignRule basicGetRule() {
@@ -521,8 +502,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRule(R4EDesignRule newRule) {
@@ -533,8 +513,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getNotAcceptedReason() {
@@ -542,8 +521,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setNotAcceptedReason(String newNotAcceptedReason) {
@@ -554,8 +532,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isIsImported() {
@@ -563,8 +540,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setIsImported(boolean newIsImported) {
@@ -575,8 +551,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion getFixedInVersion() {
@@ -592,8 +567,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EFileVersion basicGetFixedInVersion() {
@@ -601,8 +575,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFixedInVersion(R4EFileVersion newFixedInVersion) {
@@ -613,8 +586,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getRuleID() {
@@ -622,8 +594,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRuleID(String newRuleID) {
@@ -634,8 +605,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getDecidedByID() {
@@ -643,8 +613,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDecidedByID(String newDecidedByID) {
@@ -655,8 +624,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFixedByID() {
@@ -664,8 +632,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFixedByID(String newFixedByID) {
@@ -676,8 +643,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFollowUpByID() {
@@ -685,8 +651,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFollowUpByID(String newFollowUpByID) {
@@ -697,8 +662,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID getId() {
@@ -720,8 +684,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID basicGetId() {
@@ -729,8 +692,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetId(R4EID newId, NotificationChain msgs) {
@@ -744,8 +706,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setId(R4EID newId) {
@@ -763,8 +724,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -779,8 +739,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -828,8 +787,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -890,8 +848,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -950,8 +907,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -994,8 +950,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1024,8 +979,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1054,8 +1008,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

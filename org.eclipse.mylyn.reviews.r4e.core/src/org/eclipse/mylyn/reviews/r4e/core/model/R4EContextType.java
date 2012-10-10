@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Context Type</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Context Type</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EContextType()
  * @model
  * @generated
@@ -32,8 +30,7 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EContextType implements Enumerator {
 	/**
 	 * The '<em><b>R4E UNDEFINED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_UNDEFINED_VALUE
 	 * @generated
 	 * @ordered
@@ -42,8 +39,7 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E ADDED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_ADDED_VALUE
 	 * @generated
 	 * @ordered
@@ -52,8 +48,7 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E DELETED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_DELETED_VALUE
 	 * @generated
 	 * @ordered
@@ -62,8 +57,7 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E MODIFIED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_MODIFIED_VALUE
 	 * @generated
 	 * @ordered
@@ -72,8 +66,7 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * The '<em><b>R4E REPLACED</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REPLACED_VALUE
 	 * @generated
 	 * @ordered
@@ -84,8 +77,8 @@ public enum R4EContextType implements Enumerator {
 	 * The '<em><b>R4E UNDEFINED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E UNDEFINED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E UNDEFINED</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_UNDEFINED
@@ -99,8 +92,8 @@ public enum R4EContextType implements Enumerator {
 	 * The '<em><b>R4E ADDED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ADDED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ADDED</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_ADDED
@@ -114,8 +107,8 @@ public enum R4EContextType implements Enumerator {
 	 * The '<em><b>R4E DELETED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E DELETED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E DELETED</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_DELETED
@@ -129,8 +122,8 @@ public enum R4EContextType implements Enumerator {
 	 * The '<em><b>R4E MODIFIED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E MODIFIED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E MODIFIED</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_MODIFIED
@@ -144,8 +137,8 @@ public enum R4EContextType implements Enumerator {
 	 * The '<em><b>R4E REPLACED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REPLACED</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REPLACED</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REPLACED
@@ -157,12 +150,10 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * An array of all the '<em><b>R4E Context Type</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final R4EContextType[] VALUES_ARRAY =
-		new R4EContextType[] {
+	private static final R4EContextType[] VALUES_ARRAY = new R4EContextType[] {
 			R4E_UNDEFINED,
 			R4E_ADDED,
 			R4E_DELETED,
@@ -172,8 +163,8 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>R4E Context Type</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static final List<R4EContextType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -196,8 +187,8 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Context Type</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EContextType getByName(String name) {
@@ -228,30 +219,26 @@ public enum R4EContextType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EContextType(int value, String name, String literal) {
@@ -261,8 +248,7 @@ public enum R4EContextType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -270,8 +256,7 @@ public enum R4EContextType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -279,8 +264,7 @@ public enum R4EContextType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -289,13 +273,13 @@ public enum R4EContextType implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EContextType

@@ -19,9 +19,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Participant</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Participant</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -45,8 +43,8 @@ public interface R4EParticipant extends R4EUser {
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Roles</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Roles</em>' attribute list isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Roles</em>' attribute list.
@@ -61,8 +59,8 @@ public interface R4EParticipant extends R4EUser {
 	 * Returns the value of the '<em><b>Focus Area</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Focus Area</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Focus Area</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Focus Area</em>' attribute.
@@ -75,8 +73,7 @@ public interface R4EParticipant extends R4EUser {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getFocusArea <em>Focus Area</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Focus Area</em>' attribute.
 	 * @see #getFocusArea()
 	 * @generated
@@ -87,8 +84,8 @@ public interface R4EParticipant extends R4EUser {
 	 * Returns the value of the '<em><b>Is Part Of Decision</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Is Part Of Decision</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Is Part Of Decision</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Part Of Decision</em>' attribute.
@@ -101,8 +98,7 @@ public interface R4EParticipant extends R4EUser {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#isIsPartOfDecision <em>Is Part Of Decision</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Part Of Decision</em>' attribute.
 	 * @see #isIsPartOfDecision()
 	 * @generated
@@ -114,8 +110,8 @@ public interface R4EParticipant extends R4EUser {
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Reviewed Content</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Reviewed Content</em>' containment reference list isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reviewed Content</em>' reference list.
@@ -131,8 +127,7 @@ public interface R4EParticipant extends R4EUser {
 	 * and the value is of type {@link java.lang.Integer},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Time Log</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Time Log</em>' map isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Time Log</em>' map.

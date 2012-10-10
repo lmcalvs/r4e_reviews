@@ -39,8 +39,9 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	protected final Map<ResourceType, String>	fresTypeToTag	= new HashMap<ResourceType, String>();
-	private final Persistence.IResSerializationState	fResState;
+	protected final Map<ResourceType, String> fresTypeToTag = new HashMap<ResourceType, String>();
+
+	private final Persistence.IResSerializationState fResState;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -56,7 +57,7 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 		fresTypeToTag.put(ResourceType.USER_GROUP, IRWUserBasedRes.GROUP_UREVIEW_TAG);
 		fresTypeToTag.put(ResourceType.GROUP, IRWUserBasedRes.GROUP_ROOT_TAG);
 		fresTypeToTag.put(ResourceType.DRULE_SET, IRWUserBasedRes.DRULE_SET_TAG);
-		
+
 		//Save options
 		if (fOptions == null) {
 			fOptions = new HashMap<String, Object>();
@@ -98,12 +99,12 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 			message.append("Not possible to save a Resource with URI= null");
 			throw new ResourceHandlingException(message.toString());
 		}
-		
+
 		// Mark new folder creation
 		URI folderUri = ResourceUtils.getFolderPath(resUri);
 		File folder = new File(URI.decode(folderUri.devicePath()));
 		boolean newFolder = !folder.exists();
-		
+
 		// Mark new file creation
 		File file = new File(URI.decode(resUri.devicePath()));
 		boolean newFile = !file.exists();
@@ -188,4 +189,3 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 		return result;
 	}
 }
-	

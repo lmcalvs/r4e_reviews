@@ -36,7 +36,7 @@ public class PreferenceConstants {
 	public static final String FP_SERVER_HOST_GROUP = "Server Host Information";
 
 	public static final String FP_SMTP_SERVER_LABEL = "Host:";
-	
+
 	public static final String FP_SMTP_SERVER_LIST_ID = "serverList";
 
 }

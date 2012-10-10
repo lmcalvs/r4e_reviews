@@ -36,23 +36,24 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E File Version</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E File Version</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getPlatformURI <em>Platform URI</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getVersionID <em>Version ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getRepositoryPath <em>Repository Path</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getResource <em>Resource</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getLocalVersionID <em>Local Version ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getFileRevision <em>File Revision</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getInfoAtt <em>Info Att</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getPlatformURI <em>Platform URI</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getVersionID <em>Version ID</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getRepositoryPath <em>Repository Path
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getResource <em>Resource</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getLocalVersionID <em>Local Version ID
+ * </em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getFileRevision <em>File Revision</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
@@ -68,8 +69,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The cached value of the '{@link #getPlatformURI() <em>Platform URI</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getPlatformURI()
 	 * @generated
 	 * @ordered
@@ -78,8 +79,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The default value of the '{@link #getVersionID() <em>Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getVersionID()
 	 * @generated
 	 * @ordered
@@ -88,8 +89,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The cached value of the '{@link #getVersionID() <em>Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getVersionID()
 	 * @generated
 	 * @ordered
@@ -98,8 +99,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The default value of the '{@link #getRepositoryPath() <em>Repository Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getRepositoryPath()
 	 * @generated
 	 * @ordered
@@ -108,8 +109,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The cached value of the '{@link #getRepositoryPath() <em>Repository Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getRepositoryPath()
 	 * @generated
 	 * @ordered
@@ -117,9 +118,9 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	protected String repositoryPath = REPOSITORY_PATH_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -127,9 +128,9 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -138,8 +139,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The default value of the '{@link #getResource() <em>Resource</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getResource()
 	 * @generated
 	 * @ordered
@@ -148,8 +149,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The cached value of the '{@link #getResource() <em>Resource</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getResource()
 	 * @generated
 	 * @ordered
@@ -158,8 +159,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The default value of the '{@link #getLocalVersionID() <em>Local Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getLocalVersionID()
 	 * @generated
 	 * @ordered
@@ -168,8 +169,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 
 	/**
 	 * The cached value of the '{@link #getLocalVersionID() <em>Local Version ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getLocalVersionID()
 	 * @generated
 	 * @ordered
@@ -197,9 +198,9 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	protected IFileRevision fileRevision = FILE_REVISION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getInfoAtt()
 	 * @generated
 	 * @ordered
@@ -207,8 +208,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	protected EMap<String, String> infoAtt;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EFileVersionImpl() {
@@ -216,8 +216,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -226,8 +225,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getPlatformURI() {
@@ -235,8 +233,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setPlatformURI(String newPlatformURI) {
@@ -247,8 +244,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getVersionID() {
@@ -256,8 +252,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setVersionID(String newVersionID) {
@@ -268,8 +263,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getRepositoryPath() {
@@ -277,8 +271,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRepositoryPath(String newRepositoryPath) {
@@ -289,8 +282,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -298,8 +290,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -310,8 +301,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public IResource getResource() {
@@ -319,8 +309,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setResource(IResource newResource) {
@@ -331,8 +320,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLocalVersionID() {
@@ -340,8 +328,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLocalVersionID(String newLocalVersionID) {
@@ -352,8 +339,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public IFileRevision getFileRevision() {
@@ -361,8 +347,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFileRevision(IFileRevision newFileRevision) {
@@ -373,8 +358,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getInfoAtt() {
@@ -385,8 +369,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -399,8 +382,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -428,8 +410,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -464,8 +445,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -500,8 +480,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -528,8 +507,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

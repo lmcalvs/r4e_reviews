@@ -18,9 +18,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Design Rule Area</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Design Rule Area</b></em>'. <!--
+ * end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -40,8 +39,8 @@ public interface R4EDesignRuleArea extends ReviewComponent {
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Violations</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Violations</em>' containment reference list isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Violations</em>' containment reference list.
@@ -55,8 +54,7 @@ public interface R4EDesignRuleArea extends ReviewComponent {
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
@@ -69,8 +67,7 @@ public interface R4EDesignRuleArea extends ReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated

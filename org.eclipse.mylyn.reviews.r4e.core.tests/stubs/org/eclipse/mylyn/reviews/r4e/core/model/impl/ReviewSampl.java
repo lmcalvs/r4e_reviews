@@ -55,14 +55,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class ReviewSampl {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static RModelFactoryExt	fResFactory	= SerializeFactory.getModelExtension();
+	private static RModelFactoryExt fResFactory = SerializeFactory.getModelExtension();
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -96,12 +95,12 @@ public class ReviewSampl {
 		if (projects != null && projects.size() > 0) {
 			project = projects.get(0);
 		}
-		
+
 		EList<String> components = aGroup.getAvailableComponents();
 		String component = "TBD";
 		if (components != null && components.size() > 0) {
 			component = components.get(0);
-		}	
+		}
 
 		R4EReviewDecision decision = RModelFactory.eINSTANCE.createR4EReviewDecision();
 		decision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
@@ -141,7 +140,7 @@ public class ReviewSampl {
 		participant2.setIsPartOfDecision(true);
 		participant2.getGroupPaths().add("c:/group1/");
 		participant2.getGroupPaths().add("c:/group2/");
-		
+
 		userTimes = participant2.getTimeLog().values();
 		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
 			Integer time = iterator.next();
@@ -155,7 +154,7 @@ public class ReviewSampl {
 		// comments on anomalies createed by other users
 		createComments(participant, anomalyP2);
 		createComments(participant2, anomalyP1);
-		
+
 		// ITEMS
 		createItems(participant);
 		createItems(participant2);
@@ -225,7 +224,7 @@ public class ReviewSampl {
 		// Comments
 		R4ECommentType commType = RModelFactory.eINSTANCE.createR4ECommentType();
 		commType.setType(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS);
-		
+
 		// comment1
 		R4EComment comment1 = null;
 		try {
@@ -247,7 +246,6 @@ public class ReviewSampl {
 		comment2.setType(commType);
 		comment2.setDescription("This is test comment number 2");
 	}
-
 
 	/**
 	 * @param participant
@@ -314,4 +312,3 @@ public class ReviewSampl {
 		}
 	}
 }
-	

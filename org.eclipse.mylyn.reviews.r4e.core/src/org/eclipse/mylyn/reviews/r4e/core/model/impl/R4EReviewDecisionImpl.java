@@ -24,9 +24,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Review Decision</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review Decision</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -40,8 +39,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecision {
 	/**
 	 * The default value of the '{@link #getSpentTime() <em>Spent Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSpentTime()
 	 * @generated
 	 * @ordered
@@ -50,8 +49,8 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 
 	/**
 	 * The cached value of the '{@link #getSpentTime() <em>Spent Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getSpentTime()
 	 * @generated
 	 * @ordered
@@ -60,8 +59,8 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
@@ -69,9 +68,9 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	protected static final R4EDecision VALUE_EDEFAULT = R4EDecision.R4E_REVIEW_DECISION_NONE;
 
 	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
@@ -79,8 +78,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	protected R4EDecision value = VALUE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EReviewDecisionImpl() {
@@ -88,8 +86,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -98,8 +95,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getSpentTime() {
@@ -107,8 +103,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSpentTime(int newSpentTime) {
@@ -119,8 +114,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EDecision getValue() {
@@ -128,8 +122,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setValue(R4EDecision newValue) {
@@ -140,8 +133,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -156,8 +148,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -174,8 +165,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -192,8 +182,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -208,8 +197,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

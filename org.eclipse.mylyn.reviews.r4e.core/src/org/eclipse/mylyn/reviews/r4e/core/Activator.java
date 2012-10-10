@@ -26,7 +26,7 @@ public class Activator extends Plugin {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	public static final String	PLUGIN_ID	= "org.eclipse.mylyn.reviews.r4e.core"; // The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.core"; // The plug-in ID
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -35,12 +35,12 @@ public class Activator extends Plugin {
 	/**
 	 * Field Plugin.
 	 */
-	private static Activator	Plugin;											// The shared instance
+	private static Activator Plugin; // The shared instance
 
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer		fTracer		= new Tracer();
+	public static Tracer fTracer = new Tracer();
 
 	// ------------------------------------------------------------------------
 	// Constructors

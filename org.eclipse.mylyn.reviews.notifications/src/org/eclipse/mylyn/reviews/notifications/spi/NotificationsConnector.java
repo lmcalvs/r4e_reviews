@@ -21,13 +21,12 @@ import org.eclipse.mylyn.reviews.notifications.core.NotificationFilter;
 /**
  * @author Alvaro Sanchez-Leon
  * @author Jacques Bouthillier
- * 
  */
 public abstract class NotificationsConnector {
 	// ------------------------------------------------------------------------
 	// Instance variables
 	// ------------------------------------------------------------------------
-	protected boolean	enabled	= false;
+	protected boolean enabled = false;
 
 	// ------------------------------------------------------------------------
 	// Methods

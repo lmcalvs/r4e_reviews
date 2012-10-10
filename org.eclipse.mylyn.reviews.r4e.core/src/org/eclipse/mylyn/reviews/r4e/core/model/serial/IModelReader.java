@@ -20,7 +20,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public interface IModelReader {
 

@@ -21,9 +21,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Review</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -38,7 +36,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision <em>Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}</li
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
@@ -57,8 +55,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
@@ -71,8 +68,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -83,8 +79,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Project</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Project</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Project</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project</em>' attribute.
@@ -97,8 +93,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getProject <em>Project</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Project</em>' attribute.
 	 * @see #getProject()
 	 * @generated
@@ -110,8 +105,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Components</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Components</em>' attribute list isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Components</em>' attribute list.
@@ -125,8 +120,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Entry Criteria</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Entry Criteria</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Entry Criteria</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Entry Criteria</em>' attribute.
@@ -139,8 +134,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEntryCriteria <em>Entry Criteria</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Entry Criteria</em>' attribute.
 	 * @see #getEntryCriteria()
 	 * @generated
@@ -151,8 +145,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Extra Notes</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Extra Notes</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Extra Notes</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Extra Notes</em>' attribute.
@@ -165,8 +159,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getExtraNotes <em>Extra Notes</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Extra Notes</em>' attribute.
 	 * @see #getExtraNotes()
 	 * @generated
@@ -177,8 +170,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Objectives</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Objectives</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Objectives</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Objectives</em>' attribute.
@@ -191,8 +184,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getObjectives <em>Objectives</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Objectives</em>' attribute.
 	 * @see #getObjectives()
 	 * @generated
@@ -203,8 +195,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Reference Material</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Reference Material</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Reference Material</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reference Material</em>' attribute.
@@ -217,8 +209,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getReferenceMaterial <em>Reference Material</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Reference Material</em>' attribute.
 	 * @see #getReferenceMaterial()
 	 * @generated
@@ -229,8 +220,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Decision</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Decision</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Decision</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Decision</em>' containment reference.
@@ -243,8 +234,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision <em>Decision</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Decision</em>' containment reference.
 	 * @see #getDecision()
 	 * @generated
@@ -255,8 +245,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Start Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Start Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Start Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Date</em>' attribute.
@@ -269,8 +259,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Start Date</em>' attribute.
 	 * @see #getStartDate()
 	 * @generated
@@ -281,8 +270,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>End Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>End Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>End Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Date</em>' attribute.
@@ -295,8 +284,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>End Date</em>' attribute.
 	 * @see #getEndDate()
 	 * @generated
@@ -307,8 +295,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Due Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Due Date</em>' attribute.
@@ -318,24 +306,22 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @generated
 	 */
 	Date getDueDate();
-	
+
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDa
-te <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Due Date</em>' attribute.
 	 * @see #getDueDate()
 	 * @generated
 	 */
 	void setDueDate(Date value);
-	
+
 	/**
 	 * Returns the value of the '<em><b>Anomaly Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Anomaly Template</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Anomaly Template</em>' reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Anomaly Template</em>' containment reference.
@@ -348,8 +334,7 @@ te <em>Due Date</em>}' attribute.
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Anomaly Template</em>' containment reference.
 	 * @see #getAnomalyTemplate()
 	 * @generated
@@ -362,8 +347,7 @@ te <em>Due Date</em>}' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
@@ -377,8 +361,7 @@ te <em>Due Date</em>}' attribute.
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType
 	 * @see #getType()
@@ -392,8 +375,7 @@ te <em>Due Date</em>}' attribute.
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Users Map</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Users Map</em>' map isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Users Map</em>' map.
@@ -409,8 +391,8 @@ te <em>Due Date</em>}' attribute.
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Ids Map</em>' reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Ids Map</em>' reference list isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ids Map</em>' map.
@@ -424,8 +406,8 @@ te <em>Due Date</em>}' attribute.
 	 * Returns the value of the '<em><b>Active Meeting</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Active Meeting</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Active Meeting</em>' containment reference isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Active Meeting</em>' containment reference.
@@ -438,8 +420,7 @@ te <em>Due Date</em>}' attribute.
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Active Meeting</em>' containment reference.
 	 * @see #getActiveMeeting()
 	 * @generated
@@ -450,8 +431,8 @@ te <em>Due Date</em>}' attribute.
 	 * Returns the value of the '<em><b>Created By</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Created By</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Created By</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Created By</em>' reference.
@@ -464,8 +445,7 @@ te <em>Due Date</em>}' attribute.
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Created By</em>' reference.
 	 * @see #getCreatedBy()
 	 * @generated

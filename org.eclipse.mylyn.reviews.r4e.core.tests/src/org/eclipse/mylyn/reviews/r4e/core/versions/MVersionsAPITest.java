@@ -43,27 +43,35 @@ import org.junit.Test;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class MVersionsAPITest extends GitTestCase {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private IProject			fIProject		= null;
-	private TestRepository		testRepo		= null;
-	private Repository			repo			= null;
-	private List<IResource>		resources		= new ArrayList<IResource>();
-	private IFile				ifileA			= null;
-	private IFile				ifileB			= null;
-	private IFile				ifileC			= null;
-	private IFile				ifileD			= null;
-	private ScmConnector		fConnector		= null;
-	private ScmRepository		fScmRepo			= null;
+	private IProject fIProject = null;
+
+	private TestRepository testRepo = null;
+
+	private Repository repo = null;
+
+	private List<IResource> resources = new ArrayList<IResource>();
+
+	private IFile ifileA = null;
+
+	private IFile ifileB = null;
+
+	private IFile ifileC = null;
+
+	private IFile ifileD = null;
+
+	private ScmConnector fConnector = null;
+
+	private ScmRepository fScmRepo = null;
+
 	/**
 	 * Perform pre-test initialization
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#setUp()
 	 */
 	@Before
@@ -109,9 +117,8 @@ public class MVersionsAPITest extends GitTestCase {
 
 	/**
 	 * Perform post-test clean up
-	 *
+	 * 
 	 * @throws Exception
-	 *
 	 * @see TestCase#tearDown()
 	 */
 	@After
@@ -158,7 +165,6 @@ public class MVersionsAPITest extends GitTestCase {
 				public IFileRevision withAllProperties(IProgressMonitor monitor) throws CoreException {
 					return null;
 				}
-
 
 				public boolean isPropertyMissing() {
 					return false;

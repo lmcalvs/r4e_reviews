@@ -25,19 +25,24 @@ public class TstGeneral {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	public static final String	GROUP_PATH_STR			= "outGroupX";
-	public static final String	GOLDEN_GROUP_DIR_STR	= "stubs_model/" + GROUP_PATH_STR;
-	public static final String	GOLDEN_GROUP_FILE_STR	= GOLDEN_GROUP_DIR_STR + "/Golden_Group_group_root.xrer";
-	
+	public static final String GROUP_PATH_STR = "outGroupX";
+
+	public static final String GOLDEN_GROUP_DIR_STR = "stubs_model/" + GROUP_PATH_STR;
+
+	public static final String GOLDEN_GROUP_FILE_STR = GOLDEN_GROUP_DIR_STR + "/Golden_Group_group_root.xrer";
+
 	//Windows specific
-	public static final String	GROUP_PATH_STRW			= "outGroupW";
-	public static final String	GOLDEN_GROUP_DIR_STRW	= "stubs_model/" + GROUP_PATH_STRW;
-	public static final String	GOLDEN_GROUP_FILE_STRW	= GOLDEN_GROUP_DIR_STRW + "/Golden_Group_group_root.xrer";
-	
-	
-	public static final URI		GOLDEN_GROUP_DIR		= URI.createFileURI(GOLDEN_GROUP_DIR_STR);
-	public static final URI		GOLDEN_GROUP_DIRW		= URI.createFileURI(GOLDEN_GROUP_DIR_STRW);
-	public static final URI		GOLDEN_GROUP_FILE		= URI.createFileURI(GOLDEN_GROUP_FILE_STR);
+	public static final String GROUP_PATH_STRW = "outGroupW";
+
+	public static final String GOLDEN_GROUP_DIR_STRW = "stubs_model/" + GROUP_PATH_STRW;
+
+	public static final String GOLDEN_GROUP_FILE_STRW = GOLDEN_GROUP_DIR_STRW + "/Golden_Group_group_root.xrer";
+
+	public static final URI GOLDEN_GROUP_DIR = URI.createFileURI(GOLDEN_GROUP_DIR_STR);
+
+	public static final URI GOLDEN_GROUP_DIRW = URI.createFileURI(GOLDEN_GROUP_DIR_STRW);
+
+	public static final URI GOLDEN_GROUP_FILE = URI.createFileURI(GOLDEN_GROUP_FILE_STR);
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -72,7 +77,7 @@ public class TstGeneral {
 		long fileSizeA = FileUtils.sizeOfDirectory(fileA);
 		// Find the size of the new Directory
 		long fileSizeB = FileUtils.sizeOfDirectory(fileB);
-		
+
 		boolean same = (fileSizeA == fileSizeB);
 		if (!same) {
 			StringBuilder sb = new StringBuilder("TestGeneral.compareDirectories, directories size are different:");

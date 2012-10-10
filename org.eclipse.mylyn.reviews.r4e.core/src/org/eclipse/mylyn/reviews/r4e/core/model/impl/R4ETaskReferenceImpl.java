@@ -24,16 +24,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Task Reference</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Task Reference</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl#getAssignedTo <em>Assigned To</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETaskReferenceImpl#getAssignedTo <em>Assigned To</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskReference {
@@ -48,8 +47,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	protected EList<String> assignedTo;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4ETaskReferenceImpl() {
@@ -57,8 +55,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -67,8 +64,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAssignedTo() {
@@ -79,8 +75,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -93,8 +88,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -110,8 +104,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -125,8 +118,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -139,8 +131,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -155,8 +146,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -171,8 +161,7 @@ public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskRe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

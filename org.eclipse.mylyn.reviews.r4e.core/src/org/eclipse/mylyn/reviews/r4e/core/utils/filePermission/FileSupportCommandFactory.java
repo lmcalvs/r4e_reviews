@@ -18,7 +18,6 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.sys.OSPLATFORM;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class FileSupportCommandFactory {
 

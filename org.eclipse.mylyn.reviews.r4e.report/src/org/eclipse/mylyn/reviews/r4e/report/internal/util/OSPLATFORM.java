@@ -18,7 +18,6 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.Platform;
 
-
 public final class OSPLATFORM {
 
 	// ------------------------------------------------------------------------
@@ -26,26 +25,25 @@ public final class OSPLATFORM {
 	// ------------------------------------------------------------------------
 
 	// Separator among files
-	private static final String	FILE_PATH_SEPARATOR					= File.pathSeparator;
+	private static final String FILE_PATH_SEPARATOR = File.pathSeparator;
 
-	private static final char	FILE_PATH_SEPARATOR_CHAR			= File.pathSeparatorChar;
+	private static final char FILE_PATH_SEPARATOR_CHAR = File.pathSeparatorChar;
 
 	// Separator between file elements (directory and file names)
-	private static final String	FILE_ELEMENT_SEPARATOR				= File.separator;
+	private static final String FILE_ELEMENT_SEPARATOR = File.separator;
 
-	private static final char	FILE_ELEMENT_SEPARATOR_CHAR			= File.separatorChar;
+	private static final char FILE_ELEMENT_SEPARATOR_CHAR = File.separatorChar;
 
-	public static final String		FFILE_ELEMENT_SEPARATOR_PORTABLE		= "/";
+	public static final String FFILE_ELEMENT_SEPARATOR_PORTABLE = "/";
 
-	private static final boolean	IS_FILE_ELEMENT_SEPARATOR_PORTABLE	= FFILE_ELEMENT_SEPARATOR_PORTABLE
-																			.equals(FILE_ELEMENT_SEPARATOR);
+	private static final boolean IS_FILE_ELEMENT_SEPARATOR_PORTABLE = FFILE_ELEMENT_SEPARATOR_PORTABLE.equals(FILE_ELEMENT_SEPARATOR);
 
 	// ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
-	public static final String		FNAME								= System.getProperty("os.name");
+	public static final String FNAME = System.getProperty("os.name");
 
-	public static final OSTYPE		FTYPE								= OSTYPE.resolveOSNameToOSType(FNAME);
+	public static final OSTYPE FTYPE = OSTYPE.resolveOSNameToOSType(FNAME);
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -111,7 +109,7 @@ public final class OSPLATFORM {
 				return type;
 			}
 		};
-		
+
 		protected abstract OSTYPE match(String name);
 
 		// Internal Helper
@@ -148,14 +146,11 @@ public final class OSPLATFORM {
 		public boolean isSolarisOS() {
 			return this == SOLARIS;
 		}
-		
+
 		public boolean isMacOS() {
 			return this == MAC;
 		}
 	} // enum
-
-
-
 
 	/**
 	 * @param args
@@ -171,17 +166,14 @@ public final class OSPLATFORM {
 		System.out.println("main() OS Name [" + OSPLATFORM.FNAME + "]");
 		System.out.println("main() OS Type [" + OSPLATFORM.FTYPE + "]");
 
-		System.out.println("main() Windows/Linux/Solaris "
- + OSPLATFORM.FTYPE.isWindowsOS() + "/"
+		System.out.println("main() Windows/Linux/Solaris " + OSPLATFORM.FTYPE.isWindowsOS() + "/"
 				+ OSPLATFORM.FTYPE.isLinuxOS() + "/" + OSPLATFORM.FTYPE.isSolarisOS());
 
 		//
 
-		System.out.println("main() File Path separator ["
-				+ OSPLATFORM.FILE_PATH_SEPARATOR + "] char ["
+		System.out.println("main() File Path separator [" + OSPLATFORM.FILE_PATH_SEPARATOR + "] char ["
 				+ OSPLATFORM.FILE_PATH_SEPARATOR_CHAR + "]");
-		System.out.println("main() File Element separator ["
-				+ OSPLATFORM.FILE_ELEMENT_SEPARATOR + "] char ["
+		System.out.println("main() File Element separator [" + OSPLATFORM.FILE_ELEMENT_SEPARATOR + "] char ["
 				+ OSPLATFORM.FILE_ELEMENT_SEPARATOR_CHAR + "] Portable "
 				+ OSPLATFORM.IS_FILE_ELEMENT_SEPARATOR_PORTABLE);
 

@@ -14,11 +14,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Anomaly Text Position</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Anomaly Text Position</b></em>'. <!--
+ * end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -36,8 +34,8 @@ public interface R4EAnomalyTextPosition extends R4ETextPosition {
 	 * Returns the value of the '<em><b>File</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>File</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>File</em>' containment reference.
@@ -50,8 +48,7 @@ public interface R4EAnomalyTextPosition extends R4ETextPosition {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile <em>File</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>File</em>' containment reference.
 	 * @see #getFile()
 	 * @generated

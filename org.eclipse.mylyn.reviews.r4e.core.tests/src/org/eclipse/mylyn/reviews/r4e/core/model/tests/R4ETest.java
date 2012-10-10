@@ -19,18 +19,24 @@ package org.eclipse.mylyn.reviews.r4e.core.model.tests;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public interface R4ETest {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	static final String	_REVIEW_NAME_1		= "reviewOne";
-	static final String	_REVIEW_NAME_2		= "reviewTwo";
-	static final String	_GROUP_ROOT_PATH	= "outGroup/";
-	static final String	_GROUP_ROOT_PATH2	= "outReview/";
-	static final String	_GROUP_ROOT_PATH3	= "outParticipant/";
-	static final String	_GROUP_NAME			= "GrpGroup";
-	static final String	_GROUP_NAME2		= "GrpReview";
-	static final String	_GROUP_NAME3		= "GrpParticipant";
+	static final String _REVIEW_NAME_1 = "reviewOne";
+
+	static final String _REVIEW_NAME_2 = "reviewTwo";
+
+	static final String _GROUP_ROOT_PATH = "outGroup/";
+
+	static final String _GROUP_ROOT_PATH2 = "outReview/";
+
+	static final String _GROUP_ROOT_PATH3 = "outParticipant/";
+
+	static final String _GROUP_NAME = "GrpGroup";
+
+	static final String _GROUP_NAME2 = "GrpReview";
+
+	static final String _GROUP_NAME3 = "GrpParticipant";
 }

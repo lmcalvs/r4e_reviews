@@ -40,8 +40,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 /**
  * @author Jacques Bouthillier
  */
-public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
-		IWorkbenchPreferencePage {
+public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
@@ -53,6 +52,7 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	 * Field PREFS_CONTAINER_DATA_SPAN. (value is 1)
 	 */
 	private static final int FPREFS_CONTAINER_DATA_SPAN = 1;
+
 	/**
 	 * Field PREFS_CONTAINER_DATA_NUM_COLUMNS. (value is 4)
 	 */
@@ -85,14 +85,11 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	protected void createFieldEditors() {
 
 		// The Main preferences composite
-		final Composite prefsContainer = new Composite(getFieldEditorParent(),
-				SWT.NONE);
-		final GridData prefsContainerData = new GridData(GridData.FILL,
-				GridData.FILL, true, false);
+		final Composite prefsContainer = new Composite(getFieldEditorParent(), SWT.NONE);
+		final GridData prefsContainerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		prefsContainerData.horizontalSpan = FPREFS_CONTAINER_DATA_SPAN;
 		prefsContainer.setLayoutData(prefsContainerData);
-		final GridLayout prefsLayout = new GridLayout(
-				FPREFS_CONTAINER_DATA_NUM_COLUMNS, false);
+		final GridLayout prefsLayout = new GridLayout(FPREFS_CONTAINER_DATA_NUM_COLUMNS, false);
 		prefsContainer.setLayout(prefsLayout);
 
 		// Create the Server host information area
@@ -117,29 +114,21 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	 */
 	private void createServerHostInformation(Composite aPrefsContainer) {
 		// Create a Group to hold SMTP user preferences
-		final Group smtpHostPrefsGroup = new Group(aPrefsContainer,
-				SWT.BORDER_SOLID);
-		final GridData smtpHostPrefsGroupData = new GridData(GridData.FILL,
-				GridData.FILL, true, false);
+		final Group smtpHostPrefsGroup = new Group(aPrefsContainer, SWT.BORDER_SOLID);
+		final GridData smtpHostPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		smtpHostPrefsGroupData.horizontalSpan = FGROUP_PREFS_SERVER_DATA_SPAN;
-		smtpHostPrefsGroup
-				.setText(PreferenceConstants.FP_SERVER_HOST_GROUP);
+		smtpHostPrefsGroup.setText(PreferenceConstants.FP_SERVER_HOST_GROUP);
 		smtpHostPrefsGroup.setLayoutData(smtpHostPrefsGroupData);
-		smtpHostPrefsGroup.setLayout(new GridLayout(
-				FGROUP_PREFS_SERVER_DATA_SPAN, false));
+		smtpHostPrefsGroup.setLayout(new GridLayout(FGROUP_PREFS_SERVER_DATA_SPAN, false));
 
 		// dummy spacer label
-		final Label smtpPrefsSpacer = new Label(smtpHostPrefsGroup,
-				SWT.FILL);
-		final GridData smtpPrefsSpacerData = new GridData(GridData.FILL,
-				GridData.FILL, true, false);
+		final Label smtpPrefsSpacer = new Label(smtpHostPrefsGroup, SWT.FILL);
+		final GridData smtpPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		smtpPrefsSpacerData.horizontalSpan = FGROUP_PREFS_SERVER_DATA_SPAN;
 		smtpPrefsSpacer.setLayoutData(smtpPrefsSpacerData);
 
-		fserverlListBox = new ListEditor(
-				PreferenceConstants.FP_SMTP_SERVER_LIST_ID,
-				PreferenceConstants.FP_SMTP_SERVER_LABEL,
-				smtpHostPrefsGroup) {
+		fserverlListBox = new ListEditor(PreferenceConstants.FP_SMTP_SERVER_LIST_ID,
+				PreferenceConstants.FP_SMTP_SERVER_LABEL, smtpHostPrefsGroup) {
 
 			@Override
 			protected String createList(String[] aItems) {
@@ -158,11 +147,8 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 			protected String getNewInputObject() {
 				// New button selected
 
-				InputDialog dialog = new InputDialog(getShell(),
-						SMTPHostString.getString("smtp_pref_title"),
-						SMTPHostString.getString("smtp_pref_dialog_msg"),
-						"",
-						SmtpInputValidator());
+				InputDialog dialog = new InputDialog(getShell(), SMTPHostString.getString("smtp_pref_title"),
+						SMTPHostString.getString("smtp_pref_dialog_msg"), "", SmtpInputValidator());
 				dialog.create();
 				dialog.open();
 				String text = dialog.getValue();
@@ -192,8 +178,7 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	 * @return String []
 	 */
 	public String[] getSmtpServer() {
-		String listServerStr = FStore
-				.getString(PreferenceConstants.FP_SMTP_SERVER_LIST_ID);
+		String listServerStr = FStore.getString(PreferenceConstants.FP_SMTP_SERVER_LIST_ID);
 		String[] star = listServerStr.split(fLIST_SEPARATOR);
 
 		return star;

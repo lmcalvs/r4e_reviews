@@ -35,9 +35,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
 import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Design Rule Collection</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Design Rule Collection</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -56,8 +55,8 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements R4EDesignRuleCollection {
 	/**
 	 * The default value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getFragmentVersion()
 	 * @generated
 	 * @ordered
@@ -66,8 +65,8 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getFragmentVersion()
 	 * @generated
 	 * @ordered
@@ -96,17 +95,16 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * This is true if the Compatibility attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	protected boolean compatibilityESet;
 
 	/**
-	 * The default value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getApplicationVersion()
 	 * @generated
 	 * @ordered
@@ -114,9 +112,9 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	protected static final String APPLICATION_VERSION_EDEFAULT = "1.0.0";
 
 	/**
-	 * The cached value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getApplicationVersion()
 	 * @generated
 	 * @ordered
@@ -125,8 +123,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * This is true if the Application Version attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -144,8 +141,8 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getVersion()
 	 * @generated
 	 * @ordered
@@ -154,8 +151,8 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getVersion()
 	 * @generated
 	 * @ordered
@@ -164,8 +161,8 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * The default value of the '{@link #getFolder() <em>Folder</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFolder()
 	 * @generated
 	 * @ordered
@@ -174,8 +171,8 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 
 	/**
 	 * The cached value of the '{@link #getFolder() <em>Folder</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getFolder()
 	 * @generated
 	 * @ordered
@@ -183,9 +180,9 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	protected String folder = FOLDER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -193,9 +190,9 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -203,8 +200,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EDesignRuleCollectionImpl() {
@@ -212,8 +208,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -222,8 +217,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFragmentVersion() {
@@ -231,8 +225,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFragmentVersion(String newFragmentVersion) {
@@ -261,8 +254,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setCompatibility(int newCompatibility) {
@@ -275,8 +267,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void unsetCompatibility() {
@@ -289,8 +280,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isSetCompatibility() {
@@ -298,8 +288,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setApplicationVersion(String newApplicationVersion) {
@@ -312,8 +301,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void unsetApplicationVersion() {
@@ -326,8 +314,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isSetApplicationVersion() {
@@ -335,8 +322,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<R4EDesignRuleArea> getAreas() {
@@ -347,8 +333,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getVersion() {
@@ -356,8 +341,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setVersion(String newVersion) {
@@ -368,8 +352,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getFolder() {
@@ -377,8 +360,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFolder(String newFolder) {
@@ -389,8 +371,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -398,8 +379,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -410,8 +390,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -424,8 +403,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -450,8 +428,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -485,8 +462,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -518,8 +494,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -544,8 +519,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -562,8 +536,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -580,8 +553,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

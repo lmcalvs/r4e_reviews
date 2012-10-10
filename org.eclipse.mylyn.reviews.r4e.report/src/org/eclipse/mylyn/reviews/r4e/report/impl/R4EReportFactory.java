@@ -18,13 +18,11 @@ package org.eclipse.mylyn.reviews.r4e.report.impl;
 
 import org.eclipse.mylyn.reviews.r4e.report.internal.dialog.ReportGeneration;
 
-
 /**
  * @author Jacques Bouthillier
- *
  */
 public class R4EReportFactory {
-	
+
 	public static IR4EReport getInstance() {
 		return new ReportGeneration();
 	}

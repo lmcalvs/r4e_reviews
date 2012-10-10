@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public abstract class NotificationFilter {
 	// ------------------------------------------------------------------------
@@ -43,7 +42,6 @@ public abstract class NotificationFilter {
 	}
 
 	/**
-	 * 
 	 * @param aCriteria
 	 * @param aElement
 	 * @return - true for accepted

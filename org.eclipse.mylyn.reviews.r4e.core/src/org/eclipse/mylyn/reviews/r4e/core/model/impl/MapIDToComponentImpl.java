@@ -31,9 +31,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Map ID To Component</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Map ID To Component</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -47,8 +46,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry<R4EID,R4EIDComponent> {
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -57,8 +56,8 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -66,8 +65,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	protected R4EIDComponent value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MapIDToComponentImpl() {
@@ -75,8 +73,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -85,8 +82,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID getTypedKey() {
@@ -102,8 +98,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID basicGetTypedKey() {
@@ -111,8 +106,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(R4EID newKey) {
@@ -123,8 +117,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EIDComponent getTypedValue() {
@@ -140,8 +133,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EIDComponent basicGetTypedValue() {
@@ -149,8 +141,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(R4EIDComponent newValue) {
@@ -161,8 +152,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -179,8 +169,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -197,8 +186,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -215,8 +203,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -231,15 +218,13 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -251,8 +236,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -260,8 +244,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID getKey() {
@@ -269,8 +252,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setKey(R4EID key) {
@@ -278,8 +260,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EIDComponent getValue() {
@@ -287,8 +268,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EIDComponent setValue(R4EIDComponent value) {
@@ -298,8 +278,7 @@ public class MapIDToComponentImpl extends EObjectImpl implements BasicEMap.Entry
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")

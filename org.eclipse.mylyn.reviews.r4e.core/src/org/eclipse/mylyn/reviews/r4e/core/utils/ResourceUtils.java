@@ -31,7 +31,6 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class ResourceUtils {
 	// ------------------------------------------------------------------------
@@ -80,13 +79,13 @@ public class ResourceUtils {
 		if (platformUri == null) {
 			return null;
 		}
-		
+
 		if (!platformUri.isPlatform()) {
 			throw new IllegalArgumentException("Not a platform uri");
 		}
-		
+
 		IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(platformUri.toPlatformString(true)));
-		
+
 		if (!ifile.exists()) {
 			StringBuilder sb = new StringBuilder("The file: " + platformUri.toString()
 					+ " does not exists in the workspace");
@@ -277,4 +276,3 @@ public class ResourceUtils {
 	}
 
 }
-	

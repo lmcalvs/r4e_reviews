@@ -207,10 +207,11 @@ public class ReviewAnnotationHover implements IAnnotationHover, IAnnotationHover
 					}
 				} catch (BadLocationException e) {
 					if (null != ReviewAnnotationConfigFactory.getPlugin()) {
-						ReviewAnnotationConfigFactory.getPlugin().getLog().log(
-							new Status(IStatus.ERROR, 
-									ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
-									IStatus.OK, e.getMessage(), e));
+						ReviewAnnotationConfigFactory.getPlugin()
+								.getLog()
+								.log(new Status(IStatus.ERROR, ReviewAnnotationConfigFactory.getPlugin()
+										.getBundle()
+										.getSymbolicName(), IStatus.OK, e.getMessage(), e));
 					}
 				}
 			}
@@ -239,10 +240,11 @@ public class ReviewAnnotationHover implements IAnnotationHover, IAnnotationHover
 				return aLine == aDocument.getLineOfOffset(aPosition.getOffset());
 			} catch (BadLocationException ex) {
 				if (null != ReviewAnnotationConfigFactory.getPlugin()) {
-					ReviewAnnotationConfigFactory.getPlugin().getLog().log(
-						new Status(IStatus.ERROR, 
-								ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
-								IStatus.OK, ex.getMessage(), ex));
+					ReviewAnnotationConfigFactory.getPlugin()
+							.getLog()
+							.log(new Status(IStatus.ERROR, ReviewAnnotationConfigFactory.getPlugin()
+									.getBundle()
+									.getSymbolicName(), IStatus.OK, ex.getMessage(), ex));
 				}
 			}
 		}

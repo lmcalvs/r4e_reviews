@@ -15,15 +15,15 @@
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
+
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class CompatibilityException extends Exception {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	// ------------------------------------------------------------------------
 	// Constructors

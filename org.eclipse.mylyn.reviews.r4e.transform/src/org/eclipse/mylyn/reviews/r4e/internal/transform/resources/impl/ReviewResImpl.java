@@ -32,23 +32,22 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Review Res</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Review Res</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl#getUsersRes <em>Users Res</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl#getUsersRes <em>Users Res
+ * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ReviewResImpl extends R4EFormalReviewImpl implements ReviewRes {
 	/**
-	 * The cached value of the '{@link #getUsersRes() <em>Users Res</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getUsersRes() <em>Users Res</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getUsersRes()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,8 @@ public class ReviewResImpl extends R4EFormalReviewImpl implements ReviewRes {
 	protected EList<R4EUser> usersRes;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReviewResImpl() {
@@ -65,8 +64,8 @@ public class ReviewResImpl extends R4EFormalReviewImpl implements ReviewRes {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -75,87 +74,88 @@ public class ReviewResImpl extends R4EFormalReviewImpl implements ReviewRes {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<R4EUser> getUsersRes() {
 		if (usersRes == null) {
-			usersRes = new EObjectContainmentEList.Resolving<R4EUser>(R4EUser.class, this, TransResPackage.REVIEW_RES__USERS_RES);
+			usersRes = new EObjectContainmentEList.Resolving<R4EUser>(R4EUser.class, this,
+					TransResPackage.REVIEW_RES__USERS_RES);
 		}
 		return usersRes;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_RES__USERS_RES:
-				return ((InternalEList<?>)getUsersRes()).basicRemove(otherEnd, msgs);
+		case TransResPackage.REVIEW_RES__USERS_RES:
+			return ((InternalEList<?>) getUsersRes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_RES__USERS_RES:
-				return getUsersRes();
+		case TransResPackage.REVIEW_RES__USERS_RES:
+			return getUsersRes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_RES__USERS_RES:
-				getUsersRes().clear();
-				getUsersRes().addAll((Collection<? extends R4EUser>)newValue);
-				return;
+		case TransResPackage.REVIEW_RES__USERS_RES:
+			getUsersRes().clear();
+			getUsersRes().addAll((Collection<? extends R4EUser>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_RES__USERS_RES:
-				getUsersRes().clear();
-				return;
+		case TransResPackage.REVIEW_RES__USERS_RES:
+			getUsersRes().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_RES__USERS_RES:
-				return usersRes != null && !usersRes.isEmpty();
+		case TransResPackage.REVIEW_RES__USERS_RES:
+			return usersRes != null && !usersRes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

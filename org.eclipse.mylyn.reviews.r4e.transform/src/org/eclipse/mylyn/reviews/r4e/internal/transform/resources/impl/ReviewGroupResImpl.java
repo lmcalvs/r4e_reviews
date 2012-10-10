@@ -32,24 +32,25 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Review Group Res</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Review Group Res</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getReviewsRes <em>Reviews Res</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getFilesPrefix <em>Files Prefix</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getReviewsRes <em>
+ * Reviews Res</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getFilesPrefix <em>
+ * Files Prefix</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGroupRes {
 	/**
-	 * The cached value of the '{@link #getReviewsRes() <em>Reviews Res</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReviewsRes() <em>Reviews Res</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReviewsRes()
 	 * @generated
 	 * @ordered
@@ -57,18 +58,19 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	protected EList<ReviewRes> reviewsRes;
 
 	/**
-	 * The default value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getFilesPrefix()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String FILES_PREFIX_EDEFAULT = null;
+
 	/**
-	 * The cached value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #getFilesPrefix()
 	 * @generated
 	 * @ordered
@@ -76,8 +78,8 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	protected String filesPrefix = FILES_PREFIX_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ReviewGroupResImpl() {
@@ -85,8 +87,8 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -95,20 +97,21 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<ReviewRes> getReviewsRes() {
 		if (reviewsRes == null) {
-			reviewsRes = new EObjectContainmentEList.Resolving<ReviewRes>(ReviewRes.class, this, TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES);
+			reviewsRes = new EObjectContainmentEList.Resolving<ReviewRes>(ReviewRes.class, this,
+					TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES);
 		}
 		return reviewsRes;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getFilesPrefix() {
@@ -116,109 +119,111 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setFilesPrefix(String newFilesPrefix) {
 		String oldFilesPrefix = filesPrefix;
 		filesPrefix = newFilesPrefix;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX, oldFilesPrefix, filesPrefix));
+			eNotify(new ENotificationImpl(this, Notification.SET, TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX,
+					oldFilesPrefix, filesPrefix));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
-				return ((InternalEList<?>)getReviewsRes()).basicRemove(otherEnd, msgs);
+		case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
+			return ((InternalEList<?>) getReviewsRes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
-				return getReviewsRes();
-			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
-				return getFilesPrefix();
+		case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
+			return getReviewsRes();
+		case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+			return getFilesPrefix();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
-				getReviewsRes().clear();
-				getReviewsRes().addAll((Collection<? extends ReviewRes>)newValue);
-				return;
-			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
-				setFilesPrefix((String)newValue);
-				return;
+		case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
+			getReviewsRes().clear();
+			getReviewsRes().addAll((Collection<? extends ReviewRes>) newValue);
+			return;
+		case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+			setFilesPrefix((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
-				getReviewsRes().clear();
-				return;
-			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
-				setFilesPrefix(FILES_PREFIX_EDEFAULT);
-				return;
+		case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
+			getReviewsRes().clear();
+			return;
+		case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+			setFilesPrefix(FILES_PREFIX_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
-				return reviewsRes != null && !reviewsRes.isEmpty();
-			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
-				return FILES_PREFIX_EDEFAULT == null ? filesPrefix != null : !FILES_PREFIX_EDEFAULT.equals(filesPrefix);
+		case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
+			return reviewsRes != null && !reviewsRes.isEmpty();
+		case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+			return FILES_PREFIX_EDEFAULT == null ? filesPrefix != null : !FILES_PREFIX_EDEFAULT.equals(filesPrefix);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (filesPrefix: ");

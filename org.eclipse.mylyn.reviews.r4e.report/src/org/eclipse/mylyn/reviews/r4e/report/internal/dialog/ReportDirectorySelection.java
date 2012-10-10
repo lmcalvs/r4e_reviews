@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Jacques Bouthillier
- * 
  */
 public class ReportDirectorySelection extends Dialog {
 
@@ -40,20 +39,20 @@ public class ReportDirectorySelection extends Dialog {
 	private final int fWIDTH = 400;
 
 	private final int fHEIGHT = 150;
-	
+
 	private final String fTITLE = "R4E Directory selection";
-	
+
 	private final String fOkTooltip = "Consider the new directory as the valid one";
 
 	private final String fCancelTooltip = "Return to the old directory";
-	
+
 	private final String fStorage = "storage";
-	
+
 	// ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
 	private File fReportFolder = null;
-	
+
 	private static Button ok;
 
 	private static Button cancel;
@@ -72,7 +71,7 @@ public class ReportDirectorySelection extends Dialog {
 		// setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.MODELESS);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -95,10 +94,8 @@ public class ReportDirectorySelection extends Dialog {
 	}
 
 	protected void createButtonsForButtonBar(Composite aParent) {
-		ok = createButton(aParent, IDialogConstants.OK_ID,
-				IDialogConstants.OK_LABEL, false);
-		cancel = createButton(aParent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
+		ok = createButton(aParent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
+		cancel = createButton(aParent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 		ok.setToolTipText(fOkTooltip);
 		cancel.setToolTipText(fCancelTooltip);
 	}
@@ -126,8 +123,7 @@ public class ReportDirectorySelection extends Dialog {
 	 */
 	private void createDirSelectionWindow(Composite aParent) {
 
-		dirFieldEditor = new DirectoryFieldEditor(
-				fStorage, " &Directory:", aParent);
+		dirFieldEditor = new DirectoryFieldEditor(fStorage, " &Directory:", aParent);
 		setTextIntoGrid(aParent);
 	}
 
@@ -164,9 +160,9 @@ public class ReportDirectorySelection extends Dialog {
 	private void setReportDirectory(File afi) {
 		fReportFolder = afi;
 	}
-	
-	public File getReportDirectory () {
+
+	public File getReportDirectory() {
 		return fReportFolder;
 	}
-	
+
 }

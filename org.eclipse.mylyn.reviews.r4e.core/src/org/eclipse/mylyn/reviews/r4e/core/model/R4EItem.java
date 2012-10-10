@@ -21,9 +21,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4E Item</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Item</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -48,8 +46,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
@@ -62,8 +60,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getDescription <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Description</em>' attribute.
 	 * @see #getDescription()
 	 * @generated
@@ -74,8 +71,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * Returns the value of the '<em><b>Added By Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Added By Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Added By Id</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Added By Id</em>' attribute.
@@ -88,8 +85,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAddedById <em>Added By Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Added By Id</em>' attribute.
 	 * @see #getAddedById()
 	 * @generated
@@ -101,8 +97,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File Context List</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>File Context List</em>' containment reference list isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>File Context List</em>' containment reference list.
@@ -116,8 +112,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * Returns the value of the '<em><b>Repository Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Repository Ref</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Repository Ref</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Repository Ref</em>' attribute.
@@ -130,8 +126,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getRepositoryRef <em>Repository Ref</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Repository Ref</em>' attribute.
 	 * @see #getRepositoryRef()
 	 * @generated
@@ -143,8 +138,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Project UR Is</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Project UR Is</em>' attribute list isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project UR Is</em>' attribute list.
@@ -158,8 +153,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * Returns the value of the '<em><b>Author Rep</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Author Rep</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Author Rep</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Author Rep</em>' attribute.
@@ -172,8 +167,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep <em>Author Rep</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Author Rep</em>' attribute.
 	 * @see #getAuthorRep()
 	 * @generated
@@ -184,8 +178,8 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * Returns the value of the '<em><b>Submitted</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Submitted</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Submitted</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Submitted</em>' attribute.
@@ -198,8 +192,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted <em>Submitted</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Submitted</em>' attribute.
 	 * @see #getSubmitted()
 	 * @generated
@@ -212,8 +205,7 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Info Att</em>' map isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Info Att</em>' map isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Info Att</em>' map.

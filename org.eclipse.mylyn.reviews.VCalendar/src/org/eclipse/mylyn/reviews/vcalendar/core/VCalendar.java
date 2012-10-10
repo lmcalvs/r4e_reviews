@@ -20,20 +20,17 @@ import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 
 /**
  * @author Jacques Bouthillier
- *
  * @version $Revision: 1.0 $
  */
 public class VCalendar {
 
-	private long fTIME_ZONE_OFFSET = TimeZone.getDefault().getOffset(
-			System.currentTimeMillis());
+	private long fTIME_ZONE_OFFSET = TimeZone.getDefault().getOffset(System.currentTimeMillis());
 
 	private final String fNEW_LINE = "\n";
 
 	private final String fGMT_TIME = "Z";
 
-	private final SimpleDateFormat fDATE_FORMAT = new SimpleDateFormat(
-			"yyyyMMdd'T'HHmmss", new Locale("eng", "US"));
+	private final SimpleDateFormat fDATE_FORMAT = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("eng", "US"));
 
 	public VCalendar() {
 	}
@@ -50,8 +47,7 @@ public class VCalendar {
 	 *            List of email's of the recipients
 	 * @return
 	 */
-	public String createVCalendar(IMeetingData aInfo, String aFrom,
-			String[] aEmails) {
+	public String createVCalendar(IMeetingData aInfo, String aFrom, String[] aEmails) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("BEGIN:VCALENDAR");
 		sb.append(fNEW_LINE);
@@ -94,8 +90,7 @@ public class VCalendar {
 	}
 
 	/**
-	 * Reformat the content of the message to replace "\n" char by the
-	 * appropriate value to be used in the vCalendar
+	 * Reformat the content of the message to replace "\n" char by the appropriate value to be used in the vCalendar
 	 * 
 	 * @param aBody
 	 *            String
@@ -112,7 +107,6 @@ public class VCalendar {
 		str = str.replaceAll("\r", "=0D=0A"); //CR
 
 		return str;
-
 
 	}
 
@@ -153,8 +147,8 @@ public class VCalendar {
 	 * @return String
 	 */
 	private String getEndDate(IMeetingData aInfo) {
-		Long timeDuration= (long) (aInfo.getDuration() * 60 * 1000); //convert minutes to millisec
-		return fDATE_FORMAT.format(aInfo.getStartTime() + timeDuration- fTIME_ZONE_OFFSET);
+		Long timeDuration = (long) (aInfo.getDuration() * 60 * 1000); //convert minutes to millisec
+		return fDATE_FORMAT.format(aInfo.getStartTime() + timeDuration - fTIME_ZONE_OFFSET);
 	}
 
 }

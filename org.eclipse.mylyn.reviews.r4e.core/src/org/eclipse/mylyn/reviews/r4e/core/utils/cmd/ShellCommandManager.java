@@ -24,15 +24,25 @@ import org.eclipse.mylyn.reviews.r4e.core.Activator;
 
 public class ShellCommandManager {
 	private File cmdPath;
+
 	private boolean receivedCancellation = false;
+
 	private Boolean waitforCompletion = false;
+
 	private Process process = null;
+
 	private StreamThread outputStream = null;
+
 	private StreamThread errorStream = null;
+
 	private List<String> command = null;
+
 	private List<String> listResult = null;
+
 	List<String> results = null;
+
 	int executedCount = 0;
+
 	int processExitValue = -1;
 
 	// Two purposes:
@@ -42,6 +52,7 @@ public class ShellCommandManager {
 	// cancellation order
 	// It determines the maximum waiting time waiting for the command to finish
 	private int intervals = 10;
+
 	private int msSleep = 10;
 
 	public ShellCommandManager(String commandPath, List<String> rcommand) {
@@ -124,18 +135,17 @@ public class ShellCommandManager {
 			// Allow the threads to finish reading before processing the
 			// command results
 			int iwaitCnt = 0;
-			while (errorStream != null && errorStream.isAlive()
-					&& (iwaitCnt < intervals) && receivedCancellation == false) {
+			while (errorStream != null && errorStream.isAlive() && (iwaitCnt < intervals)
+					&& receivedCancellation == false) {
 				iwaitCnt++;
 				Thread.sleep(msSleep);
 			}
 
-			Activator.fTracer.traceInfo("\nWaited " + iwaitCnt
-					* msSleep + " ms to read the errorStream");
+			Activator.fTracer.traceInfo("\nWaited " + iwaitCnt * msSleep + " ms to read the errorStream");
 
 			iwaitCnt = 0;
-			while (outputStream != null && outputStream.isAlive()
-					&& (iwaitCnt < intervals) && receivedCancellation == false) {
+			while (outputStream != null && outputStream.isAlive() && (iwaitCnt < intervals)
+					&& receivedCancellation == false) {
 				iwaitCnt++;
 				Thread.sleep(msSleep);
 			}
@@ -150,8 +160,7 @@ public class ShellCommandManager {
 			executedCount++;
 		} catch (InterruptedException e) {
 			// waitFor()
-			Activator.fTracer.traceInfo("ShellCommandManager.execute() InterruptedException:"
-					+ e.getMessage());
+			Activator.fTracer.traceInfo("ShellCommandManager.execute() InterruptedException:" + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -159,16 +168,14 @@ public class ShellCommandManager {
 	}
 
 	/**
-	 * Order cancellation of the process execution associated to this command
-	 * manager
+	 * Order cancellation of the process execution associated to this command manager
 	 */
 	public void cancelExecution() {
 		receivedCancellation = true;
 		if (process != null) {
 			process.destroy();
 		}
-		Activator.fTracer.traceInfo("Cancelling execution for : "
-				+ command.toString() + " at " + cmdPath);
+		Activator.fTracer.traceInfo("Cancelling execution for : " + command.toString() + " at " + cmdPath);
 	}
 
 	public boolean isCancelled() {
@@ -199,15 +206,13 @@ public class ShellCommandManager {
 			// so this should not happen unless the waiting period have elapsed,
 			// or the command is cancelled
 			if (outputStream.isAlive()) {
-				Activator.fTracer
-						.traceInfo("ShellCommandManager.getResults() outputStream is alive: Java Process exit value: "
-								+ processExitValue);
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() outputStream is alive: Java Process exit value: "
+						+ processExitValue);
 			}
 
 			if (errorStream.isAlive()) {
-				Activator.fTracer
-						.traceInfo("ShellCommandManager.getResults() errorStream is alive: Java Process exit value: "
-								+ processExitValue);
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() errorStream is alive: Java Process exit value: "
+						+ processExitValue);
 			}
 		}
 		// Print error, if any
@@ -216,8 +221,7 @@ public class ShellCommandManager {
 			if (lines == null) {
 				Activator.fTracer.traceInfo("ShellCommandManager.getResults() error stream lines size: NULL");
 			} else {
-				Activator.fTracer.traceInfo("ShellCommandManager.getResults() error stream lines size: "
-								+ lines.size());
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() error stream lines size: " + lines.size());
 			}
 			if (lines != null && lines.size() > 0) {
 				StringBuilder sb = new StringBuilder();
@@ -227,7 +231,7 @@ public class ShellCommandManager {
 				Activator.fTracer.traceInfo("ShellCommandManager.getResults() " + sb);
 				throw new IOException(
 						"R4E reporting error when attempting to execute command. Operation could not be completed. "
-										+ command.toString() + "\n" + sb);
+								+ command.toString() + "\n" + sb);
 			}
 		}
 
@@ -283,8 +287,7 @@ public class ShellCommandManager {
 			e.printStackTrace();
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time "
-						+ elapsedTime);
+		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time " + elapsedTime);
 
 		startTime = System.currentTimeMillis();
 		outputLines = outputStream.getLines();
@@ -316,8 +319,7 @@ public class ShellCommandManager {
 			e.printStackTrace();
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time "
-						+ elapsedTime);
+		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time " + elapsedTime);
 
 		startTime = System.currentTimeMillis();
 		outputLines = outputStream.getLines();

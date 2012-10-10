@@ -25,9 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4E Delta</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Delta</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -41,13 +39,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	/**
 	 * The cached value of the '{@link #getBase() <em>Base</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getBase()
 	 * @generated
 	 * @ordered
 	 */
 	protected R4EContent base;
+
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -57,9 +56,9 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	 * @ordered
 	 */
 	protected R4EContent target;
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EDeltaImpl() {
@@ -67,8 +66,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -77,8 +75,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContent getBase() {
@@ -100,8 +97,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContent basicGetBase() {
@@ -109,8 +105,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetBase(R4EContent newBase, NotificationChain msgs) {
@@ -124,8 +119,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setBase(R4EContent newBase) {
@@ -143,8 +137,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContent getTarget() {
@@ -166,8 +159,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EContent basicGetTarget() {
@@ -175,8 +167,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetTarget(R4EContent newTarget, NotificationChain msgs) {
@@ -190,8 +181,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTarget(R4EContent newTarget) {
@@ -209,8 +199,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -225,8 +214,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -243,8 +231,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -261,8 +248,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -279,8 +265,7 @@ public class R4EDeltaImpl extends R4EIDComponentImpl implements R4EDelta {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

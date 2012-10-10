@@ -21,10 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Review Type</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>R4E Review Type</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReviewType()
  * @model
  * @generated
@@ -32,24 +30,21 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum R4EReviewType implements Enumerator {
 	/**
 	 * The '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_BASIC_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_REVIEW_TYPE_BASIC(0, "R4E_REVIEW_TYPE_BASIC", "R4E_REVIEW_TYPE_BASIC"), /**
 	 * The '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_INFORMAL_VALUE
 	 * @generated
 	 * @ordered
 	 */
 	R4E_REVIEW_TYPE_INFORMAL(1, "R4E_REVIEW_TYPE_INFORMAL", "R4E_REVIEW_TYPE_INFORMAL"), /**
 	 * The '<em><b>R4E REVIEW TYPE FORMAL</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_FORMAL_VALUE
 	 * @generated
 	 * @ordered
@@ -60,8 +55,8 @@ public enum R4EReviewType implements Enumerator {
 	 * The '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_BASIC
@@ -75,8 +70,8 @@ public enum R4EReviewType implements Enumerator {
 	 * The '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_INFORMAL
@@ -90,8 +85,8 @@ public enum R4EReviewType implements Enumerator {
 	 * The '<em><b>R4E REVIEW TYPE FORMAL</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E Review Type Formal</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E Review Type Formal</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_REVIEW_TYPE_FORMAL
@@ -103,12 +98,10 @@ public enum R4EReviewType implements Enumerator {
 
 	/**
 	 * An array of all the '<em><b>R4E Review Type</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final R4EReviewType[] VALUES_ARRAY =
-		new R4EReviewType[] {
+	private static final R4EReviewType[] VALUES_ARRAY = new R4EReviewType[] {
 			R4E_REVIEW_TYPE_BASIC,
 			R4E_REVIEW_TYPE_INFORMAL,
 			R4E_REVIEW_TYPE_FORMAL,
@@ -116,8 +109,8 @@ public enum R4EReviewType implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>R4E Review Type</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static final List<R4EReviewType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -140,8 +133,8 @@ public enum R4EReviewType implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>R4E Review Type</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	public static R4EReviewType getByName(String name) {
@@ -170,30 +163,26 @@ public enum R4EReviewType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private R4EReviewType(int value, String name, String literal) {
@@ -203,8 +192,7 @@ public enum R4EReviewType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -212,8 +200,7 @@ public enum R4EReviewType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -221,8 +208,7 @@ public enum R4EReviewType implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -231,13 +217,13 @@ public enum R4EReviewType implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
+
 } //R4EReviewType

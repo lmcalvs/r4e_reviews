@@ -27,7 +27,8 @@ import org.eclipse.jface.text.IInformationControlCreator;
 public interface IReviewAnnotationControlCreatorFactory {
 	/**
 	 * Method createInformationControlCreator.
-	
-	 * @return IInformationControlCreator */
+	 * 
+	 * @return IInformationControlCreator
+	 */
 	public IInformationControlCreator createInformationControlCreator();
 }

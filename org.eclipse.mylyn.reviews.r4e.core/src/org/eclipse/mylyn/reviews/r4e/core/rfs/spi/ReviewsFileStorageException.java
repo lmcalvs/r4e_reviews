@@ -15,14 +15,13 @@ package org.eclipse.mylyn.reviews.r4e.core.rfs.spi;
 
 /**
  * @author Alvaro Sanchez-Leon
- *
  */
 public class ReviewsFileStorageException extends Exception {
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 2039821628997910836L;
+	private static final long serialVersionUID = 2039821628997910836L;
 
 	// ------------------------------------------------------------------------
 	// Constructors

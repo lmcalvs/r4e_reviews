@@ -45,16 +45,18 @@ import org.eclipse.team.core.history.provider.FileRevision;
 
 /**
  * @author Alvaro Sanchez-Leon
- * 
  */
 public class ReviewsRFSProxy implements IRFSRegistry {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
-	private static final String	DEFAULT_REPO_NAME	= "ReviewsRepo.git";
-	private ObjectInserter		fInserter	= null;
-	protected Repository			fRepository	= null;
+	private static final String DEFAULT_REPO_NAME = "ReviewsRepo.git";
+
+	private ObjectInserter fInserter = null;
+
+	protected Repository fRepository = null;
+
 	protected final RepositoryUtil fRepositoryUtil;
 
 	// ------------------------------------------------------------------------
@@ -145,14 +147,13 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			//If the id is not registered throw the exception
 			id = blobIdFor(content);
 			InputStream is = getBlobContent(null, id);
-			
+
 			if (is == null) {
 				//The file was not registered in the local repo
 				throw new ReviewsFileStorageException(e);
 			} else {
-				Activator.fTracer
-						.traceError("IOException while registering content however it's already available in the local repository, "
-								+ e.getMessage());
+				Activator.fTracer.traceError("IOException while registering content however it's already available in the local repository, "
+						+ e.getMessage());
 				try {
 					is.close();
 				} catch (IOException ex) {

@@ -43,36 +43,40 @@ public interface IReviewAnnotationSupport {
 	/**
 	 * Sets the current object instance the Annotation Model is connected to.
 	 * 
-	 * @param aElement - the current object instance the Annotation Model is connected to
+	 * @param aElement
+	 *            - the current object instance the Annotation Model is connected to
 	 */
 	void setAnnotationModelElement(Object aElement);
 
 	/**
 	 * Refresh Annotation Model.
 	 * 
-	 * @param aElement - the (new) element the annotation model is linked with 
+	 * @param aElement
+	 *            - the (new) element the annotation model is linked with
 	 */
 	void refreshAnnotations(Object aElement);
-	
+
 	/**
 	 * Add new Annotation to the Annotation Model.
 	 * 
-	 * @param aElement - the element source for the new annotation 
+	 * @param aElement
+	 *            - the element source for the new annotation
 	 */
 	void addAnnotation(Object aElement);
 
 	/**
 	 * Update Annotation data in the Annotation Model.
 	 * 
-	 * @param aElement - the element source for the annotation to update
+	 * @param aElement
+	 *            - the element source for the annotation to update
 	 */
 	void updateAnnotation(Object aElement);
 
 	/**
 	 * Remove an Annotation from the Annotation Model.
 	 * 
-	 * @param aElement - the element source for the annotation to remove
-	 *
+	 * @param aElement
+	 *            - the element source for the annotation to remove
 	 */
 	void removeAnnotation(Object aElement);
 

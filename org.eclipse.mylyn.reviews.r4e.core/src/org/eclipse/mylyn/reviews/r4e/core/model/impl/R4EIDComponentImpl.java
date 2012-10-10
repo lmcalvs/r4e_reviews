@@ -27,23 +27,22 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>R4EID Component</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4EID Component</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDComponent {
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -51,8 +50,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	protected R4EID id;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected R4EIDComponentImpl() {
@@ -60,8 +58,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -70,8 +67,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID getId() {
@@ -93,8 +89,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public R4EID basicGetId() {
@@ -102,8 +97,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetId(R4EID newId, NotificationChain msgs) {
@@ -117,8 +111,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setId(R4EID newId) {
@@ -136,8 +129,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -150,8 +142,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -165,8 +156,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -180,8 +170,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -195,8 +184,7 @@ public class R4EIDComponentImpl extends R4EReviewComponentImpl implements R4EIDC
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

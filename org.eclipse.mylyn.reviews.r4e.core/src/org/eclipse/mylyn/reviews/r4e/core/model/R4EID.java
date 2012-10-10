@@ -17,9 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>R4EID</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>R4EID</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -38,8 +36,8 @@ public interface R4EID extends EObject {
 	 * Returns the value of the '<em><b>Sequence ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Sequence ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Sequence ID</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sequence ID</em>' attribute.
@@ -52,8 +50,7 @@ public interface R4EID extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getSequenceID <em>Sequence ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Sequence ID</em>' attribute.
 	 * @see #getSequenceID()
 	 * @generated
@@ -64,8 +61,8 @@ public interface R4EID extends EObject {
 	 * Returns the value of the '<em><b>User ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>User ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>User ID</em>' attribute isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>User ID</em>' attribute.
@@ -78,8 +75,7 @@ public interface R4EID extends EObject {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID#getUserID <em>User ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @param value the new value of the '<em>User ID</em>' attribute.
 	 * @see #getUserID()
 	 * @generated

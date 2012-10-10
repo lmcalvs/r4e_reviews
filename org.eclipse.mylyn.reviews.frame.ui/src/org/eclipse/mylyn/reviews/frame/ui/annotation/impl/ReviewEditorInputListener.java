@@ -102,8 +102,7 @@ public abstract class ReviewEditorInputListener implements IEditorInputListener 
 	 *            IDocument
 	 */
 	protected abstract void addAnnotationModel(IAnnotationModel aModel, IDocument aNewInput);
-	
-	
+
 	/**
 	 * Method inputDocumentChanged.
 	 * 

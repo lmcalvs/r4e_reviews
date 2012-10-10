@@ -43,7 +43,9 @@ public class TestProject {
 	public IJavaProject javaProject;
 
 	private IPackageFragmentRoot sourceFolder;
+
 	private String location;
+
 	private TestUtils testUtils = new TestUtils();
 
 	/**
@@ -93,8 +95,7 @@ public class TestProject {
 		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
 		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
 		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaCore.newLibraryEntry(result, null,
-				null);
+		newEntries[oldEntries.length] = JavaCore.newLibraryEntry(result, null, null);
 		javaProject.setRawClasspath(newEntries, null);
 	}
 
@@ -104,14 +105,12 @@ public class TestProject {
 		return sourceFolder.createPackageFragment(name, false, null);
 	}
 
-	public IType createType(IPackageFragment pack, String cuName, String source)
-			throws JavaModelException {
+	public IType createType(IPackageFragment pack, String cuName, String source) throws JavaModelException {
 		StringBuilder buf = new StringBuilder();
 		buf.append("package " + pack.getElementName() + ";\n");
 		buf.append("\n");
 		buf.append(source);
-		ICompilationUnit cu = pack.createCompilationUnit(cuName,
-				buf.toString(), false, null);
+		ICompilationUnit cu = pack.createCompilationUnit(cuName, buf.toString(), false, null);
 		return cu.getTypes()[0];
 	}
 
@@ -128,7 +127,7 @@ public class TestProject {
 		folder.create(true, true, null);
 
 		IFile keep = project.getFile(name + "/keep");
-		keep.create(new ByteArrayInputStream(new byte[] {0}), true, null);
+		keep.create(new ByteArrayInputStream(new byte[] { 0 }), true, null);
 
 		return folder;
 	}
@@ -156,8 +155,7 @@ public class TestProject {
 		project.setDescription(description, null);
 	}
 
-	private void createOutputFolder(IFolder binFolder)
-			throws JavaModelException {
+	private void createOutputFolder(IFolder binFolder) throws JavaModelException {
 		IPath outputLocation = binFolder.getFullPath();
 		javaProject.setOutputLocation(outputLocation, null);
 	}
@@ -178,8 +176,7 @@ public class TestProject {
 		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
 		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
 		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaRuntime
-				.getDefaultJREContainerEntry();
+		newEntries[oldEntries.length] = JavaRuntime.getDefaultJREContainerEntry();
 		javaProject.setRawClasspath(newEntries, null);
 	}
 
@@ -212,6 +209,7 @@ public class TestProject {
 		InputStream stream = file.getContents();
 		return testUtils.slurpAndClose(stream);
 	}
+
 	/**
 	 * @return Returns the sourceFolder.
 	 */
@@ -220,7 +218,8 @@ public class TestProject {
 	}
 
 	/**
-	 * @param sourceFolder The sourceFolder to set.
+	 * @param sourceFolder
+	 *            The sourceFolder to set.
 	 */
 	public void setSourceFolder(IPackageFragmentRoot sourceFolder) {
 		this.sourceFolder = sourceFolder;
