@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
-import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
@@ -210,18 +209,6 @@ public class R4EIDImpl extends EObjectImpl implements R4EID {
 		result.append(userID);
 		result.append(')');
 		return result.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	public R4EID clone() {
-		R4EID id = RModelFactory.eINSTANCE.createR4EID();
-		id.setSequenceID(this.sequenceID);
-		id.setUserID(this.userID);
-		return id;
 	}
 
 } //R4EIDImpl

@@ -82,11 +82,4 @@ public interface R4EID extends EObject {
 	 */
 	void setUserID(String value);
 
-	/**
-	 * Overriding Object clone, since R4EID contains java primitives for its fields, the shallow copy is enough
-	 * 
-	 * @return
-	 */
-	R4EID clone();
-
 } // R4EID
