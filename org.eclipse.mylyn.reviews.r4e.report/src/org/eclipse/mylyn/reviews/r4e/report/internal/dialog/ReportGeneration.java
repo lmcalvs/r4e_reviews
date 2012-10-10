@@ -62,7 +62,6 @@ import org.eclipse.mylyn.reviews.r4e.report.internal.Activator;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.OSPLATFORM;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.Popup;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.R4EReportString;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -84,10 +83,10 @@ public class ReportGeneration implements IR4EReport {
 	// BIRT Debug level
 	// private Level fBIRT_LEVEL = Level.ALL; //Use the debug level desired
 	// Level.OFF by default
-	private Level fBIRT_LEVEL = Level.OFF; // Use the debug level desired
+	private final Level fBIRT_LEVEL = Level.OFF; // Use the debug level desired
 
 	// Level.OFF by default
-	private String fLogConfigdir = "C:/R4EDebug"; // Put a directory to log
+	private final String fLogConfigdir = "C:/R4EDebug"; // Put a directory to log
 
 	// the debug from BIRT
 	// Test variable
@@ -169,8 +168,6 @@ public class ReportGeneration implements IR4EReport {
 
 	// Variable to test if the file to generate the report exist
 	private Boolean fPROPERTY_FILE_CREATED = false;
-
-	private Composite fCompositeParent = null;
 
 	private File fReportDir = null;
 
@@ -577,14 +574,14 @@ public class ReportGeneration implements IR4EReport {
 			File[] destFile = workingDir.listFiles();
 
 			//Should get the Group here
-			for (int count = 0; count < destFile.length; count++) {
-				Activator.FTracer.traceInfo("List reportFile: " + destFile[count].getName());
-				if (destFile[count].isFile()) {
+			for (File element : destFile) {
+				Activator.FTracer.traceInfo("List reportFile: " + element.getName());
+				if (element.isFile()) {
 					//Register the Group file for the report
-					aMonitor.subTask("Processing file " + destFile[count].getName());
-					prepareDataSource(destFile[count], reportDesignHandle, workingDir);
+					aMonitor.subTask("Processing file " + element.getName());
+					prepareDataSource(element, reportDesignHandle, workingDir);
 				}
-				File[] revFile = destFile[count].listFiles();
+				File[] revFile = element.listFiles();
 
 				for (int i = 0; revFile != null && i < revFile.length; i++) {
 					//Now we should have one file for each Data Source
@@ -1004,7 +1001,10 @@ public class ReportGeneration implements IR4EReport {
 	 * @return Boolean
 	 */
 	private File createSaveDirectory(final File aReportDir) {
-		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(fCompositeParent.getShell());
+		//Obtain display from current thread or fist created
+		Display display = Display.getCurrent() != null ? Display.getCurrent() : Display.getDefault();
+
+		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(display.getActiveShell());
 		Runnable runnable = new Runnable() {
 
 			public void run() {
@@ -1237,13 +1237,13 @@ public class ReportGeneration implements IR4EReport {
 
 				File[] destFile = workingDir.listFiles();
 				//Should get the Group here
-				for (int count = 0; count < destFile.length; count++) {
-					Activator.FTracer.traceInfo("List reportFile: " + destFile[count].getName());
-					if (destFile[count].isFile()) {
+				for (File element : destFile) {
+					Activator.FTracer.traceInfo("List reportFile: " + element.getName());
+					if (element.isFile()) {
 						//Register the Group file for the report
-						prepareDataSource(destFile[count], reportDesignHandle, workingDir);
+						prepareDataSource(element, reportDesignHandle, workingDir);
 					}
-					File[] revFile = destFile[count].listFiles();
+					File[] revFile = element.listFiles();
 
 					for (int i = 0; revFile != null && i < revFile.length; i++) {
 						//Now we should have one file for each Data Source
