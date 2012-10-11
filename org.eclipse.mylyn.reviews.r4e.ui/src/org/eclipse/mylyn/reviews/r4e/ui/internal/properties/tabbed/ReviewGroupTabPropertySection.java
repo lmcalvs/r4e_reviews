@@ -442,7 +442,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		}
 		fAvailableProjects.updateButtons();
 
-		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
+		EList<String> availableComponents = modelGroup.getAvailableComponents();
+		final String[] components = availableComponents.toArray(new String[availableComponents.size()]);
 		fAvailableComponents.removeAll();
 		String component = null;
 		for (int i = 0; i < components.length; i++) {

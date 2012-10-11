@@ -584,7 +584,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_COMPONENTS_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		final String[] components = (String[]) parentGroup.getReviewGroup().getAvailableComponents().toArray();
+		EList<String> componentsList = parentGroup.getReviewGroup().getAvailableComponents();
+		final String[] components = componentsList.toArray(new String[componentsList.size()]);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
