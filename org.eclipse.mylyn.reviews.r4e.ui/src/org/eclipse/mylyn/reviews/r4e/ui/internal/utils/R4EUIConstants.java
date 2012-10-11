@@ -18,6 +18,10 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Sebastien Dubois
  * @authot Jacques Bouthillier
@@ -864,9 +868,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	/**
 	 * Field PARTICIPANT_ROLES.
 	 */
-	public static final String[] PARTICIPANT_ROLES = { R4EUIConstants.USER_ROLE_LEAD, R4EUIConstants.USER_ROLE_AUTHOR,
-			R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER };
-
+	public static final List<String> PARTICIPANT_ROLES = Collections.unmodifiableList(Arrays.asList(R4EUIConstants.USER_ROLE_LEAD,
+			R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER));
+	
 	//Anomaly Classes & Ranks
 
 	/**
@@ -2437,7 +2441,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	/**
 	 * Field R4E_UI_JOB_FAMILY.
 	 */
-	public static String R4E_UI_JOB_FAMILY = "R4EUI";
+	public static final String R4E_UI_JOB_FAMILY = "R4EUI";
 
 	//Inline Markers
 

@@ -742,7 +742,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 			textGridData.horizontalSpan = 3;
 			fRoleValues = new EditableListWidget(aToolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
-					R4EUIConstants.PARTICIPANT_ROLES);
+					R4EUIConstants.PARTICIPANT_ROLES.toArray(new String[R4EUIConstants.PARTICIPANT_ROLES.size()]));
 			fRoleValues.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 			fRoleValues.setEnabled(false);
 

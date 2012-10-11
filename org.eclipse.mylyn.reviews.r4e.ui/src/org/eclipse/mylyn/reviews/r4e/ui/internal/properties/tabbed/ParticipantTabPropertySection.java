@@ -427,7 +427,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		gridData.horizontalSpan = 3;
 		fRolesList = new EditableListWidget(aWidgetFactory, rolesSectionClient, gridData, this, 2, CCombo.class,
-				R4EUIConstants.PARTICIPANT_ROLES);
+				R4EUIConstants.PARTICIPANT_ROLES.toArray(new String[R4EUIConstants.PARTICIPANT_ROLES.size()]));
 		fRolesList.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 
 		//Time Management section
