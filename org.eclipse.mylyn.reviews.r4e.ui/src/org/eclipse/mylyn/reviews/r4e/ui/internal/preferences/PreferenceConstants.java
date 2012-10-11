@@ -74,7 +74,7 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	/**
 	 * Field P_USER_GROUPS_USERS. (value is ""userGroupUsers"")
 	 */
-	public static String P_PARTICIPANTS = "participants";
+	public static final String P_PARTICIPANTS = "participants";
 
 	/**
 	 * Flag that state whether deltas are created for commit review items
