@@ -339,7 +339,9 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 				fAuthorRepText.setText("");
 			}
 		}
-		fProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
+
+		EList<String> projects = modelItem.getProjectURIs();
+		fProjectIdList.setItems(projects.toArray(new String[projects.size()]));
 		fRepositoryText.setText(null != modelItem.getRepositoryRef() ? modelItem.getRepositoryRef() : "");
 		if (null != modelItem.getSubmitted()) {
 			final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);

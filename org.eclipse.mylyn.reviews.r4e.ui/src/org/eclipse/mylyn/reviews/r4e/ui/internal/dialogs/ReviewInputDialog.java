@@ -25,6 +25,7 @@ import java.util.Date;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -564,7 +565,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		label.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
-		final String[] projects = (String[]) parentGroup.getReviewGroup().getAvailableProjects().toArray();
+		EList<String> availableProjects = parentGroup.getReviewGroup().getAvailableProjects();
+		final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
 		if (0 == projects.length) {
 			fProjectsCombo.setEnabled(false);
 		} else {

@@ -15,6 +15,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -421,7 +422,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			fDescriptionText.setText("");
 		}
 
-		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
+		EList<String> availableProjects = modelGroup.getAvailableProjects();
+		final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
 		fAvailableProjects.removeAll();
 		Item item = null;
 		String project = null;
