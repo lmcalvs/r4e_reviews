@@ -512,7 +512,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 
 		final Composite dateComposite = toolkit.createComposite(extraSectionClient);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
-		textGridData.horizontalSpan = 2;
+		textGridData.horizontalSpan = 3;
 		dateComposite.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(textGridData);
 		dateComposite.setLayout(new GridLayout(2, false));
@@ -525,7 +525,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		final Composite dateButtonComposite = toolkit.createComposite(dateComposite);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
 		textGridData.horizontalSpan = 1;
-		dateButtonComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
+		dateButtonComposite.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
 		dateButtonComposite.setLayoutData(textGridData);
 		dateButtonComposite.setLayout(new GridLayout(2, false));
 

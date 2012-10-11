@@ -465,7 +465,7 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 
 		final Composite dateComposite = toolkit.createComposite(extraSectionClient);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
-		textGridData.horizontalSpan = 2;
+		textGridData.horizontalSpan = 3;
 		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(textGridData);
 		dateComposite.setLayout(new GridLayout(2, false));
