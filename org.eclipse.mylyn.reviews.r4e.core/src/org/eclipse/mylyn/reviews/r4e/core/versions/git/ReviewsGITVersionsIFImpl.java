@@ -39,6 +39,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.errors.AmbiguousObjectException;
@@ -128,6 +129,8 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 		} catch (NoHeadException e) {
 			throw new ReviewVersionsException(e);
 		} catch (JGitInternalException e) {
+			throw new ReviewVersionsException(e);
+		} catch (GitAPIException e) {
 			throw new ReviewVersionsException(e);
 		}
 
