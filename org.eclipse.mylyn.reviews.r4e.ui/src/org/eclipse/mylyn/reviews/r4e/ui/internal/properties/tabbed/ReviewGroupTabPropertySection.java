@@ -464,7 +464,9 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 
 		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
 		final List<String> tmpRuleSetLocations = new ArrayList<String>();
-		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
+		//Fixed warning, see Bug 391614
+		EList<String> ruleLocations = modelGroup.getDesignRuleLocations();
+		final String[] ruleSetsLocations = ruleLocations.toArray(new String[ruleLocations.size()]);
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 			if (uiRuleSet.isEnabled()) {
 				tmpRuleSetLocations.add(uiRuleSet.getName());
