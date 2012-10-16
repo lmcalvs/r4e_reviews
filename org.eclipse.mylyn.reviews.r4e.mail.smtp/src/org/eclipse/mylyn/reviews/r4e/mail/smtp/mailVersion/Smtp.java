@@ -14,7 +14,6 @@ package org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.TimeZone;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -170,17 +169,24 @@ public class Smtp extends NotificationsConnector {
 	 *            Long
 	 * @param aDuration
 	 *            Integer
-	 * @return IMeetingData * @throws CoreException * @see
-	 *         org.eclipse.mylyn.reviews.notifications.NotificationConnector#createMeetingRequest(String, String,
-	 *         String[], Long, Integer)
+	 * @param aLocation
+	 *            - String
+	 * @return IMeetingData
+	 * @throws CoreException
+	 * @see org.eclipse.mylyn.reviews.notifications.NotificationConnector#createMeetingRequest(String, String, String[],
+	 *      Long, Integer)
 	 */
 	@Override
 	public IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmailsTo, Long aStartDate,
-			Integer aDuration) throws CoreException {
+			Integer aDuration, String aLocation) throws CoreException {
 		IMeetingData r4eMeetingData = null;
 
 		final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(getShell());
 		dialog.create();
+		dialog.setStartTime(aStartDate);
+		dialog.setDuration(aDuration);
+		dialog.setLocation(aLocation);
+
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			final String customID = aSubject + System.currentTimeMillis();
@@ -207,19 +213,22 @@ public class Smtp extends NotificationsConnector {
 	 *            IMeetingData
 	 * @param aSearchFrom
 	 *            Date
+	 * @param aForceUpdate
+	 *            - true if meeting data values should be taken from the argument values, false otherwise
 	 * @return IMeetingData
-	 * @see org.eclipse.mylyn.reviews.notifications.NotificationConnector#openAndUpdateMeeting(IMeetingData, Date)
+	 * @see org.eclipse.mylyn.reviews.notifications.NotificationConnector#openAndUpdateMeeting(IMeetingData, Date,
+	 *      boolean, boolean)
 	 */
 	@Override
-	public IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date aSearchFrom) {
+	public IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date aSearchFrom, boolean aForceUpdate) {
 
+		//NOTE:  Since we do not store data here, we assume aForceUpdate and aShowDialog are always true
 		IMeetingData newMeetingData = null;
 		final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(getShell());
 		dialog.create();
 
 		//Set the received value
-		final Long zoneStartTime = Long.valueOf(aMeetingData.getStartTime().longValue()
-				+ Long.valueOf(TimeZone.getDefault().getOffset(System.currentTimeMillis())).longValue());
+		final Long zoneStartTime = Long.valueOf(aMeetingData.getStartTime().longValue());
 
 		dialog.setStartTime(zoneStartTime);
 		dialog.setDuration(aMeetingData.getDuration());
@@ -232,9 +241,8 @@ public class Smtp extends NotificationsConnector {
 			//Lets create a Vcalendar
 			try {
 				newMeetingData = NotificationsCore.createMeetingData(aMeetingData.getCustomID(),
-						aMeetingData.getSubject(), aMeetingData.getBody(), dialog.getLocation(), dialog.getStartTime()
-								.longValue(), dialog.getDuration().intValue(), aMeetingData.getSender(),
-						aMeetingData.getReceivers());
+						aMeetingData.getSubject(), aMeetingData.getBody(), dialog.getLocation(), dialog.getStartTime(),
+						dialog.getDuration().intValue(), aMeetingData.getSender(), aMeetingData.getReceivers());
 			} catch (CoreException e) {
 				StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 			}
@@ -267,11 +275,12 @@ public class Smtp extends NotificationsConnector {
 	 */
 	@Override
 	public IMeetingData fetchSystemMeetingData(IMeetingData aLocalData, Date aSearchFrom) {
+		//We do not store any data so just echo back what was passed-in
 		return aLocalData;
 	}
 
 	/**
-	 * method fetchSystemMeetingData
+	 * method createAndSendEmail
 	 * 
 	 * @param aSMTPServer
 	 *            String
@@ -300,8 +309,8 @@ public class Smtp extends NotificationsConnector {
 			msg.setFrom(new InternetAddress(aFrom));
 		}
 
-		for (int i = 0; i < aEmails.length; i++) {
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(aEmails[i]));
+		for (String aEmail : aEmails) {
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(aEmail));
 		}
 
 		msg.setSubject(aSubject);
@@ -355,10 +364,6 @@ public class Smtp extends NotificationsConnector {
 		String[] host = null;
 		SmtpHostPreferencePage prefOrder = new SmtpHostPreferencePage();
 		host = prefOrder.getSmtpServer();
-		// for (int i = 0; i < host.length; i++) {
-		// System.out.println("Host [ " + i + " ] : " +
-		// host[i]);
-		// }
 		return host;
 	}
 }

@@ -1015,35 +1015,32 @@ public class CommandUtils {
 	 */
 	public static boolean isEmailValid(String aEmailAddress) {
 
-		//Ignore empty entry
-		if ((null == aEmailAddress) || aEmailAddress.equals("")) {
-			return true;
-		}
-
 		boolean result = false;
-		final Pattern pattern = Pattern.compile(
-				"^([\\w]((\\.(?!\\.))|[-!#\\$%'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[\\w])@(([\\w][-\\w]*[\\w]\\.)+[a-zA-Z]{2,6})$",
-				Pattern.CASE_INSENSITIVE);
-		if (null != pattern) {
-			final Matcher matcher = pattern.matcher(aEmailAddress);
-			if (null != matcher) {
-				result = matcher.matches();
-			}
-		}
-
-		//Validation of input failed
-		if (!result) {
-
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Invalid format for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-							aEmailAddress + " is invalid", null), IStatus.ERROR);
-			Display.getDefault().syncExec(new Runnable() {
-				public void run() {
-					if (null != dialog) {
-						dialog.open();
-					}
+		if (null != aEmailAddress) {
+			final Pattern pattern = Pattern.compile(
+					"^([\\w]((\\.(?!\\.))|[-!#\\$%'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[\\w])@(([\\w][-\\w]*[\\w]\\.)+[a-zA-Z]{2,6})$",
+					Pattern.CASE_INSENSITIVE);
+			if (null != pattern) {
+				final Matcher matcher = pattern.matcher(aEmailAddress);
+				if (null != matcher) {
+					result = matcher.matches();
 				}
-			});
+			}
+
+			//Validation of input failed
+			if (!result) {
+
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Invalid format for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+								aEmailAddress + " is invalid", null), IStatus.ERROR);
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						if (null != dialog) {
+							dialog.open();
+						}
+					}
+				});
+			}
 		}
 		return result;
 	}

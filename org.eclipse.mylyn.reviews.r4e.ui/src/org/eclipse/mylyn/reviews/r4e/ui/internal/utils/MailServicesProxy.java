@@ -19,7 +19,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -37,6 +36,7 @@ import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
+import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -47,7 +47,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -158,6 +157,16 @@ public class MailServicesProxy {
 	 * Field DEFAULT_MEETING_DURATION. (value is "60")
 	 */
 	private static final Integer DEFAULT_MEETING_DURATION = new Integer(60);
+
+	/**
+	 * Field DECISION_MEETING_UPDATED_MSG. (value is "" - Decision Meeting Request Updated"")
+	 */
+	private static final String DECISION_MEETING_UPDATED_MSG = " - Decision Meeting Request Updated";
+
+	/**
+	 * Field DECISION_MEETING_INITIAL_MSG. (value is "" - Items Ready for Review & Decision Meeting Request"")
+	 */
+	private static final String DECISION_MEETING_INITIAL_MSG = " - Items Ready for Review & Decision Meeting Request";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -290,9 +299,25 @@ public class MailServicesProxy {
 	 */
 	public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException,
 			ResourceHandlingException {
+
+		String originatorEmail = getOriginatorEmail();
+		String[] destinations = adjustDestinationEmails(aDestinations, originatorEmail);
+
+		R4EUIDialogFactory.getInstance()
+				.getMailConnector()
+				.sendEmailGraphical(originatorEmail, destinations, aSubject, aBody, null, null);
+	}
+
+	/**
+	 * Method getOriginatorEmail
+	 * 
+	 * @return String
+	 * @throws ResourceHandlingException
+	 */
+	private static String getOriginatorEmail() throws ResourceHandlingException {
+		String originatorEmail = null;
 		final R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(
 				R4EUIModelController.getReviewer(), false);
-		String originatorEmail = null;
 		if (null != user) {
 			originatorEmail = user.getEmail();
 		}
@@ -303,23 +328,31 @@ public class MailServicesProxy {
 			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 			originatorEmail = store.getString(PreferenceConstants.P_USER_EMAIL);
 		}
+		return originatorEmail;
+	}
 
-		//Bug: 39102
-		if (originatorEmail != null
+	/**
+	 * Method adjustDestinationEmails (see bug 390102)
+	 * 
+	 * @param aDestinations
+	 *            - String[]
+	 * @param aOriginator
+	 *            - String
+	 * @return String[]
+	 * @throws ResourceHandlingException
+	 */
+	private static String[] adjustDestinationEmails(String[] aDestinations, String aOriginator) {
+		List<String> destinations = new ArrayList<String>(Arrays.asList(aDestinations));
+		if (aOriginator != null
 				&& R4EUIPlugin.getDefault()
 						.getPreferenceStore()
 						.getBoolean(PreferenceConstants.P_SEND_NOTIFICATION_TO_SENDER)) {
 			//Make sure sender is part of the destination list
-			List<String> destinations = new ArrayList<String>(Arrays.asList(aDestinations));
-			if (!destinations.contains(originatorEmail)) {
-				destinations.add(originatorEmail);
-				aDestinations = destinations.toArray(new String[destinations.size()]);
+			if (!destinations.contains(aOriginator)) {
+				destinations.add(aOriginator);
 			}
 		}
-
-		R4EUIDialogFactory.getInstance()
-				.getMailConnector()
-				.sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody, null, null);
+		return destinations.toArray(new String[destinations.size()]);
 	}
 
 	/**
@@ -1083,59 +1116,93 @@ public class MailServicesProxy {
 	 * @throws CoreException
 	 */
 	public static void sendMeetingRequest() throws ResourceHandlingException, OutOfSyncException {
-		if (null != R4EUIDialogFactory.getInstance().getMailConnector()) {
+		final NotificationsConnector mailConnector = R4EUIDialogFactory.getInstance().getMailConnector();
+		if (null != mailConnector) {
 
-			boolean meetingInfoFound = false;
+			String originatorEmail = getOriginatorEmail();
+			String[] destinations = adjustDestinationEmails(createItemsUpdatedDestinations(), originatorEmail);
+
+			//Notify user if request cannot be sent when no valid destinations defined
+			if (0 == destinations.length) {
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Cannot Send Meeting Request", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
+								"No valid destinations for participants defined", null), IStatus.ERROR);
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						dialog.open();
+					}
+				});
+				return;
+			}
+
+			IMeetingData updatedMeetingData = null;
 
 			//Check if a meeting request already exist.  If so, update it.  Otherwise create a new one
 			final R4EMeetingData r4eMeetingData = R4EUIModelController.getActiveReview().getReview().getActiveMeeting();
-			IMeetingData meetingData = null;
 			if (null != r4eMeetingData) {
-				meetingData = R4EUIDialogFactory.getInstance()
-						.getMailConnector()
-						.openAndUpdateMeeting(createMeetingData(r4eMeetingData),
-								R4EUIModelController.getActiveReview().getReview().getStartDate());
-				if (null != meetingData) {
-					meetingInfoFound = true;
+				IMeetingData oldMeetingData = null;
+				final IMeetingData localMeetingData = new R4EUIMeetingData(r4eMeetingData);
+
+				//First update the current meeting request local data with any source/destination changes (if any)
+				localMeetingData.setSender(originatorEmail);
+				localMeetingData.clearReceivers();
+				for (String destination : destinations) {
+					localMeetingData.addReceiver(destination);
 				}
-			}
+				localMeetingData.setBody(createItemsReadyNotificationMessage(true)); //Regenerate body
 
-			if (!meetingInfoFound) {
-				final String[] messageDestinations = createItemsUpdatedDestinations();
+				//Then try to find the meeting data on mail server
+				oldMeetingData = mailConnector.fetchSystemMeetingData(localMeetingData,
+						R4EUIModelController.getActiveReview().getReview().getStartDate());
 
-				//Notify user if request cannot be sent when no valid destinations defined
-				if (0 == messageDestinations.length) {
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Cannot Send Meeting Request", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
-									"No valid destinations for participants defined", null), IStatus.ERROR);
-					Display.getDefault().syncExec(new Runnable() {
-						public void run() {
-							dialog.open();
-						}
-					});
-					return;
-				}
-
-				String messageSubject = null;
-				if (null != R4EUIModelController.getActiveReview().getReview().getActiveMeeting()) {
-					messageSubject = createSubject() + " - Decision Meeting Request Updated";
+				if (null == oldMeetingData) {
+					//Meeting data not found on mail server, so create one from the local data
+					try {
+						updatedMeetingData = mailConnector.createMeetingRequest(createSubject()
+								+ DECISION_MEETING_UPDATED_MSG, localMeetingData.getBody(), destinations,
+								localMeetingData.getStartTime(), localMeetingData.getDuration(),
+								localMeetingData.getLocation());
+					} catch (CoreException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						return;
+					}
 				} else {
-					messageSubject = createSubject() + " - Items Ready for Review & Decision Meeting Request";
+					//Meeting data found on mail server, now let's compare the values
+					if (!localMeetingData.equals(oldMeetingData)) {
+						//Values are different, ask user which ones we should keep
+						final int result = UIUtils.displayMeetingDataMismatchDialog(localMeetingData, oldMeetingData);
+						if (result == R4EUIConstants.DIALOG_YES) {
+							//Update the mail server data with local data
+							updatedMeetingData = mailConnector.openAndUpdateMeeting(localMeetingData,
+									R4EUIModelController.getActiveReview().getReview().getStartDate(), true);
+						} else if (result == R4EUIConstants.DIALOG_NO) {
+							//Update the local data with mail server data
+							updatedMeetingData = mailConnector.openAndUpdateMeeting(localMeetingData,
+									R4EUIModelController.getActiveReview().getReview().getStartDate(), false);
+						}
+					} else {
+						//Use local data
+						updatedMeetingData = mailConnector.openAndUpdateMeeting(localMeetingData,
+								R4EUIModelController.getActiveReview().getReview().getStartDate(), true);
+					}
 				}
-				final String messageBody = createItemsReadyNotificationMessage(true);
-
+			} else {
+				//Meeting data not found anywhere, so create a brand new one with default values
 				try {
-					meetingData = R4EUIDialogFactory.getInstance()
-							.getMailConnector()
-							.createMeetingRequest(messageSubject, messageBody, messageDestinations,
-									getDefaultStartTime(), DEFAULT_MEETING_DURATION);
+					updatedMeetingData = mailConnector.createMeetingRequest(createSubject()
+							+ DECISION_MEETING_INITIAL_MSG,
+							createItemsReadyNotificationMessage(true), destinations, getDefaultStartTime(),
+							DEFAULT_MEETING_DURATION, "");
 				} catch (CoreException e) {
 					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 					return;
 				}
 			}
-			R4EUIModelController.getActiveReview().setMeetingData(meetingData);
+			if (null != updatedMeetingData) {
+				R4EUIModelController.getActiveReview().setMeetingData(updatedMeetingData);
+			}
 		} else {
 			showNoEmailConnectorDialog();
 		}
@@ -1176,8 +1243,7 @@ public class MailServicesProxy {
 		meetingDate.set(Calendar.MINUTE, 0);
 		meetingDate.set(Calendar.SECOND, 0);
 		// Add the current time zone offset
-		meetingDate.setTimeInMillis(meetingDate.getTimeInMillis()
-				+ TimeZone.getDefault().getOffset(System.currentTimeMillis()));
+		meetingDate.setTimeInMillis(meetingDate.getTimeInMillis());
 		return Long.valueOf(meetingDate.getTimeInMillis());
 	}
 
@@ -1218,202 +1284,5 @@ public class MailServicesProxy {
 			return buffer.toString();
 		}
 		return "";
-	}
-
-	/**
-	 * Method createMeetingData
-	 * 
-	 * @param aR4EMeetingData
-	 *            R4EMeetingData
-	 * @return IMeetingData
-	 */
-	private static IMeetingData createMeetingData(final R4EMeetingData aR4EMeetingData) {
-
-		final ResourceUpdater resUpdater = R4EUIModelController.FResourceUpdater;
-		return new IMeetingData() {
-
-			public int getSentCounter() {
-				return aR4EMeetingData.getSentCount();
-			}
-
-			public void incrementSentCounter() {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setSentCount(aR4EMeetingData.getSentCount() + 1);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void clearSentCounter() {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setSentCount(0);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getCustomID() {
-				return aR4EMeetingData.getId();
-			}
-
-			public void setCustomID(String aId) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setId(aId);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getSubject() {
-				return aR4EMeetingData.getSubject();
-			}
-
-			public void setSubject(String aSubject) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setSubject(aSubject);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getBody() {
-				return aR4EMeetingData.getBody();
-			}
-
-			public void setBody(String aBody) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setBody(aBody);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getLocation() {
-				return aR4EMeetingData.getLocation();
-			}
-
-			public void setLocation(String aLocation) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setLocation(aLocation);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public Long getStartTime() {
-				return Long.valueOf(aR4EMeetingData.getStartTime());
-			}
-
-			public void setStartTime(Long aStartTime) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setStartTime(aStartTime.longValue());
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public Integer getDuration() {
-				return Integer.valueOf(aR4EMeetingData.getDuration());
-			}
-
-			public void setDuration(Integer aDuration) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setDuration(aDuration.intValue());
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getSender() {
-				return aR4EMeetingData.getSender();
-			}
-
-			public void setSender(String aSender) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.setSender(aSender);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String[] getReceivers() {
-				final EList<String> recieversL = aR4EMeetingData.getReceivers();
-				final String[] receivers = recieversL.toArray(new String[recieversL.size()]);
-				return receivers;
-			}
-
-			public void clearReceivers() {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.getReceivers().clear();
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void addReceiver(String aReceiver) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.getReceivers().add(aReceiver);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void removeReceiver(String aReceiver) {
-				try {
-					final Long bookNum = resUpdater.checkOut(aR4EMeetingData, R4EUIModelController.getReviewer());
-					aR4EMeetingData.getReceivers().remove(aReceiver);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-		};
 	}
 }

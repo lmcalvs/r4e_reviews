@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
@@ -35,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.Smtp;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICalendarDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -97,9 +97,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	private static final String DECISION_SECTION_LABEL = "Decision Information";
 
 	/**
-	 * Field REVIEW_MEETING_REFRESH_TOOLTIP. (value is ""Refresh meetinmg information for mail server"")
+	 * Field REVIEW_MEETING_SYNC_TOOLTIP. (value is ""Synchronize meeting information with mail server"")
 	 */
-	private static final String REVIEW_MEETING_REFRESH_TOOLTIP = "Refresh meetinmg information for mail server";
+	private static final String REVIEW_MEETING_SYNC_TOOLTIP = "Synchronize meeting information with mail server";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -810,7 +810,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		//Meeting update button
 		fMeetingUpdateButton = aWidgetFactory.createButton(fMeetingComposite, R4EUIConstants.CREATE_LABEL, SWT.PUSH);
 		fMeetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
-		fMeetingUpdateButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
+		fMeetingUpdateButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, false, false));
 		fMeetingUpdateButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				try {
@@ -841,10 +841,10 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		fMeetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 		fMeetingStartTimeLabel.setLayoutData(textGridData);
 
-		//Meeting refresh button
-		fMeetingRefreshButton = aWidgetFactory.createButton(fMeetingComposite, R4EUIConstants.REFRESH_LABEL, SWT.PUSH);
-		fMeetingRefreshButton.setToolTipText(REVIEW_MEETING_REFRESH_TOOLTIP);
-		fMeetingRefreshButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
+		//Meeting refresh button (only needed if a mail client with server storage space for calendar events)
+		fMeetingRefreshButton = aWidgetFactory.createButton(fMeetingComposite, R4EUIConstants.SYNC_LABEL, SWT.PUSH);
+		fMeetingRefreshButton.setToolTipText(REVIEW_MEETING_SYNC_TOOLTIP);
+		fMeetingRefreshButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, false, false));
 		fMeetingRefreshButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				try {
@@ -862,6 +862,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				//Nothing to do
 			}
 		});
+		if (R4EUIDialogFactory.getInstance().getMailConnector() instanceof Smtp) {
+			fMeetingRefreshButton.setVisible(false);
+		}
 
 		//Meeting Duration
 		final CLabel meetingDurationLabel = aWidgetFactory.createCLabel(fMeetingComposite,
@@ -1273,8 +1276,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			fMeetingUpdateButton.setText(R4EUIConstants.UPDATE_LABEL);
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
 			final DateFormat meetingDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
-			meetingDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-			fMeetingStartTimeLabel.setText(meetingDateFormat.format(new Date(meetingData.getStartTime())));
+			fMeetingStartTimeLabel.setText(meetingDateFormat.format(new Date(meetingData.getStartTime()
+					+ R4EUIConstants.TIME_ZONE_OFFSET)));
 			fMeetingDurationLabel.setText(Integer.toString(meetingData.getDuration()));
 			fMeetingLocationLabel.setText(null != meetingData.getLocation() ? meetingData.getLocation() : "");
 		} else {
@@ -1566,7 +1569,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			fReferenceMaterialText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fReferenceMaterialText.setEditable(true);
 			fMeetingUpdateButton.setEnabled(true);
-			fMeetingRefreshButton.setEnabled(true);
+			R4EMeetingData meetingData = ((R4EUIReviewBasic) fProperties.getElement()).getReview().getActiveMeeting();
+			if (null != meetingData && meetingData.getDuration() > 0) {
+				fMeetingRefreshButton.setEnabled(true);
+			} else {
+				fMeetingRefreshButton.setEnabled(false);
+			}
 			fMeetingSubjectLabel.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fMeetingStartTimeLabel.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fMeetingDurationLabel.setForeground(UIUtils.ENABLED_FONT_COLOR);
@@ -1588,6 +1596,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionTimeSpentText.setEditable(false);
 					fExitDecisionCombo.setEnabled(false);
 				}
+
 				fDecisionUsersListLabel.setVisible(true);
 				fDecisionUsersList.setVisible(true);
 				fDecisionTimeSpentText.setVisible(true);

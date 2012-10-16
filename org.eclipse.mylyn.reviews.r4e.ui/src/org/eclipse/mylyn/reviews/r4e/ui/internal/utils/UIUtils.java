@@ -18,8 +18,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
@@ -47,6 +49,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
+import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -182,6 +185,24 @@ public class UIUtils {
 	 */
 	private static final String[] COMPATIBILITY_WARNING_DIALOG_BUTTONS = { "Open (Convert Version)",
 			"Open in Read-Only Mode (Preserve Version)", "Cancel" };
+
+	/**
+	 * Field MEETING_DATA_MISMATCH_DIALOG_TITLE. (value is ""Meeting Data Mismatch Detected"")
+	 */
+	private static final String MEETING_DATA_MISMATCH_DIALOG_TITLE = "Meeting Data Mismatch Detected";
+
+	/**
+	 * Field MEETING_DATA_MISMATCH_MESSAGE. (value is ""R4E Meeting Data is different than the Remote Mail Server
+	 * Meeting Data .\n Which one should we keep?"")
+	 */
+	private static final String MEETING_DATA_MISMATCH_MESSAGE = "R4E Meeting Data is different than the Remote Mail Server Meeting Data."
+			+ R4EUIConstants.LINE_FEED + "Which one should we keep?";
+
+	/**
+	 * Field MEETING_DATA_MISMATCH_DIALOG_BUTTONS.
+	 */
+	private static final String[] MEETING_DATA_MISMATCH_DIALOG_BUTTONS = { "Use Local data", "Use Remote Data",
+			"Cancel" };
 
 	/**
 	 * Field DISABLED_FONT_COLOR.
@@ -443,6 +464,47 @@ public class UIUtils {
 				dialog.open();
 			}
 		});
+	}
+
+	/**
+	 * Method displayMeetingDataMismatchDialog.
+	 * 
+	 * @param aLocalData
+	 *            IMeetingData
+	 * @param aRemoteData
+	 *            IMeetingData
+	 * @return int
+	 */
+	public static int displayMeetingDataMismatchDialog(final IMeetingData aLocalData, final IMeetingData aRemoteData) {
+		R4EUIPlugin.Ftracer.traceWarning(MEETING_DATA_MISMATCH_MESSAGE);
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				final SimpleDateFormat dueDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
+				String localStartTime = dueDateFormat.format(new Date(aLocalData.getStartTime()));
+				String remoteStartTime = "";
+				String remoteLocation = "";
+				String remoteDuration = "";
+				if (null != aRemoteData) {
+					remoteStartTime = dueDateFormat.format(new Date(aRemoteData.getStartTime()));
+					remoteLocation = aRemoteData.getLocation();
+					remoteDuration = aRemoteData.getDuration().toString();
+				}
+				final MessageDialog dialog = new MessageDialog(null, MEETING_DATA_MISMATCH_DIALOG_TITLE, null,
+						MEETING_DATA_MISMATCH_MESSAGE + R4EUIConstants.LINE_FEED + R4EUIConstants.LINE_FEED
+								+ "Local Data:" + R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED + "Start time = "
+								+ localStartTime + R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED + "Duration = "
+								+ aLocalData.getDuration() + R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED
+								+ "Location = " + aLocalData.getLocation() + R4EUIConstants.LINE_FEED + "Remote Data:"
+								+ R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED + "Start time = "
+								+ remoteStartTime + R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED + "Duration = "
+								+ remoteDuration + R4EUIConstants.LINE_FEED + R4EUIConstants.TAB_FEED + "Location = "
+								+ remoteLocation, MessageDialog.QUESTION_WITH_CANCEL,
+						MEETING_DATA_MISMATCH_DIALOG_BUTTONS, 0);
+				result[0] = dialog.open();
+			}
+		});
+		return result[0];
 	}
 
 	/**

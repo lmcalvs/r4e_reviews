@@ -449,6 +449,15 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		}
 		fUserEmailTextField.setLayoutData(userEmailTextData);
 		fUserEmailTextField.setText(store.getString(PreferenceConstants.P_USER_EMAIL));
+		fUserEmailTextField.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
+				String newValue = fUserEmailTextField.getText().trim();
+				if (!CommandUtils.isEmailValid(newValue)) {
+					//Validation of input failed
+					fUserEmailTextField.setText(store.getString(PreferenceConstants.P_USER_EMAIL));
+				}
+			}
+		});
 
 		//Participants Lists
 		Label label = new Label(r4EUserPrefsGroup, SWT.NONE);
