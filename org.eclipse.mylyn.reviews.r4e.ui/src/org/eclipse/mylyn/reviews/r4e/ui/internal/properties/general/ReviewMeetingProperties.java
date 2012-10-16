@@ -136,7 +136,7 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 			} else if (REVIEW_MEETING_DATE_ID.equals(aId)) {
 				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
-					return new Date(meeting.getStartTime());
+					return new Date(meeting.getStartTime() + R4EUIConstants.TIME_ZONE_OFFSET);
 				}
 			} else if (REVIEW_MEETING_DURATION_ID.equals(aId)) {
 				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();

@@ -68,8 +68,7 @@ public class MeetingData implements IMeetingData {
 		fDuration = aDuration;
 		fSender = aSender;
 		if (aReceivers != null) {
-			for (int i = 0; i < aReceivers.length; i++) {
-				String receiver = aReceivers[i];
+			for (String receiver : aReceivers) {
 				fReceivers.add(receiver);
 			}
 		}
@@ -163,6 +162,7 @@ public class MeetingData implements IMeetingData {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return fSubject + ", " + fLocation + ", " + fSartTime + ", " + fDuration + ", " + fBody;
 	}
@@ -268,5 +268,19 @@ public class MeetingData implements IMeetingData {
 	 */
 	public void clearSentCounter() {
 		fSentCounter = 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#equals(IMeetingData)
+	 */
+	public boolean equals(IMeetingData aData) {
+		if (null != aData && fLocation.equals(aData.getLocation())
+				&& fDuration.intValue() == aData.getDuration().intValue()
+				&& fSartTime.longValue() == aData.getStartTime().longValue()) {
+			return true;
+		}
+		return false;
 	}
 }

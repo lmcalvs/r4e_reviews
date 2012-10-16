@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Sebastien Dubois
@@ -32,6 +33,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field TIME_ZONE_OFFSET. (value is "TimeZone.getDefault().getOffset(System.currentTimeMillis()")
+	 */
+	public final static long TIME_ZONE_OFFSET = TimeZone.getDefault().getOffset(System.currentTimeMillis());
 
 	/**
 	 * Field R4E_CONTEXT_ID. (value is ""org.eclipse.mylyn.reviews.r4e.ui.context"")
@@ -207,6 +213,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REFRESH_LABEL. (value is ""Refresh"")
 	 */
 	public static final String REFRESH_LABEL = "Refresh";
+
+	/**
+	 * Field SYNC_LABEL. (value is ""Sync"")
+	 */
+	public static final String SYNC_LABEL = "Sync";
 
 	/**
 	 * Field LINE_TAG. (value is ""Line "")
@@ -868,9 +879,10 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	/**
 	 * Field PARTICIPANT_ROLES.
 	 */
-	public static final List<String> PARTICIPANT_ROLES = Collections.unmodifiableList(Arrays.asList(R4EUIConstants.USER_ROLE_LEAD,
-			R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER));
-	
+	public static final List<String> PARTICIPANT_ROLES = Collections.unmodifiableList(Arrays.asList(
+			R4EUIConstants.USER_ROLE_LEAD, R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER,
+			USER_ROLE_ORGANIZER));
+
 	//Anomaly Classes & Ranks
 
 	/**

@@ -144,4 +144,12 @@ public interface IMeetingData {
 	 */
 	public abstract void clearSentCounter();
 
+	/**
+	 * Equality test
+	 * 
+	 * @param aData
+	 *            - IMeetingData
+	 */
+	public abstract boolean equals(IMeetingData aData);
+
 }

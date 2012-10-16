@@ -144,8 +144,22 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 		if (buttonId == IDialogConstants.OK_ID) {
 
 			//NOTE fStartTime is set below
-			//Validate StartTime
-			String validateResult = validateEmptyInput(fDurationInputTextField);
+
+			//Validate Start Time
+			String validateResult = validateEmptyInput(fStartTimeInputTextField);
+			if (null != validateResult) {
+
+				//Validation of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, SMTPHostString.getString("dialog_title_error"),
+						SMTPHostString.getString("start time_Error"), new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID,
+								0, validateResult, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
+			}
+
+			//Validate Duration
+			validateResult = validateEmptyInput(fDurationInputTextField);
 			if (null != validateResult) {
 
 				//Validation of input failed
@@ -242,14 +256,13 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		textGridData.horizontalSpan = 2;
 		fStartTimeInputTextField.setLayoutData(textGridData);
+		fStartTimeInputTextField.setEditable(false);
 
 		//Calendar Button
 		fCalendarButton = toolkit.createButton(meetingComposite, "...", SWT.NONE);
 		fCalendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fCalendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-//				final CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView().
-//						getSite().getWorkbenchWindow().getShell(), true);
 				final CalendarDialog dialog = new CalendarDialog(getShell(), true);
 				final int result = dialog.open();
 				if (result == Window.OK) {
@@ -356,7 +369,13 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 	 *            Long
 	 */
 	public void setDuration(Integer aDuration) {
-		fDurationInputTextField.setText(aDuration.toString());
+		String durationStr;
+		if (null == aDuration) {
+			durationStr = "";
+		} else {
+			durationStr = aDuration.toString();
+		}
+		fDurationInputTextField.setText(durationStr);
 	}
 
 	/**
@@ -366,7 +385,11 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 	 *            String
 	 */
 	public void setLocation(String aLoc) {
-		fLocationInputTextField.setText(aLoc);
+		String location = aLoc;
+		if (null == location) {
+			location = "";
+		}
+		fLocationInputTextField.setText(location);
 	}
 
 }

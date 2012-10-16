@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -61,6 +62,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIMeetingData;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.swt.SWT;
@@ -915,7 +917,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			coreMeetingData.setBody(aMeetingData.getBody());
 			coreMeetingData.setSubject(aMeetingData.getSubject());
 			coreMeetingData.setLocation(aMeetingData.getLocation());
-			coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue());
+			coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue() - R4EUIConstants.TIME_ZONE_OFFSET); //Store in UTC
 			coreMeetingData.setDuration(aMeetingData.getDuration().intValue());
 			coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -937,196 +939,36 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return;
 		}
 
-		IMeetingData meetingData = new IMeetingData() {
-
-			public int getSentCounter() {
-				return coreMeetingData.getSentCount();
-			}
-
-			public void incrementSentCounter() {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void clearSentCounter() {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setSentCount(0);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getCustomID() {
-				return coreMeetingData.getId();
-			}
-
-			public void setCustomID(String aId) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setId(aId);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getSubject() {
-				return coreMeetingData.getSubject();
-			}
-
-			public void setSubject(String aSubject) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setSubject(aSubject);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getBody() {
-				return coreMeetingData.getBody();
-			}
-
-			public void setBody(String aBody) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setBody(aBody);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getLocation() {
-				return coreMeetingData.getLocation();
-			}
-
-			public void setLocation(String aLocation) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setLocation(aLocation);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public Long getStartTime() {
-				return Long.valueOf(coreMeetingData.getStartTime());
-			}
-
-			public void setStartTime(Long aStartTime) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setStartTime(aStartTime.longValue());
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public Integer getDuration() {
-				return Integer.valueOf(coreMeetingData.getDuration());
-			}
-
-			public void setDuration(Integer aDuration) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setDuration(aDuration.intValue());
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String getSender() {
-				return coreMeetingData.getSender();
-			}
-
-			public void setSender(String aSender) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.setSender(aSender);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public String[] getReceivers() {
-				final EList<String> recieversL = coreMeetingData.getReceivers();
-				final String[] receivers = recieversL.toArray(new String[recieversL.size()]);
-				return receivers;
-			}
-
-			public void clearReceivers() {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.getReceivers().clear();
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void addReceiver(String aReceiver) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.getReceivers().add(aReceiver);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-			public void removeReceiver(String aReceiver) {
-				try {
-					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-					coreMeetingData.getReceivers().remove(aReceiver);
-					resUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
-
-		};
+		IMeetingData localMeetingData = new R4EUIMeetingData(coreMeetingData);
 
 		if (null != mailConnector) {
-			meetingData = mailConnector.fetchSystemMeetingData(meetingData, fReview.getStartDate());
-			if (null != meetingData) {
-				setMeetingData(meetingData);
+			IMeetingData remoteMeetingData = mailConnector.fetchSystemMeetingData(localMeetingData,
+					fReview.getStartDate());
+			if (null != remoteMeetingData) {
+				IMeetingData updatedMeetingData = null;
+				if (!localMeetingData.equals(remoteMeetingData)) {
+					//Values are different, ask user which ones we should keep
+					final int result = UIUtils.displayMeetingDataMismatchDialog(localMeetingData, remoteMeetingData);
+					if (result == R4EUIConstants.DIALOG_YES) {
+						//Update the remote mail server data with local data
+						mailConnector.openAndUpdateMeeting(localMeetingData, R4EUIModelController.getActiveReview()
+								.getReview()
+								.getStartDate(), true);
+					} else if (result == R4EUIConstants.DIALOG_NO) {
+						//Update the local data with remote mail server data
+						setMeetingData(remoteMeetingData);
+					}
+				}
+			} else {
+				//Meeting data not found on mail server, so create one from the local data
+				try {
+					mailConnector.createMeetingRequest(localMeetingData.getSubject(), localMeetingData.getBody(),
+							localMeetingData.getReceivers(), localMeetingData.getStartTime(),
+							localMeetingData.getDuration(), localMeetingData.getLocation());
+				} catch (CoreException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+				}
 			}
 		}
 	}

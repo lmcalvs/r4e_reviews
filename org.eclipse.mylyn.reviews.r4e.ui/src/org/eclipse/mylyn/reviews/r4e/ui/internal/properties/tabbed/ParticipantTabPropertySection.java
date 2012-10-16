@@ -204,13 +204,14 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fEmailText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 						String newValue = fEmailText.getText().trim();
 						if (!CommandUtils.isEmailValid(newValue)) {
 							//Validation of input failed
+							fEmailText.setText(modelParticipant.getEmail());
 							return;
 						}
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 						if (!newValue.equals(modelParticipant.getEmail())) {
 							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
 									currentUser);

@@ -67,7 +67,7 @@ public abstract class NotificationsConnector {
 	 * @throws CoreException
 	 */
 	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmailsTo,
-			Long startDate, Integer duration) throws CoreException;
+			Long startDate, Integer duration, String location) throws CoreException;
 
 	/**
 	 * Open the dialog from the system and allow the user to update as necessary
@@ -75,9 +75,11 @@ public abstract class NotificationsConnector {
 	 * @param aMeetingData
 	 * @param searchFrom
 	 *            - narrow down the search window, 6 months before current date is recommended
+	 * @param forceUpdate
+	 *            - true if meeting data values should be taken from the argument values, false otherwise
 	 * @return IMeetingData
 	 */
-	public abstract IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date searchFrom);
+	public abstract IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date searchFrom, boolean forceUpdate);
 
 	/**
 	 * Fetch the meeting data from the calendar system using the local data
