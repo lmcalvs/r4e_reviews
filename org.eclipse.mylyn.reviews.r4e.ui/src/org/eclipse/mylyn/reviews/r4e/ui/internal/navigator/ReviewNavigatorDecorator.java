@@ -116,47 +116,47 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 		if (!((IR4EUIModelElement) aElement).isEnabled()) {
 			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getDisabledImage(),
 					OverlayImageIcon.BOTTOM_RIGHT);
-			return overlayIcon.getImage(); //No need to check for other decorators
+			currentOverlayImage = overlayIcon.getImage();
+			return currentOverlayImage; //No need to check for other decorators
 		} else if (((IR4EUIModelElement) aElement).isUserReviewed()
 				|| (aElement instanceof R4EUIAnomalyExtended && ((R4EUIAnomalyExtended) aElement).isTerminalState())) {
 			//Completed element decorator
 			overlayIcon = new OverlayImageIcon(currentOverlayImage,
 					((IR4EUIModelElement) aElement).getUserReviewedImage(), OverlayImageIcon.BOTTOM_RIGHT);
+			currentOverlayImage = overlayIcon.getImage();
 		}
 
 		//Added, Removed or Modified file
-		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
-		overlayIcon = null;
 		if (aElement instanceof R4EUIFileContext) {
 			if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
 					&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
 				//Only target present, file was added
 				overlayIcon = new OverlayImageIcon(currentOverlayImage, ((R4EUIFileContext) aElement).getAddedImage(),
 						OverlayImageIcon.BOTTOM_LEFT);
+				currentOverlayImage = overlayIcon.getImage();
 			} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
 					&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
 				//Only base present, file was removed
 				overlayIcon = new OverlayImageIcon(currentOverlayImage,
 						((R4EUIFileContext) aElement).getRemovedImage(), OverlayImageIcon.BOTTOM_LEFT);
+				currentOverlayImage = overlayIcon.getImage();
 			} //else modified file
 		}
 
 		//Read-Only
-		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
-		overlayIcon = null;
 		if (((IR4EUIModelElement) aElement).isReadOnly()) {
 			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getReadOnlyImage(),
 					OverlayImageIcon.TOP_RIGHT);
+			currentOverlayImage = overlayIcon.getImage();
 		}
 
 		//Due date passed
-		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
-		overlayIcon = null;
 		if (((IR4EUIModelElement) aElement).isDueDatePassed()) {
 			overlayIcon = new OverlayImageIcon(currentOverlayImage,
 					((IR4EUIModelElement) aElement).getDueDatePassedImage(), OverlayImageIcon.TOP_LEFT);
+			currentOverlayImage = overlayIcon.getImage();
 		}
-		return (Image) ((null == overlayIcon) ? overlayIcon : overlayIcon.getImage());
+		return currentOverlayImage;
 	}
 
 	/**
