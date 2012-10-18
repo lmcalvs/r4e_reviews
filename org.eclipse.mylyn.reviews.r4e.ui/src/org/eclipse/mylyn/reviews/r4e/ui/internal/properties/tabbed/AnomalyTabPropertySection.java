@@ -976,6 +976,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		}
 		setEnabledFields();
 		fRefreshInProgress = false;
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**

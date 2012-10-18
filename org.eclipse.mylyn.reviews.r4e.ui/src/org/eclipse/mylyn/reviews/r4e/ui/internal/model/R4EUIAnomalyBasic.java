@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -982,15 +983,21 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public boolean isDueDatePassed() {
 		if (isEnabled()) {
-			if (null != fAnomaly.getDueDate() && fAnomaly.getDueDate().before(new Date())) {
+			if (null != fAnomaly.getDueDate()) {
 				IR4EUIModelElement element = getParent().getParent().getParent().getParent();
-				if (!(element instanceof R4EUIReviewBasic)) {
-					//Assume global anomaly
-					element = getParent().getParent();
-				}
-				if (!((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-					return true;
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+				cal.add(Calendar.DAY_OF_YEAR, -1);
+				if (fAnomaly.getDueDate().before(cal.getTime())) {
+
+					if (!(element instanceof R4EUIReviewBasic)) {
+						//Assume global anomaly
+						element = getParent().getParent();
+					}
+					if (!((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(
+							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						return true;
+					}
 				}
 			}
 		}

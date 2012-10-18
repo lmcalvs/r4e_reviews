@@ -884,10 +884,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isDueDatePassed() {
 		if (isEnabled()) {
 			if (null != fReview.getDueDate()
-					&& fReview.getDueDate().before(new Date())
 					&& !((R4EReviewState) fReview.getState()).getState().equals(
 							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-				return true;
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+				cal.add(Calendar.DAY_OF_YEAR, -1);
+				if (fReview.getDueDate().before(cal.getTime())) {
+					return true;
+				}
 			}
 		}
 		return false;

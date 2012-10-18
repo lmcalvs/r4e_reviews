@@ -691,9 +691,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NO_DUE_DATE_MSG = "(No Due Date)";
 
 	/**
-	 * Field DUE_DATE_PASSED_MSG. (value is ""(Due Date Passed!) "")
+	 * Field DUE_DATE_PASSED_MSG. (value is ""(Overdue) "")
 	 */
-	public static final String DUE_DATE_PASSED_MSG = "(Due Date Passed!) ";
+	public static final String DUE_DATE_PASSED_MSG = "(Overdue) ";
 
 	/**
 	 * Field STATE_LABEL. (value is ""State: "")
