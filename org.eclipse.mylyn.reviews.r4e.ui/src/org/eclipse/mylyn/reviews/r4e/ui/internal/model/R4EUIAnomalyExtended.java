@@ -814,7 +814,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 */
 	@Override
 	public boolean isTerminalState() {
-		return (0 == getNextAvailableStates().length || fAnomaly.getState().equals(
-				R4EAnomalyState.R4E_ANOMALY_STATE_FIXED));
+		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)
+				|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)
+				|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
+			return false;
+		}
+		return true;
 	}
 }
