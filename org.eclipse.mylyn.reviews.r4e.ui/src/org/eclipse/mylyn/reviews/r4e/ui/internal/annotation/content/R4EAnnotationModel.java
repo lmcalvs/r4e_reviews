@@ -418,11 +418,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @return boolean
 	 */
 	public boolean isAnnotationsAvailable(String aType) {
-		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
-		if ((null != annotationList) && (annotationList.size() > 0)) {
-			return true;
-		}
-		return false;
+		return true; //Always return available even if there are no annotations
 	}
 
 	/**
@@ -435,7 +431,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 */
 	public IReviewAnnotation getNextAnnotation(String aType) {
 		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
-		if (annotationList.size() == 0) {
+		if (null == annotationList || annotationList.size() == 0) {
 			return null; //empty list
 		} else {
 			int annotationIndex = fSortedAnnotationsIndexMap.get(aType);
@@ -459,7 +455,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	public IReviewAnnotation getPreviousAnnotation(String aType) {
 		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
 
-		if (annotationList.size() == 0) {
+		if (null == annotationList || annotationList.size() == 0) {
 			return null; //empty list
 		} else {
 			int annotationIndex = fSortedAnnotationsIndexMap.get(aType);
