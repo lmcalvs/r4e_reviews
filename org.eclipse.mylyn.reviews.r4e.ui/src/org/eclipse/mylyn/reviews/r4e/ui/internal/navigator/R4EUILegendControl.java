@@ -442,6 +442,10 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/obj16/sel_obj.gif"));
 		toolkit.createLabel(r4eClient, "Selection Annotation Marker (R4E Editor Views)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/ovr16/duedateovr_tsk.gif"));
+		toolkit.createLabel(r4eClient, "Element is overdue");
 	}
 
 	/**
@@ -614,6 +618,10 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.REPORT_ELEMENT_ICON_FILE));
 		toolkit.createLabel(r4eClient, "Generate Report for Review");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.SHOW_PROPERTIES_ICON_FILE));
+		toolkit.createLabel(r4eClient, "Show the properties view for the selected item");
 	}
 
 	/**

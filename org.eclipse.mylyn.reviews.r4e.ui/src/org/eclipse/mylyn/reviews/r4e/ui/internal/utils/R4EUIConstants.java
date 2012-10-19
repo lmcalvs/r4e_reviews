@@ -1734,6 +1734,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PREVIOUS_ANOMALY_ANNOTATION_COMMAND_MNEMONIC = "P";
 
 	/**
+	 * Field OVER_DUE_ICON_FILE (value is ""icons/ovr16/duedateovr_tsk.gif"")
+	 */
+	public static final String OVER_DUE_ICON_FILE = "icons/ovr16/duedateovr_tsk.gif";
+
+	/**
 	 * Field ANNOTATION_COMMAND_PARAM. (value is ""editor"")
 	 */
 	public static final String ANNOTATION_COMMAND_PARAM = "editor";
