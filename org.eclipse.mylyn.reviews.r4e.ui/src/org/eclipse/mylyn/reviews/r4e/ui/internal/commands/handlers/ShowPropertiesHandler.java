@@ -69,10 +69,9 @@ public class ShowPropertiesHandler extends AbstractHandler {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 				R4EUIPlugin.Ftracer.traceInfo("Showing Properties View"); //$NON-NLS-1$
 
+				R4EUIModelController.getNavigatorView().showProperties();
 				IWorkbenchPart part = HandlerUtil.getActivePart(aEvent);
-				if (part instanceof ReviewNavigatorView) {
-					R4EUIModelController.getNavigatorView().showProperties();
-				} else {
+				if (!(part instanceof ReviewNavigatorView)) {
 					//Here we assume that the commands comes from the annotation popup, so we will activate the Review Navigator view
 					//element to display the properties for the selected element.
 					final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
