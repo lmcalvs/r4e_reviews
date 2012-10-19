@@ -754,20 +754,18 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		if (control == null || control.isDisposed()) {
 			return;
 		}
-		if (null != selection) {
-			setSelectionToWidget(selection, reveal);
-			ISelection sel = getSelection();
+		setSelectionToWidget(selection, reveal);
+		ISelection sel = getSelection();
 
-			//Here we need to adjust the selection for hidden (filtered) tree elements
-			//NOTE:  This is a dirty hack that we need to be able to display the tabbed properties for hidden
-			//		 R4E UI elements using R4E editor annotations
-			if (((ITreeSelection) sel).size() == 0) {
-				if (selection != null) {
-					sel = selection;
-				}
+		//Here we need to adjust the selection for hidden (filtered) tree elements
+		//NOTE:  This is a dirty hack that we need to be able to display the tabbed properties for hidden
+		//		 R4E UI elements using R4E editor annotations
+		if (((ITreeSelection) sel).size() == 0) {
+			if (selection != null) {
+				sel = selection;
 			}
-			updateSelection(sel);
-			firePostSelectionChanged(new SelectionChangedEvent(this, sel));
 		}
+		updateSelection(sel);
+		firePostSelectionChanged(new SelectionChangedEvent(this, sel));
 	}
 }
