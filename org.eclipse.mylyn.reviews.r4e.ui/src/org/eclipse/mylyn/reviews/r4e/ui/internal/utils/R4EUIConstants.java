@@ -1246,10 +1246,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String OPEN_EDITOR_COMMAND_NAME = "Open File in Editor";
 
 	/**
-	 * Field OPEN_EDITOR_COMMAND_TOOLTIP. (value is ""Open the parent file with the matching editor and locate
-	 * element"")
+	 * Field OPEN_EDITOR_COMMAND_TOOLTIP. (value is ""Open the File with the associated Editor and Locate Element"")
 	 */
-	public static final String OPEN_EDITOR_COMMAND_TOOLTIP = "Open the Parent File with the Matching Editor and Locate Element";
+	public static final String OPEN_EDITOR_COMMAND_TOOLTIP = "Open the File with the associated Editor and Locate Element";
 
 	/**
 	 * Field OPEN_EDITOR_COMMAND_MNEMONIC. (value is ""E"")
