@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -97,6 +98,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	private static final Comparator<R4EUIAnomalyBasic> ANOMALY_COMPARATOR = new Comparator<R4EUIAnomalyBasic>() {
 		// This is where the sorting happens.
 		public int compare(R4EUIAnomalyBasic aAnomaly1, R4EUIAnomalyBasic aAnomaly2) {
+			if (aAnomaly1.getPosition() == null || aAnomaly2.getPosition() == null) {
+				//Compare by date as second option i.e. Global Anomalies
+				//CreatedOn shall be present i.e.expecting well formed anomalies
+				Date date1 = aAnomaly1.fAnomaly.getCreatedOn();
+				Date date2 = aAnomaly2.fAnomaly.getCreatedOn();
+				return date1.compareTo(date2);
+			}
+
 			final int sortOrder = ((R4EUITextPosition) aAnomaly1.getPosition()).getOffset()
 					- ((R4EUITextPosition) aAnomaly2.getPosition()).getOffset();
 			if (sortOrder == 0) {
