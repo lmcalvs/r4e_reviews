@@ -19,20 +19,23 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IColorDecorator;
 import org.eclipse.jface.viewers.IFontDecorator;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.OverlayImageIcon;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -44,6 +47,40 @@ import org.eclipse.swt.widgets.Display;
  * @version $Revision: 1.0 $
  */
 public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator, IColorDecorator {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field DECORATOR_DISABLED_ID. (value is ""Disabled"")
+	 */
+	private static final String DECORATOR_DISABLED_ID = "Disabled"; //$NON-NLS-1$
+
+	/**
+	 * Field DECORATOR_REVIEWED_ID. (value is ""Reviewed"")
+	 */
+	private static final String DECORATOR_REVIEWED_ID = "Reviewed"; //$NON-NLS-1$
+
+	/**
+	 * Field DECORATOR_ADDED_ID. (value is ""Added"")
+	 */
+	private static final String DECORATOR_ADDED_ID = "Added"; //$NON-NLS-1$
+
+	/**
+	 * Field DECORATOR_REMOVED_ID. (value is ""Removed"")
+	 */
+	private static final String DECORATOR_REMOVED_ID = "Removed"; //$NON-NLS-1$
+
+	/**
+	 * Field DECORATOR_READONLY_ID. (value is ""Readonly"")
+	 */
+	private static final String DECORATOR_READONLY_ID = "Readonly"; //$NON-NLS-1$
+
+	/**
+	 * Field DECORATOR_OVERDUE_ID. (value is ""Overdue"")
+	 */
+	private static final String DECORATOR_OVERDUE_ID = "Overdue"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -111,52 +148,74 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 			currentOverlayImage = ((IR4EUIModelElement) aElement).getImage(((IR4EUIModelElement) aElement).getImageLocation());
 		}
 
-		OverlayImageIcon overlayIcon = null;
+		ImageDescriptor topLeftOverlay = null;
+		String topLeftOverlayId = ""; //$NON-NLS-1$
+
+		ImageDescriptor topRightOverlay = null;
+		String topRightOverlayId = ""; //$NON-NLS-1$
+
+		ImageDescriptor bottomLeftOverlay = null;
+		String bottomLeftOverlayId = ""; //$NON-NLS-1$
+
+		ImageDescriptor bottomRightOverlay = null;
+		String bottomRightOverlayId = ""; //$NON-NLS-1$
+
+		ImageRegistry registry = R4EUIPlugin.getDefault().getImageRegistry();
+
 		//Disabled element decorator
 		if (!((IR4EUIModelElement) aElement).isEnabled()) {
-			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getDisabledImage(),
-					OverlayImageIcon.BOTTOM_RIGHT);
-			currentOverlayImage = overlayIcon.getImage();
-			return currentOverlayImage; //No need to check for other decorators
-		} else if (((IR4EUIModelElement) aElement).isUserReviewed()
-				|| (aElement instanceof R4EUIAnomalyExtended && ((R4EUIAnomalyExtended) aElement).isTerminalState())) {
-			//Completed element decorator
-			overlayIcon = new OverlayImageIcon(currentOverlayImage,
-					((IR4EUIModelElement) aElement).getUserReviewedImage(), OverlayImageIcon.BOTTOM_RIGHT);
-			currentOverlayImage = overlayIcon.getImage();
+			bottomRightOverlay = ImageDescriptor.createFromImage(((IR4EUIModelElement) aElement).getDisabledImage());
+			bottomRightOverlayId = DECORATOR_DISABLED_ID;
+		} else {
+			if (((IR4EUIModelElement) aElement).isUserReviewed()
+					|| (aElement instanceof R4EUIAnomalyExtended && ((R4EUIAnomalyExtended) aElement).isTerminalState())) {
+				//Completed element decorator
+				bottomRightOverlay = ImageDescriptor.createFromImage(((IR4EUIModelElement) aElement).getUserReviewedImage());
+				bottomRightOverlayId = DECORATOR_REVIEWED_ID;
+			}
+
+			//Added, Removed or Modified file
+			if (aElement instanceof R4EUIFileContext) {
+				if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
+						&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
+					//Only target present, file was added
+					bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getAddedImage());
+					bottomLeftOverlayId = DECORATOR_ADDED_ID;
+				} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
+						&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
+					//Only base present, file was removed
+					bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getRemovedImage());
+					bottomLeftOverlayId = DECORATOR_REMOVED_ID;
+				} //else modified file
+			}
+
+			//Read-Only
+			if (((IR4EUIModelElement) aElement).isReadOnly()) {
+				topRightOverlay = ImageDescriptor.createFromImage(((IR4EUIModelElement) aElement).getReadOnlyImage());
+				topRightOverlayId = DECORATOR_READONLY_ID;
+			}
+
+			//Due date passed
+			if (((IR4EUIModelElement) aElement).isDueDatePassed()) {
+				topLeftOverlay = ImageDescriptor.createFromImage(((IR4EUIModelElement) aElement).getDueDatePassedImage());
+				topLeftOverlayId = DECORATOR_OVERDUE_ID;
+			}
 		}
 
-		//Added, Removed or Modified file
-		if (aElement instanceof R4EUIFileContext) {
-			if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
-					&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
-				//Only target present, file was added
-				overlayIcon = new OverlayImageIcon(currentOverlayImage, ((R4EUIFileContext) aElement).getAddedImage(),
-						OverlayImageIcon.BOTTOM_LEFT);
-				currentOverlayImage = overlayIcon.getImage();
-			} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
-					&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
-				//Only base present, file was removed
-				overlayIcon = new OverlayImageIcon(currentOverlayImage,
-						((R4EUIFileContext) aElement).getRemovedImage(), OverlayImageIcon.BOTTOM_LEFT);
-				currentOverlayImage = overlayIcon.getImage();
-			} //else modified file
-		}
+		// Construct a new image identifier
+		String baseImageId = ((IR4EUIModelElement) aElement).getImageLocation();
+		String decoratedImageId = baseImageId + topLeftOverlayId + topRightOverlayId + bottomLeftOverlayId
+				+ bottomRightOverlayId;
 
-		//Read-Only
-		if (((IR4EUIModelElement) aElement).isReadOnly()) {
-			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getReadOnlyImage(),
-					OverlayImageIcon.TOP_RIGHT);
-			currentOverlayImage = overlayIcon.getImage();
+		// Return the stored image if we have one
+		if (registry.get(decoratedImageId) == null) {
+			DecorationOverlayIcon decoratedImage = new DecorationOverlayIcon(currentOverlayImage,
+					new ImageDescriptor[] { topLeftOverlay, topRightOverlay, bottomLeftOverlay, bottomRightOverlay,
+							null }) {
+			};
+			registry.put(decoratedImageId, decoratedImage);
 		}
-
-		//Due date passed
-		if (((IR4EUIModelElement) aElement).isDueDatePassed()) {
-			overlayIcon = new OverlayImageIcon(currentOverlayImage,
-					((IR4EUIModelElement) aElement).getDueDatePassedImage(), OverlayImageIcon.TOP_LEFT);
-			currentOverlayImage = overlayIcon.getImage();
-		}
-		return currentOverlayImage;
+		return registry.get(decoratedImageId);
 	}
 
 	/**
