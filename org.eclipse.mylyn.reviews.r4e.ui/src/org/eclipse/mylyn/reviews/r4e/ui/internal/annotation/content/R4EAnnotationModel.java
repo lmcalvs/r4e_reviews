@@ -190,16 +190,18 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 */
 	public void connect(IDocument aDocument) {
 		fDocument = aDocument;
-		for (IReviewAnnotation annotation : fAnnotationsMap.values()) {
-			try {
-				fDocument.addPosition(annotation.getPosition());
-			} catch (BadLocationException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+		if (fDocument.getLength() > 0) {
+			for (IReviewAnnotation annotation : fAnnotationsMap.values()) {
+				try {
+					fDocument.addPosition(annotation.getPosition());
+				} catch (BadLocationException e) {
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+				}
 			}
+			fDocument.addDocumentListener(fDocumentListener);
+			refreshAnnotations();
 		}
-		fDocument.addDocumentListener(fDocumentListener);
-		refreshAnnotations();
 	}
 
 	/**
