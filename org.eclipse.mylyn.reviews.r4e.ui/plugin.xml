@@ -775,9 +775,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Change Review State"
+            description="Mark as User Reviewed"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
-            name="Change Review State">
+            name="Mark as User Reviewed">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"

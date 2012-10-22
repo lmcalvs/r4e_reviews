@@ -621,7 +621,7 @@ public class R4EUILegendControl extends Composite {
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.SHOW_PROPERTIES_ICON_FILE));
-		toolkit.createLabel(r4eClient, "Show the properties view for the selected item");
+		toolkit.createLabel(r4eClient, "Show the properties view for the selected element");
 	}
 
 	/**
