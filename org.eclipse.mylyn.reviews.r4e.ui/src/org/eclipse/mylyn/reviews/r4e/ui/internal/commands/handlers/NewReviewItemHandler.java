@@ -129,7 +129,11 @@ public class NewReviewItemHandler extends AbstractHandler {
 
 					//First remove any editor selection (if open) if we execute the command from the review navigator view
 					if (null != editorPart && editorPart instanceof ITextEditor) {
-						((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
+							}
+						});
 					}
 
 					//Then iterate through all selections
