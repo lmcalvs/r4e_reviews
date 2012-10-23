@@ -666,6 +666,8 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					} else {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					}
 					break;
 
@@ -781,10 +783,16 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 						.getType();
 				switch (aCurrentState.getValue()) {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
+							|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					}
 					break;
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
