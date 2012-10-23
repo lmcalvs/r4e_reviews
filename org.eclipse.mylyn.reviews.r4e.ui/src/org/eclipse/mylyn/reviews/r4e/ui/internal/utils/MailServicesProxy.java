@@ -1081,6 +1081,24 @@ public class MailServicesProxy {
 	}
 
 	/**
+	 * Method replaceParticipantsInBody
+	 * 
+	 * @param aOldBody
+	 *            - String
+	 * @return String
+	 */
+	private static String replaceParticipantsInBody(String aOldBody) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Participants: " + TAB_MSG_PART);
+		final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
+		for (String participant : participants) {
+			buffer.append(participant + ", ");
+		}
+		buffer.append(LINE_FEED_MSG_PART);
+		return aOldBody.replaceFirst("Participants:.*", buffer.toString());
+	}
+
+	/**
 	 * Method createIntroPart
 	 * 
 	 * @return String
@@ -1149,7 +1167,7 @@ public class MailServicesProxy {
 				for (String destination : destinations) {
 					localMeetingData.addReceiver(destination);
 				}
-				localMeetingData.setBody(createItemsReadyNotificationMessage(true)); //Regenerate body
+				localMeetingData.setBody(replaceParticipantsInBody(localMeetingData.getBody()));
 
 				//Then try to find the meeting data on mail server
 				oldMeetingData = mailConnector.fetchSystemMeetingData(localMeetingData,
@@ -1191,9 +1209,8 @@ public class MailServicesProxy {
 				//Meeting data not found anywhere, so create a brand new one with default values
 				try {
 					updatedMeetingData = mailConnector.createMeetingRequest(createSubject()
-							+ DECISION_MEETING_INITIAL_MSG,
-							createItemsReadyNotificationMessage(true), destinations, getDefaultStartTime(),
-							DEFAULT_MEETING_DURATION, "");
+							+ DECISION_MEETING_INITIAL_MSG, createItemsReadyNotificationMessage(true), destinations,
+							getDefaultStartTime(), DEFAULT_MEETING_DURATION, "");
 				} catch (CoreException e) {
 					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
