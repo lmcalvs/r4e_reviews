@@ -303,7 +303,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 
 		//TODO:  This is needed to show annotation highlighting whne opening the compare editor.
 		//		 It should not be needed so this could be investigated in the future.
-		fAnnotationSupport.getTargetAnnotationModel().refreshAnnotations();
+		if (fAnnotationSupport != null) {
+			fAnnotationSupport.getTargetAnnotationModel().refreshAnnotations();
+		}
 
 		return control;
 	}
@@ -454,6 +456,10 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @return R4EAnnotationModel
 	 */
 	public R4EAnnotationModel getAnnotationModel() {
+		if (fAnnotationSupport == null) {
+			return null;
+		}
+
 		return (R4EAnnotationModel) fAnnotationSupport.getTargetAnnotationModel();
 	}
 }
