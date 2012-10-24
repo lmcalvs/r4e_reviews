@@ -48,7 +48,3 @@ Export-Package: org.eclipse.mylyn.reviews.r4e.ui;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.utils;x-internal:=true
-Import-Package: org.apache.commons.io,
- org.eclipse.core.filesystem,
- org.eclipse.mylyn.tasks.core,
- org.eclipse.ui.texteditor.rulers

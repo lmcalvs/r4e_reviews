@@ -10,20 +10,9 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.mylyn.reviews.frame.ui.annotation;x-friends:="org.eclipse.mylyn.reviews.r4e.ui",
  org.eclipse.mylyn.reviews.frame.ui.annotation.impl;x-friends:="org.eclipse.mylyn.reviews.r4e.ui"
-Import-Package: org.eclipse.core.commands.operations,
- org.eclipse.jface.internal.text,
- org.eclipse.jface.text,
- org.eclipse.jface.text.information,
- org.eclipse.jface.text.source,
- org.eclipse.jface.text.source.projection,
- org.eclipse.swt.events,
- org.eclipse.swt.graphics,
- org.eclipse.swt.widgets,
- org.eclipse.ui.editors.text,
- org.eclipse.ui.internal.editors.text,
- org.eclipse.ui.internal.texteditor,
- org.eclipse.ui.texteditor
 Require-Bundle: org.eclipse.jface,
  org.eclipse.compare,
  org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.ui.editors,
+ org.eclipse.jface.text
