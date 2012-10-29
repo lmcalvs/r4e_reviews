@@ -18,6 +18,7 @@ import java.io.File;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
+import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -25,7 +26,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -66,10 +66,11 @@ public class ReportDirectorySelection extends Dialog {
 	/**
 	 * 
 	 */
-	public ReportDirectorySelection(Shell aParentShell) {
-		super(aParentShell);
+	public ReportDirectorySelection(IShellProvider aShellProvider) {
+		super(aShellProvider);
 		// setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.MODELESS);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
+
 	}
 
 	// ------------------------------------------------------------------------
@@ -79,6 +80,7 @@ public class ReportDirectorySelection extends Dialog {
 	/**
 	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	protected Control createDialogArea(Composite aParent) {
 
 		getShell().setText(fTITLE);
@@ -93,6 +95,7 @@ public class ReportDirectorySelection extends Dialog {
 		return composite;
 	}
 
+	@Override
 	protected void createButtonsForButtonBar(Composite aParent) {
 		ok = createButton(aParent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
 		cancel = createButton(aParent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
@@ -100,6 +103,7 @@ public class ReportDirectorySelection extends Dialog {
 		cancel.setToolTipText(fCancelTooltip);
 	}
 
+	@Override
 	protected void buttonPressed(int aButtonId) {
 
 		// Ok button selected

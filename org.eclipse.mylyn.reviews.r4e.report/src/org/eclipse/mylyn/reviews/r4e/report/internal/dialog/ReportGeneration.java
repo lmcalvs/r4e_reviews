@@ -49,6 +49,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
@@ -63,6 +64,7 @@ import org.eclipse.mylyn.reviews.r4e.report.internal.util.OSPLATFORM;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.Popup;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.R4EReportString;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -1001,10 +1003,17 @@ public class ReportGeneration implements IR4EReport {
 	 * @return Boolean
 	 */
 	private File createSaveDirectory(final File aReportDir) {
-		//Obtain display from current thread or fist created
-		Display display = Display.getCurrent() != null ? Display.getCurrent() : Display.getDefault();
 
-		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(display.getActiveShell());
+		//Defer the resolution of the shell at the creation of the dialog i.e. when running in the UI thread
+		final IShellProvider shellProvider = new IShellProvider() {
+			public Shell getShell() {
+				//Obtain display from current thread or first created
+				Display display = Display.getCurrent() != null ? Display.getCurrent() : Display.getDefault();
+				return display.getActiveShell();
+			}
+		};
+
+		final ReportDirectorySelection dirSelect = new ReportDirectorySelection(shellProvider);
 		Runnable runnable = new Runnable() {
 
 			public void run() {
@@ -1013,18 +1022,11 @@ public class ReportGeneration implements IR4EReport {
 					// Set the default directory if not null
 					dirSelect.setFieldDirectory(aReportDir.getAbsolutePath());
 				}
-				dirSelect.open();
-				// TODO We need to create a dialog to allow the end-user to
-				// enter his
-				// own directory here
-				// StringBuilder sb = new StringBuilder();
-				// sb.append(reportDir.getParentFile().getParent());
-				// Activator.FTracer.traceInfo("New report Directory should be: " +
-				// sb.toString());
-				// File f = new File(sb.toString());
 
+				dirSelect.open();
 			}
 		};
+
 		Display.getDefault().syncExec(runnable);
 		File fi = dirSelect.getReportDirectory();
 		if (fi != null) {
