@@ -84,7 +84,11 @@ import org.eclipse.mylyn.versions.core.Change;
 import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IProgressConstants;
 
@@ -228,12 +232,19 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				return null;
 			}
 
+			Cursor cursor = new Cursor(PlatformUI.getWorkbench().getDisplay(), SWT.CURSOR_WAIT);
+			Shell activeShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+			activeShell.setCursor(cursor);
 			final ScmConnectorUi uiConnector = R4EUIDialogFactory.getInstance().getScmUiConnector(project);
 			if (null != uiConnector) {
 				R4EUIPlugin.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector); //$NON-NLS-1$
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
+				activeShell.setCursor(null);
+				cursor.dispose();
 				createReviewItem(aEvent, changeSet);
 			} else {
+				activeShell.setCursor(null);
+				cursor.dispose();
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "(no project)" : project.getName()); //$NON-NLS-1$
 				R4EUIPlugin.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject); //$NON-NLS-1$
