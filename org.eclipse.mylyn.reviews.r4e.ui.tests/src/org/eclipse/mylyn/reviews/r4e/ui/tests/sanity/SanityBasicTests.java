@@ -28,6 +28,7 @@ import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -48,6 +49,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
@@ -146,6 +149,7 @@ public class SanityBasicTests extends TestCase {
 		createExternalAnomalies();
 		createComments();
 		progressReview();
+		verifySorters();
 		sendQuestionNotifications();
 	}
 
@@ -528,6 +532,67 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED,
 				((R4EReviewState) fReview.getReview().getState()).getState());
 		Assert.assertNotNull(fReview.getReview().getEndDate());
+	}
+
+	/**
+	 * Method verifySorters
+	 */
+	public void verifySorters() {
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		//Alpha sorter On/Off
+		fProxy.getCommandProxy().toggleAlphaSorter();
+		ViewerComparator activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		Assert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
+				&& !(activeSorter instanceof ReviewTypeComparator));
+		Assert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		fProxy.getCommandProxy().toggleAlphaSorter();
+		Assert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		//Review Type sorter On/Off
+		fProxy.getCommandProxy().toggleReviewTypeSorter();
+		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		Assert.assertTrue(null != activeSorter && activeSorter instanceof ReviewTypeComparator);
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		fProxy.getCommandProxy().toggleReviewTypeSorter();
+		Assert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		//AlphaSorter -> ReviewTypeSorter
+		fProxy.getCommandProxy().toggleAlphaSorter();
+		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		Assert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
+				&& !(activeSorter instanceof ReviewTypeComparator));
+		Assert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		fProxy.getCommandProxy().toggleReviewTypeSorter();
+		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		Assert.assertTrue(null != activeSorter && activeSorter instanceof ReviewTypeComparator);
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		//ReviewTypeSorter -> AlphaSorter
+		fProxy.getCommandProxy().toggleAlphaSorter();
+		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		Assert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
+				&& !(activeSorter instanceof ReviewTypeComparator));
+		Assert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+
+		//Remove AlphaSorter
+		fProxy.getCommandProxy().toggleAlphaSorter();
+		Assert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		Assert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 	}
 
 	/**

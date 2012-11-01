@@ -1222,9 +1222,6 @@
                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
                </test>
                <test
-                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.alphaSorterApplied">
-               </test>
-               <test
                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
                </test>
             </and>
@@ -1237,9 +1234,6 @@
             <and>
                <test
                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-               </test>
-               <test
-                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.typeSorterApplied">
                </test>
                <test
                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
@@ -1709,20 +1703,6 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewActivePropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.review"
             properties="reviewActive"
-            type="java.lang.Object">
-      </propertyTester>
-      <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.TypeSorterTester"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.typeSorterApplied"
-            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter"
-            properties="typeSorterApplied"
-            type="java.lang.Object">
-      </propertyTester>
-      <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.AlphaSorterTester"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.alphaSorterApplied"
-            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter"
-            properties="alphaSorterApplied"
             type="java.lang.Object">
       </propertyTester>
    </extension>

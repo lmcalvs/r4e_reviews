@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -77,6 +78,14 @@ public class ReviewTypeSortHandler extends AbstractHandler {
 				//We need to preserve the expansion state and restore it afterwards
 				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
 				final Object[] elements = viewer.getExpandedElements();
+
+				//First check if there is already another sorter applied, if so, remove if
+				ViewerComparator oldSorter = viewer.getComparator();
+				if (null != oldSorter && oldSorter instanceof NavigatorElementComparator) {
+					((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).resetAlphaSorterCommand();
+				}
+
+				//Then apply the new Comparator
 
 				final ViewerComparator sorter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
 						.getActionSet()).getReviewTypeSorter();

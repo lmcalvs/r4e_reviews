@@ -33,6 +33,7 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationFilter;
@@ -61,6 +62,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -655,6 +657,137 @@ public class R4EUITestCommands extends R4EUITestElement {
 		RunToggleHideDeltasFilter hideDeltasFilterJob = new RunToggleHideDeltasFilter();
 		Display.getDefault().syncExec(hideDeltasFilterJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method toggleAlphaSorter Toggles the alphabetical sorter on the Review Navigator tree On/Off
+	 */
+	public void toggleAlphaSorter() {
+		//Inner class that runs the command on the UI thread
+		class RunToggleAlphaSorter implements Runnable {
+			public void run() {
+				try {
+					//Execute Progress Element Command
+					fParentProxy.getCommandProxy().executeCommand(R4EUIConstants.ALPHA_SORTER_COMMAND, null);
+					TestUtils.waitForJobs();
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunToggleAlphaSorter alphaSorterJob = new RunToggleAlphaSorter();
+		Display.getDefault().syncExec(alphaSorterJob);
+		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method toggleReviewTypeSorter Toggles the review type sorter on the Review Navigator tree On/Off
+	 */
+	public void toggleReviewTypeSorter() {
+		//Inner class that runs the command on the UI thread
+		class RunToggleReviewTypeSorter implements Runnable {
+			public void run() {
+				try {
+					//Execute Progress Element Command
+					fParentProxy.getCommandProxy().executeCommand(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND, null);
+					TestUtils.waitForJobs();
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunToggleReviewTypeSorter reviewTypeSorterJob = new RunToggleReviewTypeSorter();
+		Display.getDefault().syncExec(reviewTypeSorterJob);
+		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method getActiveSorter Gets active sorter on Review Navigator tree
+	 * 
+	 * @return ViewerComparator
+	 */
+	public ViewerComparator getActiveSorter() {
+		//Inner class that runs the command on the UI thread
+		class RunGetActiveSorter implements Runnable {
+
+			private ViewerComparator sorter;
+
+			public ViewerComparator getSorter() {
+				return sorter;
+			}
+
+			public void run() {
+				sorter = R4EUIModelController.getNavigatorView().getTreeViewer().getComparator();
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunGetActiveSorter getActiveSorterJob = new RunGetActiveSorter();
+		Display.getDefault().syncExec(getActiveSorterJob);
+		TestUtils.waitForJobs();
+		return getActiveSorterJob.getSorter();
+	}
+
+	/**
+	 * Method getCommandState Gets the state of the specified command
+	 * 
+	 * @param aName
+	 *            - String
+	 * @return boolean
+	 */
+	public boolean getCommandState(String aName) {
+		//Inner class that runs the command on the UI thread
+		class RunGetCommandState implements Runnable {
+
+			private String name;
+
+			private boolean state;
+
+			public void setName(String aName) {
+				name = aName;
+			}
+
+			public boolean getState() {
+				return state;
+			}
+
+			public void run() {
+				ICommandService service = (ICommandService) R4EUIModelController.getNavigatorView()
+						.getSite()
+						.getWorkbenchWindow()
+						.getService(ICommandService.class);
+				state = ((Boolean) service.getCommand(name)
+						.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+						.getValue()).booleanValue();
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunGetCommandState getCommandStateJob = new RunGetCommandState();
+		getCommandStateJob.setName(aName);
+		Display.getDefault().syncExec(getCommandStateJob);
+		TestUtils.waitForJobs();
+		return getCommandStateJob.getState();
 	}
 
 	/**

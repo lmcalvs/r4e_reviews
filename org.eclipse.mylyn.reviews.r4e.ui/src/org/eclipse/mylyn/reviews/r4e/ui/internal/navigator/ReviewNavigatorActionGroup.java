@@ -875,6 +875,26 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	}
 
 	/**
+	 * Method resetAlphaSorterCommand.
+	 */
+	public void resetAlphaSorterCommand() {
+		fView.getTreeViewer().setComparator(null);
+		fCommandService.getCommand(R4EUIConstants.ALPHA_SORTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method resetReviewTypeSorterCommand.
+	 */
+	public void resetReviewTypeSorterCommand() {
+		fView.getTreeViewer().setComparator(null);
+		fCommandService.getCommand(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
 	 * Method getTreeTableFilter.
 	 * 
 	 * @return TreeTableFilter

@@ -16,6 +16,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 
 /**
  * This class extends the default viewer comparator to compare two string and removing the first "> " sequence of
@@ -29,6 +31,25 @@ public class NavigatorElementComparator extends ViewerComparator {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method category.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @return int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator#category(Object)
+	 */
+	@Override
+	public int category(Object aElement) {
+		if (aElement instanceof R4EUIReviewGroup) {
+			return 0;
+		}
+		if (aElement instanceof R4EUIRuleSet) {
+			return 1;
+		}
+		return 2;
+	}
 
 	/**
 	 * Method compare.
