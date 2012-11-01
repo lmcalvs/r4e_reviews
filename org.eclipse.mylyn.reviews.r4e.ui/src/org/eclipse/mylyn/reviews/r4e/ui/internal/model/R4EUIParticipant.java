@@ -401,12 +401,59 @@ public class R4EUIParticipant extends R4EUIModelElement {
 				&& !isAssigned(fParticipant.getId(), true)
 				&& !isAnomalyCreator()
 				&& !isReadOnly()
-				&& !(fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || fParticipant.getRoles()
-						.contains(R4EUserRole.R4E_ROLE_LEAD))
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
-			return true;
+
+			IR4EUIModelElement parentReview = this.getParent().getParent();
+			if (parentReview instanceof R4EUIReviewBasic) {
+				//Don't allow to remove the element if this is the last review lead in the current Review
+				if (fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) {
+					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.R4E_ROLE_LEAD) < 2) {
+						//This is the only review lead left, it shall not be disabled
+						return false;
+					}
+				}
+
+				if (fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.R4E_ROLE_ORGANIZER) < 2) {
+						//This is the only organiser left, it shall not be disabled
+						return false;
+					}
+				}
+
+				//All conditions passed, element can be disabled
+				return true;
+			}
 		}
 		return false;
+	}
+
+	/**
+	 * Count the number of participants with the given role on the given review
+	 * 
+	 * @param parentReview
+	 */
+	private int reviewerRoleSize(R4EUIReviewBasic aReview, R4EUserRole aRole) {
+		List<R4EParticipant> participants = aReview.getParticipants();
+		if (participants == null) {
+			return 0;
+		}
+
+		//Resolve the current number of review participants with the given role
+		int roleCount = 0;
+		for (R4EParticipant participant : participants) {
+			//Don't consider disabled participants within the count
+			if (participant.isEnabled()) {
+				EList<R4EUserRole> roles = participant.getRoles();
+				for (R4EUserRole role : roles) {
+					if (role.equals(aRole)) {
+						roleCount++;
+						break;
+					}
+				}
+			}
+		}
+
+		return roleCount;
 	}
 
 	/**
@@ -432,7 +479,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	private boolean isAnomalyCreator() {
 		final EList<Topic> anomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
 		for (Topic anomaly : anomalies) {
-			if (anomaly.getUser().equals(fParticipant)) {
+			if (anomaly.isEnabled() && anomaly.getUser().equals(fParticipant)) {
 				return true;
 			}
 		}
