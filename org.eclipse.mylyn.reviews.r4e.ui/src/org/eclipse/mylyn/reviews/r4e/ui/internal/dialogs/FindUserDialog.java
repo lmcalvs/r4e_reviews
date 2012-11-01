@@ -341,6 +341,9 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		createSearchFiltersForm(composite, toolkit);
 		createAddUsersForm(composite, toolkit);
 		createUsersTableForm(composite, toolkit);
+
+		//Set default focus
+		fUserIdInputTextField.setFocus();
 	}
 
 	/**

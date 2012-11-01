@@ -760,6 +760,9 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 				fSelectedRule = null;
 			}
 		});
+
+		//Set default focus
+		fAnomalyTitleInputTextField.setFocus();
 	}
 
 	/**

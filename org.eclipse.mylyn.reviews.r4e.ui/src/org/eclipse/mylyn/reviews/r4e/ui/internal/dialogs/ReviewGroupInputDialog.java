@@ -515,6 +515,9 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 			fRuleSets.setEnabled(false);
 		}
 		fRuleSets.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+
+		//Set default focus
+		fGroupNameInputTextField.setFocus();
 	}
 
 	/**

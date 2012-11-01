@@ -630,6 +630,9 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
 		fReferenceMaterialTextField.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 		fReferenceMaterialTextField.setLayoutData(textGridData);
+
+		//Set default focus
+		fReviewType.setFocus();
 	}
 
 	/**

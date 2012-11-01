@@ -211,6 +211,9 @@ public class CommentInputDialog extends FormDialog implements ICommentInputDialo
 				}
 			}
 		});
+
+		//Set default focus
+		fCommentInputTextField.setFocus();
 	}
 
 	/**

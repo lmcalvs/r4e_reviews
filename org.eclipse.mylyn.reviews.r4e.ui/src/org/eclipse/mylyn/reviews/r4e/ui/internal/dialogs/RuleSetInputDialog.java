@@ -347,6 +347,9 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 				}
 			}
 		});
+
+		//Set default focus
+		fVersionInputTextField.setFocus();
 	}
 
 	/**

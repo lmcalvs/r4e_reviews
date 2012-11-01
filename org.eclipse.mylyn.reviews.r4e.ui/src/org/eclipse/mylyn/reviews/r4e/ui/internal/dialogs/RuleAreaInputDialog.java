@@ -209,6 +209,9 @@ public class RuleAreaInputDialog extends FormDialog implements IRuleAreaInputDia
 				}
 			}
 		});
+
+		//Set default focus
+		fNameInputTextField.setFocus();
 	}
 
 	/**

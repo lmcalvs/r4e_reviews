@@ -380,6 +380,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		if (fReviewSource) {
 			createExtraParameters(toolkit, composite);
 		}
+
+		//Set default focus
+		fUserToAddCombo.setFocus();
 	}
 
 	/**

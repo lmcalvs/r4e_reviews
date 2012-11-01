@@ -375,6 +375,8 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 		fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 		fRankCombo.setLayoutData(textGridData);
 
+		//Set default focus
+		fIdInputTextField.setFocus();
 	}
 
 	/**

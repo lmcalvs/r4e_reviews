@@ -210,6 +210,9 @@ public class RuleViolationInputDialog extends FormDialog implements IRuleViolati
 				}
 			}
 		});
+
+		//Set default focus
+		fNameInputTextField.setFocus();
 	}
 
 	/**
