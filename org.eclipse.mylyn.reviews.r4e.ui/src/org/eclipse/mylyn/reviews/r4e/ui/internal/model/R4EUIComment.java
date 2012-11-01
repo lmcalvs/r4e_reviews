@@ -41,9 +41,14 @@ public class R4EUIComment extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field fCommentFile. (value is ""icons/obj16/cmmnt_obj.gif"")
+	 * Field COMMENT_ICON_FILE. (value is ""icons/obj16/cmmnt_obj.gif"")
 	 */
 	private static final String COMMENT_ICON_FILE = "icons/obj16/cmmnt_obj.gif";
+
+	/**
+	 * Field COMMENT_DISABLED_ICON_FILE. (value is ""icons/obj16/cmmntdsbl_obj.png"")
+	 */
+	private static final String COMMENT_DISABLED_ICON_FILE = "icons/obj16/cmmntdsbl_obj.png";
 
 	/**
 	 * Field COPY_ELEMENT_COMMAND_NAME. (value is ""Copy Comments"")
@@ -118,7 +123,10 @@ public class R4EUIComment extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
 	 */
 	public String getImageLocation() {
-		return COMMENT_ICON_FILE;
+		if (isEnabled()) {
+			return COMMENT_ICON_FILE;
+		}
+		return COMMENT_DISABLED_ICON_FILE;
 	}
 
 	/**

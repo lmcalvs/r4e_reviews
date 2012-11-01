@@ -301,8 +301,7 @@ public class R4EAnnotationInformationControl extends ReviewAnnotationInformation
 
 			private Image getImage(Annotation aAnnotation) {
 				if (aAnnotation instanceof R4ECommentAnnotation) {
-					return ((R4ECommentAnnotation) aAnnotation).getSourceElement().getImage(
-							((R4ECommentAnnotation) aAnnotation).getSourceElement().getImageLocation());
+					return UIUtils.loadIcon(((R4ECommentAnnotation) aAnnotation).getSourceElement().getImageLocation());
 				}
 				final AnnotationPreferenceLookup lookup = EditorsPlugin.getDefault().getAnnotationPreferenceLookup();
 				if (lookup != null) {

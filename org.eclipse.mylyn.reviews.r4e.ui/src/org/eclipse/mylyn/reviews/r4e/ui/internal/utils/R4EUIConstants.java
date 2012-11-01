@@ -2480,4 +2480,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SELECTION_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.selectionDisabled.Annotation";
 
 	public static final String COMMENT_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.comment.Annotation";
+
+	public static final String COMMENT_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.commentDisabled.Annotation";
+
 }

@@ -1853,6 +1853,9 @@
       <type
             name="org.eclipse.mylyn.reviews.r4e.ui.comment.Annotation">
       </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.commentDisabled.Annotation">
+      </type>
    </extension>
    <extension
          point="org.eclipse.ui.editors.markerAnnotationSpecification">
@@ -2092,6 +2095,21 @@
             isGoToNextNavigationTarget="false"
             isGoToPreviousNavigationTarget="false"
             label="R4E Comment"
+            overviewRulerPreferenceValue="false"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            textPreferenceValue="false"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceValue="false">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.commentDisabled.Annotation"
+            contributesToHeader="false"
+            icon="icons/obj16/cmmntdsbl_obj.png"
+            includeOnPreferencePage="false"
+            isGoToNextNavigationTarget="false"
+            isGoToPreviousNavigationTarget="false"
+            label="R4E Comment Disabled"
             overviewRulerPreferenceValue="false"
             presentationLayer="0"
             showInNextPrevDropdownToolbarAction="false"
