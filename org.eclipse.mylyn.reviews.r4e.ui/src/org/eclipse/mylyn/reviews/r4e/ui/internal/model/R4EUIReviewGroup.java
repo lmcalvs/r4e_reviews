@@ -236,7 +236,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @return R4EReviewGroup
 	 */
 	public String getGroupFile() {
-		return fGroupFileURI.devicePath();
+		return URI.decode(fGroupFileURI.devicePath());
 	}
 
 	/**

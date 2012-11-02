@@ -44,6 +44,10 @@ public class TestConstants {
 	//Review Groups
 	public static final String REVIEW_GROUP_TEST_NAME = "testReviewGroup";
 
+	//The following chars should not be used as strange chars: \/<>:;*"?'
+	//May be we should add a validation for the review name and review group
+	public static final String REVIEW_GROUP_TEST_NAME_STRANGE = "test Review Group É.!@#$%^&()";
+
 	public static final String REVIEW_GROUP_TEST_NAME2 = "testReviewGroup2";
 
 	public static final String REVIEW_GROUP_TEST_DESCRIPTION = "testReviewGroup description";
@@ -95,6 +99,10 @@ public class TestConstants {
 	public static final String REVIEW_TEST_NAME_INF = "testReviewInf";
 
 	public static final String REVIEW_DUPLICATE_NAME_INF = "testReviewDuplicateInf";
+
+	//The following chars should not be used as strange chars: \/<>:;*"?'
+	//May be we should add a validation for the review name and review group
+	public static final String REVIEW_STRANGE_NAME_INF = "test Review&%$/) Inf";
 
 	public static final R4EDecision REVIEW_EXIT_DECISION_ACCEPTED = R4EDecision.R4E_REVIEW_DECISION_ACCEPTED;
 

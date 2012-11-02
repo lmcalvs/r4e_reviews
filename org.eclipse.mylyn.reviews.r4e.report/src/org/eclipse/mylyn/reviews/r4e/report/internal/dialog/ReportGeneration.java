@@ -639,7 +639,7 @@ public class ReportGeneration implements IR4EReport {
 		// //Get the selected review Name
 		int nbReview = aSelectedReview.length;
 
-		// Open Original Serialised model
+		// Open Original Serialized model
 		//Create the destination folder
 		URI destFolderURI = URI.createFileURI(aDestinationDir.getAbsolutePath());
 		ReviewGroupRes destGroup = null;
@@ -878,16 +878,12 @@ public class ReportGeneration implements IR4EReport {
 		// + FFILE_SEPARATOR + PROJECT_WORKING_DIR);
 		File parent = new File(aReportDir.getAbsoluteFile().toString() + fFILE_SEPARATOR + aDirSt);
 		if (parent.exists()) {
-//			Activator.FTracer.traceInfo
-//					("ReportGeneration.createReportDir() Directory exists already.");
+			Activator.FTracer.traceInfo("ReportGeneration.createReportDir() Directory exists already.");
 		} else {
 			// 1) Create directory
-			if (parent.mkdir()) {
-//				Activator.FTracer.traceInfo("ReportGeneration.createReportDir() Directory "
-//						+ parent.getAbsolutePath() + " created.");
-				// Set the report directory permission
-				//ReviewHeader.setFilePermission(parent.getAbsolutePath());
-				//setFilePermission (parent.getAbsolutePath());
+			if (parent.mkdirs()) {
+				Activator.FTracer.traceInfo("ReportGeneration.createReportDir() Directory " + parent.getAbsolutePath()
+						+ " created.");
 			} else {
 				Activator.FTracer.traceInfo("ReportGeneration.createReportDir() ERROR");
 				return null;
