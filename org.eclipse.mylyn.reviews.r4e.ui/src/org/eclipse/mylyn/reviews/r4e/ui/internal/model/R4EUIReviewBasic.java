@@ -494,7 +494,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		//Cast list to R4EParticipants
 		final List<R4EParticipant> participants = new ArrayList<R4EParticipant>();
 		for (Object user : users) {
-			participants.add((R4EParticipant) user);
+			if (((R4EParticipant) user).isEnabled()) {
+				participants.add((R4EParticipant) user);
+			}
 		}
 		return participants;
 	}

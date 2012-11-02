@@ -1083,11 +1083,31 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 
 			if (null != R4EUIModelController.getActiveReview()) {
 				fDecidedByCombo.setItems(participants);
-				fDecidedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
+				int selectPos = UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID());
+				if (selectPos != R4EUIConstants.INVALID_VALUE) {
+					fDecidedByCombo.select(selectPos);
+				} else {
+					//User is not valid anymore for selection, just display the text
+					fDecidedByCombo.setText(modelAnomaly.getDecidedByID());
+				}
+
 				fFixedByCombo.setItems(participants);
-				fFixedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID()));
+				selectPos = UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID());
+				if (selectPos != R4EUIConstants.INVALID_VALUE) {
+					fFixedByCombo.select(selectPos);
+				} else {
+					//User is not valid anymore for selection, just display the text
+					fFixedByCombo.setText(modelAnomaly.getFixedByID());
+				}
+
 				fFollowUpByCombo.setItems(participants);
-				fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
+				selectPos = UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID());
+				if (selectPos != R4EUIConstants.INVALID_VALUE) {
+					fFollowUpByCombo.select(selectPos);
+				} else {
+					//User is not valid anymore for selection, just display the text
+					fFollowUpByCombo.setText(modelAnomaly.getFollowUpByID());
+				}
 			}
 		}
 		setEnabledFields();

@@ -1298,6 +1298,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		}
 
 		//Formal Review Properties next
+		int selectPos = R4EUIConstants.INVALID_VALUE;
 		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 			final R4EUIReviewExtended uiExtendedReview = (R4EUIReviewExtended) fProperties.getElement();
 			final R4EFormalReview modelFormalReview = (R4EFormalReview) uiReview.getReview();
@@ -1363,8 +1364,14 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fPlanningPhaseOwnerCombo.setItems(participantsStr);
-					fPlanningPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
-							.getPhaseOwnerID()));
+					selectPos = UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent().getPhaseOwnerID());
+					if (selectPos != R4EUIConstants.INVALID_VALUE) {
+						fPlanningPhaseOwnerCombo.select(selectPos);
+					} else {
+						//User is not valid anymore for selection, just display the text
+						fPlanningPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+					}
+
 				}
 			} else {
 				fPhasePlanning.setText(1, "");
@@ -1389,8 +1396,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fPreparationPhaseOwnerCombo.setItems(participantsStr);
-					fPreparationPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
-							.getPhaseOwnerID()));
+					selectPos = UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent().getPhaseOwnerID());
+					if (selectPos != R4EUIConstants.INVALID_VALUE) {
+						fPreparationPhaseOwnerCombo.select(selectPos);
+					} else {
+						//User is not valid anymore for selection, just display the text
+						fPreparationPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+					}
 				}
 			} else {
 				fPhasePreparation.setText(1, "");
@@ -1416,8 +1428,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fDecisionPhaseOwnerCombo.setItems(participantsStr);
-					fDecisionPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
-							.getPhaseOwnerID()));
+					selectPos = UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent().getPhaseOwnerID());
+					if (selectPos != R4EUIConstants.INVALID_VALUE) {
+						fDecisionPhaseOwnerCombo.select(selectPos);
+					} else {
+						//User is not valid anymore for selection, just display the text
+						fDecisionPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+					}
 				}
 			} else {
 				fPhaseDecision.setText(1, "");
@@ -1443,8 +1460,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
 					fReworkPhaseOwnerCombo.setItems(participantsStr);
-					fReworkPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
-							.getPhaseOwnerID()));
+					selectPos = UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent().getPhaseOwnerID());
+					if (selectPos != R4EUIConstants.INVALID_VALUE) {
+						fReworkPhaseOwnerCombo.select(selectPos);
+					} else {
+						//User is not valid anymore for selection, just display the text
+						fReworkPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+					}
 				}
 			} else {
 				fPhaseRework.setText(1, "");

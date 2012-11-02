@@ -596,12 +596,19 @@ public class UIUtils {
 		}
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		final int numParticipants = participants.size();
+		int index = 0;
 		for (int i = 0; i < numParticipants; i++) {
-			if (participants.get(i).getId().equals(aParticipant)) {
-				return i;
+			if (participants.get(i).isEnabled()) {
+
+				if (participants.get(i).getId().equals(aParticipant)) {
+					return index;
+				}
+				index++;
+			} else {
+				//Participant is disable, so do not consider the index since it does not show
 			}
 		}
-		return R4EUIConstants.INVALID_VALUE; //should never happen
+		return R4EUIConstants.INVALID_VALUE; //Will happen for the disable participants
 	}
 
 	/**
