@@ -1676,7 +1676,9 @@ Eclipse allows you to customize your keyboard using ''General&gt;Keys'' preferen
 
 R4E defines some keys as accelerator keys to help the user to perform reviews. Each command starts with ALT +4 as below: 
 
-[[Image:DefaultKeyBindings.png]] 
+[[Image:DefaultKeyBindings.png]]
+
+[[Image:DefaultKeyBindings2.png]]
 
 <br> 
 
@@ -1686,9 +1688,11 @@ R4E defines some keys as accelerator keys to help the user to perform reviews. E
 *ALT +4 =&nbsp;: Expand all elements of the Review Navigator View tree. 
 *ALT +4 F&nbsp;: Opens a dialog used with the Version Control System connector to Find new Review Items. A Project needs to be selected first before using this shortcut. 
 *ALT +4 I&nbsp;: Add Review Item. Available from any editor View. There must be a selection in the editor to create a new Review Item. 
-*ALT +4 L&nbsp;: Add a new Linked Anomaly to the selected Review Navigator Selection/Delta element, if any. 
-*ALT +4 O&nbsp;: Open the default editor on the selected Review Navigator element, if any. 
-*ALT +4 R&nbsp;: Refresh the Review Navigator View. 
+*ALT +4 L&nbsp;: Add a new Linked Anomaly to the selected Review Navigator Selection/Delta element, if any.
+*ALT +4 N&nbsp;: Progress the selected element (Review or Anomaly) to its next logical state 
+*ALT +4 O&nbsp;: Open the default editor on the selected Review Navigator element, if any
+*ALT +4 P&nbsp;: Regress the selected element (Review or Anomaly) to its previous logical state
+*ALT +4 R&nbsp;: Refresh the Review Navigator View.
 *ALT +4 S&nbsp;: Mark/Unmark the selected Review Navigator element as Reviewed, if any. 
 *ALT +4 X&nbsp;: Remove (disable) the selected Review Navigator element, if any.
 

@@ -77,7 +77,8 @@ public class PreviousStatePropertyTester extends PropertyTester {
 	private boolean testElement(IR4EUIModelElement aElement) {
 		if (aElement.isEnabled()) {
 			if (aElement instanceof R4EUIReviewExtended) {
-				if (null != ((R4EUIReviewExtended) aElement).getPreviousPhase()) {
+				if (((R4EUIReviewExtended) aElement).isOpen()
+						&& null != ((R4EUIReviewExtended) aElement).getPreviousPhase()) {
 					return true;
 				}
 			} else if (aElement instanceof R4EUIReviewBasic) {

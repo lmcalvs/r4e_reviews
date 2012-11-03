@@ -789,7 +789,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
             description="Regress to Previous State"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
-            name="Progress to Next State">
+            name="Regress to Previous State">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -1785,6 +1785,18 @@
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 Q">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+4 N">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+4 P">
       </key>
    </extension>
    <extension

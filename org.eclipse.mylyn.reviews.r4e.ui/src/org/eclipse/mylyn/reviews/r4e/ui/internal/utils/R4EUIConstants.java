@@ -1486,9 +1486,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEXT_STATE_ELEMENT_COMMAND_TOOLTIP = "Progress the element to one of its Next logical state";
 
 	/**
-	 * Field NEXT_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""P"")
+	 * Field NEXT_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""N"")
 	 */
-	public static final String NEXT_STATE_ELEMENT_COMMAND_MNEMONIC = "P";
+	public static final String NEXT_STATE_ELEMENT_COMMAND_MNEMONIC = "N";
 
 	/**
 	 * Field PREVIOUS_STATE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"")
@@ -1511,9 +1511,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP = "Regress the element to its Previous logical State";
 
 	/**
-	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""R"")
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""P"")
 	 */
-	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC = "R";
+	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC = "P";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"")
