@@ -161,6 +161,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	IContextActivation fR4EContext = null;
 
+	/**
+	 * Field fAskConfirmation
+	 */
+	private boolean fAskConfirmation = true;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -373,6 +378,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		ReviewAnnotationConfigFactory.setPlugin(R4EUIPlugin.getDefault());
 		ReviewAnnotationConfigFactory.registerFactory(new R4EAnnotationControlCreatorFactory());
 		ReviewAnnotationConfigFactory.setUseInformationControlReplacer(true);
+
+		//Set Removal confirmation flag
+		fAskConfirmation = true;
 	}
 
 	/**
@@ -1002,5 +1010,24 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				.getActionBars()
 				.getMenuManager();
 		menu.updateAll(true);
+	}
+
+	/**
+	 * Method isAskConfirmation. Check if we should ask for confirmation before deleting Navigator View elements
+	 * 
+	 * @return boolean
+	 */
+	public boolean isAskConfirmation() {
+		return fAskConfirmation;
+	}
+
+	/**
+	 * Method setAskConfirmation
+	 * 
+	 * @param aConfirmationValue
+	 *            - boolean
+	 */
+	public void setAskConfirmation(boolean aConfirmationValue) {
+		fAskConfirmation = aConfirmationValue;
 	}
 }

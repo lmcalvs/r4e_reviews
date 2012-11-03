@@ -94,7 +94,6 @@ public class RemoveElementHandler extends AbstractHandler {
 					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
 					R4EUIModelController.setJobInProgress(true);
 
-					boolean askConfirmation = true;
 					R4EReview review = null;
 					if (null != R4EUIModelController.getActiveReview()) {
 						review = R4EUIModelController.getActiveReview().getReview();
@@ -107,7 +106,7 @@ public class RemoveElementHandler extends AbstractHandler {
 						final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 						final boolean[] fileRemove = new boolean[1];
 						final String elementName = element.getName();
-						if (askConfirmation) {
+						if (R4EUIModelController.getNavigatorView().isAskConfirmation()) {
 							Display.getDefault().syncExec(new Runnable() {
 								public void run() {
 									MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
@@ -119,7 +118,7 @@ public class RemoveElementHandler extends AbstractHandler {
 							});
 						}
 						if (result[0] == Window.OK) {
-							askConfirmation = fileRemove[0];
+							R4EUIModelController.getNavigatorView().setAskConfirmation(fileRemove[0]);
 							try {
 								if (element instanceof R4EUIReviewItem) {
 									removedItems.add(((R4EUIReviewItem) element).getItem());
