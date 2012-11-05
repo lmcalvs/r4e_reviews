@@ -1369,7 +1369,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						fPlanningPhaseOwnerCombo.select(selectPos);
 					} else {
 						//User is not valid anymore for selection, just display the text
-						fPlanningPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+						fPlanningPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID() != null
+								? modelFormalReview.getCurrent().getPhaseOwnerID()
+								: "");
 					}
 
 				}
@@ -1401,7 +1403,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						fPreparationPhaseOwnerCombo.select(selectPos);
 					} else {
 						//User is not valid anymore for selection, just display the text
-						fPreparationPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+						fPreparationPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID() != null
+								? modelFormalReview.getCurrent().getPhaseOwnerID()
+								: "");
 					}
 				}
 			} else {
@@ -1433,7 +1437,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						fDecisionPhaseOwnerCombo.select(selectPos);
 					} else {
 						//User is not valid anymore for selection, just display the text
-						fDecisionPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+						fDecisionPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID() != null
+								? modelFormalReview.getCurrent().getPhaseOwnerID()
+								: "");
 					}
 				}
 			} else {
@@ -1465,7 +1471,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						fReworkPhaseOwnerCombo.select(selectPos);
 					} else {
 						//User is not valid anymore for selection, just display the text
-						fReworkPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID());
+						fReworkPhaseOwnerCombo.setText(modelFormalReview.getCurrent().getPhaseOwnerID() != null
+								? modelFormalReview.getCurrent().getPhaseOwnerID()
+								: "");
 					}
 				}
 			} else {

@@ -1088,7 +1088,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 					fDecidedByCombo.select(selectPos);
 				} else {
 					//User is not valid anymore for selection, just display the text
-					fDecidedByCombo.setText(modelAnomaly.getDecidedByID());
+					fDecidedByCombo.setText(modelAnomaly.getDecidedByID() != null ? modelAnomaly.getDecidedByID() : "");
 				}
 
 				fFixedByCombo.setItems(participants);
@@ -1097,7 +1097,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 					fFixedByCombo.select(selectPos);
 				} else {
 					//User is not valid anymore for selection, just display the text
-					fFixedByCombo.setText(modelAnomaly.getFixedByID());
+					fFixedByCombo.setText(modelAnomaly.getFixedByID() != null ? modelAnomaly.getFixedByID() : "");
 				}
 
 				fFollowUpByCombo.setItems(participants);
@@ -1106,7 +1106,9 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 					fFollowUpByCombo.select(selectPos);
 				} else {
 					//User is not valid anymore for selection, just display the text
-					fFollowUpByCombo.setText(modelAnomaly.getFollowUpByID());
+					fFollowUpByCombo.setText(modelAnomaly.getFollowUpByID() != null
+							? modelAnomaly.getFollowUpByID()
+							: "");
 				}
 			}
 		}
