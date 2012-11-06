@@ -92,6 +92,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	private static final String PARTICIPANT_DETAILS_SECTION_LABEL = "Participants Details";
 
+	/**
+	 * Field MIN_DATE_TEXT.  Size in pixels of the text for the anomaly due date
+	 */
+	private static final int MIN_DATE_TEXT = 75;
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -147,14 +152,19 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	protected CCombo fRankCombo = null;
 
 	/**
-	 * Field fRuleId.
+	 * Field fRuleIdText.
 	 */
-	protected Text fRuleId = null;
+	protected Text fRuleIdText = null;
 
 	/**
 	 * Field fRuleButton.
 	 */
 	protected Button fRuleButton = null;
+
+	/**
+	 * Field fClearRuleIdButton.
+	 */
+	protected Button fClearRuleIdButton = null;
 
 	/**
 	 * Field fDateText.
@@ -572,17 +582,27 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		ruleIdLabel.setLayoutData(gridData);
 
 		final Composite ruleComposite = aWidgetFactory.createComposite(anomalyDetailsSectionClient);
-		gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 3;
 		ruleComposite.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
 		ruleComposite.setLayoutData(gridData);
-		ruleComposite.setLayout(new GridLayout(2, false));
+		GridLayout layout = new GridLayout(3, false);
+		layout.marginWidth = 0;
+		ruleComposite.setLayout(layout);
 
-		fRuleId = aWidgetFactory.createText(ruleComposite, "", SWT.NULL);
-		fRuleId.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		fRuleId.setEditable(false);
-		fRuleButton = aWidgetFactory.createButton(ruleComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
-		fRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		fRuleIdText = aWidgetFactory.createText(ruleComposite, "", SWT.NULL);
+		gridData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
+		//set minimum size
+		gridData.widthHint = MIN_DATE_TEXT;
+		fRuleIdText.setLayoutData(gridData);
+		fRuleIdText.setEditable(false);
+
+		final Composite ruleBottonComposite = aWidgetFactory.createComposite(ruleComposite);
+		ruleBottonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		ruleBottonComposite.setLayout(new GridLayout(2, false));
+
+		fRuleButton = aWidgetFactory.createButton(ruleBottonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fRuleButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		fRuleButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				//Modify anomaly
@@ -653,6 +673,28 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			}
 		});
 
+		fClearRuleIdButton = aWidgetFactory.createButton(ruleBottonComposite, R4EUIConstants.CLEAR_LABEL, SWT.NONE);
+		fClearRuleIdButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fClearRuleIdButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fRuleIdText.setText(""); //$NON-NLS-1$
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
+						modelAnomaly.setRuleID("");
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
+			}
+		});
+
 		//Due Date
 		final CLabel dateLabel = aWidgetFactory.createCLabel(anomalyDetailsSectionClient, R4EUIConstants.DUE_DATE_LABEL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
@@ -661,20 +703,23 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 		final Composite dateComposite = aWidgetFactory.createComposite(anomalyDetailsSectionClient);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridData.horizontalSpan = 2;
+		gridData.horizontalSpan = 3;
 		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(gridData);
-		dateComposite.setLayout(new GridLayout(2, false));
+		layout = new GridLayout(2, false);
+		layout.marginWidth = 0;
+		dateComposite.setLayout(layout);
 
-		aWidgetFactory.setBorderStyle(SWT.NULL);
 		fDateText = aWidgetFactory.createText(dateComposite, "", SWT.NULL);
-		fDateText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		gridData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
+		gridData.widthHint = MIN_DATE_TEXT;
+		fDateText.setLayoutData(gridData);
 		fDateText.setEditable(false);
 
 		final Composite dateButtonComposite = aWidgetFactory.createComposite(dateComposite);
 		dateButtonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		dateButtonComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
-		dateButtonComposite.setLayout(new GridLayout(2, false));
+		dateButtonComposite.setLayout(new GridLayout(3, false));
 
 		fCalendarButton = aWidgetFactory.createButton(dateButtonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
 		fCalendarButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
@@ -952,8 +997,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				: rankValue);
 
 		if (null != modelAnomaly.getRuleID()) {
-			fRuleId.setText(modelAnomaly.getRuleID());
+			fRuleIdText.setText(modelAnomaly.getRuleID());
+		} else {
+			fRuleIdText.setText("");
 		}
+
 		if (null != modelAnomaly.getDueDate()) {
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
 			fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
@@ -1030,11 +1078,12 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fCalendarButton.setEnabled(false);
 			fClearButton.setEnabled(false);
+			fClearRuleIdButton.setEnabled(false);
 			fDecidedByCombo.setEnabled(false);
 			fFixedByCombo.setEnabled(false);
 			fFollowUpByCombo.setEnabled(false);
 			fRuleButton.setEnabled(false);
-			fRuleId.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fRuleIdText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToCombo.setEnabled(false);
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				fStateLabel.setVisible(true);
@@ -1061,7 +1110,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fPositionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fRuleButton.setEnabled(true);
-			fRuleId.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fClearRuleIdButton.setEnabled(true);
+			fRuleIdText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToCombo.setEnabled(true);
 
 			final R4EUIAnomalyBasic uiAnomaly = (R4EUIAnomalyBasic) fProperties.getElement();
