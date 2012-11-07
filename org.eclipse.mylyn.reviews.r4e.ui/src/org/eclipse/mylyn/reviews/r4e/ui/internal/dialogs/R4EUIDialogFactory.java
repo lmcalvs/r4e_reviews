@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Sebastien Dubois
@@ -328,10 +329,7 @@ public class R4EUIDialogFactory {
 	 */
 	public IFindUserDialog getFindUserDialog() {
 		if (null == fFindUserDialog) {
-			fFindUserDialog = new FindUserDialog(R4EUIModelController.getNavigatorView()
-					.getSite()
-					.getWorkbenchWindow()
-					.getShell());
+			fFindUserDialog = new FindUserDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 		}
 		return fFindUserDialog;
 	}
@@ -355,9 +353,8 @@ public class R4EUIDialogFactory {
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
 		if (!UIUtils.TEST_MODE) {
-			fParticipantInputDialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView()
-					.getSite()
-					.getWorkbenchWindow()
+			fParticipantInputDialog = new ParticipantInputDialog(PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow()
 					.getShell(), aShowExtraParams);
 		}
 		return fParticipantInputDialog; //Test mode: return mockup reference
