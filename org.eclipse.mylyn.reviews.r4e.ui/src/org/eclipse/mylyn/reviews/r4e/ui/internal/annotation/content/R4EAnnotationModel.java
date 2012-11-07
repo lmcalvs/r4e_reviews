@@ -337,16 +337,23 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.jface.text.source.IAnnotationModel#addAnnotation(Annotation, Position)
 	 */
 	public void addAnnotation(Annotation aAnnotation, Position aPosition) {
-		final R4EAnnotation newAnnotation = (R4EAnnotation) aAnnotation;
-		fAnnotationsMap.put((R4EID) newAnnotation.getId(), newAnnotation);
-		List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(newAnnotation.getType());
-		if (null == annotationList) {
-			annotationList = new ArrayList<IReviewAnnotation>();
-			fSortedAnnotationsListsMap.put(newAnnotation.getType(), annotationList);
+		if (aAnnotation instanceof R4EAnnotation) {
+			final R4EAnnotation newAnnotation = (R4EAnnotation) aAnnotation;
+			fAnnotationsMap.put((R4EID) newAnnotation.getId(), newAnnotation);
+			List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(newAnnotation.getType());
+			if (null == annotationList) {
+				annotationList = new ArrayList<IReviewAnnotation>();
+				fSortedAnnotationsListsMap.put(newAnnotation.getType(), annotationList);
+			}
+			annotationList.add(newAnnotation);
+			Collections.sort(annotationList, ANNOTATION_COMPARATOR);
+			fSortedAnnotationsIndexMap.put(newAnnotation.getType(), annotationList.indexOf(newAnnotation));
+		} else {
+			//should never happen
+			String msg = "Cannot add invalid Annonation of type " + aAnnotation.getClass().toString();
+			R4EUIPlugin.Ftracer.traceWarning(msg);
+			R4EUIPlugin.getDefault().logWarning(msg, null);
 		}
-		annotationList.add(newAnnotation);
-		Collections.sort(annotationList, ANNOTATION_COMPARATOR);
-		fSortedAnnotationsIndexMap.put(newAnnotation.getType(), annotationList.indexOf(newAnnotation));
 	}
 
 	/**
@@ -380,15 +387,22 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.jface.text.source.IAnnotationModel#removeAnnotation(Annotation)
 	 */
 	public void removeAnnotation(Annotation aAnnotation) {
-		final R4EAnnotation remAnnotation = (R4EAnnotation) aAnnotation;
-		fAnnotationsMap.remove(remAnnotation.getId());
-		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(remAnnotation.getType());
-		int remAnnotationIndex = annotationList.indexOf(remAnnotation);
-		annotationList.remove(remAnnotation);
-		if (remAnnotationIndex < 0) {
-			fSortedAnnotationsIndexMap.remove(remAnnotation.getType()); //type list is now empty
+		if (aAnnotation instanceof R4EAnnotation) {
+			final R4EAnnotation remAnnotation = (R4EAnnotation) aAnnotation;
+			fAnnotationsMap.remove(remAnnotation.getId());
+			final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(remAnnotation.getType());
+			int remAnnotationIndex = annotationList.indexOf(remAnnotation);
+			annotationList.remove(remAnnotation);
+			if (remAnnotationIndex < 0) {
+				fSortedAnnotationsIndexMap.remove(remAnnotation.getType()); //type list is now empty
+			} else {
+				fSortedAnnotationsIndexMap.put(remAnnotation.getType(), --remAnnotationIndex);
+			}
 		} else {
-			fSortedAnnotationsIndexMap.put(remAnnotation.getType(), --remAnnotationIndex);
+			//should never happen
+			String msg = "Cannot remove invalid Annonation of type " + aAnnotation.getClass().toString();
+			R4EUIPlugin.Ftracer.traceWarning(msg);
+			R4EUIPlugin.getDefault().logWarning(msg, null);
 		}
 	}
 
