@@ -415,21 +415,12 @@ public class SanityInformalTests extends TestCase {
 		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
 		participant.setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
-		for (R4EUserRole role : TestConstants.PARTICIPANT_TEST_ROLES) {
-			participant.getRoles().add(role);
-		}
-		participant.setFocusArea(TestConstants.PARTICIPANT_TEST_FOCUS_AREA);
 		participants.add(participant);
 		fParticipant = fProxy.getParticipantProxy().createParticipant(fReview.getParticipantContainer(), participants);
 		Assert.assertNotNull(fParticipant);
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fParticipant.getParticipant().getId());
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, fParticipant.getParticipant().getEmail());
-		for (int i = 0; i < TestConstants.PARTICIPANT_TEST_ROLES.length; i++) {
-			Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ROLES[i], fParticipant.getParticipant()
-					.getRoles()
-					.get(i));
-		}
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_FOCUS_AREA, fParticipant.getParticipant().getFocusArea());
+		Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, fParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**

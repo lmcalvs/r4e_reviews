@@ -1077,7 +1077,7 @@ To do so, right click on the parent review and select the ''New Participants'' C
 
 <br> 
 
-This opens the ''Enter Participant details'' dialog. 
+This opens the ''Enter Participants details'' dialog. 
 
 <br> 
 
@@ -1085,14 +1085,10 @@ This opens the ''Enter Participant details'' dialog.
 
 <br> 
 
-The dialog is divided into 3 sections:
+The dialog is divided into 2 sections:
 
-*Participants:  This is where the participants are added.  Use the field above to enter the IDs on the participants to add, separated by semicolons (;).  If you defined Participants Lists in the preferences, the list name can be added here.  Once the participants are entered, hit the return key, or use the ''Add'' button to add them to the list of participants.  The participants will now appear in the participants list just below.  If present, participants lists from Preferences are resolved and their contents is added to the list as well.  If an LDAP database is setup up and configured in the preferences, R4E will also try to resolve the added users and automatically fetch the information from the database.  Participants can be removed from the list by using the ''Erase'' button, and the list can be reset by using the ''Clear'' button.  If an LDAP database is set up, it can also be accessed using the ''Find'' button (see below).
-*The participant id entered within the R4E review data will be in lower case and R4E will enforce that (this to prevent duplicated users Ids for the same user).
+*Participants:  This is where the participants are added.  Use the field above to enter the IDs on the participants to add, separated by semicolons (;).  If you defined Participants Lists in the preferences, the list name can be added here.  Once the participants are entered, hit the return key, or use the ''Add'' button to add them to the list of participants.  The participants will now appear in the participants list just below.  If present, participants lists from Preferences are resolved and their contents is added to the list as well.  If an LDAP database is setup up and configured in the preferences, R4E will also try to resolve the added users and automatically fetch the information from the database.  Participants can be removed from the list by using the ''Erase'' button, and the list can be reset by using the ''Clear'' button.  If an LDAP database is set up, it can also be accessed using the ''Find'' button (see below).  The participant id entered within the R4E review data will be in lower case and R4E will enforce that (this to prevent duplicated users Ids for the same user).
 *Basic Parameters:  Once participants are added to the participants list.  This section displays the basic information for the currently selected entry in the list.  The email address can be edited, but not the Id or the participant details field (which in only filled if an LDAP database is set up and there is information about the user in it).
-*Extra Parameters: Once participants are added to the participants list.  This section displays the extra information for the currently selected entry in the list.  Take note that this section is not present if the dialog was triggered from the User Preferences dialog, when creating participants lists.  The user roles and optional focus area fields can be edited to further characterize what the participant will do as part of the review.
-**Roles can be assigned to the participant to restrict actions that can be taken. Take note that Roles are mandatory for Formal Review and Optional for Basic and Informal Review types 
-**Focus Area value can be entered to specify a specific areas this Participant should focus on for this Review
 
 <br> 
 

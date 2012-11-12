@@ -26,7 +26,6 @@ import javax.naming.NamingException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -44,7 +43,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -146,16 +144,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * Field fParticipantsDetailsValue.
 	 */
 	private final List<String> fParticipantsDetailsValues = new ArrayList<String>();
-
-	/**
-	 * Field fRoleValues.
-	 */
-	private EditableListWidget fRoleValues = null;
-
-	/**
-	 * Field fFocusAreaTextField.
-	 */
-	private Text fFocusAreaTextField;
 
 	/**
 	 * The input validator, or <code>null</code> if none.
@@ -353,9 +341,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 */
 	@Override
 	public boolean close() {
-		if (null != fRoleValues) {
-			fRoleValues.dispose();
-		}
 		return super.close();
 	}
 
@@ -377,9 +362,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 
 		createParticipantsGroup(toolkit, composite);
 		createBasicParameters(toolkit, composite);
-		if (fReviewSource) {
-			createExtraParameters(toolkit, composite);
-		}
 
 		//Set default focus
 		fUserToAddCombo.setFocus();
@@ -509,33 +491,12 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						} else {
 							fParticipantDetailsInputTextField.setText("");
 						}
-						if (fReviewSource) {
-							if (null != fRoleValues) {
-								fRoleValues.removeAll();
-								final EList<R4EUserRole> roles = participant.getRoles();
-								for (R4EUserRole role : roles) {
-									Item newItem = fRoleValues.addItem();
-									newItem.setText(R4EUIParticipant.mapRoleToString(role));
-								}
-							}
-							if (null != participant.getFocusArea()) {
-								fFocusAreaTextField.setText(participant.getFocusArea());
-							} else {
-								fFocusAreaTextField.setText("");
-							}
-						}
 					}
 
 					//Make sure fields are enabled
 					fParticipantIdInputTextField.setEnabled(true);
 					fParticipantEmailInputTextField.setEnabled(true);
 					fParticipantDetailsInputTextField.setEnabled(true);
-					if (fReviewSource) {
-						if (null != fRoleValues) {
-							fRoleValues.setEnabled(true);
-						}
-						fFocusAreaTextField.setEnabled(true);
-					}
 				}
 			}
 		});
@@ -710,71 +671,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	}
 
 	/**
-	 * method createExtraParameters
-	 * 
-	 * @param aToolkit
-	 * @param aComposite
-	 */
-	private void createExtraParameters(FormToolkit aToolkit, Composite aComposite) {
-
-		//Extra parameters section
-		final Section extraSection = aToolkit.createSection(aComposite, Section.DESCRIPTION
-				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
-		final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		extraSectionGridData.horizontalSpan = 4;
-		extraSection.setLayoutData(extraSectionGridData);
-		extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
-		extraSection.setDescription(R4EUIConstants.EXTRA_PARAMS_HEADER_DETAILS + PARTICIPANT_LABEL);
-		extraSection.addExpansionListener(new ExpansionAdapter() {
-			@Override
-			public void expansionStateChanged(ExpansionEvent e) {
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
-			}
-		});
-
-		final Composite extraSectionClient = aToolkit.createComposite(extraSection);
-		final GridLayout layout = new GridLayout(4, false);
-		extraSectionClient.setLayout(layout);
-		extraSection.setClient(extraSectionClient);
-
-		//Roles
-		if (!R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-			final Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
-			label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
-			label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-			final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-			textGridData.horizontalSpan = 3;
-			fRoleValues = new EditableListWidget(aToolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
-					R4EUIConstants.PARTICIPANT_ROLES.toArray(new String[R4EUIConstants.PARTICIPANT_ROLES.size()]));
-			fRoleValues.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
-			fRoleValues.setEnabled(false);
-
-		}
-
-		//Focus Area
-		final Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
-		label.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
-		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		aToolkit.setBorderStyle(SWT.BORDER);
-		fFocusAreaTextField = aToolkit.createText(extraSectionClient, "", SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
-		final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		textGridData.horizontalSpan = 3;
-		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
-		fFocusAreaTextField.setEnabled(false);
-		fFocusAreaTextField.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
-		fFocusAreaTextField.setLayoutData(textGridData);
-		fFocusAreaTextField.addListener(SWT.FocusOut, new Listener() {
-			public void handleEvent(Event event) {
-				if (fSelectedParticipantIndex >= 0) {
-					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
-					participant.setFocusArea(fFocusAreaTextField.getText().trim());
-				}
-			}
-		});
-
-	}
-
-	/**
 	 * Configures the button bar.
 	 * 
 	 * @param parent
@@ -826,22 +722,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fParticipantIdInputTextField.setText("");
 		fParticipantEmailInputTextField.setText("");
 		fParticipantDetailsInputTextField.setText("");
-		if (fReviewSource) {
-			if (null != fRoleValues) {
-				fRoleValues.removeAll();
-			}
-			fFocusAreaTextField.setText("");
-		}
 		if (0 == fParticipants.size()) {
 			fParticipantDetailsInputTextField.setEnabled(false);
 			fParticipantIdInputTextField.setEnabled(false);
 			fParticipantEmailInputTextField.setEnabled(false);
-			if (fReviewSource) {
-				if (null != fRoleValues) {
-					fRoleValues.setEnabled(false);
-				}
-				fFocusAreaTextField.setEnabled(false);
-			}
 			fClearParticipantsButton.setEnabled(false);
 			fRemoveUserButton.setEnabled(false);
 			if (fReviewSource) {

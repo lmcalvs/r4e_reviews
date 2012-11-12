@@ -461,21 +461,13 @@ public class PostponedAnomaliesTests extends TestCase {
 		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
 		participant.setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
-		for (R4EUserRole role : TestConstants.PARTICIPANT_TEST_ROLES) {
-			participant.getRoles().add(role);
-		}
-		participant.setFocusArea(TestConstants.PARTICIPANT_TEST_FOCUS_AREA);
 		participants.add(participant);
 		R4EUIParticipant uiParticipant = fProxy.getParticipantProxy().createParticipant(
 				aReview.getParticipantContainer(), participants);
 		Assert.assertNotNull(uiParticipant);
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
-		for (int i = 0; i < TestConstants.PARTICIPANT_TEST_ROLES.length; i++) {
-			Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ROLES[i],
-					uiParticipant.getParticipant().getRoles().get(i));
-		}
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_FOCUS_AREA, uiParticipant.getParticipant().getFocusArea());
+		Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**
