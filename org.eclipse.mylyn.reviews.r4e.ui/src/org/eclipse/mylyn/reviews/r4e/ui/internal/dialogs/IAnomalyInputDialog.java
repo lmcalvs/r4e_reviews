@@ -124,6 +124,13 @@ public interface IAnomalyInputDialog {
 	void setDescription(String aDescription);
 
 	/**
+	 * Method getRuleID.
+	 * 
+	 * @return String
+	 */
+	String getRuleID();
+
+	/**
 	 * Method setRuleID.
 	 * 
 	 * @param aId

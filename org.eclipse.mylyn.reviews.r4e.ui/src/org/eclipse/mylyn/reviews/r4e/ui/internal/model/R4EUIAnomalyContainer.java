@@ -578,7 +578,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			commentType.setType(rule.getClass_());
 			aAnomaly.setType(commentType);
 			aAnomaly.setRank(rule.getRank());
-			aAnomaly.setRuleID(rule.getId());
+			aAnomaly.setRuleID(aDialog.getRuleID());
 		} else {
 			if (null != aDialog.getClass_()) {
 				final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
@@ -587,6 +587,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 			if (null != aDialog.getRank()) {
 				aAnomaly.setRank(aDialog.getRank());
+			}
+			if (null != aDialog.getRuleID()) {
+				aAnomaly.setRuleID(aDialog.getRuleID());
 			}
 		}
 	}
