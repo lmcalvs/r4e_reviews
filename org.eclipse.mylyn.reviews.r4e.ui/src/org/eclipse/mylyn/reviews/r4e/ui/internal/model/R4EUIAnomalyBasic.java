@@ -668,7 +668,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 
 		//Also restore any participant assigned to this element
 		for (String participant : fAnomaly.getAssignedTo()) {
-			R4EUIModelController.getActiveReview().getParticipant(participant, true);
+			if (!(null == participant || participant.equals(""))) { //Filter out invalid participants
+				R4EUIModelController.getActiveReview().getParticipant(participant, true);
+			}
 		}
 	}
 
