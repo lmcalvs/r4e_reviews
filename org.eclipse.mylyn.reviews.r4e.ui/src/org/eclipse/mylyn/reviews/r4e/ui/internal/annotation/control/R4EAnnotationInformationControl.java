@@ -214,11 +214,14 @@ public class R4EAnnotationInformationControl extends ReviewAnnotationInformation
 	 */
 	@Override
 	public Point computeSizeHint() {
-		//Limit maximum size to avoid taking too much real estate
+		//Limit maximum size to avoid taking too much real estate and minimum size to see all potential commands in toolbar
 		final Point newSize = super.computeSizeHint();
 		if (newSize.x > R4EUIConstants.ANNOTATION_CONTROL_MAX_WIDTH) {
 			newSize.x = R4EUIConstants.ANNOTATION_CONTROL_MAX_WIDTH;
+		} else if (newSize.x < R4EUIConstants.ANNOTATION_CONTROL_MIN_WIDTH) {
+			newSize.x = R4EUIConstants.ANNOTATION_CONTROL_MIN_WIDTH;
 		}
+
 		if (newSize.y > R4EUIConstants.ANNOTATION_CONTROL_MAX_HEIGHT) {
 			newSize.y = R4EUIConstants.ANNOTATION_CONTROL_MAX_HEIGHT;
 		}

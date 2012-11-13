@@ -324,6 +324,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String BUTTON_REMOVE_LABEL = "Remove";
 
 	/**
+	 * Field ANNOTATION_CONTROL_MIN_WIDTH. (value is 200)
+	 */
+	public static final int ANNOTATION_CONTROL_MIN_WIDTH = 200;
+
+	/**
 	 * Field ANNOTATION_CONTROL_MAX_WIDTH. (value is 600)
 	 */
 	public static final int ANNOTATION_CONTROL_MAX_WIDTH = 600;
