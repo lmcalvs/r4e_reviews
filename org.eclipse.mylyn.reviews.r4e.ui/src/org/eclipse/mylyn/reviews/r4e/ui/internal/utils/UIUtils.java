@@ -741,78 +741,92 @@ public class UIUtils {
 	 * 
 	 * @param aInput
 	 *            R4ECompareEditorInput
+	 * @return boolean
 	 */
-	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
+	public static boolean selectElementInEditor(R4ECompareEditorInput aInput) {
 
 		//For now the Review Navigator View must be open to see the highlighted text in the compare editor
-		if (null == R4EUIModelController.getNavigatorView()) {
-			return;
-		}
+		if (null != R4EUIModelController.getNavigatorView()) {
+			final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+			final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+			IR4EUIPosition position = null;
+			boolean isLeftPane = true;
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
-		IR4EUIPosition position = null;
-		boolean isLeftPane = true;
-
-		if (element instanceof R4EUIAnomalyBasic) {
-			position = ((R4EUIAnomalyBasic) element).getPosition();
-			if (element instanceof R4EUIPostponedAnomaly) {
-				isLeftPane = false; //Use right pane for postponed anomalies
+			if (element instanceof R4EUIAnomalyBasic) {
+				position = ((R4EUIAnomalyBasic) element).getPosition();
+				if (element instanceof R4EUIPostponedAnomaly) {
+					isLeftPane = false; //Use right pane for postponed anomalies
+				}
+			} else if (element instanceof R4EUIComment) {
+				position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
+			} else if (element instanceof R4EUIContent) {
+				position = ((R4EUIContent) element).getPosition();
 			}
-		} else if (element instanceof R4EUIComment) {
-			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
-		} else if (element instanceof R4EUIContent) {
-			position = ((R4EUIContent) element).getPosition();
-		} else {
-			return; //Do nothing if any other element is selected
-		}
-		final ICompareNavigator navigator = aInput.getNavigator();
 
-		//Use free form to select position in file
-		//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
-		//       the only way to select the current position in the compare editor.  Hopefully this code can
-		//		 be removed later when the Eclipse compare editor allows this.
-		if (navigator instanceof CompareEditorInputNavigator) {
-			final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
-			for (Object pane : panes) {
-				if (pane instanceof CompareContentViewerSwitchingPane) {
-					Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
-					if (viewer instanceof TextMergeViewer) {
-						TextMergeViewer textViewer = (TextMergeViewer) viewer;
-						Class textViewerClass = textViewer.getClass();
-						if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
-							do {
-								textViewerClass = textViewerClass.getSuperclass();
-								if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
-									break;
+			if (null != position) {
+				final ICompareNavigator navigator = aInput.getNavigator();
+
+				//Use free form to select position in file
+				//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
+				//       the only way to select the current position in the compare editor.  Hopefully this code can
+				//		 be removed later when the Eclipse compare editor allows this.
+				if (navigator instanceof CompareEditorInputNavigator) {
+					final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+					for (Object pane : panes) {
+						if (pane instanceof CompareContentViewerSwitchingPane) {
+							Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
+							if (viewer instanceof TextMergeViewer) {
+								TextMergeViewer textViewer = (TextMergeViewer) viewer;
+								Class textViewerClass = textViewer.getClass();
+								if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
+									do {
+										textViewerClass = textViewerClass.getSuperclass();
+										if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
+											break;
+										}
+									} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
 								}
-							} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
-						}
-						try {
-							Field field;
-							if (isLeftPane) {
-								field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
-							} else {
-								field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_RIGHT);
+								try {
+									Field field;
+									if (isLeftPane) {
+										field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+									} else {
+										field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_RIGHT);
+									}
+									field.setAccessible(true);
+									MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
+
+									//Now check if the element can be displayed completely in the current viewport.  If so, do it.  Otherwise, tell
+									//the caller
+									int visibleOffset = sourceViewer.getSourceViewer().getVisibleRegion().getOffset();
+									int visibleLength = sourceViewer.getSourceViewer().getVisibleRegion().getLength();
+									int elementOffset = ((R4EUITextPosition) position).getOffset();
+									int elementLength = ((R4EUITextPosition) position).getLength();
+
+									if (elementOffset < visibleOffset
+											|| (elementOffset + elementLength) > (visibleOffset + visibleLength)) {
+										return false; //Element falls outside the visible region
+									} else {
+										ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
+										adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
+												((R4EUITextPosition) position).getLength());
+									}
+								} catch (SecurityException e) {
+									//just continue
+								} catch (NoSuchFieldException e) {
+									//just continue
+								} catch (IllegalArgumentException e) {
+									//just continue
+								} catch (IllegalAccessException e) {
+									//just continue
+								}
 							}
-							field.setAccessible(true);
-							MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
-							ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
-							adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
-									((R4EUITextPosition) position).getLength());
-						} catch (SecurityException e) {
-							//just continue
-						} catch (NoSuchFieldException e) {
-							//just continue
-						} catch (IllegalArgumentException e) {
-							//just continue
-						} catch (IllegalAccessException e) {
-							//just continue
 						}
 					}
 				}
 			}
 		}
+		return true;
 	}
 
 	/**

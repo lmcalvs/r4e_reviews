@@ -237,25 +237,35 @@ public class EditorProxy {
 		IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
 
 		if (null != editor) {
-			aPage.activate(editor); //Simply provide focus to editor
-
-			//Go to the correct element in the compare editor
-			UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput());
-		} else {
-			input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
-			input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title
-
-			R4EUIPlugin.Ftracer.traceInfo("Open compare editor on files "
-					+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
-					+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
-			try {
-				editor = aPage.openEditor(input, "org.eclipse.compare.CompareEditor", OpenStrategy.activateOnOpen());
-			} catch (PartInitException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			//First try to activate current editor.  If it is not possible to display the element in the editor, reuse it if possible, or worse case close and re-open it
+			aPage.activate(editor);
+			if (!UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput())) {
+				//Reuse editor whenever possible, otherwise close and re-open it
+				if (editor instanceof IReusableEditor) {
+					aPage.reuseEditor((IReusableEditor) editor,
+							CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion));
+					//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
+					return editor;
+				} else {
+					aPage.closeEditor(editor, true); //Close current editor
+				}
+			} else {
+				return editor;
 			}
-			//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
 		}
+		input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
+		input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title
+
+		R4EUIPlugin.Ftracer.traceInfo("Open compare editor on files "
+				+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
+				+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
+		try {
+			editor = aPage.openEditor(input, "org.eclipse.compare.CompareEditor", OpenStrategy.activateOnOpen());
+		} catch (PartInitException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		}
+		//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
 		return editor;
 	}
 
