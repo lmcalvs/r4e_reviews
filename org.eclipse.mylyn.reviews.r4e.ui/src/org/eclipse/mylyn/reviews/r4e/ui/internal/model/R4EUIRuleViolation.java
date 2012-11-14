@@ -170,7 +170,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		//Get Rule from user and set it in model data
 		final List<ReviewComponent> tempRules = new ArrayList<ReviewComponent>();
 
-		final IRuleInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleInputDialog();
+		final IRuleInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleInputDialog(getViolation());
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			final R4EDesignRule tempRule = DRModelFactory.eINSTANCE.createR4EDesignRule();

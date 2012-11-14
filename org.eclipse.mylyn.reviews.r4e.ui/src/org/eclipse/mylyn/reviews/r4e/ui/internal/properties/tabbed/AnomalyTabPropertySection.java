@@ -93,7 +93,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	private static final String PARTICIPANT_DETAILS_SECTION_LABEL = "Participants Details";
 
 	/**
-	 * Field MIN_DATE_TEXT.  Size in pixels of the text for the anomaly due date
+	 * Field MIN_DATE_TEXT. Size in pixels of the text for the anomaly due date
 	 */
 	private static final int MIN_DATE_TEXT = 75;
 
@@ -640,7 +640,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 								commentType.setType(rule.getClass_());
 								modelAnomaly.setType(commentType);
 								modelAnomaly.setRank(rule.getRank());
-								modelAnomaly.setRuleID(rule.getId());
+								modelAnomaly.setRuleID(dialog.getRuleID());
 							} else {
 								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
 								commentType.setType(dialog.getClass_());
@@ -997,9 +997,15 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				: rankValue);
 
 		if (null != modelAnomaly.getRuleID()) {
-			fRuleIdText.setText(modelAnomaly.getRuleID());
+			//Only display the last segment of the rule id
+			String[] ar = modelAnomaly.getRuleID().split(R4EUIConstants.SEPARATOR);
+			String rule = ar[ar.length - 1];
+			fRuleIdText.setText(rule);
+			fRuleIdText.setToolTipText(modelAnomaly.getRuleID());
 		} else {
 			fRuleIdText.setText("");
+			fRuleIdText.setToolTipText("");
+
 		}
 
 		if (null != modelAnomaly.getDueDate()) {

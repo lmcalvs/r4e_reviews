@@ -57,6 +57,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorLabelProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -214,6 +215,11 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 	 */
 	R4EUIRule fSelectedRule = null;
 
+	/**
+	 * Field fRuleId.
+	 */
+	private String fRuleId = null;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -292,7 +298,13 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		for (R4EUIRuleSet ruleset : fOpenRuleSets) {
 			ruleset.close();
 		}
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+
+		//Test if the view is still available or not
+		//If not available, then don't try to refresh it
+		ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+		if (view != null) {
+			view.getTreeViewer().refresh();
+		}
 		fOpenRuleSets.clear();
 		super.buttonPressed(buttonId);
 	}
@@ -749,6 +761,7 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 							fAnomalyRank.setEnabled(false);
 							fAnomalyTitleInputTextField.setEnabled(false);
 							fSelectedRule = rule;
+							fRuleId = buildRuleId();
 							return;
 						}
 					}
@@ -979,18 +992,91 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 	 */
 	public void setRuleID(String aId) {
 		final List<R4EUIRuleSet> ruleSets = R4EUIModelController.getRootElement().getRuleSets();
+		String ruleId = null;
+		String ruleViolation = null;
+		String ruleArea = null;
+		String ruleContainer = null;
+		String ruleTitle = getAnomalyTitleValue();
+
+		if (aId != null) {
+			String[] ruleArray = aId.split(R4EUIConstants.SEPARATOR);
+			int size = ruleArray.length;
+			if (aId.isEmpty()) {
+				//No need to inspect all rules at this point
+				return;
+			}
+			ruleId = ruleArray[size - 1];
+			if (size > 1) {
+				ruleViolation = ruleArray[size - 2];
+			}
+			if (size > 2) {
+				ruleArea = ruleArray[size - 3];
+			}
+			if (size > 3) {
+				ruleContainer = ruleArray[size - 4];
+			}
+
+		} else if (aId == null) {
+			//No need to inspect all rules at this point
+			return;
+		}
+
+		//Find the rule if we have access to it
+		//Testing the NULL if for the backward compatibility to find old rule id
 		for (R4EUIRuleSet ruleSet : ruleSets) {
-			for (IR4EUIModelElement area : ruleSet.getChildren()) {
-				for (IR4EUIModelElement violation : area.getChildren()) {
-					for (IR4EUIModelElement rule : violation.getChildren()) {
-						if (((R4EUIRule) rule).getRule().getId().equals(aId)) {
-							fRuleTreeViewer.setSelection(new StructuredSelection(rule), true);
-							return;
+			if (ruleSet.getName().equals(ruleContainer) || ruleContainer == null) {
+				for (IR4EUIModelElement area : ruleSet.getChildren()) {
+					if (area.getName().equals(ruleArea) || ruleArea == null) {
+						for (IR4EUIModelElement violation : area.getChildren()) {
+							if (violation.getName().equals(ruleViolation) || ruleViolation == null) {
+								for (IR4EUIModelElement rule : violation.getChildren()) {
+
+									if (((R4EUIRule) rule).getRule().getId().equals(ruleId)) {
+										fRuleTreeViewer.setSelection(new StructuredSelection(rule), true);
+										return;
+									}
+								}
+
+							}
 						}
 					}
+
 				}
 			}
 		}
+	}
+
+	/**
+	 * Build the relative path for the ruleId with his parents
+	 * 
+	 * @return String
+	 */
+	private String buildRuleId() {
+
+		String ruleId = fSelectedRule.getName();
+		String ruleViolation = fSelectedRule.getParent().getName();
+		String ruleArea = fSelectedRule.getParent().getParent().getName();
+		String ruleSet = fSelectedRule.getParent().getParent().getParent().getName();
+		StringBuilder sb = new StringBuilder();
+		sb.append(ruleSet);
+		sb.append(R4EUIConstants.SEPARATOR);
+		sb.append(ruleArea);
+		sb.append(R4EUIConstants.SEPARATOR);
+		sb.append(ruleViolation);
+		sb.append(R4EUIConstants.SEPARATOR);
+		sb.append(ruleId);
+		return sb.toString();
+	}
+
+	/**
+	 * Method getRuleId.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getRuleID()
+	 */
+	public String getRuleID() {
+		return fRuleId;
+
 	}
 
 	/**

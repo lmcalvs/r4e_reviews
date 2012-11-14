@@ -304,8 +304,15 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 								if (null != anomaly.getRank()) {
 									fAnomalyRankTextField.setText(UIUtils.getRankStr(anomaly.getRank()));
 								}
-								if (null != anomaly.getRule() && null != anomaly.getRule().getId()) {
-									fRuleIdTextField.setText(anomaly.getRule().getId());
+
+								if (null != anomaly.getRuleID()) {
+									//Only display the last segment of the rule id
+									String[] ar = anomaly.getRuleID().split(R4EUIConstants.SEPARATOR);
+									String rule = ar[ar.length - 1];
+
+									fRuleIdTextField.setText(rule);
+									//Set the path in the tooltip
+									fRuleIdTextField.setToolTipText(anomaly.getRuleID());
 								}
 							}
 							getButton(IDialogConstants.OK_ID).setEnabled(true);
@@ -658,6 +665,22 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 	}
 
 	/**
+	 * Method getRuleID.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getRuleID()
+	 */
+	public String getRuleID() {
+		String rule = null;
+		//Need to rebuild the ruleId here
+		if (null != fClonedAnomaly && null != fClonedAnomaly.getAnomaly()) {
+			rule = fClonedAnomaly.getAnomaly().getRuleID();
+		}
+
+		return rule;
+	}
+
+	/**
 	 * Method setRuleID.
 	 * 
 	 * @param aId
@@ -727,4 +750,5 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 		}
 		disp.update();
 	}
+
 }

@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -493,14 +494,16 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getRuleInputDialog.
 	 * 
+	 * @param R4EDesignRuleViolation
 	 * @return IRuleInputDialog
 	 */
-	public IRuleInputDialog getRuleInputDialog() {
+	public IRuleInputDialog getRuleInputDialog(R4EDesignRuleViolation aViolation) {
+
 		if (null == fRuleInputDialog) {
 			fRuleInputDialog = new RuleInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
-					.getShell());
+					.getShell(), aViolation);
 		}
 		return fRuleInputDialog;
 	}

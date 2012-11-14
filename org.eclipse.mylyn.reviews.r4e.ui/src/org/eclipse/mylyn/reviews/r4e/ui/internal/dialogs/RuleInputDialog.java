@@ -19,13 +19,17 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -157,6 +161,11 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 	 */
 	private final IInputValidator fValidator;
 
+	/**
+	 * The parent structure for a ruleId, the rule violation
+	 */
+	private R4EDesignRuleViolation fDesignRuleViolation = null;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -167,8 +176,9 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 	 * @param aParentShell
 	 *            Shell
 	 */
-	public RuleInputDialog(Shell aParentShell) {
+	public RuleInputDialog(Shell aParentShell, R4EDesignRuleViolation aViolation) {
 		super(aParentShell);
+		fDesignRuleViolation = aViolation;
 		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 	}
@@ -229,6 +239,10 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 			}
 			fDescriptionValue = fDescriptionInputTextField.getText().trim();
 
+			//Validate is the ruleId already exist
+			if (!isValidRuleId()) {
+				return;
+			}
 		} else {
 			fIdValue = null;
 			fTitleValue = null;
@@ -377,6 +391,30 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 
 		//Set default focus
 		fIdInputTextField.setFocus();
+	}
+
+	/**
+	 * Test if the rule iD already exist or not under the same rule violation
+	 * 
+	 * @return Boolean
+	 */
+	private Boolean isValidRuleId() {
+		// Validate if the same ruleId already exist 
+		R4EUIPlugin.Ftracer.traceInfo("Rule id: " + fIdValue); //$NON-NLS-1$
+		List<R4EDesignRule> rulesList = fDesignRuleViolation.getRules();
+		int size = rulesList.size();
+		for (int i = 0; i < size; i++) {
+			if (((R4EDesignRule) rulesList.get(i)).getId().equals(fIdValue)) {
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"This Rule Id already exist", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, fIdValue,
+								null), IStatus.ERROR);
+				dialog.open();
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
