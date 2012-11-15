@@ -529,11 +529,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
 							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
 						return true;
-					} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-						if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
-								|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
-							return true;
-						}
+					}
+				} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
+							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+						return true;
 					}
 				}
 			}
@@ -547,7 +547,8 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isFixedByEnabled() {
-		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
+		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
+				|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
 			return true;
 		}
 		return false;
@@ -559,7 +560,8 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isFollowUpByEnabled() {
-		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)
+				|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 			return true;
 		}
 		return false;
