@@ -1292,7 +1292,13 @@ public class UIUtils {
 	 * @return List<IR4EUIModelElement>
 	 */
 	public static List<IR4EUIModelElement> getCommandUIElements() {
-		return getSourceProvider().getSelectedElements();
+		UIElementsProvider uiElementProvider = getSourceProvider();
+		if (uiElementProvider != null) {
+			return uiElementProvider.getSelectedElements();
+		}
+		//Create an empty list
+		List<IR4EUIModelElement> uiElements = new ArrayList<IR4EUIModelElement>(1);
+		return uiElements;
 	}
 
 	/**
@@ -1302,7 +1308,10 @@ public class UIUtils {
 	 *            - List<IR4EUIModelElement>
 	 */
 	public static void setCommandUIElements(List<IR4EUIModelElement> uiElements) {
-		getSourceProvider().setSelectedElements(uiElements);
+		UIElementsProvider uiElementProvider = getSourceProvider();
+		if (uiElementProvider != null) {
+			uiElementProvider.setSelectedElements(uiElements);
+		}
 	}
 
 	/**
@@ -1311,7 +1320,10 @@ public class UIUtils {
 	 * @return List<IR4EUIModelElement>
 	 */
 	public static void clearCommandUIElements() {
-		getSourceProvider().setSelectedElements(null);
+		UIElementsProvider uiElementProvider = getSourceProvider();
+		if (uiElementProvider != null) {
+			uiElementProvider.setSelectedElements(null);
+		}
 	}
 
 	/**
@@ -1321,7 +1333,11 @@ public class UIUtils {
 	 */
 	private static UIElementsProvider getSourceProvider() {
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
-		return (UIElementsProvider) service.getSourceProvider(UIElementsProvider.SELECTED_ELEMENTS);
+		//Window can be null when exiting
+		if (window != null) {
+			ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
+			return (UIElementsProvider) service.getSourceProvider(UIElementsProvider.SELECTED_ELEMENTS);
+		}
+		return null;
 	}
 }
