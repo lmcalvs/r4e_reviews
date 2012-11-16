@@ -96,6 +96,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -1332,11 +1333,15 @@ public class UIUtils {
 	 * @return UIElementsProvider
 	 */
 	private static UIElementsProvider getSourceProvider() {
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		//Window can be null when exiting
-		if (window != null) {
-			ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
-			return (UIElementsProvider) service.getSourceProvider(UIElementsProvider.SELECTED_ELEMENTS);
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		if (workbench != null) {
+			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+			//Window can be null when exiting
+			if (window != null) {
+				ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
+				return (UIElementsProvider) service.getSourceProvider(UIElementsProvider.SELECTED_ELEMENTS);
+			}
+
 		}
 		return null;
 	}
