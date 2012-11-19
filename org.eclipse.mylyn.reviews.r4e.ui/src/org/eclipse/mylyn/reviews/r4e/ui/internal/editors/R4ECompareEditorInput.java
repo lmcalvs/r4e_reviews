@@ -156,7 +156,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		final Differencer differencer = new Differencer();
 		//Bug 392349
 		if (null == fLeft && null == fRight) {
-			R4EUIPlugin.Ftracer.traceError("Nothing to compare, both sides are NULL");
+			R4EUIPlugin.Ftracer.traceWarning("Nothing to compare, both sides are NULL");
 		} else {
 			differencer.findDifferences(false, null, null, fAncestor, fLeft, fRight);
 		}

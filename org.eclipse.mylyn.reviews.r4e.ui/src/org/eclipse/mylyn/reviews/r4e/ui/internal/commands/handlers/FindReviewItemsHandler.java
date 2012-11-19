@@ -569,7 +569,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 										if (file.getTarget() != null || file.getBase() != null) {
 											addFileToModel(uiReviewItem, file, aAddMonitor);
 										} else {
-											R4EUIPlugin.Ftracer.traceInfo("INFO No Base and NO target files, so no ADD"); //$NON-NLS-1$
+											R4EUIPlugin.Ftracer.traceWarning("Warning No Base and NO target files, so no ADD"); //$NON-NLS-1$
 										}
 									}
 
