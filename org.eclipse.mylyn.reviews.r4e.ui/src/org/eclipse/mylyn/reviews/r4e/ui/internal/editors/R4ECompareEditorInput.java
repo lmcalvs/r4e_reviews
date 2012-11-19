@@ -42,6 +42,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.R4EAnnotationContributionItems;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
@@ -153,7 +154,12 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public void prepareCompareInputNoEditor() {
 		//Build the diff node to compare the files		
 		final Differencer differencer = new Differencer();
-		differencer.findDifferences(false, null, null, fAncestor, fLeft, fRight);
+		//Bug 392349
+		if (null == fLeft && null == fRight) {
+			R4EUIPlugin.Ftracer.traceError("Nothing to compare, both sides are NULL");
+		} else {
+			differencer.findDifferences(false, null, null, fAncestor, fLeft, fRight);
+		}
 	}
 
 	/**

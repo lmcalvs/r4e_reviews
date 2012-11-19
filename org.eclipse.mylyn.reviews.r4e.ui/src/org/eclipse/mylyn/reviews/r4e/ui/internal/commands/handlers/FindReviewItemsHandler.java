@@ -302,7 +302,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 					.getReview());
 
-			//Create Synchronized list that will temporarly hold the elements to be added
+			//Create Synchronized list that will temporarily hold the elements to be added
 			final List<TempFileContext> filesToAddlist = Collections.synchronizedList(new ArrayList<TempFileContext>());
 
 			//The Main Job is the parent of all the child jobs that execute the work
@@ -565,13 +565,18 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									R4EUIModelController.stopSerialization(resource);
 
 									for (TempFileContext file : filesToAddlist) {
-										addFileToModel(uiReviewItem, file, aAddMonitor);
+										//May need to Test if the target or base files are empty, means this is a folder
+										if (file.getTarget() != null || file.getBase() != null) {
+											addFileToModel(uiReviewItem, file, aAddMonitor);
+										} else {
+											R4EUIPlugin.Ftracer.traceInfo("INFO No Base and NO target files, so no ADD"); //$NON-NLS-1$
+										}
 									}
 
 									//Resume serialization
 									R4EUIModelController.resetToDefaultSerialization();
 
-									//Check-in to serialise the whole commit element with children
+									//Check-in to serialize the whole commit element with children
 									R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 									UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
@@ -697,7 +702,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 */
 	private void updateFilesWithDeltas(final TempFileContext aFile) throws CoreException {
 
-		//Find all differecences between Base and Target files
+		//Find all differences between Base and Target files
 		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
 		input.prepareCompareInputNoEditor();
 
