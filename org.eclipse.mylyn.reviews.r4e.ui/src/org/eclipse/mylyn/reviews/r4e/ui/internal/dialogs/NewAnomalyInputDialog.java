@@ -1001,7 +1001,7 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		if (aId != null) {
 			String[] ruleArray = aId.split(R4EUIConstants.SEPARATOR);
 			int size = ruleArray.length;
-			if (aId.isEmpty()) {
+			if (aId.length() == 0) {
 				//No need to inspect all rules at this point
 				return;
 			}
