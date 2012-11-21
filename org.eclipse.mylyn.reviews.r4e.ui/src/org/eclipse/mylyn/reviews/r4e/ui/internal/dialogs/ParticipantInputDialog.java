@@ -32,6 +32,7 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
@@ -200,15 +201,17 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for ParticipantInputDialog.
+	 * Constructor for ParticipantInputDialog. <br>
+	 * Using a ShellProvider to Defer the resolution of the shell to the opening of the dialog i.e. when running in the
+	 * UI thread
 	 * 
-	 * @param aParentShell
+	 * @param aShellProvider
 	 *            Shell
 	 * @param aReviewSource
 	 *            boolean
 	 */
-	public ParticipantInputDialog(Shell aParentShell, boolean aReviewSource) {
-		super(aParentShell);
+	public ParticipantInputDialog(IShellProvider aShellProvider, boolean aReviewSource) {
+		super(aShellProvider);
 		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 		fReviewSource = aReviewSource;

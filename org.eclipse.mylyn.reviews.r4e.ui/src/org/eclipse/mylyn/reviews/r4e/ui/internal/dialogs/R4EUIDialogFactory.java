@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
@@ -32,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -178,6 +180,17 @@ public class R4EUIDialogFactory {
 			FInstance = new R4EUIDialogFactory();
 		}
 		return FInstance;
+	}
+
+	private IShellProvider getShellProvider() {
+		final IShellProvider shellProvider = new IShellProvider() {
+			public Shell getShell() {
+				//Obtain display from current thread or first created
+				Display display = Display.getCurrent() != null ? Display.getCurrent() : Display.getDefault();
+				return display.getActiveShell();
+			}
+		};
+		return shellProvider;
 	}
 
 	/**
@@ -354,9 +367,7 @@ public class R4EUIDialogFactory {
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
 		if (!UIUtils.TEST_MODE) {
-			fParticipantInputDialog = new ParticipantInputDialog(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getShell(), aShowExtraParams);
+			fParticipantInputDialog = new ParticipantInputDialog(getShellProvider(), aShowExtraParams);
 		}
 		return fParticipantInputDialog; //Test mode: return mockup reference
 	}
