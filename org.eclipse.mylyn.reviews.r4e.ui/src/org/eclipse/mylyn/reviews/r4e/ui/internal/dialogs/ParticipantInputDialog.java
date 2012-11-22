@@ -57,6 +57,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
@@ -121,6 +122,18 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * Field CLEAR_BUTTON_LABEL. (value is ""Clear"")
 	 */
 	private static final String CLEAR_BUTTON_LABEL = "Clear";
+
+	/**
+	 * Field LDAP_NOT_CONFIGURED. (value is ""LDAP Server not present or not configured"")
+	 */
+	private static final String LDAP_NOT_CONFIGURED = "LDAP Server not present or not configured";
+
+	/**
+	 * Field LDAP_NOT_CONFIGURED_DETAILED. (value is ""No LDAP Server is currently configured to accept queries. " +
+	 * "You can add the Server configuration in the R4E LDAP Preferences"")
+	 */
+	private static final String LDAP_NOT_CONFIGURED_DETAILED = "No LDAP Server is currently configured to accept queries.  "
+			+ "You can add the Server configuration in the R4E LDAP Preferences";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -534,20 +547,29 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		final GridData findButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		fFindUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
 		fFindUserButton.setLayoutData(findButtonGridData);
-		if (!R4EUIModelController.isUserQueryAvailable()) {
-			fFindUserButton.setEnabled(false);
-		}
 		fFindUserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
-				dialog.create();
-				dialog.setDialogsDefaults();
-				final int result = dialog.open();
-				if (result == Window.OK) {
-					final List<IUserInfo> usersInfos = dialog.getUserInfos();
-					for (IUserInfo user : usersInfos) {
-						addUserToParticipantList(user);
+				if (R4EUIModelController.isUserQueryAvailable()) {
+					final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
+					dialog.create();
+					dialog.setDialogsDefaults();
+					final int result = dialog.open();
+					if (result == Window.OK) {
+						final List<IUserInfo> usersInfos = dialog.getUserInfos();
+						for (IUserInfo user : usersInfos) {
+							addUserToParticipantList(user);
+						}
 					}
+				} else {
+					R4EUIPlugin.Ftracer.traceWarning(LDAP_NOT_CONFIGURED);
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+							LDAP_NOT_CONFIGURED, new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
+									LDAP_NOT_CONFIGURED_DETAILED, null), IStatus.WARNING);
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							dialog.open();
+						}
+					});
 				}
 			}
 		});
@@ -874,8 +896,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (IOException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 			}
 		}
 		participant.setId(aId);

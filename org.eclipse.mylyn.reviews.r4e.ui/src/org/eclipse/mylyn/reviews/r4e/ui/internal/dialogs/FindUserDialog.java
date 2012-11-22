@@ -761,8 +761,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (IOException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 			}
 		}
 		return null;

@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
@@ -610,8 +611,16 @@ public class R4EUIModelController {
 	 * @return boolean\
 	 */
 	public static boolean isUserQueryAvailable() {
-		//Verify if the LDAP bundle is available
-		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) { //$NON-NLS-1$
+		//Verify if the LDAP bundle is available and if there is any LDAP host configured
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")
+				&& LdapPlugin.getDefault()
+						.getPreferenceStore()
+						.getString(org.eclipse.mylyn.reviews.ldap.internal.preferences.PreferenceConstants.FP_HOST_ID)
+						.length() > 0
+				&& LdapPlugin.getDefault()
+						.getPreferenceStore()
+						.getString(org.eclipse.mylyn.reviews.ldap.internal.preferences.PreferenceConstants.FP_PORT_ID)
+						.length() > 0) {
 			return true;
 		}
 		return false;

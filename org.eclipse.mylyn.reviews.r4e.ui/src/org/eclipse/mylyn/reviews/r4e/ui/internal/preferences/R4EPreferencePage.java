@@ -417,8 +417,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex); //$NON-NLS-1$
 						} catch (IOException ex) {
-							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex); //$NON-NLS-1$
+							R4EUIPlugin.getDefault().logWarning("Exception: " + ex.toString(), ex); //$NON-NLS-1$
 						} finally {
 							getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 						}
