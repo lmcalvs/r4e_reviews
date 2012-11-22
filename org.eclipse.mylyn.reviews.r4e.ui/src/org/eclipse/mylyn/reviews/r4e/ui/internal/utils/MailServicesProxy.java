@@ -297,15 +297,24 @@ public class MailServicesProxy {
 	 * @throws CoreException
 	 * @throws ResourceHandlingException
 	 */
-	public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException,
-			ResourceHandlingException {
+	public static void sendMessage(String[] aDestinations, final String aSubject, final String aBody)
+			throws ResourceHandlingException {
 
-		String originatorEmail = getOriginatorEmail();
-		String[] destinations = adjustDestinationEmails(aDestinations, originatorEmail);
+		final String originatorEmail = getOriginatorEmail();
+		final String[] destinations = adjustDestinationEmails(aDestinations, originatorEmail);
 
-		R4EUIDialogFactory.getInstance()
-				.getMailConnector()
-				.sendEmailGraphical(originatorEmail, destinations, aSubject, aBody, null, null);
+		//Make sure the email is sent in the UI thread
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				try {
+					R4EUIDialogFactory.getInstance()
+							.getMailConnector()
+							.sendEmailGraphical(originatorEmail, destinations, aSubject, aBody, null, null);
+				} catch (CoreException e) {
+					UIUtils.displayCoreErrorDialog(e);
+				}
+			}
+		});
 	}
 
 	/**
