@@ -394,12 +394,8 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 			} else {
 				fSortedAnnotationsIndexMap.put(remAnnotation.getType(), --remAnnotationIndex);
 			}
-		} else {
-			//should never happen
-			String msg = "Cannot remove invalid Annonation of type " + aAnnotation.getClass().toString();
-			R4EUIPlugin.Ftracer.traceWarning(msg);
-			R4EUIPlugin.getDefault().logWarning(msg, null);
 		}
+		//Ignore any other Annotation type
 	}
 
 	/**
