@@ -151,7 +151,7 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, SMTPHostString.getString("dialog_title_error"),
-						SMTPHostString.getString("start time_Error"), new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID,
+						SMTPHostString.getString("start_time_Error"), new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID,
 								0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
