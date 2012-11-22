@@ -29,6 +29,7 @@ import javax.mail.internet.MimeMultipart;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.commons.core.StatusHandler;
@@ -38,6 +39,7 @@ import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.MailData;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.SMTPHostString;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.dialogs.ScheduleMeetingInputDialog;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.SmtpHostPreferencePage;
 import org.eclipse.mylyn.reviews.vcalendar.core.VCalendar;
@@ -94,9 +96,10 @@ public class Smtp extends NotificationsConnector {
 	 * @param aFilter
 	 *            NotificationFilter
 	 * @throws CoreException
+	 * @return Boolean OK
 	 */
 	@Override
-	public void sendEmail(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody, String aAttachment,
+	public Boolean sendEmail(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody, String aAttachment,
 			NotificationFilter aFilter) throws CoreException {
 		// The SMTP connection will be tried in this order stored in the preference page. 
 		// After all try the exception is thrown to the caller.
@@ -104,6 +107,21 @@ public class Smtp extends NotificationsConnector {
 		String[] smtpHost = getSMTPHost();
 		int numHost = smtpHost.length;
 		for (int i = 0; i < numHost; i++) {
+			if (smtpHost[i].trim().length() == 0) {
+				//There is no SMTP server defined
+				final ErrorDialog dialog = new ErrorDialog(
+						null,
+						SMTPHostString.getString("dialog_title_error"),
+						SMTPHostString.getString("smtp_emtpy_server"),
+						new Status(
+								IStatus.ERROR,
+								SmtpPlugin.FPLUGIN_ID,
+								0,
+								"You should define the SMTP server under \n Window -> Preferences-> R4E-> SMTP Host, \n No E-mail sent",
+								null), IStatus.ERROR);
+				dialog.open();
+				return false;
+			}
 			try {
 				createAndSendEmail(smtpHost[i], aEmailFrom, aEmailsTo, aSubject, aBody, aAttachment);
 				break;
@@ -118,6 +136,7 @@ public class Smtp extends NotificationsConnector {
 			}
 
 		}
+		return true;
 	}
 
 	/**
@@ -199,8 +218,12 @@ public class Smtp extends NotificationsConnector {
 			final String vcalAttachment = vcal.createVCalendar(r4eMeetingData, defaultUserId, aEmailsTo);
 
 			//Now send the message
-			sendEmail(defaultUserId, aEmailsTo, r4eMeetingData.getSubject(), r4eMeetingData.getBody(), vcalAttachment,
-					null);
+			Boolean ok = sendEmail(defaultUserId, aEmailsTo, r4eMeetingData.getSubject(), r4eMeetingData.getBody(),
+					vcalAttachment, null);
+			if (!ok) {
+				//If not send, then re-initialize the data structure
+				r4eMeetingData = null;
+			}
 		}
 
 		return r4eMeetingData;
@@ -253,8 +276,12 @@ public class Smtp extends NotificationsConnector {
 			//Now send the message
 			if (null != newMeetingData) {
 				try {
-					sendEmail(defaultUserId, newMeetingData.getReceivers(), newMeetingData.getSubject(),
+					Boolean ok = sendEmail(defaultUserId, newMeetingData.getReceivers(), newMeetingData.getSubject(),
 							newMeetingData.getBody(), vcalAttachment, null);
+					if (!ok) {
+						//If not send, then re-initialize the data structure
+						newMeetingData = null;
+					}
 				} catch (CoreException e) {
 					StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 				}

@@ -38,9 +38,10 @@ public abstract class NotificationsConnector {
 	 * @param aBody
 	 * @param aAttachment
 	 * @param aFilter
+	 * @return Boolean OK
 	 * @throws CoreException
 	 */
-	public abstract void sendEmail(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody,
+	public abstract Boolean sendEmail(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody,
 			String aAttachment, NotificationFilter aFilter) throws CoreException;
 
 	/**
