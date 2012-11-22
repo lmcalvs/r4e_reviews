@@ -76,7 +76,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				if (!selectedElements.isEmpty()) {
+				if (selectedElements != null && !selectedElements.isEmpty()) {
 					final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
 
 					//Get the previous element
@@ -113,8 +113,14 @@ public class SelectPreviousHandler extends AbstractHandler {
 	 * @return IR4EUIModelElement
 	 */
 	private IR4EUIModelElement getPreviousElement(ReviewNavigatorTreeViewer aTreeViewer) {
-		final TreeItem item = aTreeViewer.getTree().getSelection()[0];
-		final TreeItem previousItem = aTreeViewer.getPrevious(item);
-		return (IR4EUIModelElement) previousItem.getData();
+		final TreeItem[] item = aTreeViewer.getTree().getSelection();
+		if (item.length == 0) {
+			//No item selected, so just return
+			return null;
+		} else {
+			final TreeItem previousItem = aTreeViewer.getPrevious(item[0]);
+			return (IR4EUIModelElement) previousItem.getData();
+		}
+
 	}
 }
