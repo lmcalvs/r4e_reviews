@@ -301,6 +301,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 			fAssignColumnWeight = (int) ((assignColumnWidth / totalWidth) * 100);
 			fNumChangesColumnWeight = (int) ((numChangesColumnWidth / totalWidth) * 100);
 			fNumAnomaliesColumnWeight = (int) ((numAnomaliesColumnWidth / totalWidth) * 100);
+			fElementColumn.getColumn().setWidth((int) totalWidth); //make sure width is reset to full treeViewer width
 		}
 		fIsDefaultDisplay = true;
 
