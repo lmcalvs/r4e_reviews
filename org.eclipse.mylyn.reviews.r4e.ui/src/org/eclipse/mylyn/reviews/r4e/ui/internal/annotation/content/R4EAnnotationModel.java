@@ -348,12 +348,8 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 			annotationList.add(newAnnotation);
 			Collections.sort(annotationList, ANNOTATION_COMPARATOR);
 			fSortedAnnotationsIndexMap.put(newAnnotation.getType(), annotationList.indexOf(newAnnotation));
-		} else {
-			//should never happen
-			String msg = "Cannot add invalid Annonation of type " + aAnnotation.getClass().toString();
-			R4EUIPlugin.Ftracer.traceWarning(msg);
-			R4EUIPlugin.getDefault().logWarning(msg, null);
 		}
+		//Ignore any other Annotation type
 	}
 
 	/**
