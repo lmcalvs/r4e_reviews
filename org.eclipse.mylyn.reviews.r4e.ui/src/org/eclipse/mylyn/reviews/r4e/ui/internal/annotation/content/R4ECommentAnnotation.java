@@ -78,7 +78,7 @@ public class R4ECommentAnnotation extends R4EAnnotation {
 	 * @return IR4EUIPosition
 	 */
 	@Override
-	protected IR4EUIPosition getR4EPosition() {
+	public IR4EUIPosition getR4EPosition() {
 		return null;
 	}
 

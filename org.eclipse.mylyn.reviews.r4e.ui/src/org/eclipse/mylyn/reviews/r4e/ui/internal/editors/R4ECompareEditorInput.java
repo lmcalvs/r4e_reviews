@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.text.Position;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -47,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.R4EAnnotati
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -412,21 +412,33 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @return R4EAnnotation
 	 */
 	public R4EAnnotation gotoNextAnnotation(String aType) {
-		R4EAnnotation annotation = null;
+		R4EAnnotation originalAnnotation = null;
+		R4EAnnotation foundAnnotation = null;
+
+		//We need to only consider the anomalies currently visible in the viewport
 		if (null != fAnnotationSupport) {
-			IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
-			if (null != model) {
-				annotation = (R4EAnnotation) model.getNextAnnotation(aType);
-				if (null != annotation) {
-					final Position annotationPositon = annotation.getPosition();
-					ITextEditor editor = fAnnotationSupport.getTargetEditor();
-					if (null != editor) {
-						editor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+			ITextEditor editor = fAnnotationSupport.getTargetEditor();
+			if (null != editor) {
+				IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
+				if (null != model) {
+					ICompareNavigator navigator = ((R4ECompareEditorInput) editor.getEditorInput()).getNavigator();
+
+					originalAnnotation = (R4EAnnotation) model.getNextAnnotation(aType);
+					if (null != originalAnnotation) {
+						R4EAnnotation annotation = originalAnnotation;
+						do {
+							final IR4EUIPosition annotationPositon = annotation.getR4EPosition();
+							if (UIUtils.selectElementInEditorPane(navigator, annotationPositon, true)) {
+								foundAnnotation = annotation;
+								break;
+							}
+							annotation = (R4EAnnotation) model.getNextAnnotation(aType);
+						} while (!originalAnnotation.getR4EPosition().isSameAs(annotation.getR4EPosition()));
 					}
 				}
 			}
 		}
-		return annotation;
+		return foundAnnotation;
 	}
 
 	/**
@@ -437,21 +449,33 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @return R4EAnnotation
 	 */
 	public R4EAnnotation gotoPreviousAnnotation(String aType) {
-		R4EAnnotation annotation = null;
+		R4EAnnotation originalAnnotation = null;
+		R4EAnnotation foundAnnotation = null;
+
+		//We need to only consider the anomalies currently visible in the viewport
 		if (null != fAnnotationSupport) {
-			IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
-			if (null != model) {
-				annotation = (R4EAnnotation) model.getPreviousAnnotation(aType);
-				if (null != annotation) {
-					final Position annotationPositon = annotation.getPosition();
-					ITextEditor editor = fAnnotationSupport.getTargetEditor();
-					if (null != editor) {
-						editor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+			ITextEditor editor = fAnnotationSupport.getTargetEditor();
+			if (null != editor) {
+				IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
+				if (null != model) {
+					ICompareNavigator navigator = ((R4ECompareEditorInput) editor.getEditorInput()).getNavigator();
+
+					originalAnnotation = (R4EAnnotation) model.getPreviousAnnotation(aType);
+					if (null != originalAnnotation) {
+						R4EAnnotation annotation = originalAnnotation;
+						do {
+							final IR4EUIPosition annotationPositon = annotation.getR4EPosition();
+							if (UIUtils.selectElementInEditorPane(navigator, annotationPositon, true)) {
+								foundAnnotation = annotation;
+								break;
+							}
+							annotation = (R4EAnnotation) model.getPreviousAnnotation(aType);
+						} while (!originalAnnotation.getR4EPosition().isSameAs(annotation.getR4EPosition()));
 					}
 				}
 			}
 		}
-		return annotation;
+		return foundAnnotation;
 	}
 
 	//Test Methods

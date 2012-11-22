@@ -81,7 +81,7 @@ public abstract class R4EAnnotation extends Annotation implements IReviewAnnotat
 	 * 
 	 * @return IR4EUIPosition
 	 */
-	protected abstract IR4EUIPosition getR4EPosition();
+	public abstract IR4EUIPosition getR4EPosition();
 
 	/**
 	 * Method getPosition.
