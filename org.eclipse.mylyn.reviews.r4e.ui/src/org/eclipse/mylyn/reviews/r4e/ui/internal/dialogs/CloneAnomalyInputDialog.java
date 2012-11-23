@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -448,8 +449,17 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
-					fDateText.setText(dateFormat.format(dialog.getDate()));
-					fAnomalyDueDateValue = dialog.getDate();
+					Date dialogDate = dialog.getDate();
+					String dialogDateStr = dateFormat.format(dialogDate);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(new Date());
+					cal.add(Calendar.DAY_OF_YEAR, -1);
+					if (dialogDate.after(cal.getTime())) {
+						fDateText.setText(dialogDateStr);
+						fAnomalyDueDateValue = dialogDate;
+					} else {
+						UIUtils.displayPastDateError(dialogDate, dialogDateStr);
+					}
 				}
 			}
 

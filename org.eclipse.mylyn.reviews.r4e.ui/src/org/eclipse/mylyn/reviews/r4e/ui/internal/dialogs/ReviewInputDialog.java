@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.eclipse.core.runtime.IStatus;
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
@@ -537,8 +539,17 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
-					fDueDateText.setText(dateFormat.format(dialog.getDate()));
-					fDueDateValue = dialog.getDate();
+					Date dialogDate = dialog.getDate();
+					String dialogDateStr = dateFormat.format(dialogDate);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(new Date());
+					cal.add(Calendar.DAY_OF_YEAR, -1);
+					if (dialogDate.after(cal.getTime())) {
+						fDueDateText.setText(dialogDateStr);
+						fDueDateValue = dialogDate;
+					} else {
+						UIUtils.displayPastDateError(dialogDate, dialogDateStr);
+					}
 				}
 			}
 

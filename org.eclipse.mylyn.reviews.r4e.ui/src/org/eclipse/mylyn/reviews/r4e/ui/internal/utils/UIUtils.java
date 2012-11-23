@@ -509,6 +509,27 @@ public class UIUtils {
 	}
 
 	/**
+	 * Method displayPastDateError.
+	 * 
+	 * @param aPastDate
+	 *            Date
+	 * @param aPastDateStr
+	 *            String
+	 * @return boolean
+	 */
+	public static void displayPastDateError(Date aPastDate, String aPastDateStr) {
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+				"Date Passed Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+						"You cannot specify a date (" + aPastDateStr + ") that occured in the past", null),
+				IStatus.ERROR);
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
+	}
+
+	/**
 	 * Method isFilterPreferenceSet.
 	 * 
 	 * @param aFilterSet
