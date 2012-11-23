@@ -73,16 +73,16 @@ public class CloseElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
+				R4EUIModelController.setJobInProgress(true);
 				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 				if (!selectedElements.isEmpty()) {
-					R4EUIModelController.setJobInProgress(true);
 					final IR4EUIModelElement element = selectedElements.get(0);
 					R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName()); //$NON-NLS-1$
 					element.close();
-					R4EUIModelController.setJobInProgress(false);
 					UIUtils.setNavigatorViewFocus(element, 0);
 				}
+				R4EUIModelController.setJobInProgress(false);
 				monitor.done();
 				return Status.OK_STATUS;
 			}

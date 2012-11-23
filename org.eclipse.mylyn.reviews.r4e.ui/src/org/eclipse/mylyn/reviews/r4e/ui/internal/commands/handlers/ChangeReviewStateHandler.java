@@ -88,9 +88,8 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
 				if (!selectedElements.isEmpty()) {
-
-					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
 					R4EUIModelController.setJobInProgress(true);
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
 
 					Resource resource = null;
 					try {

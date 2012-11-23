@@ -89,9 +89,10 @@ public class RestoreElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
+				R4EUIModelController.setJobInProgress(true);
+
 				if (!selectedElements.isEmpty()) {
 					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
-					R4EUIModelController.setJobInProgress(true);
 
 					R4EReview review = null;
 					if (null != R4EUIModelController.getActiveReview()) {

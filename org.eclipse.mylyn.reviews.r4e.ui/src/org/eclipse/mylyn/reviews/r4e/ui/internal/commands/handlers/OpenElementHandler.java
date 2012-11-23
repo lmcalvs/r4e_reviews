@@ -79,8 +79,8 @@ public class OpenElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor aMonitor) {
-				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
+				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 				if (!selectedElements.isEmpty()) {
 					IR4EUIModelElement element = null;

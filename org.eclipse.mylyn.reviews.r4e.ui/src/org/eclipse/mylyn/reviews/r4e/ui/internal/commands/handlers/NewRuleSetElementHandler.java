@@ -88,8 +88,8 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 					final Job job = new Job(COMMAND_MESSAGE) {
 						@Override
 						public IStatus run(IProgressMonitor monitor) {
-							monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 							R4EUIModelController.setJobInProgress(true);
+							monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 							IR4EUIModelElement newElement = null;
 							try {

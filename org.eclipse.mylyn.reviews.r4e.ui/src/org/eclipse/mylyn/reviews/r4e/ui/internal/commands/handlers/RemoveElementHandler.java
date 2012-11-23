@@ -91,8 +91,8 @@ public class RemoveElementHandler extends AbstractHandler {
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
 				if (!selectedElements.isEmpty()) {
-					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
 					R4EUIModelController.setJobInProgress(true);
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
 
 					R4EReview review = null;
 					if (null != R4EUIModelController.getActiveReview()) {

@@ -96,11 +96,10 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
+				R4EUIModelController.setJobInProgress(true);
 				final R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) R4EUIModelController.getActiveReview()
 						.getParent();
-
 				monitor.beginTask(COMMAND_MESSAGE, parentGroup.getChildren().length);
-				R4EUIModelController.setJobInProgress(true);
 
 				importPostponedElements(true, monitor);
 				R4EUIModelController.setJobInProgress(false);

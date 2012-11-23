@@ -88,8 +88,8 @@ public class NewChildElementHandler extends AbstractHandler {
 
 					@Override
 					public IStatus run(IProgressMonitor monitor) {
-						monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 						R4EUIModelController.setJobInProgress(true);
+						monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 						for (final ReviewComponent tempModelComponent : tempModelComponents) {
 							R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());

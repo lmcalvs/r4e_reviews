@@ -76,6 +76,7 @@ public class RemoveAssignHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
+				R4EUIModelController.setJobInProgress(true);
 				if (!selectedElements.isEmpty()) {
 
 					//Get participants to assign
@@ -84,7 +85,6 @@ public class RemoveAssignHandler extends AbstractHandler {
 					//Unassign them
 					if (participants.size() > 0) {
 						monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
-						R4EUIModelController.setJobInProgress(true);
 
 						for (IR4EUIModelElement element : selectedElements) {
 							R4EUIPlugin.Ftracer.traceInfo("Remove Assignees..." //$NON-NLS-1$
@@ -99,10 +99,10 @@ public class RemoveAssignHandler extends AbstractHandler {
 							}
 						}
 					}
-					R4EUIModelController.setJobInProgress(false);
 					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 					R4EUIDialogFactory.getInstance().removeParticipantUnassignDialog();
 				}
+				R4EUIModelController.setJobInProgress(false);
 				monitor.done();
 				return Status.OK_STATUS;
 			}

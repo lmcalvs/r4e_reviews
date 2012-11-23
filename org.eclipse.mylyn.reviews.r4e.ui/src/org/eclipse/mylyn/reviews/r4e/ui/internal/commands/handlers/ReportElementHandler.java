@@ -77,8 +77,8 @@ public class ReportElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
+				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 				if (!selectedElements.isEmpty()) {
 					String groupFile = null;

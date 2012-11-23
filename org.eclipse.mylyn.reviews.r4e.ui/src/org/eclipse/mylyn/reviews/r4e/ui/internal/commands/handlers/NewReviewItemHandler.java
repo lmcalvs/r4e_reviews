@@ -117,8 +117,8 @@ public class NewReviewItemHandler extends AbstractHandler {
 		final Job job = new Job(COMMAND_MESSAGE) {
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				R4EUIModelController.setJobInProgress(true);
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 
 				//Act differently depending on the type of selection we get
 				if (selection instanceof ITextSelection) {

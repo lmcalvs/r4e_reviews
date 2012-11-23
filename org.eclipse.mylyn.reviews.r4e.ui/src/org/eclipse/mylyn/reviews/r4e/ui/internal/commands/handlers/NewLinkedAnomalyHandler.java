@@ -77,8 +77,8 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
+				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
 				//Add a linked anomaly to the selected contents
 				if (!selectedElements.isEmpty()) {

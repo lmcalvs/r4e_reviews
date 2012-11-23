@@ -75,6 +75,7 @@ public class AddAssignHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
+				R4EUIModelController.setJobInProgress(true);
 
 				if (!selectedElements.isEmpty()) {
 					//Get participants to assign
@@ -83,7 +84,6 @@ public class AddAssignHandler extends AbstractHandler {
 					//Assign them
 					if (participants.size() > 0) {
 						monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
-						R4EUIModelController.setJobInProgress(true);
 
 						for (IR4EUIModelElement element : selectedElements) {
 							R4EUIPlugin.Ftracer.traceInfo("Add Assignees..." + element.getName()); //$NON-NLS-1$
@@ -96,10 +96,10 @@ public class AddAssignHandler extends AbstractHandler {
 								return Status.CANCEL_STATUS;
 							}
 						}
-						R4EUIModelController.setJobInProgress(false);
 					}
 					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 				}
+				R4EUIModelController.setJobInProgress(false);
 				monitor.done();
 				return Status.OK_STATUS;
 			}
