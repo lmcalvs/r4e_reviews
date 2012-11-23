@@ -1303,7 +1303,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			final R4EUIReviewExtended uiExtendedReview = (R4EUIReviewExtended) fProperties.getElement();
 			final R4EFormalReview modelFormalReview = (R4EFormalReview) uiReview.getReview();
 
-			final List<R4EParticipant> participants = uiExtendedReview.getParticipants();
+			final List<R4EParticipant> participants = uiExtendedReview.getParticipants(false);
 			item = null;
 			final int numParticipants = participants.size();
 			fDecisionUsersList.removeAll();

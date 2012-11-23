@@ -485,17 +485,21 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 	/**
 	 * Method getParticipants.
-	 * 
+	 * @param aIncludeDisabled - boolean
 	 * @return List<R4EParticipant>
 	 */
-	public List<R4EParticipant> getParticipants() {
+	public List<R4EParticipant> getParticipants(boolean aIncludeDisabled) {
 		final Object[] users = fReview.getUsersMap().values().toArray();
 
 		//Cast list to R4EParticipants
 		final List<R4EParticipant> participants = new ArrayList<R4EParticipant>();
 		for (Object user : users) {
-			if (((R4EParticipant) user).isEnabled()) {
+			if (aIncludeDisabled) {
 				participants.add((R4EParticipant) user);
+			} else {
+				if (((R4EParticipant) user).isEnabled()) {
+					participants.add((R4EParticipant) user);
+				}
 			}
 		}
 		return participants;

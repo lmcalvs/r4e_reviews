@@ -198,7 +198,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() {
-		final List<R4EParticipant> participants = ((R4EUIReviewBasic) getParent()).getParticipants();
+		final List<R4EParticipant> participants = ((R4EUIReviewBasic) getParent()).getParticipants(true);
 		if (null != participants) {
 			final int participantsSize = participants.size();
 			for (int i = 0; i < participantsSize; i++) {

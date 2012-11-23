@@ -616,7 +616,7 @@ public class UIUtils {
 		if (null == R4EUIModelController.getActiveReview()) {
 			return 0;
 		}
-		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		final int numParticipants = participants.size();
 		int index = 0;
 		for (int i = 0; i < numParticipants; i++) {

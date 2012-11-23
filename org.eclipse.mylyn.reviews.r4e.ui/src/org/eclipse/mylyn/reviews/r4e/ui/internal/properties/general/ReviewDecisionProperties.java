@@ -133,7 +133,7 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 			if (REVIEW_DECISION_MEETING_ID.equals(aId)) {
 				return new ReviewMeetingProperties(getElement());
 			} else if (REVIEW_DECISION_PARTICIPANTS_ID.equals(aId)) {
-				final List<R4EParticipant> participants = ((R4EUIReviewBasic) getElement()).getParticipants();
+				final List<R4EParticipant> participants = ((R4EUIReviewBasic) getElement()).getParticipants(false);
 				final List<String> decisionParticipantIds = new ArrayList<String>();
 				for (R4EParticipant participant : participants) {
 					if (participant.isIsPartOfDecision()) {

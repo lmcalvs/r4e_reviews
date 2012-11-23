@@ -401,7 +401,7 @@ public class MailServicesProxy {
 	 */
 	private static String[] createItemsUpdatedDestinations() {
 		final ArrayList<String> destinations = new ArrayList<String>();
-		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		for (R4EParticipant participant : participants) {
 			if (isEmailValid(participant)) {
 				//All active participants should receive this email
@@ -418,7 +418,7 @@ public class MailServicesProxy {
 	 */
 	private static String[] createProgressDestinations() {
 		final ArrayList<String> destinations = new ArrayList<String>();
-		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		for (R4EParticipant participant : participants) {
 			if (isEmailValid(participant)) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
@@ -443,7 +443,7 @@ public class MailServicesProxy {
 	 */
 	private static String[] createQuestionDestinations() {
 		final ArrayList<String> destinations = new ArrayList<String>();
-		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		for (R4EParticipant participant : participants) {
 			if (isEmailValid(participant)) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {

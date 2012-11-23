@@ -439,7 +439,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @param parentReview
 	 */
 	private int reviewerRoleSize(R4EUIReviewBasic aReview, R4EUserRole aRole) {
-		List<R4EParticipant> participants = aReview.getParticipants();
+		List<R4EParticipant> participants = aReview.getParticipants(false);
 		if (participants == null) {
 			return 0;
 		}
@@ -448,13 +448,11 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		int roleCount = 0;
 		for (R4EParticipant participant : participants) {
 			//Don't consider disabled participants within the count
-			if (participant.isEnabled()) {
-				EList<R4EUserRole> roles = participant.getRoles();
-				for (R4EUserRole role : roles) {
-					if (role.equals(aRole)) {
-						roleCount++;
-						break;
-					}
+			EList<R4EUserRole> roles = participant.getRoles();
+			for (R4EUserRole role : roles) {
+				if (role.equals(aRole)) {
+					roleCount++;
+					break;
 				}
 			}
 		}
