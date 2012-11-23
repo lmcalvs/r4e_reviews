@@ -357,34 +357,40 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * Method setParticipantDetails.
 	 */
 	public void setParticipantDetails() {
-		if (fParticipant.getId().equals(
-				R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID))) {
-			//If this is the default user, get its email
-			String email = R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_EMAIL);
-			fParticipant.setEmail(email);
-		}
+		if (fParticipant.getEmail() == null || fParticipant.getEmail().equals("")) {
 
-		if (R4EUIModelController.isUserQueryAvailable()) {
-			try {
-				//Get detailed info from DB if available
-				final IQueryUser query = new QueryUserFactory().getInstance();
-				final List<IUserInfo> info = query.searchByUserId(fParticipant.getId());
-				if (info.size() > 0) {
-					final IUserInfo userInfo = info.get(0);
-					fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
-					if (null == fParticipant.getEmail() || fParticipant.getEmail().length() < 1) {
-						fParticipant.setEmail(userInfo.getEmail());
-					}
-				}
-			} catch (NamingException e) {
-				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			} catch (IOException e) {
-				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			if (fParticipant.getId().equals(
+					R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID))) {
+				//If this is the default user, get its email
+				String email = R4EUIPlugin.getDefault()
+						.getPreferenceStore()
+						.getString(PreferenceConstants.P_USER_EMAIL);
+				fParticipant.setEmail(email);
 			}
-		}
 
-		if (fParticipant.getEmail() == null) {
-			fParticipant.setEmail(""); //$NON-NLS-1$
+			if (R4EUIModelController.isUserQueryAvailable()) {
+				try {
+					//Get detailed info from DB if available
+					final IQueryUser query = new QueryUserFactory().getInstance();
+					final List<IUserInfo> info = query.searchByUserId(fParticipant.getId());
+					if (info.size() > 0) {
+						final IUserInfo userInfo = info.get(0);
+						fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
+						if (null == fParticipant.getEmail() || fParticipant.getEmail().length() < 1) {
+							fParticipant.setEmail(userInfo.getEmail());
+						}
+					}
+				} catch (NamingException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				} catch (IOException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				}
+			}
+
+			//Safety if the LDAP query is not resolved properly
+			if (fParticipant.getEmail() == null) {
+				fParticipant.setEmail(""); //$NON-NLS-1$
+			}
 		}
 
 	}
