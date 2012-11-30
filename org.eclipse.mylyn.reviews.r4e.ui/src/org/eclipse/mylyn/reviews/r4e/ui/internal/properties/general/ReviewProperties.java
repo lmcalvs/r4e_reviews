@@ -67,12 +67,12 @@ public class ReviewProperties extends ModelElementProperties {
 			REVIEW_END_DATE_ID, R4EUIConstants.END_DATE_LABEL);
 
 	/**
-	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
+	 * Field REVIEW_DUE_DATE_ID. (value is ""reviewElement.dueDate"")
 	 */
 	protected static final String REVIEW_DUE_DATE_ID = "reviewElement.dueDate";
 
 	/**
-	 * Field REVIEW_START_DATE_PROPERTY_DESCRIPTOR.
+	 * Field REVIEW_DUE_DATE_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final PropertyDescriptor REVIEW_DUE_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
