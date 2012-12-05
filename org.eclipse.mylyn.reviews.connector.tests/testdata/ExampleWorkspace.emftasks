@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emftasks:TaskCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:emftasks="http://eclipse.org/mylyn/tasks/emftasks/1.0" label="Test Tasks">
+  <tasks id="1" summary="Test Task 1 4" description="This is test task 1." priority="STANDARD" dueDate="2012-10-28T00:00:00.000-0700" completionDate="2012-10-31T00:00:00.000-0700" creationDate="2012-10-21T00:00:00.000-0700">
+    <collaborators>Melvin</collaborators>
+    <collaborators>Dincus</collaborators>
+  </tasks>
+  <tasks id="2" summary="Test Task 2 Unmodified 3" description="This is test task 2. I think. Really. For sure." priority="IMPORTANT" dueDate="2012-10-29T00:00:00.000-0700" creationDate="2012-10-22T00:00:00.000-0700"/>
+  <tasks id="3" summary="Test Task 3 Hey" description="This is test task 3." priority="URGENT" dueDate="2012-10-30T00:00:00.000-0700" creationDate="2012-10-23T00:00:00.000-0700"/>
+</emftasks:TaskCollection>

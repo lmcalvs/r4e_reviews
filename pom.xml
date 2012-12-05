@@ -87,11 +87,6 @@
            <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
          </repository>
 -->
-         <repository>
-            <id>eclipse-mylyn-reviews-r4e</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/r4e/updates/</url>
-          </repository>
       </repositories>
       <modules>
          <module>org.eclipse.mylyn.reviews.r4e-site</module>
@@ -189,5 +184,9 @@
      <module>org.eclipse.mylyn.reviews.r4e.ui</module>
      <module>org.eclipse.mylyn.reviews.VCalendar</module>
      <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
+     <module>org.eclipse.mylyn.reviews.connector</module>
+     <module>org.eclipse.mylyn.reviews.connector.ui</module>
+     <module>org.eclipse.mylyn.reviews.connector.tests</module>
+     <module>org.eclipse.mylyn.reviews.connector.feature</module>
    </modules>
 </project>
