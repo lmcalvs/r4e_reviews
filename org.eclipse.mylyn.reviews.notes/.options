@@ -1,0 +1,6 @@
+org.eclipse.mylyn.reviews.notes/error=true
+org.eclipse.mylyn.reviews.notes/warning=true
+org.eclipse.mylyn.reviews.notes/info=true
+org.eclipse.mylyn.reviews.notes/debug=true
+org.eclipse.mylyn.reviews.notes/consoleLog=true
+org.eclipse.mylyn.reviews.notes/logfile=test.log
