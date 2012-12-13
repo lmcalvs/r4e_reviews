@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated emftasks -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.mylyn.reviews.example.emftasks.presentation.EmfTasksModelWizardID"
+            name="%_UI_EmfTasksModelWizard_label"
+            class="org.eclipse.mylyn.reviews.example.emftasks.presentation.EmfTasksModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/EmfTasksModelFile.gif">
+         <description>%_UI_EmfTasksModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated emftasks -->
+      <editor
+            id="org.eclipse.mylyn.reviews.example.emftasks.presentation.EmfTasksEditorID"
+            name="%_UI_EmfTasksEditor_label"
+            icon="icons/full/obj16/EmfTasksModelFile.gif"
+            extensions="emftasks"
+            class="org.eclipse.mylyn.reviews.example.emftasks.presentation.EmfTasksEditor"
+            contributorClass="org.eclipse.mylyn.reviews.example.emftasks.presentation.EmfTasksActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

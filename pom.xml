@@ -188,5 +188,12 @@
      <module>org.eclipse.mylyn.reviews.connector.ui</module>
      <module>org.eclipse.mylyn.reviews.connector.tests</module>
      <module>org.eclipse.mylyn.reviews.connector.feature</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.core</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.core.tests</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.ui</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.model</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.model.edit</module>
+     <module>org.eclipse.mylyn.reviews.example.emftasks.model.editor</module>
+     <module>org.eclipse.mylyn.reviews.example.feature</module>
    </modules>
 </project>

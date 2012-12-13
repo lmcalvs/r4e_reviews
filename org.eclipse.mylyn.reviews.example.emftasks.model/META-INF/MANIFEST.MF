@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mylyn Emf Example Tasks Model
+Bundle-SymbolicName: org.eclipse.mylyn.reviews.example.emftasks.model;singleton:=true
+Bundle-Version: 0.13.0.qualifier
+Bundle-ClassPath: .
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.mylyn.commons.core,
+ org.eclipse.mylyn.commons.net,
+ org.eclipse.mylyn.tasks.core,
+ org.eclipse.mylyn.commons.sdk.util
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Eclipse Mylyn
+Export-Package: org.eclipse.mylyn.reviews.example.emftasks,
+ org.eclipse.mylyn.reviews.example.emftasks.impl,
+ org.eclipse.mylyn.reviews.example.emftasks.util

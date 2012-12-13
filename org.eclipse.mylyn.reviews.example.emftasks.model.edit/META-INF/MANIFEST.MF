@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mylyn Emf Example Tasks Model Edit Support
+Bundle-SymbolicName: org.eclipse.mylyn.reviews.example.emftasks.model.edit;singleton:=true
+Bundle-Version: 0.13.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.mylyn.reviews.example.emftasks.provider.EmfTasksEditPlugin$Implementation
+Bundle-Vendor: Eclipse Mylyn
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.mylyn.reviews.example.emftasks.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.mylyn.reviews.example.emftasks.model;visibility:=reexport,
+ org.eclipse.emf.edit;visibility:=reexport
+Bundle-ActivationPolicy: lazy

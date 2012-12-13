@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated emftasks -->
+      <package
+            uri="http://eclipse.org/mylyn/tasks/emftasks/1.0"
+            class="org.eclipse.mylyn.reviews.example.emftasks.EmfTasksPackage"
+            genModel="model/emftasks.genmodel"/>
+   </extension>
+
+</plugin>

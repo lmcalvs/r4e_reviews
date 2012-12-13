@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.repositories">
+      <connectorCore
+            id="org.eclipse.mylyn.emf.example"
+            class="org.eclipse.mylyn.internal.reviews.example.emftasks.core.EmfExampleConnector"
+            name="Emf Example Tasks"/>
+	  <connectorUi
+         brandingIcon="icons/obj16/Ecore.png"
+         class="org.eclipse.mylyn.internal.reviews.example.emftasks.ui.EmfExampleConnectorUi"
+         id="org.eclipse.mylyn.tasks.example.emf"
+         name="Emf Example Tasks"
+         overlayIcon="icons/obj16/EcoreOverlay.png"/>
+   </extension>
+
+
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.editors">
+         <pageFactory
+            class="org.eclipse.mylyn.internal.reviews.example.emftasks.ui.editor.EmfExampleEditorPageFactory"
+            id="org.eclipse.mylyn.reviews.r4e.connector.ui.pageFactory">
+      </pageFactory>   
+   </extension>
+</plugin>
