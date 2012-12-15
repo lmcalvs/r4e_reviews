@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends Plugin {
@@ -40,7 +39,7 @@ public class Activator extends Plugin {
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer fTracer = new Tracer();
+//	public static Tracer fTracer = new Tracer();
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -69,9 +68,9 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		// super.start(context);
 		Plugin = this;
-		fTracer = new Tracer();
-		fTracer.init(PLUGIN_ID);
-		fTracer.traceDebug("plugin started: " + PLUGIN_ID);
+//		fTracer = new Tracer();
+//		fTracer.init(PLUGIN_ID);
+//		fTracer.traceDebug("plugin started: " + PLUGIN_ID);
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class Activator extends Plugin {
 	public void stop(BundleContext context) throws Exception {
 		Plugin = null;
 		// super.stop(context);
-		fTracer.traceDebug("plugin stopped");
+//		fTracer.traceDebug("plugin stopped");
 	}
 
 	/**

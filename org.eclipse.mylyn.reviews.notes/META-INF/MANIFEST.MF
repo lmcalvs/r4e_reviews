@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jgit;bundle-version="1.3.0",
  org.eclipse.egit.core;bundle-version="1.3.0",
  org.eclipse.emf.ecore;bundle-version="2.5.0",
- org.eclipse.mylyn.reviews.r4e.core;bundle-version="0.13.0"
+ org.eclipse.emf.ecore.xmi;bundle-version="2.5.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.mylyn.reviews.internal.notes.Activator
-Export-Package: org.eclipse.mylyn.reviews.internal.notes
+Export-Package: org.eclipse.mylyn.reviews.internal.notes,
+ org.eclipse.mylyn.reviews.internal.notes.model.entityData,
+ org.eclipse.mylyn.reviews.internal.notes.model.entityData.impl,
+ org.eclipse.mylyn.reviews.internal.notes.model.entityData.util

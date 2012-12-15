@@ -47,9 +47,17 @@
   <children xmi:type="notation:Node" xmi:id="_XbWfEEOYEeKw4dwL4dCM7g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_XbXtMEOYEeKw4dwL4dCM7g" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_XbXtMUOYEeKw4dwL4dCM7g" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_dIUB4EOYEeKw4dwL4dCM7g" type="2001">
-        <element xmi:type="ecore:EAttribute" href="entityData.ecore#//ValueContainer/name"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_dIUB4UOYEeKw4dwL4dCM7g"/>
+      <children xmi:type="notation:Node" xmi:id="_Lb60UEUnEeK3DM6diZUALg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="entityData.ecore#//ValueContainer/text"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Lb60UUUnEeK3DM6diZUALg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_knvD4EUkEeK3DM6diZUALg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="entityData.ecore#//ValueContainer/number"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_knvD4UUkEeK3DM6diZUALg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_R4pnMEUnEeK3DM6diZUALg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="entityData.ecore#//ValueContainer/date"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_R4pnMUUnEeK3DM6diZUALg"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_XbYUQEOYEeKw4dwL4dCM7g"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_XbYUQUOYEeKw4dwL4dCM7g"/>
@@ -62,7 +70,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_XbWfEUOYEeKw4dwL4dCM7g" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="entityData.ecore#//ValueContainer"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_XbWfEkOYEeKw4dwL4dCM7g" x="468" y="216" width="207" height="75"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_XbWfEkOYEeKw4dwL4dCM7g" x="468" y="216" width="207" height="99"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_ynB4IEOWEeKw4dwL4dCM7g"/>
   <element xmi:type="ecore:EPackage" href="entityData.ecore#/"/>

@@ -20,13 +20,6 @@
             uri="http://org.eclipse.mylyn.reviews.model.notes.ecore/1.0">
       </package>
    </extension>
-   <extension
-         point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            class="org.eclipse.mylyn.reviews.internal.notes.model.entityData.util.EntityDataAdapterFactory"
-            type="org.eclipse.mylyn.reviews.notes.parser1">
-      </parser>
-   </extension>
 
 
 
