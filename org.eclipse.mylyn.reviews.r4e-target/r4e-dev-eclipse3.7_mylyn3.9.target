@@ -52,17 +52,17 @@
 <repository location="http://download.eclipse.org/releases/indigo/201109230900/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.tigris.subversion.subclipse.feature.group" version="1.8.16"/>
-<unit id="org.tigris.subversion.subclipse.mylyn.feature.group" version="3.0.0"/>
-<unit id="org.tigris.subversion.clientadapter.feature.feature.group" version="1.8.3"/>
-<unit id="org.tigris.subversion.clientadapter.javahl.feature.feature.group" version="1.7.7"/>
+<unit id="org.tigris.subversion.subclipse.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.subclipse.mylyn.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.clientadapter.feature.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.clientadapter.javahl.feature.feature.group" version="0.0.0"/>
 <repository location="http://subclipse.tigris.org/update_1.8.x"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.mylyn.git.feature.group" version="1.1.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.subclipse.feature.group" version="1.1.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.commons.feature.group" version="3.9.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.versions.feature.group" version="1.1.0.I20121208-2137"/>
+<unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/mylyn/snapshots/weekly"/>
 </location>
 </locations>

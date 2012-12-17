@@ -2,10 +2,10 @@
 <?pde version="3.8"?><target name="r4e-dev-eclipse4.2-mylyn3.9" sequenceNumber="13">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.mylyn.git.feature.group" version="1.1.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.subclipse.feature.group" version="1.1.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.commons.feature.group" version="3.9.0.I20121208-2137"/>
-<unit id="org.eclipse.mylyn.versions.feature.group" version="1.1.0.I20121208-2137"/>
+<unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/mylyn/snapshots/weekly"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
