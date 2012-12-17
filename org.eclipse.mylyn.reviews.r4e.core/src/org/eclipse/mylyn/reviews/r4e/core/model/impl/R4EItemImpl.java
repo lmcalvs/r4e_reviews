@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.mylyn.reviews.core.model.IComment;
 import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.core.model.IReview;
 import org.eclipse.mylyn.reviews.core.model.IReviewItem;
@@ -816,4 +817,19 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 		return result.toString();
 	}
 
+	/**
+	 * Returns empty list for now.
+	 * @generated NOT
+	 */
+	public List<IComment> getAllComments() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Returns topics.
+	 * @generated NOT
+	 */
+	public List<ITopic> getDirectTopics() {
+		throw new UnsupportedOperationException();
+	}
 } //R4EItemImpl
