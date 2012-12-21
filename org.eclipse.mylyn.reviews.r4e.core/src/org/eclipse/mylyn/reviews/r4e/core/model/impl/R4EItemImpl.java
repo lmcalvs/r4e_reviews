@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.core.model.IReview;
 import org.eclipse.mylyn.reviews.core.model.IReviewItem;
 import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.core.model.ITopicContainer;
 import org.eclipse.mylyn.reviews.core.model.IUser;
 import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -48,10 +50,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAllComments <em>All Comments</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getTopics <em>Topics</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getDirectTopics <em>Direct Topics</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedBy <em>Added By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getReview <em>Review</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getTopics <em>Topics</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedById <em>Added By Id</em>}</li>
@@ -67,6 +71,26 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * @generated
  */
 public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
+	/**
+	 * The cached value of the '{@link #getTopics() <em>Topics</em>}' reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @see #getTopics()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ITopic> topics;
+
+	/**
+	 * The cached value of the '{@link #getDirectTopics() <em>Direct Topics</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDirectTopics()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ITopic> directTopics;
+
 	/**
 	 * The cached value of the '{@link #getAddedBy() <em>Added By</em>}' reference.
 	 * <!-- begin-user-doc --> <!--
@@ -106,16 +130,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getTopics() <em>Topics</em>}' reference list.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @see #getTopics()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ITopic> topics;
 
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -376,7 +390,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 */
 	public List<ITopic> getTopics() {
 		if (topics == null) {
-			topics = new EObjectWithInverseResolvingEList<ITopic>(ITopic.class, this, RModelPackage.R4E_ITEM__TOPICS, ReviewsPackage.TOPIC__ITEM);
+			topics = new EObjectResolvingEList<ITopic>(ITopic.class, this, RModelPackage.R4E_ITEM__TOPICS);
 		}
 		return topics;
 	}
@@ -546,8 +560,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RModelPackage.R4E_ITEM__TOPICS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTopics()).basicAdd(otherEnd, msgs);
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getDirectTopics()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -559,8 +573,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RModelPackage.R4E_ITEM__TOPICS:
-				return ((InternalEList<?>)getTopics()).basicRemove(otherEnd, msgs);
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				return ((InternalEList<?>)getDirectTopics()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_ITEM__FILE_CONTEXT_LIST:
 				return ((InternalEList<?>)getFileContextList()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_ITEM__INFO_ATT:
@@ -576,6 +590,12 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case RModelPackage.R4E_ITEM__ALL_COMMENTS:
+				return getAllComments();
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return getTopics();
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				return getDirectTopics();
 			case RModelPackage.R4E_ITEM__ADDED_BY:
 				if (resolve) return getAddedBy();
 				return basicGetAddedBy();
@@ -584,8 +604,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return basicGetReview();
 			case RModelPackage.R4E_ITEM__NAME:
 				return getName();
-			case RModelPackage.R4E_ITEM__TOPICS:
-				return getTopics();
 			case RModelPackage.R4E_ITEM__ID:
 				return getId();
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
@@ -617,6 +635,14 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case RModelPackage.R4E_ITEM__TOPICS:
+				getTopics().clear();
+				getTopics().addAll((Collection<? extends ITopic>)newValue);
+				return;
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				getDirectTopics().clear();
+				getDirectTopics().addAll((Collection<? extends ITopic>)newValue);
+				return;
 			case RModelPackage.R4E_ITEM__ADDED_BY:
 				setAddedBy((IUser)newValue);
 				return;
@@ -625,10 +651,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return;
 			case RModelPackage.R4E_ITEM__NAME:
 				setName((String)newValue);
-				return;
-			case RModelPackage.R4E_ITEM__TOPICS:
-				getTopics().clear();
-				getTopics().addAll((Collection<? extends ITopic>)newValue);
 				return;
 			case RModelPackage.R4E_ITEM__ID:
 				setId((String)newValue);
@@ -670,6 +692,12 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_ITEM__TOPICS:
+				getTopics().clear();
+				return;
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				getDirectTopics().clear();
+				return;
 			case RModelPackage.R4E_ITEM__ADDED_BY:
 				setAddedBy((IUser)null);
 				return;
@@ -678,9 +706,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return;
 			case RModelPackage.R4E_ITEM__NAME:
 				setName(NAME_EDEFAULT);
-				return;
-			case RModelPackage.R4E_ITEM__TOPICS:
-				getTopics().clear();
 				return;
 			case RModelPackage.R4E_ITEM__ID:
 				setId(ID_EDEFAULT);
@@ -720,14 +745,18 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_ITEM__ALL_COMMENTS:
+				return !getAllComments().isEmpty();
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return topics != null && !topics.isEmpty();
+			case RModelPackage.R4E_ITEM__DIRECT_TOPICS:
+				return directTopics != null && !directTopics.isEmpty();
 			case RModelPackage.R4E_ITEM__ADDED_BY:
 				return addedBy != null;
 			case RModelPackage.R4E_ITEM__REVIEW:
 				return review != null;
 			case RModelPackage.R4E_ITEM__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case RModelPackage.R4E_ITEM__TOPICS:
-				return topics != null && !topics.isEmpty();
 			case RModelPackage.R4E_ITEM__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
@@ -756,12 +785,19 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ITopicContainer.class) {
+			switch (derivedFeatureID) {
+				case RModelPackage.R4E_ITEM__ALL_COMMENTS: return ReviewsPackage.TOPIC_CONTAINER__ALL_COMMENTS;
+				case RModelPackage.R4E_ITEM__TOPICS: return ReviewsPackage.TOPIC_CONTAINER__TOPICS;
+				case RModelPackage.R4E_ITEM__DIRECT_TOPICS: return ReviewsPackage.TOPIC_CONTAINER__DIRECT_TOPICS;
+				default: return -1;
+			}
+		}
 		if (baseClass == IReviewItem.class) {
 			switch (derivedFeatureID) {
 				case RModelPackage.R4E_ITEM__ADDED_BY: return ReviewsPackage.REVIEW_ITEM__ADDED_BY;
 				case RModelPackage.R4E_ITEM__REVIEW: return ReviewsPackage.REVIEW_ITEM__REVIEW;
 				case RModelPackage.R4E_ITEM__NAME: return ReviewsPackage.REVIEW_ITEM__NAME;
-				case RModelPackage.R4E_ITEM__TOPICS: return ReviewsPackage.REVIEW_ITEM__TOPICS;
 				case RModelPackage.R4E_ITEM__ID: return ReviewsPackage.REVIEW_ITEM__ID;
 				default: return -1;
 			}
@@ -775,12 +811,19 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ITopicContainer.class) {
+			switch (baseFeatureID) {
+				case ReviewsPackage.TOPIC_CONTAINER__ALL_COMMENTS: return RModelPackage.R4E_ITEM__ALL_COMMENTS;
+				case ReviewsPackage.TOPIC_CONTAINER__TOPICS: return RModelPackage.R4E_ITEM__TOPICS;
+				case ReviewsPackage.TOPIC_CONTAINER__DIRECT_TOPICS: return RModelPackage.R4E_ITEM__DIRECT_TOPICS;
+				default: return -1;
+			}
+		}
 		if (baseClass == IReviewItem.class) {
 			switch (baseFeatureID) {
 				case ReviewsPackage.REVIEW_ITEM__ADDED_BY: return RModelPackage.R4E_ITEM__ADDED_BY;
 				case ReviewsPackage.REVIEW_ITEM__REVIEW: return RModelPackage.R4E_ITEM__REVIEW;
 				case ReviewsPackage.REVIEW_ITEM__NAME: return RModelPackage.R4E_ITEM__NAME;
-				case ReviewsPackage.REVIEW_ITEM__TOPICS: return RModelPackage.R4E_ITEM__TOPICS;
 				case ReviewsPackage.REVIEW_ITEM__ID: return RModelPackage.R4E_ITEM__ID;
 				default: return -1;
 			}

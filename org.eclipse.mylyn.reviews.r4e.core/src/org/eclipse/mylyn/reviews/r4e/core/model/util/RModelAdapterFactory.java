@@ -23,6 +23,8 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.mylyn.reviews.core.model.IComment;
 import org.eclipse.mylyn.reviews.core.model.ICommentType;
+import org.eclipse.mylyn.reviews.core.model.IDated;
+import org.eclipse.mylyn.reviews.core.model.IIndexed;
 import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
 import org.eclipse.mylyn.reviews.core.model.IReview;
@@ -32,7 +34,9 @@ import org.eclipse.mylyn.reviews.core.model.IReviewItem;
 import org.eclipse.mylyn.reviews.core.model.IReviewState;
 import org.eclipse.mylyn.reviews.core.model.ITaskReference;
 import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.core.model.ITopicContainer;
 import org.eclipse.mylyn.reviews.core.model.IUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
@@ -261,8 +265,20 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 				return createModelVersioningAdapter();
 			}
 			@Override
+			public Adapter caseTopicContainer(ITopicContainer object) {
+				return createTopicContainerAdapter();
+			}
+			@Override
+			public Adapter caseDated(IDated object) {
+				return createDatedAdapter();
+			}
+			@Override
 			public Adapter caseReview(IReview object) {
 				return createReviewAdapter();
+			}
+			@Override
+			public Adapter caseIndexed(IIndexed object) {
+				return createIndexedAdapter();
 			}
 			@Override
 			public Adapter caseComment(IComment object) {
@@ -803,6 +819,34 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ITopicContainer <em>Topic Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.core.model.ITopicContainer
+	 * @generated
+	 */
+	public Adapter createTopicContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IDated <em>Dated</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.core.model.IDated
+	 * @generated
+	 */
+	public Adapter createDatedAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReview <em>Review</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
 	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
@@ -811,6 +855,20 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReviewAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IIndexed <em>Indexed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.core.model.IIndexed
+	 * @generated
+	 */
+	public Adapter createIndexedAdapter() {
 		return null;
 	}
 

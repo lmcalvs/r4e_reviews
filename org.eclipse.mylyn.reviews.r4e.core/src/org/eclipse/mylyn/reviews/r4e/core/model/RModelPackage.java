@@ -238,12 +238,48 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW__ENABLED = ReviewsPackage.REVIEW__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>All Comments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__ALL_COMMENTS = ReviewsPackage.REVIEW__ALL_COMMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_REVIEW__TOPICS = ReviewsPackage.REVIEW__TOPICS;
+
+	/**
+	 * The feature id for the '<em><b>Direct Topics</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__DIRECT_TOPICS = ReviewsPackage.REVIEW__DIRECT_TOPICS;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__CREATION_DATE = ReviewsPackage.REVIEW__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__MODIFICATION_DATE = ReviewsPackage.REVIEW__MODIFICATION_DATE;
 
 	/**
 	 * The feature id for the '<em><b>Items</b></em>' reference list.
@@ -278,6 +314,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_REVIEW__ID = ReviewsPackage.REVIEW__ID;
+
+	/**
+	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__OWNER = ReviewsPackage.REVIEW__OWNER;
 
 	/**
 	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
@@ -473,6 +518,32 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__ENABLED = ReviewsPackage.TOPIC__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__INDEX = ReviewsPackage.TOPIC__INDEX;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__CREATION_DATE = ReviewsPackage.TOPIC__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__MODIFICATION_DATE = ReviewsPackage.TOPIC__MODIFICATION_DATE;
+
+	/**
 	 * The feature id for the '<em><b>Author</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -498,14 +569,6 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__DESCRIPTION = ReviewsPackage.TOPIC__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__CREATION_DATE = ReviewsPackage.TOPIC__CREATION_DATE;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -529,6 +592,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_ANOMALY__DRAFT = ReviewsPackage.TOPIC__DRAFT;
+
+	/**
+	 * The feature id for the '<em><b>Parent Topic</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__PARENT_TOPIC = ReviewsPackage.TOPIC__PARENT_TOPIC;
 
 	/**
 	 * The feature id for the '<em><b>Task</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
@@ -739,12 +811,48 @@ public interface RModelPackage extends EPackage {
 	int R4E_FORMAL_REVIEW__ENABLED = R4E_REVIEW__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>All Comments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__ALL_COMMENTS = R4E_REVIEW__ALL_COMMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__TOPICS = R4E_REVIEW__TOPICS;
+
+	/**
+	 * The feature id for the '<em><b>Direct Topics</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__DIRECT_TOPICS = R4E_REVIEW__DIRECT_TOPICS;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__CREATION_DATE = R4E_REVIEW__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__MODIFICATION_DATE = R4E_REVIEW__MODIFICATION_DATE;
 
 	/**
 	 * The feature id for the '<em><b>Items</b></em>' reference list.
@@ -779,6 +887,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__ID = R4E_REVIEW__ID;
+
+	/**
+	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__OWNER = R4E_REVIEW__OWNER;
 
 	/**
 	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
@@ -1501,28 +1618,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_ITEM__R4E_ID = R4EID_COMPONENT__R4E_ID;
 
 	/**
-	 * The feature id for the '<em><b>Added By</b></em>' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>All Comments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__ADDED_BY = R4EID_COMPONENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Review</b></em>' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ITEM__REVIEW = R4EID_COMPONENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ITEM__NAME = R4EID_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_ITEM__ALL_COMMENTS = R4EID_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
@@ -1530,7 +1632,40 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__TOPICS = R4EID_COMPONENT_FEATURE_COUNT + 3;
+	int R4E_ITEM__TOPICS = R4EID_COMPONENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Direct Topics</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__DIRECT_TOPICS = R4EID_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Added By</b></em>' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__ADDED_BY = R4EID_COMPONENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Review</b></em>' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__REVIEW = R4EID_COMPONENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__NAME = R4EID_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1538,7 +1673,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__ID = R4EID_COMPONENT_FEATURE_COUNT + 4;
+	int R4E_ITEM__ID = R4EID_COMPONENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -1546,7 +1681,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__DESCRIPTION = R4EID_COMPONENT_FEATURE_COUNT + 5;
+	int R4E_ITEM__DESCRIPTION = R4EID_COMPONENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Added By Id</b></em>' attribute.
@@ -1554,7 +1689,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__ADDED_BY_ID = R4EID_COMPONENT_FEATURE_COUNT + 6;
+	int R4E_ITEM__ADDED_BY_ID = R4EID_COMPONENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>File Context List</b></em>' containment reference list.
@@ -1563,7 +1698,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__FILE_CONTEXT_LIST = R4EID_COMPONENT_FEATURE_COUNT + 7;
+	int R4E_ITEM__FILE_CONTEXT_LIST = R4EID_COMPONENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Repository Ref</b></em>' attribute.
@@ -1571,7 +1706,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__REPOSITORY_REF = R4EID_COMPONENT_FEATURE_COUNT + 8;
+	int R4E_ITEM__REPOSITORY_REF = R4EID_COMPONENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Project UR Is</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
@@ -1580,7 +1715,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__PROJECT_UR_IS = R4EID_COMPONENT_FEATURE_COUNT + 9;
+	int R4E_ITEM__PROJECT_UR_IS = R4EID_COMPONENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Author Rep</b></em>' attribute.
@@ -1588,7 +1723,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__AUTHOR_REP = R4EID_COMPONENT_FEATURE_COUNT + 10;
+	int R4E_ITEM__AUTHOR_REP = R4EID_COMPONENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Submitted</b></em>' attribute.
@@ -1596,7 +1731,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__SUBMITTED = R4EID_COMPONENT_FEATURE_COUNT + 11;
+	int R4E_ITEM__SUBMITTED = R4EID_COMPONENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
@@ -1604,7 +1739,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__INFO_ATT = R4EID_COMPONENT_FEATURE_COUNT + 12;
+	int R4E_ITEM__INFO_ATT = R4EID_COMPONENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The number of structural features of the '<em>R4E Item</em>' class.
@@ -1612,7 +1747,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM_FEATURE_COUNT = R4EID_COMPONENT_FEATURE_COUNT + 13;
+	int R4E_ITEM_FEATURE_COUNT = R4EID_COMPONENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl <em>R4E Content</em>}' class.
@@ -1622,6 +1757,15 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	int R4E_CONTENT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_CONTENT__INDEX = ReviewsPackage.LOCATION__INDEX;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' containment reference.
@@ -1657,6 +1801,15 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	int R4E_TEXT_CONTENT = 9;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_TEXT_CONTENT__INDEX = R4E_CONTENT__INDEX;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' containment reference.
@@ -1854,6 +2007,32 @@ public interface RModelPackage extends EPackage {
 	int R4E_COMMENT__ENABLED = ReviewsPackage.COMMENT__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__INDEX = ReviewsPackage.COMMENT__INDEX;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__CREATION_DATE = ReviewsPackage.COMMENT__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__MODIFICATION_DATE = ReviewsPackage.COMMENT__MODIFICATION_DATE;
+
+	/**
 	 * The feature id for the '<em><b>Author</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -1879,14 +2058,6 @@ public interface RModelPackage extends EPackage {
 	int R4E_COMMENT__DESCRIPTION = ReviewsPackage.COMMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_COMMENT__CREATION_DATE = ReviewsPackage.COMMENT__CREATION_DATE;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -1910,6 +2081,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_COMMENT__DRAFT = ReviewsPackage.COMMENT__DRAFT;
+
+	/**
+	 * The feature id for the '<em><b>Parent Topic</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__PARENT_TOPIC = ReviewsPackage.COMMENT__PARENT_TOPIC;
 
 	/**
 	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
