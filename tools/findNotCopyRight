@@ -1,0 +1,15 @@
+#!/bin/ksh 
+
+typeset -i mCnt
+
+for mFile in `find . -name "*.java"`
+do
+  mCnt=`egrep -c 'Copyright' $mFile`
+  if [ $mCnt -eq 0 ]; then
+        echo "found"
+	echo "File = "$mFile" does not contain 'copyright'"
+
+  fi
+done
+
+
