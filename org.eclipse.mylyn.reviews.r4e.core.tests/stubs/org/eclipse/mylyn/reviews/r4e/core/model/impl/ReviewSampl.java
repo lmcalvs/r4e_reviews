@@ -25,7 +25,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
@@ -194,7 +193,7 @@ public class ReviewSampl {
 
 			R4ETextContent content = fResFactory.createR4ETextContent(anomaly);
 			content.setInfo("Write any information here");
-			R4EAnomalyTextPosition location = fResFactory.createR4EAnomalyTextPosition(content);
+			R4ETextPosition location = fResFactory.createR4EAnomalyTextPosition(content);
 			location.setStartLine(50);
 			location.setEndLine(100);
 			location.setStartPosition(1230);

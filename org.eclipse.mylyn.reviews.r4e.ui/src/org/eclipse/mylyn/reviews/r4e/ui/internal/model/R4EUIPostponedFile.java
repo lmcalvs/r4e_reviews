@@ -26,12 +26,14 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -217,7 +219,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 
 		//get anomalies that are specific to a file
 		R4EUIPostponedAnomaly uiAnomaly = null;
-		R4EUITextPosition position = null;
+		IR4EUIPosition uiPosition = null;
 		fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getLocalVersionID());
 		final int anomaliesSize = (null != fAnomalies) ? fAnomalies.size() : 0;
 		R4EAnomaly anomaly = null;
@@ -230,14 +232,19 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			if (anomaly.isEnabled()
 					|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 				//Do not set position for global List<E>lies
-				position = null;
+				uiPosition = null;
 				List<ILocation> locations = anomaly.getLocations(); // $codepro.audit.disable variableDeclaredInLoop
 				if (null != locations) {
 					if (null != locations.get(0)) {
 						int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
 						for (int j = 0; j < locationsSize; j++) {
-							position = new R4EUITextPosition(((R4EContent) anomaly.getLocations().get(j)).getLocation());
-							uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, position);
+							R4EPosition pos = ((R4EContent) anomaly.getLocations().get(j)).getLocation();
+							if (pos instanceof R4ETextPosition) {
+								uiPosition = new R4EUITextPosition((R4ETextPosition) pos);
+							} else if (pos instanceof R4EModelPosition) {
+								uiPosition = new R4EUIModelPosition((R4EModelPosition) pos);
+							}
+							uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, uiPosition);
 							uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": "
 									+ uiAnomaly.getName());
 
@@ -305,7 +312,10 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		List<R4EAnomaly> savedAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget()
 				.getLocalVersionID());
 		R4EAnomaly anomaly = null;
-		R4EUITextPosition uiPosition = null;
+		IR4EUIPosition uiPosition = null;
+//		R4EUITextPosition uiPosition = null;
+		R4EPosition postponedPosition = null;
+
 		if (null != savedAnomalies) {
 			for (R4EAnomaly savedAnomaly : savedAnomalies) {
 				if (null == savedAnomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
@@ -317,7 +327,27 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 							R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID))) {
 						//Postponed anomaly existed but was disabled, restore it
 						anomaly = savedAnomaly;
-						uiPosition = new R4EUITextPosition(CommandUtils.getAnomalyPosition(anomaly));
+						postponedPosition = CommandUtils.getAnomalyPosition(anomaly);
+						if (postponedPosition == null) {
+							R4EUIPlugin.getDefault();
+							R4EUIPlugin.Ftracer.traceError("Unable to create postponed anomaly- invalid R4EPosition on saved anomaly"); //$NON-NLS-1$
+							return null;
+						}
+
+						R4EPosition position = null;
+						if (postponedPosition instanceof R4EModelPosition) {
+							//Set position data
+							position = R4EUIModelController.FModelExt.createR4EAnomalyModelPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+							uiPosition = new R4EUIModelPosition((R4EModelPosition) position);
+						} else if (postponedPosition instanceof R4ETextPosition) {
+							//Set position data
+							position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+							uiPosition = new R4EUITextPosition(((R4ETextPosition) postponedPosition));
+						} else {
+							R4EUIPlugin.Ftracer.traceError("Unkown R4EPosition instance - " + postponedPosition); //$NON-NLS-1$
+							return null;
+						}
+						uiPosition.setPositionInModel(position);
 					}
 				}
 			}
@@ -333,8 +363,26 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aOrigReviewName);
 
 			//Set position data
-			final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
-			uiPosition = new R4EUITextPosition(CommandUtils.getAnomalyPosition(aPostponedAnomaly));
+			postponedPosition = CommandUtils.getAnomalyPosition(aPostponedAnomaly);
+			if (postponedPosition == null) {
+				R4EUIPlugin.getDefault();
+				R4EUIPlugin.Ftracer.traceError("Unable to create postponed anomaly- invalid R4EPosition on source anomaly"); //$NON-NLS-1$
+				return null;
+			}
+
+			R4EPosition position = null;
+			if (postponedPosition instanceof R4EModelPosition) {
+				//Set position data
+				position = R4EUIModelController.FModelExt.createR4EAnomalyModelPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+				uiPosition = new R4EUIModelPosition((R4EModelPosition) position);
+			} else if (postponedPosition instanceof R4ETextPosition) {
+				//Set position data
+				position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+				uiPosition = new R4EUITextPosition(((R4ETextPosition) postponedPosition));
+			} else {
+				R4EUIPlugin.Ftracer.traceError("Unkown R4EPosition instance - " + postponedPosition); //$NON-NLS-1$
+				return null;
+			}
 			uiPosition.setPositionInModel(position);
 
 			//Set File version data

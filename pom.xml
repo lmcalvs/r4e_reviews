@@ -92,6 +92,11 @@
             <layout>p2</layout>
             <url>http://download.eclipse.org/r4e/updates/</url>
           </repository>
+		<repository>
+			<id>eclipse-emf-compare-integration</id>
+			<layout>p2</layout>
+			<url>					http://download.eclipse.org/modeling/emf/compare/updates/interim/1.3/</url>
+		</repository>
       </repositories>
       <modules>
          <module>org.eclipse.mylyn.reviews.r4e-site</module>
@@ -189,5 +194,7 @@
      <module>org.eclipse.mylyn.reviews.r4e.ui</module>
      <module>org.eclipse.mylyn.reviews.VCalendar</module>
      <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
+	<module>org.eclipse.mylyn.reviews.r4e.emf.compare.detection</module>
+	<module>org.eclipse.mylyn.reviews.r4e.emf.compare-feature	</module>
    </modules>
 </project>

@@ -183,7 +183,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EContent/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EContent/info"/>
     </genClasses>
-    <genClasses ecoreClass="r4e.ecore#//R4EPosition"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EPosition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EPosition/anomalyFile"/>
+    </genClasses>
     <genClasses ecoreClass="r4e.ecore#//R4EFileVersion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/platformURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/versionID"/>
@@ -246,6 +248,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/sender"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/receivers"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/body"/>
+    </genClasses>
+    <genClasses ecoreClass="r4e.ecore#//R4EModelPosition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EModelPosition/objectID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EModelPosition/description"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

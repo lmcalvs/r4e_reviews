@@ -17,7 +17,6 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-//import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 
 /**
  * @author Alvaro Sanchez-Leon

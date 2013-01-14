@@ -37,7 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  */
 public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R4EAnomalyTextPosition {
 	/**
-	 * The cached value of the '{@link #getFile() <em>File</em>}' containment reference.
+	 * The cached value of the '{@link #getFile() <em>File</em>}' reference.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * @see #getFile()
@@ -72,12 +72,6 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 			InternalEObject oldFile = (InternalEObject)file;
 			file = (R4EFileVersion)eResolveProxy(oldFile);
 			if (file != oldFile) {
-				InternalEObject newFile = (InternalEObject)file;
-				NotificationChain msgs = oldFile.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, null, null);
-				if (newFile.eInternalContainer() == null) {
-					msgs = newFile.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, null, msgs);
-				}
-				if (msgs != null) msgs.dispatch();
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, oldFile, file));
 			}
@@ -97,45 +91,11 @@ public class R4EAnomalyTextPositionImpl extends R4ETextPositionImpl implements R
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetFile(R4EFileVersion newFile, NotificationChain msgs) {
+	public void setFile(R4EFileVersion newFile) {
 		R4EFileVersion oldFile = file;
 		file = newFile;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, oldFile, newFile);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFile(R4EFileVersion newFile) {
-		if (newFile != file) {
-			NotificationChain msgs = null;
-			if (file != null)
-				msgs = ((InternalEObject)file).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, null, msgs);
-			if (newFile != null)
-				msgs = ((InternalEObject)newFile).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, null, msgs);
-			msgs = basicSetFile(newFile, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, newFile, newFile));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE:
-				return basicSetFile(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY_TEXT_POSITION__FILE, oldFile, file));
 	}
 
 	/**

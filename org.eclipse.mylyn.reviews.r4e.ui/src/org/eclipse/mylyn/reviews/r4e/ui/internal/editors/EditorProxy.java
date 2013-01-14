@@ -239,7 +239,7 @@ public class EditorProxy {
 		if (null != editor) {
 			//First try to activate current editor.  If it is not possible to display the element in the editor, reuse it if possible, or worse case close and re-open it
 			aPage.activate(editor);
-			if (!UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput())) {
+			if (!UIUtils.selectElementInEditor(editor)) {
 				//Reuse editor whenever possible, otherwise close and re-open it
 				if (editor instanceof IReusableEditor) {
 					aPage.reuseEditor((IReusableEditor) editor,

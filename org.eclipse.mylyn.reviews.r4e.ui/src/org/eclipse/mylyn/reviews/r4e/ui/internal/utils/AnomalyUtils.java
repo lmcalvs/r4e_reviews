@@ -31,7 +31,6 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -107,24 +106,23 @@ public class AnomalyUtils {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method addAnomalyFromText.
+	 * Method addAnomalyFromEditor.
 	 * 
 	 * @param aSelection
 	 *            ITextSelection
 	 * @param aInput
 	 *            - IEditorInput
 	 */
-	public static void addAnomalyFromText(ITextSelection aSelection, IEditorInput aInput, boolean aClone) {
+	public static void addAnomalyFromEditor(IR4EUIPosition aUIPosition, IEditorInput aInput, boolean aClone) {
 		//This is a text selection in a text editor, we need to get the file path and
 		//the position of the selection within the file
 		try {
-			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
 			final R4EFileVersion baseVersion = CommandUtils.getBaseFileData(aInput);
 			final R4EFileVersion targetVersion = CommandUtils.getTargetFileData(aInput);
 
 			//Add anomaly to model
 			if (null != targetVersion) {
-				addAnomaly(baseVersion, targetVersion, position, aClone);
+				addAnomaly(baseVersion, targetVersion, aUIPosition, aClone);
 			} else {
 				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file"); //$NON-NLS-1$
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,

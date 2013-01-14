@@ -48,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
@@ -778,16 +779,15 @@ public class CommandUtils {
 	 * 
 	 * @param aAnomaly
 	 *            R4EAnomaly
-	 * @return R4EAnomalyTextPosition
+	 * @return R4EPosition
 	 */
-	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
+	public static R4EPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
 		if (null != aAnomaly) {
 			final List<ILocation> location = aAnomaly.getLocations();
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
-					final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-					return position;
+					return content.getLocation();
 				}
 			}
 		}
@@ -807,10 +807,13 @@ public class CommandUtils {
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
-					final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-					if (null != position) {
-						return position.getFile();
+					final R4EPosition position = content.getLocation();
+					R4EFileVersion fileVersion = position.getAnomalyFile();
+					//TODO: Keep for backward compatibility until the deprecated R4EAnomalyTextPosition is removed from the core model
+					if (fileVersion == null && position instanceof R4EAnomalyTextPosition) {
+						fileVersion = ((R4EAnomalyTextPosition) position).getFile();
 					}
+					return fileVersion;
 				}
 			}
 		}

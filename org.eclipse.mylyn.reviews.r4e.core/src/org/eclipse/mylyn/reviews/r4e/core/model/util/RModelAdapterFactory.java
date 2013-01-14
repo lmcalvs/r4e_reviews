@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.core.model.IReviewState;
 import org.eclipse.mylyn.reviews.core.model.ITaskReference;
 import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.core.model.IUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
@@ -47,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -247,6 +249,10 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseR4EMeetingData(R4EMeetingData object) {
 				return createR4EMeetingDataAdapter();
+			}
+			@Override
+			public Adapter caseR4EModelPosition(R4EModelPosition object) {
+				return createR4EModelPositionAdapter();
 			}
 			@Override
 			public Adapter caseReviewComponent(IReviewComponent object) {
@@ -759,6 +765,19 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createR4EMeetingDataAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition <em>R4E Model Position</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that we can
+	 * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+	 * end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition
+	 * @generated
+	 */
+	public Adapter createR4EModelPositionAdapter() {
 		return null;
 	}
 

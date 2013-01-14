@@ -21,11 +21,15 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+
+//import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 
 /**
  * @author Sebastien Dubois
@@ -81,12 +85,19 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	public R4EUIDelta createDelta(R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
+	public R4EUIDelta createDelta(IR4EUIPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
 
 		//Create and set content model element
 		final R4EDelta delta = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext) getParent()).getFileContext());
-		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(delta));
-		aUiPosition.setPositionInModel(position);
+
+		R4EPosition position = null;
+		if (aUiPosition instanceof R4EUITextPosition) {
+			position = R4EUIModelController.FModelExt.createR4ETextPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(delta));
+			aUiPosition.setPositionInModel(position);
+		} else if (aUiPosition instanceof R4EUIModelPosition) {
+			position = R4EUIModelController.FModelExt.createR4EModelPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(delta));
+			aUiPosition.setPositionInModel(position);
+		}
 
 		//Create and set UI model element
 		final R4EUIDelta uiDelta = new R4EUIDelta(this, delta, aUiPosition);
@@ -105,7 +116,7 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 	public void open() {
 		final List<R4EDelta> deltas = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
 		if (null != deltas) {
-			R4EUITextPosition position = null;
+			IR4EUIPosition uiPosition = null;
 			R4EUIDelta newDelta = null;
 			final int deltaSize = deltas.size();
 			R4EDelta delta = null;
@@ -115,8 +126,13 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 						|| R4EUIPlugin.getDefault()
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					position = new R4EUITextPosition(deltas.get(i).getTarget().getLocation());
-					newDelta = new R4EUIDelta(this, deltas.get(i), position);
+					R4EPosition position = deltas.get(i).getTarget().getLocation();
+					if (position instanceof R4EModelPosition) {
+						uiPosition = new R4EUIModelPosition((R4EModelPosition) position);
+					} else if (position instanceof R4ETextPosition) {
+						uiPosition = new R4EUITextPosition((R4ETextPosition) position);
+					}
+					newDelta = new R4EUIDelta(this, deltas.get(i), uiPosition);
 					addChildren(newDelta);
 				}
 			}
