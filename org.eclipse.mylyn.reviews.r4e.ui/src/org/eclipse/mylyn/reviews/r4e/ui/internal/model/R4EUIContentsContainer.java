@@ -53,11 +53,24 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 	private static final Comparator<R4EUIContent> CONTENT_COMPARATOR = new Comparator<R4EUIContent>() {
 		// This is where the sorting happens.
 		public int compare(R4EUIContent aContent1, R4EUIContent aContent2) {
-			final int sortOrder = ((R4EUITextPosition) aContent1.getPosition()).getOffset()
-					- ((R4EUITextPosition) aContent2.getPosition()).getOffset();
-			if (sortOrder == 0) {
-				return ((R4EUITextPosition) aContent1.getPosition()).getLength()
-						- ((R4EUITextPosition) aContent2.getPosition()).getLength();
+			IR4EUIPosition uiposition = aContent1.getPosition();
+			int sortOrder = 0;
+			if (uiposition instanceof R4EUIModelPosition) {
+//				System.out.println("JBJB  UI model compare");
+//				sortOrder = ((R4EUIModelPosition) aContent1.getPosition()).getOffset()
+//						- ((R4EUIModelPosition) aContent2.getPosition()).getOffset();
+//				if (sortOrder == 0) {
+//					return ((R4EUITextPosition) aContent1.getPosition()).getLength()
+//							- ((R4EUITextPosition) aContent2.getPosition()).getLength();
+//				}
+			} else {
+//				System.out.println("Not a UI model compare");
+				sortOrder = ((R4EUITextPosition) aContent1.getPosition()).getOffset()
+						- ((R4EUITextPosition) aContent2.getPosition()).getOffset();
+				if (sortOrder == 0) {
+					return ((R4EUITextPosition) aContent1.getPosition()).getLength()
+							- ((R4EUITextPosition) aContent2.getPosition()).getLength();
+				}
 			}
 			return sortOrder;
 		}

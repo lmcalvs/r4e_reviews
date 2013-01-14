@@ -77,6 +77,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -758,6 +759,44 @@ public class UIUtils {
 	}
 
 	/**
+	 * @param editor
+	 *            IEditorPart
+	 * @return boolean
+	 */
+	public static boolean selectElementInEditor(IEditorPart editor) {
+		final IR4EUIModelElement element = getR4EUIElement();
+		IR4EUIPosition position = null;
+		if (element instanceof R4EUIContent) {
+			position = ((R4EUIContent) element).getPosition();
+		} else if (element instanceof R4EUIAnomalyBasic) {
+			position = ((R4EUIAnomalyBasic) element).getPosition();
+		}
+
+		if (position instanceof R4EUIModelPosition) {
+			return selectElementInCompareModelEditor(editor, (R4EUIModelPosition) position);
+		} else {
+			final IEditorInput aInput = editor.getEditorInput();
+			return selectElementInEditor((R4ECompareEditorInput) aInput);
+		}
+	}
+
+	private static boolean selectElementInCompareModelEditor(IEditorPart editor, R4EUIModelPosition pos) {
+		if (isEMFCompareActive()) {
+			UIEMFCompareUtils.selectElementInCompareModelEditor(editor, pos);
+			return true;
+		} else {
+			R4EUIPlugin.Ftracer.traceDebug("EMF Compare is not available or does not meet minimum requirements"); //$NON-NLS-1$
+			return false;
+		}
+	}
+
+	private static IR4EUIModelElement getR4EUIElement() {
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		return element;
+	}
+
+	/**
 	 * Method selectElementInEditor.
 	 * 
 	 * @param aInput
@@ -768,8 +807,7 @@ public class UIUtils {
 
 		//For now the Review Navigator View must be open to see the highlighted text in the compare editor
 		if (null != R4EUIModelController.getNavigatorView()) {
-			final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-			final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+			final IR4EUIModelElement element = getR4EUIElement();
 			IR4EUIPosition position = null;
 			boolean isLeftPane = true;
 
@@ -792,7 +830,7 @@ public class UIUtils {
 	}
 
 	/**
-	 * Method selectElementInEditor.
+	 * Method selectElementInEditorPane.
 	 * 
 	 * @param aInput
 	 *            R4ECompareEditorInput
@@ -927,8 +965,7 @@ public class UIUtils {
 			try {
 				if (aReview instanceof R4EUIReviewExtended) {
 					final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) aReview).getReview());
-					if (aNewPhase.equals(R4EReviewPhase.PREPARATION)
-							&& null == review.getActiveMeeting()) {
+					if (aNewPhase.equals(R4EReviewPhase.PREPARATION) && null == review.getActiveMeeting()) {
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
 								try {
@@ -1140,6 +1177,31 @@ public class UIUtils {
 	 */
 	public static String formatNumChanges(int aNumChanges, int aNumReviewedChanges) {
 		return Integer.toString(aNumReviewedChanges) + R4EUIConstants.SEPARATOR + Integer.toString(aNumChanges);
+	}
+
+	/**
+	 * Check if the requirements to use model compare are met
+	 * 
+	 * @return
+	 */
+	public static boolean isEMFCompareActive() {
+		boolean active = false;
+
+		try {
+			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck"); //$NON-NLS-1$
+			Object obj = emfCompareCheck.newInstance();
+			if (obj != null) {
+				active = true;
+			}
+		} catch (ClassNotFoundException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
+		} catch (InstantiationException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
+		} catch (IllegalAccessException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
+		}
+
+		return active;
 	}
 
 	//Inline commenting

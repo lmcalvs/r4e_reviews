@@ -55,6 +55,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -263,7 +266,23 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		// Set the label values for the compare editor
 		initLabels();
 
-		return new R4EFileContextNode(fLeft, fRight);
+//		return new R4EFileContextNode(fLeft, fRight);
+
+		// Build the diff node to compare the files		
+		final Differencer differencer = new Differencer();
+
+		//Store the differences here, we might need them later
+		final Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
+
+		/* We might want to do something here in the future
+		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
+			@Override
+			public void compareInputChanged(ICompareInput source) {
+			}
+		});
+		*/
+		return (ICompareInput) differences;
+
 	}
 
 	/**
@@ -304,10 +323,18 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public Control createContents(Composite aParent) {
 		final Control control = super.createContents(aParent);
 
-		//Go to the correct element in the compare editor
-		UIUtils.selectElementInEditor(this);
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		if (page != null) {
+			IEditorPart editor = page.findEditor(this);
+			if (editor != null) {
+				UIUtils.selectElementInEditor(editor);
+			}
+		} else {
+			//Go to the correct element in the compare editor
+			UIUtils.selectElementInEditor(this);
+		}
 
-		//TODO:  This is needed to show annotation highlighting whne opening the compare editor.
+		//TODO:  This is needed to show annotation highlighting when opening the compare editor.
 		//		 It should not be needed so this could be investigated in the future.
 		if (fAnnotationSupport != null) {
 			fAnnotationSupport.getTargetAnnotationModel().refreshAnnotations();

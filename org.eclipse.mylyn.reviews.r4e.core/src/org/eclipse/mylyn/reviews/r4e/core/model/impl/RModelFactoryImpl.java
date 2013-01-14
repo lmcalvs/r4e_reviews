@@ -45,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -80,26 +81,25 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	private static RModelFactoryExt factoryExtension = SerializeFactory.getModelExtension();
 
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static RModelFactory init() {
 		try {
-			RModelFactory theRModelFactory = (RModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.r4e.core.model/"); 
+			RModelFactory theRModelFactory = (RModelFactory) EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.r4e.core.model/");
 			if (theRModelFactory != null) {
 				return theRModelFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new RModelFactoryImpl();
 	}
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public RModelFactoryImpl() {
@@ -108,107 +108,146 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case RModelPackage.R4E_REVIEW_GROUP: return createR4EReviewGroup();
-			case RModelPackage.R4E_REVIEW: return createR4EReview();
-			case RModelPackage.R4E_ANOMALY: return createR4EAnomaly();
-			case RModelPackage.R4E_FORMAL_REVIEW: return createR4EFormalReview();
-			case RModelPackage.R4E_TEXT_POSITION: return createR4ETextPosition();
-			case RModelPackage.R4E_REVIEW_DECISION: return createR4EReviewDecision();
-			case RModelPackage.R4E_USER: return createR4EUser();
-			case RModelPackage.R4E_PARTICIPANT: return createR4EParticipant();
-			case RModelPackage.R4E_ITEM: return createR4EItem();
-			case RModelPackage.R4E_TEXT_CONTENT: return createR4ETextContent();
-			case RModelPackage.R4EID: return createR4EID();
-			case RModelPackage.R4E_ANOMALY_TYPE: return createR4EAnomalyType();
-			case RModelPackage.R4E_TASK_REFERENCE: return createR4ETaskReference();
-			case RModelPackage.R4E_REVIEW_STATE: return createR4EReviewState();
-			case RModelPackage.R4E_COMMENT: return createR4EComment();
-			case RModelPackage.R4E_REVIEW_COMPONENT: return createR4EReviewComponent();
-			case RModelPackage.R4E_FILE_CONTEXT: return createR4EFileContext();
-			case RModelPackage.R4E_DELTA: return createR4EDelta();
-			case RModelPackage.R4E_COMMENT_TYPE: return createR4ECommentType();
-			case RModelPackage.MAP_TO_ANOMALY_TYPE: return (EObject)createMapToAnomalyType();
-			case RModelPackage.R4E_POSITION: return createR4EPosition();
-			case RModelPackage.R4E_FILE_VERSION: return createR4EFileVersion();
-			case RModelPackage.MAP_NAME_TO_REVIEW: return (EObject)createMapNameToReview();
-			case RModelPackage.MAP_TO_USERS: return (EObject)createMapToUsers();
-			case RModelPackage.R4E_USER_REVIEWS: return createR4EUserReviews();
-			case RModelPackage.R4EID_COMPONENT: return createR4EIDComponent();
-			case RModelPackage.MAP_ID_TO_COMPONENT: return (EObject)createMapIDToComponent();
-			case RModelPackage.MAP_USER_ID_TO_USER_REVIEWS: return (EObject)createMapUserIDToUserReviews();
-			case RModelPackage.R4E_ANOMALY_TEXT_POSITION: return createR4EAnomalyTextPosition();
-			case RModelPackage.MAP_DATE_TO_DURATION: return (EObject)createMapDateToDuration();
-			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
-			case RModelPackage.R4E_REVIEW_PHASE_INFO: return createR4EReviewPhaseInfo();
-			case RModelPackage.R4E_MEETING_DATA: return createR4EMeetingData();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case RModelPackage.R4E_REVIEW_GROUP:
+			return createR4EReviewGroup();
+		case RModelPackage.R4E_REVIEW:
+			return createR4EReview();
+		case RModelPackage.R4E_ANOMALY:
+			return createR4EAnomaly();
+		case RModelPackage.R4E_FORMAL_REVIEW:
+			return createR4EFormalReview();
+		case RModelPackage.R4E_TEXT_POSITION:
+			return createR4ETextPosition();
+		case RModelPackage.R4E_REVIEW_DECISION:
+			return createR4EReviewDecision();
+		case RModelPackage.R4E_USER:
+			return createR4EUser();
+		case RModelPackage.R4E_PARTICIPANT:
+			return createR4EParticipant();
+		case RModelPackage.R4E_ITEM:
+			return createR4EItem();
+		case RModelPackage.R4E_TEXT_CONTENT:
+			return createR4ETextContent();
+		case RModelPackage.R4EID:
+			return createR4EID();
+		case RModelPackage.R4E_ANOMALY_TYPE:
+			return createR4EAnomalyType();
+		case RModelPackage.R4E_TASK_REFERENCE:
+			return createR4ETaskReference();
+		case RModelPackage.R4E_REVIEW_STATE:
+			return createR4EReviewState();
+		case RModelPackage.R4E_COMMENT:
+			return createR4EComment();
+		case RModelPackage.R4E_REVIEW_COMPONENT:
+			return createR4EReviewComponent();
+		case RModelPackage.R4E_FILE_CONTEXT:
+			return createR4EFileContext();
+		case RModelPackage.R4E_DELTA:
+			return createR4EDelta();
+		case RModelPackage.R4E_COMMENT_TYPE:
+			return createR4ECommentType();
+		case RModelPackage.MAP_TO_ANOMALY_TYPE:
+			return (EObject) createMapToAnomalyType();
+		case RModelPackage.R4E_POSITION:
+			return createR4EPosition();
+		case RModelPackage.R4E_FILE_VERSION:
+			return createR4EFileVersion();
+		case RModelPackage.MAP_NAME_TO_REVIEW:
+			return (EObject) createMapNameToReview();
+		case RModelPackage.MAP_TO_USERS:
+			return (EObject) createMapToUsers();
+		case RModelPackage.R4E_USER_REVIEWS:
+			return createR4EUserReviews();
+		case RModelPackage.R4EID_COMPONENT:
+			return createR4EIDComponent();
+		case RModelPackage.MAP_ID_TO_COMPONENT:
+			return (EObject) createMapIDToComponent();
+		case RModelPackage.MAP_USER_ID_TO_USER_REVIEWS:
+			return (EObject) createMapUserIDToUserReviews();
+		case RModelPackage.R4E_ANOMALY_TEXT_POSITION:
+			return createR4EAnomalyTextPosition();
+		case RModelPackage.MAP_DATE_TO_DURATION:
+			return (EObject) createMapDateToDuration();
+		case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES:
+			return (EObject) createMapKeyToInfoAttributes();
+		case RModelPackage.R4E_REVIEW_PHASE_INFO:
+			return createR4EReviewPhaseInfo();
+		case RModelPackage.R4E_MEETING_DATA:
+			return createR4EMeetingData();
+		case RModelPackage.R4E_MODEL_POSITION:
+			return createR4EModelPosition();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case RModelPackage.R4E_ANOMALY_STATE:
-				return createR4EAnomalyStateFromString(eDataType, initialValue);
-			case RModelPackage.R4E_REVIEW_PHASE:
-				return createR4EReviewPhaseFromString(eDataType, initialValue);
-			case RModelPackage.R4E_USER_ROLE:
-				return createR4EUserRoleFromString(eDataType, initialValue);
-			case RModelPackage.R4E_DECISION:
-				return createR4EDecisionFromString(eDataType, initialValue);
-			case RModelPackage.R4E_REVIEW_TYPE:
-				return createR4EReviewTypeFromString(eDataType, initialValue);
-			case RModelPackage.R4E_CONTEXT_TYPE:
-				return createR4EContextTypeFromString(eDataType, initialValue);
-			case RModelPackage.IRESOURCE:
-				return createIResourceFromString(eDataType, initialValue);
-			case RModelPackage.IFILE_REVISION:
-				return createIFileRevisionFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		case RModelPackage.R4E_ANOMALY_STATE:
+			return createR4EAnomalyStateFromString(eDataType, initialValue);
+		case RModelPackage.R4E_REVIEW_PHASE:
+			return createR4EReviewPhaseFromString(eDataType, initialValue);
+		case RModelPackage.R4E_USER_ROLE:
+			return createR4EUserRoleFromString(eDataType, initialValue);
+		case RModelPackage.R4E_DECISION:
+			return createR4EDecisionFromString(eDataType, initialValue);
+		case RModelPackage.R4E_REVIEW_TYPE:
+			return createR4EReviewTypeFromString(eDataType, initialValue);
+		case RModelPackage.R4E_CONTEXT_TYPE:
+			return createR4EContextTypeFromString(eDataType, initialValue);
+		case RModelPackage.IRESOURCE:
+			return createIResourceFromString(eDataType, initialValue);
+		case RModelPackage.IFILE_REVISION:
+			return createIFileRevisionFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case RModelPackage.R4E_ANOMALY_STATE:
-				return convertR4EAnomalyStateToString(eDataType, instanceValue);
-			case RModelPackage.R4E_REVIEW_PHASE:
-				return convertR4EReviewPhaseToString(eDataType, instanceValue);
-			case RModelPackage.R4E_USER_ROLE:
-				return convertR4EUserRoleToString(eDataType, instanceValue);
-			case RModelPackage.R4E_DECISION:
-				return convertR4EDecisionToString(eDataType, instanceValue);
-			case RModelPackage.R4E_REVIEW_TYPE:
-				return convertR4EReviewTypeToString(eDataType, instanceValue);
-			case RModelPackage.R4E_CONTEXT_TYPE:
-				return convertR4EContextTypeToString(eDataType, instanceValue);
-			case RModelPackage.IRESOURCE:
-				return convertIResourceToString(eDataType, instanceValue);
-			case RModelPackage.IFILE_REVISION:
-				return convertIFileRevisionToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		case RModelPackage.R4E_ANOMALY_STATE:
+			return convertR4EAnomalyStateToString(eDataType, instanceValue);
+		case RModelPackage.R4E_REVIEW_PHASE:
+			return convertR4EReviewPhaseToString(eDataType, instanceValue);
+		case RModelPackage.R4E_USER_ROLE:
+			return convertR4EUserRoleToString(eDataType, instanceValue);
+		case RModelPackage.R4E_DECISION:
+			return convertR4EDecisionToString(eDataType, instanceValue);
+		case RModelPackage.R4E_REVIEW_TYPE:
+			return convertR4EReviewTypeToString(eDataType, instanceValue);
+		case RModelPackage.R4E_CONTEXT_TYPE:
+			return convertR4EContextTypeToString(eDataType, instanceValue);
+		case RModelPackage.IRESOURCE:
+			return convertIResourceToString(eDataType, instanceValue);
+		case RModelPackage.IFILE_REVISION:
+			return convertIFileRevisionToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewGroup createR4EReviewGroup() {
@@ -218,6 +257,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReview createR4EReview() {
@@ -227,6 +267,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EAnomaly createR4EAnomaly() {
@@ -236,6 +277,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EFormalReview createR4EFormalReview() {
@@ -245,6 +287,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4ETextPosition createR4ETextPosition() {
@@ -254,6 +297,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewDecision createR4EReviewDecision() {
@@ -263,6 +307,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EUser createR4EUser() {
@@ -272,6 +317,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EParticipant createR4EParticipant() {
@@ -281,6 +327,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EItem createR4EItem() {
@@ -290,6 +337,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4ETextContent createR4ETextContent() {
@@ -299,6 +347,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EID createR4EID() {
@@ -308,6 +357,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EAnomalyType createR4EAnomalyType() {
@@ -317,6 +367,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4ETaskReference createR4ETaskReference() {
@@ -326,6 +377,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewState createR4EReviewState() {
@@ -335,6 +387,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EComment createR4EComment() {
@@ -344,6 +397,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewComponent createR4EReviewComponent() {
@@ -353,6 +407,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EFileContext createR4EFileContext() {
@@ -362,6 +417,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EDelta createR4EDelta() {
@@ -371,6 +427,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EFileVersion createR4EFileVersion() {
@@ -380,6 +437,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<String, R4EReview> createMapNameToReview() {
@@ -389,6 +447,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<String, R4EUser> createMapToUsers() {
@@ -398,6 +457,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EUserReviews createR4EUserReviews() {
@@ -407,6 +467,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EIDComponent createR4EIDComponent() {
@@ -416,6 +477,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<R4EID, R4EIDComponent> createMapIDToComponent() {
@@ -425,6 +487,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<String, R4EUserReviews> createMapUserIDToUserReviews() {
@@ -434,6 +497,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EAnomalyTextPosition createR4EAnomalyTextPosition() {
@@ -443,6 +507,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<Date, Integer> createMapDateToDuration() {
@@ -452,6 +517,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<String, String> createMapKeyToInfoAttributes() {
@@ -461,6 +527,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewPhaseInfo createR4EReviewPhaseInfo() {
@@ -470,6 +537,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EMeetingData createR4EMeetingData() {
@@ -479,6 +547,17 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public R4EModelPosition createR4EModelPosition() {
+		R4EModelPositionImpl r4EModelPosition = new R4EModelPositionImpl();
+		return r4EModelPosition;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4ECommentType createR4ECommentType() {
@@ -488,6 +567,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Map.Entry<String, R4EAnomalyType> createMapToAnomalyType() {
@@ -497,6 +577,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EPosition createR4EPosition() {
@@ -506,16 +587,21 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EAnomalyState createR4EAnomalyState(String literal) {
 		R4EAnomalyState result = R4EAnomalyState.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_ANOMALY_STATE.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_ANOMALY_STATE.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EAnomalyState createR4EAnomalyStateFromString(EDataType eDataType, String initialValue) {
@@ -524,6 +610,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EAnomalyState(R4EAnomalyState instanceValue) {
@@ -532,24 +619,30 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EAnomalyStateToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EAnomalyState((R4EAnomalyState)instanceValue);
+		return convertR4EAnomalyState((R4EAnomalyState) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewPhase createR4EReviewPhase(String literal) {
 		R4EReviewPhase result = R4EReviewPhase.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_REVIEW_PHASE.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_REVIEW_PHASE.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewPhase createR4EReviewPhaseFromString(EDataType eDataType, String initialValue) {
@@ -558,6 +651,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EReviewPhase(R4EReviewPhase instanceValue) {
@@ -566,24 +660,30 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EReviewPhaseToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EReviewPhase((R4EReviewPhase)instanceValue);
+		return convertR4EReviewPhase((R4EReviewPhase) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EUserRole createR4EUserRole(String literal) {
 		R4EUserRole result = R4EUserRole.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_USER_ROLE.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_USER_ROLE.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EUserRole createR4EUserRoleFromString(EDataType eDataType, String initialValue) {
@@ -592,6 +692,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EUserRole(R4EUserRole instanceValue) {
@@ -600,24 +701,30 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EUserRoleToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EUserRole((R4EUserRole)instanceValue);
+		return convertR4EUserRole((R4EUserRole) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EDecision createR4EDecision(String literal) {
 		R4EDecision result = R4EDecision.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_DECISION.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_DECISION.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EDecision createR4EDecisionFromString(EDataType eDataType, String initialValue) {
@@ -626,6 +733,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EDecision(R4EDecision instanceValue) {
@@ -634,24 +742,30 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EDecisionToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EDecision((R4EDecision)instanceValue);
+		return convertR4EDecision((R4EDecision) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewType createR4EReviewType(String literal) {
 		R4EReviewType result = R4EReviewType.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_REVIEW_TYPE.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_REVIEW_TYPE.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EReviewType createR4EReviewTypeFromString(EDataType eDataType, String initialValue) {
@@ -660,6 +774,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EReviewType(R4EReviewType instanceValue) {
@@ -668,24 +783,30 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EReviewTypeToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EReviewType((R4EReviewType)instanceValue);
+		return convertR4EReviewType((R4EReviewType) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EContextType createR4EContextType(String literal) {
 		R4EContextType result = R4EContextType.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_CONTEXT_TYPE.getName() + "'");
+		if (result == null) {
+			throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '"
+					+ RModelPackage.Literals.R4E_CONTEXT_TYPE.getName() + "'");
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public R4EContextType createR4EContextTypeFromString(EDataType eDataType, String initialValue) {
@@ -694,6 +815,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EContextType(R4EContextType instanceValue) {
@@ -702,22 +824,25 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertR4EContextTypeToString(EDataType eDataType, Object instanceValue) {
-		return convertR4EContextType((R4EContextType)instanceValue);
+		return convertR4EContextType((R4EContextType) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public IResource createIResource(String literal) {
-		return (IResource)super.createFromString(RModelPackage.Literals.IRESOURCE, literal);
+		return (IResource) super.createFromString(RModelPackage.Literals.IRESOURCE, literal);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public IResource createIResourceFromString(EDataType eDataType, String initialValue) {
@@ -726,6 +851,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertIResource(IResource instanceValue) {
@@ -734,18 +860,20 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertIResourceToString(EDataType eDataType, Object instanceValue) {
-		return convertIResource((IResource)instanceValue);
+		return convertIResource((IResource) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public IFileRevision createIFileRevision(String literal) {
-		return (IFileRevision)super.createFromString(RModelPackage.Literals.IFILE_REVISION, literal);
+		return (IFileRevision) super.createFromString(RModelPackage.Literals.IFILE_REVISION, literal);
 	}
 
 	/**
@@ -759,6 +887,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertIFileRevision(IFileRevision instanceValue) {
@@ -767,22 +896,25 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String convertIFileRevisionToString(EDataType eDataType, Object instanceValue) {
-		return convertIFileRevision((IFileRevision)instanceValue);
+		return convertIFileRevision((IFileRevision) instanceValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public RModelPackage getRModelPackage() {
-		return (RModelPackage)getEPackage();
+		return (RModelPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -1069,7 +1201,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#creeateR4EAnomalyTextPosition
 	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
 	 */
-	public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
+	public R4ETextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
 		return factoryExtension.createR4EAnomalyTextPosition(content);
 	}
 
@@ -1077,11 +1209,22 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#creeateR4EFileVersion(org.eclipse
-	 * .mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomalyTextPosition
+	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
 	 */
-	public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition fileVersion) throws ResourceHandlingException {
-		return factoryExtension.createR4EFileVersion(fileVersion);
+	public R4EModelPosition createR4EAnomalyModelPosition(R4EContent content) throws ResourceHandlingException {
+		return factoryExtension.createR4EAnomalyModelPosition(content);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EFileVersion(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EPosition)
+	 */
+	public R4EFileVersion createR4EFileVersion(R4EPosition position) throws ResourceHandlingException {
+		return factoryExtension.createR4EFileVersion(position);
 	}
 
 	/*
@@ -1205,6 +1348,13 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public R4EReview copyR4EReview(URI origGroup, URI destGroup, String origReviewName, String destReviewName) {
 		return factoryExtension.copyR4EReview(origGroup, destGroup, origReviewName, destReviewName);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EModelPosition(org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
+	 */
+	public R4EModelPosition createR4EModelPosition(R4EContent content) throws ResourceHandlingException {
+		return factoryExtension.createR4EModelPosition(content);
 	}
 
 } //RModelFactoryImpl

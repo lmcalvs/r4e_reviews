@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
@@ -35,7 +36,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.AnomalyUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIEMFCompareUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -52,6 +55,8 @@ public class NewAnomalyHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+//	fWarningButtonLabels
+	private static final String[] WARNING_BUTTONS_LABELS = { "Continue", "Cancel" }; //$NON-NLS-1$
 
 	/**
 	 * Field COMMAND_MESSAGE. (value is ""Adding Anomaly..."")
@@ -101,7 +106,8 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 				if (selection instanceof ITextSelection) {
 					monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
-					AnomalyUtils.addAnomalyFromText((ITextSelection) selection, input, false);
+					AnomalyUtils.addAnomalyFromEditor(CommandUtils.getPosition((ITextSelection) selection), input,
+							false);
 
 				} else if (selection instanceof ITreeSelection) {
 
@@ -113,7 +119,15 @@ public class NewAnomalyHandler extends AbstractHandler {
 					//Then iterate through all selections
 					monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
 					for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
-						AnomalyUtils.addAnomalyFromTree(iterator.next(), monitor, false);
+						Object sel = iterator.next();
+						if (sel instanceof DiffElement) {
+							//Selection of EMF compare delta structure
+							AnomalyUtils.addAnomalyFromEditor(UIEMFCompareUtils.getPosition((DiffElement) sel), input,
+									false);
+						} else {
+							AnomalyUtils.addAnomalyFromTree(iterator.next(), monitor, false);
+						}
+
 						if (monitor.isCanceled()) {
 							R4EUIModelController.setJobInProgress(false);
 							return Status.CANCEL_STATUS;
@@ -133,7 +147,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 									((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
 								}
 							});
-							AnomalyUtils.addAnomalyFromText(selectedText, input, false);
+							AnomalyUtils.addAnomalyFromEditor(CommandUtils.getPosition(selectedText), input, false);
 						}
 					}
 				}

@@ -242,6 +242,15 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	R4EMeetingData createR4EMeetingData();
 
 	/**
+	 * Returns a new object of class '<em>R4E Model Position</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>R4E Model Position</em>'.
+	 * @generated
+	 */
+	R4EModelPosition createR4EModelPosition();
+
+	/**
 	 * Returns an instance of data type '<em>R4E Anomaly State</em>' corresponding the given literal. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 

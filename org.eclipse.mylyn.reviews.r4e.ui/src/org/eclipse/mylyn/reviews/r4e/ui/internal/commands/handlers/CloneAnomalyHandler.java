@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
@@ -35,7 +36,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.AnomalyUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIEMFCompareUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -101,7 +104,7 @@ public class CloneAnomalyHandler extends AbstractHandler {
 
 				if (selection instanceof ITextSelection) {
 					monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
-					AnomalyUtils.addAnomalyFromText((ITextSelection) selection, input, true);
+					AnomalyUtils.addAnomalyFromEditor(CommandUtils.getPosition((ITextSelection) selection), input, true);
 
 				} else if (selection instanceof ITreeSelection) {
 
@@ -113,7 +116,15 @@ public class CloneAnomalyHandler extends AbstractHandler {
 					//Then iterate through all selections
 					monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
 					for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
-						AnomalyUtils.addAnomalyFromTree(iterator.next(), monitor, true);
+						Object sel = iterator.next();
+						if (sel instanceof DiffElement) {
+							//Selection of EMF compare delta structure
+							AnomalyUtils.addAnomalyFromEditor(UIEMFCompareUtils.getPosition((DiffElement) sel), input,
+									true);
+						} else {
+							AnomalyUtils.addAnomalyFromTree(iterator.next(), monitor, true);
+						}
+
 						if (monitor.isCanceled()) {
 							R4EUIModelController.setJobInProgress(false);
 							return Status.CANCEL_STATUS;
@@ -133,7 +144,7 @@ public class CloneAnomalyHandler extends AbstractHandler {
 									((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
 								}
 							});
-							AnomalyUtils.addAnomalyFromText(selectedText, input, true);
+							AnomalyUtils.addAnomalyFromEditor(CommandUtils.getPosition(selectedText), input, true);
 						}
 					}
 				}

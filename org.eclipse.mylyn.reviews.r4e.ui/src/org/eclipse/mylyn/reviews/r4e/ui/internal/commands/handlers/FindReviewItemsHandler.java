@@ -19,6 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -26,6 +28,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.compare.IStreamContentAccessor;
+import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -42,7 +46,10 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -72,13 +79,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.Diff;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.DiffUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIEMFCompareUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.Change;
 import org.eclipse.mylyn.versions.core.ChangeSet;
@@ -706,27 +713,59 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
 		input.prepareCompareInputNoEditor();
 
-		final DiffUtils diffUtils = new DiffUtils();
-		final List<Diff> diffs;
-
-		fLock.lock();
-		try {
-			diffs = diffUtils.doDiff(false, true, input);
-		} finally {
-			fLock.unlock();
-		}
-
-		//Add Deltas from the list of differences
-		for (Diff diff : diffs) {
-			IR4EUIPosition position = CommandUtils.getPosition(diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR)
-					.getOffset(), diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
-					diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
-
-			if ((null == position) || (RangeDifference.NOCHANGE == diff.getKind())) {
-				continue; //Cannot resolve position for this delta or no change
+		if (UIUtils.isEMFCompareActive() && isModelResource(input)) {
+			//Create model deltas
+			List<IR4EUIPosition> positions = UIEMFCompareUtils.createModelDeltas(input);
+			for (IR4EUIPosition position : positions) {
+				aFile.getPositions().add(position);
 			}
-			aFile.getPositions().add(position);
+		} else {
+
+			final DiffUtils diffUtils = new DiffUtils();
+			final List<Diff> diffs;
+
+			fLock.lock();
+			try {
+				diffs = diffUtils.doDiff(false, true, input);
+			} finally {
+				fLock.unlock();
+			}
+
+			//Add Deltas from the list of differences
+			for (Diff diff : diffs) {
+				IR4EUIPosition position = CommandUtils.getPosition(diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR)
+						.getOffset(), diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
+						diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
+
+				if ((null == position) || (RangeDifference.NOCHANGE == diff.getKind())) {
+					continue; //Cannot resolve position for this delta or no change
+				}
+				aFile.getPositions().add(position);
+			}
 		}
+
+	}
+
+	private boolean isModelResource(final R4ECompareEditorInput input) throws CoreException {
+		ITypedElement elt = input.getLeftElement();
+		if (elt != null && elt instanceof IStreamContentAccessor) {
+			InputStream is = ((IStreamContentAccessor) elt).getContents();
+			if (is == null) {
+				return false;
+			}
+			ResourceSet resourceSet = new ResourceSetImpl();
+			Resource resource = resourceSet.createResource(URI.createURI("test.resource.type"));
+			try {
+				resource.load(is, Collections.EMPTY_MAP);
+				resource.unload();
+				R4EUIPlugin.Ftracer.traceInfo("A model resource found: ");
+				return true;
+			} catch (IOException e) {
+				R4EUIPlugin.Ftracer.traceDebug("IOException while trying to load model");
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -756,7 +795,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			for (IR4EUIPosition position : aFile.getPositions()) {
 				//Lazily create the Delta container if not already done
 				R4EUIDeltaContainer deltaContainer = (R4EUIDeltaContainer) uiFileContext.getContentsContainerElement();
-				deltaContainer.createDelta((R4EUITextPosition) position);
+				deltaContainer.createDelta(position);
 			}
 		} catch (OutOfSyncException e) {
 			R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$

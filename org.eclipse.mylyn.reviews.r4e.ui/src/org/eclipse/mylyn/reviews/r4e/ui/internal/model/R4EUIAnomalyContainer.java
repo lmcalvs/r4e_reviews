@@ -37,15 +37,17 @@ import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -290,7 +292,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		if (parentElement instanceof R4EUIFileContext) {
 			//get anomalies that are specific to a file
 			final List<R4EAnomaly> anomalies = ((R4EUIFileContext) parentElement).getAnomalies();
-			R4EUITextPosition position = null;
+			IR4EUIPosition uiPosition = null;
 			final int anomaliesSize = anomalies.size();
 			R4EAnomaly anomaly = null;
 			for (int i = 0; i < anomaliesSize; i++) {
@@ -305,20 +307,25 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					//Do not set position for global List<E>lies
-					position = null;
+					uiPosition = null;
 					List<ILocation> locations = anomalies.get(i).getLocations(); // $codepro.audit.disable variableDeclaredInLoop
 					if (null != locations) {
 						if (null != locations.get(0)) {
 							int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
 							for (int j = 0; j < locationsSize; j++) {
-								position = new R4EUITextPosition(
-										((R4EContent) anomalies.get(i).getLocations().get(j)).getLocation()); // $codepro.audit.disable methodChainLength
+								R4EPosition pos = ((R4EContent) anomalies.get(i).getLocations().get(j)).getLocation();
+								if (pos instanceof R4ETextPosition) {
+									uiPosition = new R4EUITextPosition((R4ETextPosition) pos); // $codepro.audit.disable methodChainLength
+								} else if (pos instanceof R4EModelPosition) {
+									uiPosition = new R4EUIModelPosition((R4EModelPosition) pos);
+								}
+
 								if (((R4EUIReviewBasic) getParent().getParent().getParent()).getReview()
 										.getType()
 										.equals(R4EReviewType.BASIC)) {
-									uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), position);
+									uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), uiPosition);
 								} else {
-									uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), position);
+									uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), uiPosition);
 									uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomalies.get(i).getState())
 											+ ": " + uiAnomaly.getName());
 								}
@@ -355,9 +362,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 						if (0 == anomaly.getLocations().size()) {
-							if (((R4EUIReviewBasic) getParent()).getReview()
-									.getType()
-									.equals(R4EReviewType.BASIC)) {
+							if (((R4EUIReviewBasic) getParent()).getReview().getType().equals(R4EReviewType.BASIC)) {
 								uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
 							} else {
 								uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, null);
@@ -444,10 +449,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			addedChild = new R4EUIAnomalyBasic(this, anomaly, null);
 		} else {
 			addedChild = new R4EUIAnomalyExtended(this, anomaly, null);
-			if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.FORMAL)) {
+			if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.FORMAL)) {
 				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.CREATED);
 			} else { //R4EReviewType.INFORMAL
 				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.ASSIGNED);
@@ -463,13 +465,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Method createAnomaly Creates a new Anomaly from the user dialog
 	 * 
 	 * @param aFile
-	 *            R4EFileVersion
+	 *            R4EUIFileContext
 	 * @param aUiPosition
 	 *            - the position of the anomaly to create
 	 * @param aClone
 	 *            - flag set if this is a cloned anomaly
 	 */
-	public void createAnomaly(final R4EUIFileContext aFile, final R4EUITextPosition aUiPosition, boolean aClone) {
+	public void createAnomaly(final R4EUIFileContext aFile, final IR4EUIPosition aUiPosition, boolean aClone) {
 
 		//Get anomaly details from user
 		final IAnomalyInputDialog dialog;
@@ -643,19 +645,26 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @param aAnomaly
 	 *            R4EAnomaly
 	 * @param aUiPosition
-	 *            R4EUITextPosition
+	 *            IR4EUIPosition
 	 * @return R4EUIAnomalyBasic
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
 	public R4EUIAnomalyBasic createAnomalyDetails(R4EAnomaly aAnomaly, R4EFileVersion aAnomalyTempFileVersion,
-			R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
+			IR4EUIPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
 
 		R4EUIAnomalyBasic uiAnomaly = null;
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 
 		//Set position data
-		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(aAnomaly));
+		R4EPosition position = null;
+		if (aUiPosition instanceof R4EUIModelPosition) {
+			//Set position data
+			position = R4EUIModelController.FModelExt.createR4EAnomalyModelPosition(R4EUIModelController.FModelExt.createR4ETextContent(aAnomaly));
+		} else {
+			//Set position data
+			position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(aAnomaly));
+		}
 
 		//Set File version data
 		final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
@@ -760,8 +769,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public boolean isNewChildElementCmd() {
 		if (!isReadOnly()
 				&& !((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) && getParent().isEnabled()
-				&& getParent() instanceof R4EUIReviewBasic) {
+						R4EReviewPhase.COMPLETED) && getParent().isEnabled() && getParent() instanceof R4EUIReviewBasic) {
 			return true;
 		}
 		return false;

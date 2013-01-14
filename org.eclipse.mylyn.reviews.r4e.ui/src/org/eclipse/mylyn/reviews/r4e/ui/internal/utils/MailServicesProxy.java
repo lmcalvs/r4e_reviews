@@ -41,7 +41,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
@@ -1298,16 +1300,23 @@ public class MailServicesProxy {
 	 */
 	private static String buildLineTag(R4EDelta aDelta) {
 		if (null != aDelta.getTarget() && null != aDelta.getTarget().getLocation()) {
-			final int startLine = ((R4ETextPosition) aDelta.getTarget().getLocation()).getStartLine();
-			final int endLineLine = ((R4ETextPosition) aDelta.getTarget().getLocation()).getEndLine();
+			R4EPosition position = aDelta.getTarget().getLocation();
 			final StringBuilder buffer = new StringBuilder(R4EUIConstants.DEFAULT_LINE_TAG_LENGTH);
-			if (startLine == endLineLine) {
-				buffer.append(R4EUIConstants.LINE_TAG + startLine);
-			} else {
-				buffer.append(R4EUIConstants.LINES_TAG + startLine + "-" + endLineLine);
+			if (position instanceof R4ETextPosition) {
+				final int startLine = ((R4ETextPosition) aDelta.getTarget().getLocation()).getStartLine();
+				final int endLineLine = ((R4ETextPosition) aDelta.getTarget().getLocation()).getEndLine();
+				if (startLine == endLineLine) {
+					buffer.append(R4EUIConstants.LINE_TAG + startLine);
+				} else {
+					buffer.append(R4EUIConstants.LINES_TAG + startLine + "-" + endLineLine);
+				}
+				return buffer.toString();
+			} else if (position instanceof R4EModelPosition) {
+				buffer.append(((R4EModelPosition) position).getDescription());
+				return buffer.toString();
 			}
-			return buffer.toString();
 		}
 		return "";
 	}
+
 }
