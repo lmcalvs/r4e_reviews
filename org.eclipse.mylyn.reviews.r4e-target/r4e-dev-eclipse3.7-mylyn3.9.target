@@ -62,8 +62,9 @@
 <unit id="org.eclipse.mylyn.git.feature.group" version="1.1.0.I20121215-2122"/>
 <unit id="org.eclipse.mylyn.subclipse.feature.group" version="1.1.0.I20121215-2122"/>
 <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="3.9.0.I20121215-2122"/>
-<unit id="org.eclipse.mylyn.reviews.feature.feature.group" version="1.1.0.I20121215-2122"/>
+<unit id="org.eclipse.mylyn.reviews.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.test_feature.feature.group" version="3.9.0.I20121215-2122"/>
+<unit id="org.eclipse.mylyn.test_feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/mylyn/snapshots/weekly"/>
 </location>
 </locations>
