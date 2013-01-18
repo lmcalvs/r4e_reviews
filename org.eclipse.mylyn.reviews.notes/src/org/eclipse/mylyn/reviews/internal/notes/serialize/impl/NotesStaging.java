@@ -11,7 +11,11 @@
 
 package org.eclipse.mylyn.reviews.internal.notes.serialize.impl;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 
@@ -31,6 +35,13 @@ public class NotesStaging {
 
 	private NoteMap fNotesMap = NoteMap.newEmptyMap();
 
+	/**
+	 * @param aReference
+	 *            e.g. /refs/notes/07/7
+	 * @param repo
+	 * @throws AmbiguousObjectException
+	 * @throws IOException
+	 */
 	public NotesStaging(String aReference, Repository repo) throws AmbiguousObjectException, IOException {
 		//Need to open all the notes of a particular reference
 		//We shall then resolve the commit based on the refs name e.g. refs/notes/07/7
@@ -47,6 +58,8 @@ public class NotesStaging {
 			RevWalk rwalk = new RevWalk(repo);
 			commit = rwalk.parseCommit(reference.getObjectId());
 			fNotesMap = NoteMap.read(rwalk.getObjectReader(), commit);
+		} else {
+			throw new IllegalArgumentException("Unable to resolve reference: " + aReference);
 		}
 	}
 
@@ -70,12 +83,32 @@ public class NotesStaging {
 
 		Resource dres = resfactory.createResource(destFileUri);
 
-//		load
-
 		try {
 			dres.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {
 			e.printStackTrace();
+			return;
+		}
+
+		//register an object with the entity data in the git repo
+		InputStream istream = null;
+		try {
+			istream = new BufferedInputStream(new FileInputStream(destFileUri.devicePath()));
+
+			//read notes on the current noteOn object
+
+			//if noteOn object already has a note and the note is of the Entity type call a merge facility
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		} finally {
+			if (istream != null) {
+				try {
+					istream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
