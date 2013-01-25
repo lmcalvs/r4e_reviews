@@ -22,7 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.filters;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 
 /**
  * @author Sebastien Dubois
@@ -47,7 +47,7 @@ public class ReviewedElemsFilter extends ViewerFilter {
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (!(element instanceof R4EUIReviewBasic)) {
+		if (!(element instanceof R4EUIReview)) {
 			if (((IR4EUIModelElement) element).isUserReviewed()) {
 				return false;
 			}

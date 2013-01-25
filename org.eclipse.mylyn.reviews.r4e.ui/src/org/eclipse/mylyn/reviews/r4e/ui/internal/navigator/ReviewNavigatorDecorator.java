@@ -82,6 +82,11 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 */
 	private static final String DECORATOR_OVERDUE_ID = "Overdue"; //$NON-NLS-1$
 
+	/**
+	 * Field DECORATOR_UNRESOLVED_ID. (value is ""Unresolved"")
+	 */
+	private static final String DECORATOR_UNRESOLVED_ID = "Unresolved"; //$NON-NLS-1$
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -175,18 +180,24 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 			}
 
 			//Added, Removed or Modified file
-			if (aElement instanceof R4EUIFileContext) {
-				if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
-						&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
-					//Only target present, file was added
-					bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getAddedImage());
-					bottomLeftOverlayId = DECORATOR_ADDED_ID;
-				} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
-						&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
-					//Only base present, file was removed
-					bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getRemovedImage());
-					bottomLeftOverlayId = DECORATOR_REMOVED_ID;
-				} //else modified file
+			if (!((IR4EUIModelElement) aElement).isResolved()) {
+				//Version Compatibility problem
+				bottomLeftOverlay = ImageDescriptor.createFromImage(((IR4EUIModelElement) aElement).getUnresolvedImage());
+				bottomLeftOverlayId = DECORATOR_UNRESOLVED_ID;
+			} else {
+				if (aElement instanceof R4EUIFileContext) {
+					if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
+							&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
+						//Only target present, file was added
+						bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getAddedImage());
+						bottomLeftOverlayId = DECORATOR_ADDED_ID;
+					} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
+							&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
+						//Only base present, file was removed
+						bottomLeftOverlay = ImageDescriptor.createFromImage(((R4EUIFileContext) aElement).getRemovedImage());
+						bottomLeftOverlayId = DECORATOR_REMOVED_ID;
+					} //else modified file
+				}
 			}
 
 			//Read-Only

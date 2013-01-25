@@ -98,7 +98,7 @@ public class PreviousStateHandler extends AbstractHandler {
 							UIUtils.changeReviewPhase(element, newPhase);
 						} else if (element instanceof R4EUIPostponedAnomaly) {
 							try {
-								if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
+								if (((R4EUIPostponedAnomaly) element).checkOrigReviewCompatibility()) {
 									R4EAnomalyState newState = ((R4EUIPostponedAnomaly) element).getPreviousState();
 									UIUtils.changeAnomalyState(element, newState);
 								}

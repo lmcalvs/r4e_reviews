@@ -103,7 +103,7 @@ public class NextStateHandler extends AbstractHandler {
 
 						} else if (element instanceof R4EUIPostponedAnomaly) {
 							try {
-								if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
+								if (((R4EUIPostponedAnomaly) element).checkOrigReviewCompatibility()) {
 									progressAnomaly((R4EUIPostponedAnomaly) element);
 								}
 							} catch (ResourceHandlingException e) {

@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
@@ -73,11 +73,11 @@ public class ReviewCompletedFilter extends ViewerFilter {
 		IR4EUIModelElement element = null;
 		for (int i = 0; i < length; i++) {
 			element = aCurrentElement.getChildren()[i];
-			if (!(element instanceof R4EUIReviewBasic)) {
+			if (!(element instanceof R4EUIReview)) {
 				return false;
 			}
-			if (!(((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
-					|| ((R4EUIReviewBasic) element).isOpen()) {
+			if (!(((R4EReviewState) ((R4EUIReview) element).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+					|| ((R4EUIReview) element).isOpen()) {
 				return true;
 			}
 		}
@@ -95,14 +95,14 @@ public class ReviewCompletedFilter extends ViewerFilter {
 
 		//Get Review parent
 		IR4EUIModelElement reviewParentElement = aCurrentElement;
-		while (!(reviewParentElement instanceof R4EUIReviewBasic)) {
+		while (!(reviewParentElement instanceof R4EUIReview)) {
 			reviewParentElement = reviewParentElement.getParent();
 			if (null == reviewParentElement) {
 				return false;
 			}
 		}
-		if (!(((R4EReviewState) ((R4EUIReviewBasic) reviewParentElement).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
-				|| ((R4EUIReviewBasic) reviewParentElement).isOpen()) {
+		if (!(((R4EReviewState) ((R4EUIReview) reviewParentElement).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+				|| ((R4EUIReview) reviewParentElement).isOpen()) {
 			return true;
 		}
 		return false;

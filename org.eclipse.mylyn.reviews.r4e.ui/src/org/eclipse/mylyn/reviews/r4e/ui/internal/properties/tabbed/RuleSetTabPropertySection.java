@@ -140,7 +140,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUIRuleSet) fProperties.getElement()).getRuleSet()) {
+		if (null != fProperties && null != ((R4EUIRuleSet) fProperties.getElement()).getRuleSet()) {
 			fRefreshInProgress = true;
 			fVersionText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getVersion());
 			fNameText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getName());

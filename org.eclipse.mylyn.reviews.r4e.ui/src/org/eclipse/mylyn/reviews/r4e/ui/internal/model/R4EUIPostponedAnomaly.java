@@ -18,10 +18,12 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.mylyn.reviews.core.model.IComment;
@@ -36,12 +38,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.PostponedAnomalyProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -140,6 +144,17 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		return null;
 	}
 
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	@Override
+	public String getImageLocation() {
+		return POSTPONED_ANOMALY_ICON_FILE;
+	}
+
 	//Attributes
 
 	/**
@@ -201,10 +216,12 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		} else {
 			return; //should never happen
 		}
+
+		//Open original review
 		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(),
 				origReviewName);
 
-		//Open original review
+		//Update original Anomaly
 		final R4EAnomaly origAnomaly = CommandUtils.getOriginalAnomaly(origReview, fAnomaly);
 		if (null != origAnomaly) {
 			//set data in original anomaly
@@ -220,45 +237,43 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 * @throws CompatibilityException
 	 * @throws ResourceHandlingException
 	 */
-	public boolean checkCompatibility() throws ResourceHandlingException, CompatibilityException {
+	public boolean checkOrigReviewCompatibility() throws ResourceHandlingException, CompatibilityException {
+
 		final String origReviewName = getOriginalReviewName();
 		final R4EUIReviewGroup uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
-		R4EReview originalReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(),
-				origReviewName);
-		String currentVersion = Persistence.Roots.REVIEW.getVersion();
-		int checkResult = VersionUtils.compareVersions(currentVersion, originalReview.getFragmentVersion());
-		switch (checkResult) {
-		case R4EUIConstants.VERSION_APPLICATION_OLDER:
-			displayCompatibilityErrorDialog();
+		final R4EUIReview originalReview = uiGroup.getReview(origReviewName);
+
+		if (null == originalReview) {
 			return false;
-		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			int result = displayCompatibilityWarningDialog(originalReview.getFragmentVersion(), currentVersion);
-			switch (result) {
-			case R4EUIConstants.OPEN_NORMAL:
-				//Upgrade version immediately
-				try {
-					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(originalReview,
-							R4EUIModelController.getReviewer());
-					originalReview.setFragmentVersion(currentVersion);
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-					return false;
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-					return false;
-				}
-				fReadOnly = false;
-				return true;
-			default:
-				//Assume Cancel
-				return false;
-			}
-		default:
-			//Normal case, do nothing
-			fReadOnly = false;
-			return true;
 		}
+
+		String newVersion = Persistence.Roots.REVIEW.getVersion();
+		String validReviewName = ResourceUtils.toValidFileName(origReviewName);
+		URI upgradeRootUri = URI.createFileURI(uiGroup.getReviewGroup().getFolder() + R4EUIConstants.SEPARATOR
+				+ validReviewName);
+		URI reviewResourceUri = upgradeRootUri.appendSegment(validReviewName + R4EUIConstants.REVIEW_FILE_SUFFIX);
+		String oldVersion;
+		try {
+			oldVersion = R4EUpgradeController.getVersionFromResourceFile(reviewResourceUri);
+		} catch (IOException e1) {
+			throw new ResourceHandlingException("Cannot find Review Group resource file " + reviewResourceUri, e1);
+		}
+
+		if (0 != VersionUtils.compareVersions(newVersion, oldVersion)) {
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Version Mismatch for Original Review for Postponed Anomaly ", new Status(IStatus.ERROR,
+							R4EUIPlugin.PLUGIN_ID, 0, "The Original Review (" + origReviewName
+									+ ") for this Postponed Anomaly is of a different version than the current Review."
+									+ R4EUIConstants.LINE_FEED
+									+ "Please update it before changing the Postponed Anomaly.", null), IStatus.ERROR);
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
+			return false;
+		}
+		return true;
 	}
 
 	/**

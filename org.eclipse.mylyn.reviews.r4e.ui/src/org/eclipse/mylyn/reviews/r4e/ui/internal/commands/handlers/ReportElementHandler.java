@@ -27,13 +27,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Jacques Bouthillier
@@ -49,6 +52,35 @@ public class ReportElementHandler extends AbstractHandler {
 	 * Field COMMAND_MESSAGE. (value is ""Generating Report for Elements..."")
 	 */
 	private static final String COMMAND_MESSAGE = "Generating Report for Elements...";
+
+	/**
+	 * Field COMMAND_MESSAGE. (value is ""Generating Report Warning"")
+	 */
+	private static final String GENERATE_REPORT_DIALOG_TITLE = "Generating Report Warning";
+
+	/**
+	 * Field GENERATE_REPORT_DIALOG_MESSAGE. (value is ""Some Uncompatible Reviews cannot be included in Report"")
+	 */
+	private static final String GENERATE_REPORT_DIALOG_MESSAGE = "Some Uncompatible Reviews cannot be included in Report"
+			+ R4EUIConstants.LINE_FEED
+			+ "Do you want to continue?"
+			+ R4EUIConstants.LINE_FEED
+			+ R4EUIConstants.LINE_FEED;
+
+	/**
+	 * Field GENERATE_REPORT_DIALOG_BUTTONS.
+	 */
+	private static final String[] GENERATE_REPORT_DIALOG_BUTTONS = { "Continue", "Cancel" };
+
+	/**
+	 * Field GENERATE_REPORT_CONTINUE_INDEX.
+	 */
+	private static final int GENERATE_REPORT_CONTINUE_INDEX = 0;
+
+	/**
+	 * Field MAX_REVIEW_ERRORS. (value is "5")
+	 */
+	private static final int MAX_REVIEW_ERRORS = 5;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -85,6 +117,8 @@ public class ReportElementHandler extends AbstractHandler {
 
 					//Build list of reviews to generate reports for
 					final ArrayList<File> listSelectedReviews = new ArrayList<File>();
+					final ArrayList<String> listUnknownReviews = new ArrayList<String>();
+
 					for (IR4EUIModelElement element : selectedElements) {
 						if (element instanceof R4EUIReviewBasic) {
 							R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
@@ -95,18 +129,45 @@ public class ReportElementHandler extends AbstractHandler {
 							R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
 									+ extentElement.getReview().getName());
 							listSelectedReviews.add(new File(extentElement.getReview().getName()));
+						} else if (element instanceof R4EUIReview) {
+							listUnknownReviews.add(((R4EUIReview) element).getReviewName());
 						}
 					}
 					if (R4EUIPlugin.isUserReportAvailable()) {
-						final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
-						reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
-						reportGen.handleReportGeneration(groupFile, monitor);
-						R4EUIPlugin.Ftracer.traceInfo("Report element AVAILABLE");//$NON-NLS-1$
+						final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+						result[0] = GENERATE_REPORT_CONTINUE_INDEX;
+						if (listUnknownReviews.size() > 0) {
+							//If some selected reviews are not compatible, ask user to confirm
+							final StringBuffer buffer = new StringBuffer();
+							int numReviewErrorsAppened = 0;
+							for (String unresolvedReview : listUnknownReviews) {
+								if (numReviewErrorsAppened < 5) {
+									buffer.append(unresolvedReview + R4EUIConstants.LINE_FEED);
+								} else if (MAX_REVIEW_ERRORS == numReviewErrorsAppened) {
+									buffer.append("...");
+								}
+								++numReviewErrorsAppened;
+							}
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									final MessageDialog dialog = new MessageDialog(null, GENERATE_REPORT_DIALOG_TITLE,
+											null, GENERATE_REPORT_DIALOG_MESSAGE + "Unresolved Reviews: "
+													+ R4EUIConstants.LINE_FEED + buffer.toString(),
+											MessageDialog.QUESTION_WITH_CANCEL, GENERATE_REPORT_DIALOG_BUTTONS, 0);
+									result[0] = dialog.open();
 
+								}
+							});
+						}
+						if (result[0] == GENERATE_REPORT_CONTINUE_INDEX) {
+							final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
+							reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
+							reportGen.handleReportGeneration(groupFile, monitor);
+							R4EUIPlugin.Ftracer.traceInfo("Report element AVAILABLE");//$NON-NLS-1$
+						}
 					} else {
 						R4EUIPlugin.Ftracer.traceWarning("Report element Not available" //$NON-NLS-1$
 						);
-
 					}
 				}
 				monitor.done();

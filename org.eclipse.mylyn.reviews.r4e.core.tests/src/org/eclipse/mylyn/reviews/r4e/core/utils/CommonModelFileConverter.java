@@ -13,6 +13,7 @@ package org.eclipse.mylyn.reviews.r4e.core.utils;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.mylyn.reviews.r4e.upgrade.utils.SimpleFileConverter;
 
 public class CommonModelFileConverter extends SimpleFileConverter {
 	static Replacement[] REPLACEMENTS = new Replacement[] {
@@ -23,16 +24,16 @@ public class CommonModelFileConverter extends SimpleFileConverter {
 			new Replacement("R4E_(\\s*)", "$1"), new Replacement("\\suser=\"", " author=\""), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			new Replacement("<location\\sxsi", "<locations xsi"), new Replacement(" fragmentVersion=\\S*\"", ""), new Replacement("(<r4ecore:R4EReview.*\" )(name=\".*>)", "$1fragmentVersion=\"2\\.0\\.0\" $2") }; //$NON-NLS-1$ //$NON-NLS-2$
 
-	public CommonModelFileConverter(EObject object) {
-		super(object, "xrer", new String[] { "git" }, REPLACEMENTS); //$NON-NLS-1$ //$NON-NLS-2$
+	public CommonModelFileConverter(EObject aObject) {
+		super(aObject, "xrer", new String[] { "git" }, REPLACEMENTS, true); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public CommonModelFileConverter(URI uri) {
-		super(uri, "xrer", new String[] { "git" }, REPLACEMENTS); //$NON-NLS-1$ //$NON-NLS-2$
+	public CommonModelFileConverter(URI aUri) {
+		super(aUri, "xrer", new String[] { "git" }, REPLACEMENTS, true); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public static void main(String[] args) {
-		URI uri = URI.createFileURI(args[0]);
+	public static void main(String[] aArgs) {
+		URI uri = URI.createFileURI(aArgs[0]);
 		CommonModelFileConverter converter = new CommonModelFileConverter(uri);
 		converter.setUser(true);
 		converter.schedule();

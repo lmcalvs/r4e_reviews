@@ -53,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -234,6 +235,54 @@ public class R4EUITestCommands extends R4EUITestElement {
 		openJob.setElement(aElement);
 		Display.getDefault().syncExec(openJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method openElementWithUpdate Open a UI model element with update dialog triggered
+	 * 
+	 * @param aElement
+	 * @param aDialogButtonIndex
+	 */
+	public void openElementWithUpdate(IR4EUIModelElement aElement, int aDialogButtonIndex) {
+
+		//Inject upgrade dialog result
+		R4EUpgradeController.setUpgradeDialogResult(aDialogButtonIndex);
+
+		//Inner class that runs the command on the UI thread
+		class RunOpenElement implements Runnable {
+			private IR4EUIModelElement element;
+
+			public void setElement(IR4EUIModelElement aElement) {
+				element = aElement;
+			}
+
+			public void run() {
+				try {
+					//Set focus on Navigator view and select element
+					setFocusOnNavigatorElement(element);
+
+					//Execute New Review Group Command
+					executeCommand(R4EUIConstants.OPEN_ELEMENT_COMMAND, null);
+					TestUtils.waitForJobs();
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunOpenElement openJob = new RunOpenElement();
+		openJob.setElement(aElement);
+		Display.getDefault().syncExec(openJob);
+		TestUtils.waitForJobs();
+		R4EUpgradeController.setUpgradeDialogResult(-1); //remove injected upgrade dialog result
 	}
 
 	/**

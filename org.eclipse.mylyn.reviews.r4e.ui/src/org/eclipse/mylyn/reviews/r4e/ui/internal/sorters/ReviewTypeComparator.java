@@ -46,13 +46,12 @@ public class ReviewTypeComparator extends NavigatorElementComparator {
 		if (aElement instanceof R4EUIReviewBasic) {
 			if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.BASIC)) {
 				return 0;
-			} else if (((R4EUIReviewBasic) aElement).getReview()
-					.getType()
-					.equals(R4EReviewType.INFORMAL)) {
+			} else if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.INFORMAL)) {
 				return 1;
-			} else {
-				//Assume R4EReviewType.FORMAL
+			} else if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.FORMAL)) {
 				return 2;
+			} else {
+				return 3;
 			}
 		}
 		return 2;

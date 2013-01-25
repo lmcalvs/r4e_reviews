@@ -918,7 +918,6 @@ public class CommandUtils {
 				}
 				if (!containerEnabled) {
 					container.close();
-					//aReview.removeChildren(container, false);  TODO this is temporary
 				}
 			}
 		}

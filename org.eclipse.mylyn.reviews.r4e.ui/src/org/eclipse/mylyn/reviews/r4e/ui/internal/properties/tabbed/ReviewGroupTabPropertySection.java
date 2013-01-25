@@ -406,105 +406,115 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	public void refresh() {
-		fRefreshInProgress = true;
-		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
-		fNameText.setText(modelGroup.getName());
-		if (null != ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup().eResource()) {
-			fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup()
-					.eResource()
-					.getURI()
-					.toFileString());
-		}
-		if (null != modelGroup.getDescription()) {
-			fDescriptionText.setText(modelGroup.getDescription());
-		} else {
-			fDescriptionText.setText("");
-		}
-
-		List<String> availableProjects = modelGroup.getAvailableProjects();
-		final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
-		fAvailableProjects.removeAll();
-		Item item = null;
-		String project = null;
-
-		for (int i = 0; i < projects.length; i++) {
-			project = projects[i];
-			if (i >= fAvailableProjects.getItemCount()) {
-				item = fAvailableProjects.addItem();
+		if (null != fProperties) {
+			fRefreshInProgress = true;
+			final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
+			fNameText.setText(modelGroup.getName());
+			if (null != ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup().eResource()) {
+				fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup()
+						.eResource()
+						.getURI()
+						.toFileString());
+			}
+			if (null != modelGroup.getDescription()) {
+				fDescriptionText.setText(modelGroup.getDescription());
 			} else {
-				item = fAvailableProjects.getItem(i);
-				if (null == item) {
+				fDescriptionText.setText("");
+			}
+
+			List<String> availableProjects = modelGroup.getAvailableProjects();
+			final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
+			fAvailableProjects.removeAll();
+			Item item = null;
+			String project = null;
+
+			for (int i = 0; i < projects.length; i++) {
+				project = projects[i];
+				if (i >= fAvailableProjects.getItemCount()) {
 					item = fAvailableProjects.addItem();
+				} else {
+					item = fAvailableProjects.getItem(i);
+					if (null == item) {
+						item = fAvailableProjects.addItem();
+					}
 				}
+				item.setText(project);
 			}
-			item.setText(project);
-		}
-		fAvailableProjects.updateButtons();
+			fAvailableProjects.updateButtons();
 
-		List<String> availableComponents = modelGroup.getAvailableComponents();
-		final String[] components = availableComponents.toArray(new String[availableComponents.size()]);
-		fAvailableComponents.removeAll();
-		String component = null;
-		for (int i = 0; i < components.length; i++) {
-			component = components[i];
-			if (i >= fAvailableComponents.getItemCount()) {
-				item = fAvailableComponents.addItem();
-			} else {
-				item = fAvailableComponents.getItem(i);
-				if (null == item) {
+			List<String> availableComponents = modelGroup.getAvailableComponents();
+			final String[] components = availableComponents.toArray(new String[availableComponents.size()]);
+			fAvailableComponents.removeAll();
+			String component = null;
+			for (int i = 0; i < components.length; i++) {
+				component = components[i];
+				if (i >= fAvailableComponents.getItemCount()) {
 					item = fAvailableComponents.addItem();
+				} else {
+					item = fAvailableComponents.getItem(i);
+					if (null == item) {
+						item = fAvailableComponents.addItem();
+					}
+				}
+				item.setText(component);
+			}
+			fAvailableComponents.updateButtons();
+
+			fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
+
+			final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
+			final List<String> tmpRuleSetLocations = new ArrayList<String>();
+			//Fixed warning, see Bug 391614
+			List<String> ruleLocations = modelGroup.getDesignRuleLocations();
+			final String[] ruleSetsLocations = ruleLocations.toArray(new String[ruleLocations.size()]);
+			for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
+				if (uiRuleSet.isEnabled()) {
+					tmpRuleSetLocations.add(uiRuleSet.getName());
 				}
 			}
-			item.setText(component);
-		}
-		fAvailableComponents.updateButtons();
-
-		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
-
-		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
-		final List<String> tmpRuleSetLocations = new ArrayList<String>();
-		//Fixed warning, see Bug 391614
-		List<String> ruleLocations = modelGroup.getDesignRuleLocations();
-		final String[] ruleSetsLocations = ruleLocations.toArray(new String[ruleLocations.size()]);
-		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
-			if (uiRuleSet.isEnabled()) {
-				tmpRuleSetLocations.add(uiRuleSet.getName());
-			}
-		}
-		fRuleSetLocations.setEditableValues(tmpRuleSetLocations.toArray(new String[tmpRuleSetLocations.size()]));
-		fRuleSetLocations.removeAll();
-		item = null;
-		String ruleSet = null;
-		for (int i = 0; i < ruleSetsLocations.length; i++) {
-			ruleSet = ruleSetsLocations[i];
-			if (i >= fRuleSetLocations.getItemCount()) {
-				item = fRuleSetLocations.addItem();
-			} else {
-				item = fRuleSetLocations.getItem(i);
-				if (null == item) {
+			fRuleSetLocations.setEditableValues(tmpRuleSetLocations.toArray(new String[tmpRuleSetLocations.size()]));
+			fRuleSetLocations.removeAll();
+			item = null;
+			String ruleSet = null;
+			for (int i = 0; i < ruleSetsLocations.length; i++) {
+				ruleSet = ruleSetsLocations[i];
+				if (i >= fRuleSetLocations.getItemCount()) {
 					item = fRuleSetLocations.addItem();
+				} else {
+					item = fRuleSetLocations.getItem(i);
+					if (null == item) {
+						item = fRuleSetLocations.addItem();
+					}
 				}
-			}
-			item.setText(ruleSet);
+				item.setText(ruleSet);
 
-			//Decorate rule set item if it is not loaded
-			item.setImage(null);
-			List<R4EUIRuleSet> loadedRuleSets = R4EUIModelController.getRootElement().getRuleSets();
-			for (R4EUIRuleSet loadedRuleSet : loadedRuleSets) {
-				if (ruleSet.equals(loadedRuleSet.getName())) {
-					item.setImage(fProperties.getElement().getUserReviewedImage());
+				//Decorate rule set item if it is not loaded or not compatible
+				item.setImage(null);
+				List<R4EUIRuleSet> loadedRuleSets = R4EUIModelController.getRootElement().getRuleSets();
+				for (R4EUIRuleSet loadedRuleSet : loadedRuleSets) {
+					if (null != loadedRuleSet.getRuleSet() && ruleSet.equals(loadedRuleSet.getName())) {
+						item.setImage(fProperties.getElement().getUserReviewedImage());
+					}
+				}
+				if (null == item.getImage()) {
+					item.setImage(fProperties.getElement().getDisabledImage());
 				}
 			}
-			if (null == item.getImage()) {
-				item.setImage(fProperties.getElement().getDisabledImage());
-			}
+
+			setEnabledFields();
+			fRefreshInProgress = false;
+
+			//Used only in test mode
+			R4EUIModelController.setCurrentPropertySection(this);
+		} else {
+			fNameText.setText("");
+			fFilePathText.setText("");
+			fDescriptionText.setText("");
+			fAvailableProjects.removeAll();
+			fAvailableComponents.removeAll();
+			fDefaultEntryCriteriaText.setText("");
+			fRuleSetLocations.removeAll();
 		}
-
-		setEnabledFields();
-		fRefreshInProgress = false;
-
-		//Used only in test mode
-		R4EUIModelController.setCurrentPropertySection(this);
 	}
 
 	/**

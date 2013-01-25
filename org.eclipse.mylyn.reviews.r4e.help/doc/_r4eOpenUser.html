@@ -590,7 +590,10 @@
 			<br/> 
 		</p>
 		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Review Group information. 
-			See below for more information on Review Groups. The Name and Description fields show additional information attached to the selected Review Group file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Group files to their workspace as needed using the ''Add ''button. Files can be removed from the workspace by pressing the ''Remove ''button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Groups are displayed in the Review Navigator.</p>
+			See below for more information on Review Groups. The Name and Description fields show additional information attached to the selected Review Group file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Group files to their workspace as needed using the 
+			<i>Add </i>button. Files can be removed from the workspace by pressing the 
+			<i>Remove </i>button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Groups are displayed in the Review Navigator.
+		</p>
 		<p>&nbsp; &nbsp;If there is a version compatibility problem between the version of the Group file and the current R4E plugin version, where the R4E version is older than the Group file version, then this group cannot be used and the description field will show a version mismatch error.  Such errors can typically be fixed by upgrading the R4E plugins to their later version.</p>
 		<p>
 			<b>Note: Make sure the defined directory location is accessible and configured with read/write permissions for the team members involved in the review.</b> 
@@ -606,7 +609,8 @@
 			<br/> 
 		</p>
 		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Rule Set information. See below for more information on Rule Sets. The Name and Version fields show additional information attached to the selected Rule Set file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Rule Set files to their workspace as needed using the 
-			<i>Add ''button. Files can be removed from the workspace by pressing the ''Remove</i> button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Rule Sets are displayed in the Review Navigator. 
+			<i>Add </i>button. Files can be removed from the workspace by pressing the 
+			<i>Remove</i> button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Rule Sets are displayed in the Review Navigator. 
 		</p>
 		<p>&nbsp; &nbsp;If there is a version compatibility problem between the version of the Rule Set file and the current R4E plugin version, where the R4E version is older than the Rule Set file version, then this ruleset cannot be used and the description field will show a version mismatch error.  Such errors can typically be fixed by upgrading the R4E plugins to their later version.</p>
 		<p>
@@ -642,7 +646,10 @@
 		<p>
 			<br/> 
 		</p>
-		<p>&nbsp; &nbsp;This is used to specify the mail server(s) that will be used to send manual and automatic email notifications to the users. More than one server can be specified. Users can add one or multiple servers to their workspace as needed using the ''Add ''button. Servers can be removed from the workspace by pressing the ''Remove ''button. Servers can be moved up or down in the list by clicking the corresponding button. The primary server should always be the first on the list. </p>
+		<p>&nbsp; &nbsp;This is used to specify the mail server(s) that will be used to send manual and automatic email notifications to the users. More than one server can be specified. Users can add one or multiple servers to their workspace as needed using the 
+			<i>Add </i>button. Servers can be removed from the workspace by pressing the 
+			<i>Remove </i>button. Servers can be moved up or down in the list by clicking the corresponding button. The primary server should always be the first on the list. 
+		</p>
 		<p>
 			<br/>
 		</p>
@@ -654,22 +661,37 @@
 			<img border="0" src="R4E_capabilities.png"/> 
 		</p>
 		<h3 id="Version_Compatibility">Version Compatibility</h3>
-		<p>In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for the Review Group, Rule Set and Review element when opening the element.  There are basically three cases that can occur:</p>
+		<p>In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for Review Groups, Rule Sets and Review elements when opening them, or when starting up the Review Navigator for Groups and Rule Sets.  There are basically three cases that can occur:</p>
 		<ul>
-			<li>Metadata version and R4E plugins version are the same:  In this case R4E opens the element normally.</li>
+			<li>Metadata version and R4E plugin data versions are the same:  In this case R4E opens the element normally.</li>
 		</ul>
 		<ul>
-			<li>Metadata version is more recent than the R4E plugins version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.</li>
+			<li>Metadata version is more recent than the R4E plugin data version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.</li>
 		</ul>
 		<p>
 			<img border="0" src="versionMismatchError.png"/>
 		</p>
 		<ul>
-			<li>Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.</li>
+			<li>Metadata version is older than the R4E plugin data version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  There are 2 possible scenarios that can occur:</li>
+		</ul>
+		<ul>
+			<li>
+				<ul>
+					<li>The metadata is compatible with the current R4E plugin data version: In this case, the user can choose to cancel the action, upgrade the metadata version to the current R4E data version, which will permanently change the metadata version for all users, or keep the older metadata version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.</li>
+				</ul>
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="versionMismatchInfo.png"/>
 		</p>
+		<ul>
+			<li>
+				<ul>
+					<li>The metadata is not compatible with the current R4E plugin data version: In this case, the user can choose to cancel the action or upgrade the metadata version to the current R4E data version, which will permanently change the metadata version for all users.  Non-compatible Reviews under an upgraded (or compatible/read-only Review Group) will be displayed prefixed with "Unknown" tag.  There reviews cannot be used, and opening them will trigger an upgrade dialog.</li>
+				</ul>
+			</li>
+		</ul>
+		<p>Review Groups, Reviews and Rule Sets that have uncompatible versions mismatches will not be resolved.  They will be displayed in the Review Navigator with a question mark (?) decorator and their properties will not be available in the Properties View.  The only possible action on them is to open them to trigger the upgrading procedure.</p>
 		<p>
 			<br/>
 		</p>
@@ -1146,7 +1168,9 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>This will trigger the Email Client dialog. You can review the contents of the message, modify it as you see fit, and press the ''OK ''button to send it. Of course, the destination email address(es) need to be valid for the email to actually be sent.</li>
+			<li>This will trigger the Email Client dialog. You can review the contents of the message, modify it as you see fit, and press the 
+				<i>OK </i>button to send it. Of course, the destination email address(es) need to be valid for the email to actually be sent.
+			</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1245,7 +1269,8 @@
 		<ul>
 			<li>Once the anomaly is resolved, we can set the Anomaly state to 
 				<i>FIXED</i> by changing the 
-				<i>State ''combo box value in the R4E Properties view. Note that the ''Fixed by</i> property (in the 
+				<i>State </i>combo box value in the R4E Properties view. Note that the 
+				<i>Fixed by</i> property (in the 
 				<i>Participant Details</i> expandable section) gets automatically set to the current user. This can be changed to any of the participants if needed.
 			</li>
 		</ul>
@@ -1348,7 +1373,8 @@
 		</ul>
 		<ul>
 			<li>If you look at the Review Properties Detailed tab, you will notice that is display a 
-				<i>Phase Map</i> table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the ''PLANNING ''phase is the active one (highlighted in blue).
+				<i>Phase Map</i> table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the 
+				<i>PLANNING </i>phase is the active one (highlighted in blue).
 			</li>
 		</ul>
 		<ul>
@@ -1434,7 +1460,9 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Once the details are entered, the Email client dialog is shown, and upon clicking the ''OK ''button, a new notification of items ready for review, bundled with a meeting invitation will be sent to all participants.</li>
+			<li>Once the details are entered, the Email client dialog is shown, and upon clicking the 
+				<i>OK </i>button, a new notification of items ready for review, bundled with a meeting invitation will be sent to all participants.
+			</li>
 		</ul>
 		<ul>
 			<li>Now, in 

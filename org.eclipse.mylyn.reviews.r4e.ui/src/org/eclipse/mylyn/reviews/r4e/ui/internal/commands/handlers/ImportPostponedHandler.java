@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.mylyn.reviews.core.model.IComment;
 import org.eclipse.mylyn.reviews.core.model.IReviewItem;
@@ -48,12 +49,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Sebastien Dubois
@@ -69,6 +72,11 @@ public class ImportPostponedHandler extends AbstractHandler {
 	 * Field COMMAND_MESSAGE. (value is ""Importing Postponed Anomalies..."")
 	 */
 	private static final String COMMAND_MESSAGE = "Importing Postponed Anomalies...";
+
+	/**
+	 * Field MAX_REVIEW_ERRORS. (value is "5")
+	 */
+	private static final int MAX_REVIEW_ERRORS = 5;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -126,17 +134,19 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 		//For each review in the parent review group, open it and look for postponed anomalies
 		//If one is found, add it to the imported postponed elements list
+		final List<String> unresolvedReviews = new ArrayList<String>(0);
 		for (IR4EUIModelElement oldReview : parentGroup.getChildren()) {
 			try {
 				//Ignore current review
-				if (((R4EUIReviewBasic) oldReview).getName().equals(R4EUIModelController.getActiveReview().getName())) {
+				if (((R4EUIReview) oldReview).getName().equals(R4EUIModelController.getActiveReview().getName())) {
 					continue;
 				}
 
 				if (null != aMonitor) {
 					aMonitor.subTask("Processing Review: " + oldReview.getName());
 				}
-				List<R4EAnomaly> oldAnomalies = getAnomalies((R4EUIReviewBasic) oldReview);
+
+				List<R4EAnomaly> oldAnomalies = getAnomalies((R4EUIReview) oldReview, unresolvedReviews);
 				for (R4EAnomaly oldAnomaly : oldAnomalies) {
 					try {
 						importAnomaly((R4EUIReviewBasic) oldReview, oldAnomaly, aAddNewAnomalies, aMonitor);
@@ -148,7 +158,6 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 				//Once the anomalies are imported, verify if we should show them (If they are now not postponed we do not show them)
 				CommandUtils.showPostponedElements(R4EUIModelController.getActiveReview());
-
 			} catch (OutOfSyncException e) {
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
@@ -163,6 +172,29 @@ public class ImportPostponedHandler extends AbstractHandler {
 				aMonitor.worked(1);
 			}
 		}
+
+		//Notify users of reviews not checked because they were not resolvable (incompatible version mismatches)
+		if (unresolvedReviews.size() > 0) {
+			StringBuffer buffer = new StringBuffer();
+			int numReviewErrorsAppened = 0;
+			for (String unresolvedReview : unresolvedReviews) {
+				if (numReviewErrorsAppened < 5) {
+					buffer.append(unresolvedReview + R4EUIConstants.LINE_FEED);
+				} else if (MAX_REVIEW_ERRORS == numReviewErrorsAppened) {
+					buffer.append("...");
+				}
+				++numReviewErrorsAppened;
+			}
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+					"Some Reviews could not be opened when importing or refreshing Postponed Anomalies", new Status(
+							IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, "Unresolved Reviews: "
+									+ R4EUIConstants.LINE_FEED + buffer.toString(), null), IStatus.WARNING);
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
+		}
 	}
 
 	/**
@@ -172,52 +204,60 @@ public class ImportPostponedHandler extends AbstractHandler {
 	 *            R4EUIReviewBasic
 	 * @return List<R4EAnomaly>
 	 */
-	private static List<R4EAnomaly> getAnomalies(R4EUIReviewBasic aUiOldReview) {
+	private static List<R4EAnomaly> getAnomalies(R4EUIReview aUiOldReview, List<String> aUnresolvedReviews) {
 		final R4EReview currentReview = R4EUIModelController.getActiveReview().getReview();
 		final List<R4EAnomaly> anomaliesToConsider = new ArrayList<R4EAnomaly>();
 
-		//Open all old reviews, loop through all anomalies for the review, and check if there are
+		//Open all compatible old reviews, loop through all anomalies for the review, and check if there are
 		//any postponed anomalies on files that are included in the current review
 		try {
-			final R4EReview oldReview = R4EUIModelController.FModelExt.openR4EReview(
-					((R4EUIReviewGroup) aUiOldReview.getParent()).getReviewGroup(), aUiOldReview.getReview().getName());
-			final List<ITopic> oldAnomalies = oldReview.getTopics();
-			for (ITopic oldAnomaly : oldAnomalies) {
+			if (((R4EUIReviewGroup) aUiOldReview.getParent()).checkChildReviewCompatibility(aUiOldReview.getReview())) {
 
-				//Get parent file
-				R4EFileVersion oldAnomalyFile = CommandUtils.getAnomalyParentFile((R4EAnomaly) oldAnomaly);
-				if (null == oldAnomalyFile) {
-					//Global anomaly
-					if (null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
-							R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
-						anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
-					}
-				} else {
+				final R4EReview oldReview = R4EUIModelController.FModelExt.openR4EReview(
+						((R4EUIReviewGroup) aUiOldReview.getParent()).getReviewGroup(), aUiOldReview.getReview()
+								.getName());
+				final List<ITopic> oldAnomalies = oldReview.getTopics();
+				for (ITopic oldAnomaly : oldAnomalies) {
 
-					for (IReviewItem currentItem : currentReview.getItems()) {
-						//Ignore R4EUIPostponedContainer for current review here
-						if ((R4EUIConstants.TRUE_ATTR_VALUE_STR).equals(((R4EItem) currentItem).getInfoAtt().get(
-								R4EUIConstants.POSTPONED_ATTR_STR))) {
-							continue;
+					//Get parent file
+					R4EFileVersion oldAnomalyFile = CommandUtils.getAnomalyParentFile((R4EAnomaly) oldAnomaly);
+					if (null == oldAnomalyFile) {
+						//Global anomaly
+						if (null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
+								R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+							anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
 						}
+					} else {
 
-						//NOTE:  We compare the URI of the files.  This means that in order to be considered, 
-						//the version of the file in the current review need to be in the workspace.  This is a limitation.
-						List<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
-						for (R4EFileContext currentFile : currentFiles) {
-							if (null != currentFile.getTarget()
-									&& null != currentFile.getTarget().getPlatformURI()
-									&& currentFile.getTarget().getPlatformURI().equals(oldAnomalyFile.getPlatformURI())
-									&& null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
-											R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
-								anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
+						for (IReviewItem currentItem : currentReview.getItems()) {
+							//Ignore R4EUIPostponedContainer for current review here
+							if ((R4EUIConstants.TRUE_ATTR_VALUE_STR).equals(((R4EItem) currentItem).getInfoAtt().get(
+									R4EUIConstants.POSTPONED_ATTR_STR))) {
+								continue;
+							}
+
+							//NOTE:  We compare the URI of the files.  This means that in order to be considered, 
+							//the version of the file in the current review need to be in the workspace.  This is a limitation.
+							List<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
+							for (R4EFileContext currentFile : currentFiles) {
+								if (null != currentFile.getTarget()
+										&& null != currentFile.getTarget().getPlatformURI()
+										&& currentFile.getTarget()
+												.getPlatformURI()
+												.equals(oldAnomalyFile.getPlatformURI())
+										&& null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
+												R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+									anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
+								}
 							}
 						}
 					}
 				}
+				R4EUIModelController.FModelExt.closeR4EReview(oldReview);
+			} else {
+				//The original review could not be checked (compatibility problems)
+				aUnresolvedReviews.add(aUiOldReview.getReviewName());
 			}
-			R4EUIModelController.FModelExt.closeR4EReview(oldReview);
-
 		} catch (ResourceHandlingException e) {
 			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);

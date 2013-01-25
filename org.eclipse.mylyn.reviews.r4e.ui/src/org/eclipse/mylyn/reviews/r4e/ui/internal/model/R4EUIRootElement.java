@@ -18,6 +18,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -42,6 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -242,14 +245,33 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	/**
 	 * Method loadReviewGroup.
 	 * 
-	 * @param aGroup
-	 *            R4EReviewGroup
+	 * @param aGroupPath
+	 *            String
+	 * @throws IOException
+	 * @throws CompatibilityException
 	 * @throws ResourceHandlingException
 	 */
-	public void loadReviewGroup(R4EReviewGroup aGroup) {
-		if (aGroup.isEnabled()
-				|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroup, false);
+	public void loadReviewGroup(String aGroupPath) throws IOException, ResourceHandlingException,
+			CompatibilityException {
+
+		R4EReviewGroup loadedGroup = null;
+		String newVersion = Persistence.Roots.GROUP.getVersion();
+		URI resourceUri = URI.createFileURI(aGroupPath);
+		String oldVersion = R4EUpgradeController.getVersionFromResourceFile(resourceUri);
+
+		try {
+			if (R4EUpgradeController.upgradeCompatibilityCheck(resourceUri, oldVersion, newVersion)) {
+				loadedGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(URI.createFileURI(aGroupPath));
+			}
+		} catch (IOException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		}
+
+		if (null == loadedGroup
+				|| (loadedGroup.isEnabled() || R4EUIPlugin.getDefault()
+						.getPreferenceStore()
+						.getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroupPath, loadedGroup, false);
 			addChildren(addedChild);
 		}
 	}
@@ -259,14 +281,30 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * 
 	 * @param aRuleSet
 	 *            R4EDesignRuleCollection
+	 * @throws IOException
+	 * @throws CompatibilityException
 	 * @throws ResourceHandlingException
 	 */
-	public void loadRuleSet(R4EDesignRuleCollection aRuleSet) {
-		if (aRuleSet.isEnabled()
-				|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, aRuleSet, false);
+	public void loadRuleSet(String aRuleSetPath) throws IOException, ResourceHandlingException, CompatibilityException {
+		R4EDesignRuleCollection loadedRuleSet = null;
+		String newVersion = Persistence.Roots.RULESET.getVersion();
+		URI resourceUri = URI.createFileURI(aRuleSetPath);
+		String oldVersion = R4EUpgradeController.getVersionFromResourceFile(resourceUri);
+
+		try {
+			if (R4EUpgradeController.upgradeCompatibilityCheck(resourceUri, oldVersion, newVersion)) {
+				loadedRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(URI.createFileURI(aRuleSetPath));
+			}
+		} catch (IOException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		}
+
+		if (null == loadedRuleSet
+				|| (loadedRuleSet.isEnabled() || R4EUIPlugin.getDefault()
+						.getPreferenceStore()
+						.getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, aRuleSetPath, loadedRuleSet, false);
 			addChildren(addedChild);
-			addedChild.close();
 		}
 	}
 
@@ -303,7 +341,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 
 			final R4EReviewGroup reviewGroup = R4EUIModelController.FModelExt.createR4EReviewGroup(
 					URI.createFileURI(((R4EReviewGroup) aModelComponent).getFolder()), groupName);
-			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, reviewGroup, true);
+			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, reviewGroup.eResource()
+					.getURI()
+					.toFileString(), reviewGroup, true);
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);
 
@@ -340,7 +380,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
 
 			final R4EDesignRuleCollection ruleSet = R4EUIModelController.FModelExt.createR4EDesignRuleCollection(
 					URI.createFileURI(((R4EDesignRuleCollection) aModelComponent).getFolder()), ruleSetName);
-			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, ruleSet, true);
+			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, ruleSet.eResource().getURI().toFileString(),
+					ruleSet, true);
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);
 

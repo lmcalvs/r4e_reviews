@@ -726,7 +726,8 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 						parentRuleSetElement = parentRuleSetElement.getParent();
 					}
 					//If the current review group contains a reference to this Rule Set, display it
-					if ((((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getRuleSets().contains(parentRuleSetElement))) {
+					if (null != ((R4EUIRuleSet) parentRuleSetElement).getRuleSet()
+							&& (((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getRuleSets().contains(parentRuleSetElement))) {
 						if (!parentRuleSetElement.isOpen()) {
 							try {
 								((R4EUIRuleSet) parentRuleSetElement).openReadOnly();

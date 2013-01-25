@@ -113,6 +113,17 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	}
 
 	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	@Override
+	public String getImageLocation() {
+		return POSTPONED_FILE_ICON_FILE;
+	}
+
+	/**
 	 * Method getBaseFileVersion. This is overriden to use the file version on which the anomaly was originally raised
 	 * 
 	 * @return R4EFileVersion
