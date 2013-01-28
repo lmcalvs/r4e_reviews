@@ -21,13 +21,13 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.util.Iterator;
 
+import org.eclipse.compare.structuremergeviewer.DiffElement;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;

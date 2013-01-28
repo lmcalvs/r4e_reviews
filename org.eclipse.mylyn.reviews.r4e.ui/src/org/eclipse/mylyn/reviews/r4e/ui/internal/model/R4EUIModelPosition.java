@@ -18,10 +18,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
-import org.eclipse.emf.compare.diagram.diff.util.DiffUtil;
-import org.eclipse.emf.compare.diagram.diff.util.DiffUtil.Side;
-import org.eclipse.emf.compare.diff.metamodel.DiffElement;
-import org.eclipse.emf.compare.util.AdapterUtils;
+import org.eclipse.compare.structuremergeviewer.DiffElement;
+import org.eclipse.emf.compare.match.eobject.EObjectIndex.Side;
+import org.eclipse.emf.compare.utils.DiffUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
