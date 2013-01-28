@@ -31,7 +31,7 @@
     <eLiterals name="None" literal="NONE"/>
     <eLiterals name="Minor" value="1" literal="MINOR"/>
     <eLiterals name="Major" value="2" literal="MAJOR"/>
-    <eLiterals name="Deprecated" value="3" literal="DEPRECATED"/>
+    <eLiterals name="Deprecated" value="3" literal=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EDesignRuleClass">
     <eLiterals name="Erroneous" literal="ERRONEOUS"/>

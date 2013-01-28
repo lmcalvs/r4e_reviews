@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore="http://org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore/1.0">
+  <org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleCollection xmi:id="_dVnOEEkqEeK-F5EIGTlQdQ" fragmentVersion="1.9.9" version="0.1" name="compatibleUpgradeTest">
+    <areas href="#_f6ry4EkqEeK-F5EIGTlQdQ"/>
+  </org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleCollection>
+  <org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleArea xmi:id="_f6ry4EkqEeK-F5EIGTlQdQ" name="testRuleArea">
+    <violations href="#_hnXXIEkqEeK-F5EIGTlQdQ"/>
+  </org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleArea>
+  <org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleViolation xmi:id="_hnXXIEkqEeK-F5EIGTlQdQ" name="testRuleViolation">
+    <rules href="#_lq7TMEkqEeK-F5EIGTlQdQ"/>
+  </org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRuleViolation>
+  <org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore:R4EDesignRule xmi:id="_lq7TMEkqEeK-F5EIGTlQdQ" id="0001" rank="MINOR" title="testRule" description="testRule description"/>
+</xmi:XMI>

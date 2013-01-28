@@ -20,6 +20,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +38,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.core.model.ILocation;
+import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -50,6 +54,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -304,7 +309,7 @@ public class R4EUIModelController {
 		//Set current user as reviewer
 		setReviewer(R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
 
-		//Add root for Review Navigator
+		//Add or Reset Root element in Review Navigator
 		FRootElement = new R4EUIRootElement(null, "R4E");
 
 		//Load Review Elements
@@ -334,60 +339,33 @@ public class R4EUIModelController {
 	 */
 	public static List<String> loadReviewGroups(List<String> aGroupPaths, List<String> aErrors) {
 
-		//final boolean changePrefsPaths = false;
-		R4EReviewGroup reviewGroup = null;
-		//final List<String> newGroupPaths = new ArrayList<String>();
-		//newGroupPaths.addAll(aGroupPaths);
-
 		for (String groupPath : aGroupPaths) {
-			reviewGroup = null;
-
-			//First try to open the review group file as entrered in the preferences
-			//If it fails, then create it
+			//Open the review group file as entered in the preferences
 			try {
-				reviewGroup = FModelExt.openR4EReviewGroup(URI.createFileURI(groupPath));
-				if (null != reviewGroup) {
-					FRootElement.loadReviewGroup(reviewGroup);
-				} else {
+
+				//Check if the file exists.  If not flag it here
+				File groupFile = new File(groupPath);
+				if (!groupFile.exists()) {
 					aErrors.add("Invalid Group Path " + groupPath + R4EUIConstants.LINE_FEED);
+				} else {
+					FRootElement.loadReviewGroup(groupPath);
 				}
 			} catch (ResourceHandlingException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
-
-				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
-				/*
-				//Review Group not found, ask user for review group creation
-				MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
-						null, "Missing Review Group", null, "Review Group file at location " + groupPath
-								+ " not found, remove it from Preferences?", MessageDialog.WARNING, new String[] {
-								"Yes", "No" }, R4EUIConstants.DIALOG_NO); // no is the default
-				int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
-
-				if (result == R4EUIConstants.DIALOG_YES) {
-					changePrefsPaths = true;
-					newGroupPaths.remove(groupPath);
-				}
-				*/
 			} catch (CompatibilityException e) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
+			} catch (IOException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 			}
 		}
-
-		/*
-		//Adjust review group paths in preferences
-		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault()
-					.getPreferenceStore()
-					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
-		}
-		*/
 		return aErrors;
 	}
 
 	/**
-	 * Method loadReviewGroups.
+	 * Method loadRuleSets.
 	 * 
 	 * @param aRuleSetPaths
 	 *            List<String>
@@ -397,56 +375,51 @@ public class R4EUIModelController {
 	 */
 	public static List<String> loadRuleSets(List<String> aRuleSetPaths, List<String> aErrors) {
 
-		//final boolean changePrefsPaths = false;
-		R4EDesignRuleCollection ruleSet = null;
-		//final List<String> newRuleSetPaths = new ArrayList<String>();
-		//newRuleSetPaths.addAll(aRuleSetPaths);
-
 		for (String ruleSetPath : aRuleSetPaths) {
-			ruleSet = null;
 
-			//First try to open the review group file as entered in the preferences
-			//If it fails, then create it
+			//Open the rule set file as entered in the preferences
 			try {
-				ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
-				if (null != ruleSet) {
-					FRootElement.loadRuleSet(ruleSet);
-				} else {
+
+				//Check if the file exists.  If not flag it here
+				File ruleSetFile = new File(ruleSetPath);
+				if (!ruleSetFile.exists()) {
 					aErrors.add("Invalid Ruleset Path " + ruleSetPath + R4EUIConstants.LINE_FEED);
+				} else {
+					FRootElement.loadRuleSet(ruleSetPath);
 				}
 			} catch (ResourceHandlingException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
-
-				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
-				/*
-				//Review Group not found, ask user for review group creation
-				MessageDialog dialog = new MessageDialog(
-						// $codepro.audit.disable variableDeclaredInLoop
-						null, "Missing Rule Set", null, "Rule Set file at location " + ruleSetPath + " not found",
-						MessageDialog.WARNING, new String[] { "Ok" }, R4EUIConstants.DIALOG_YES); // no is the default
-				int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
-
-				if (result == R4EUIConstants.DIALOG_YES) {
-					changePrefsPaths = true;
-					newRuleSetPaths.remove(ruleSetPath);
-				}
-				 */
 			} catch (CompatibilityException e) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
+			} catch (IOException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 			}
 		}
-
-		/*
-		//Adjust review group paths in preferences
-		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault()
-					.getPreferenceStore()
-					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
-		}
-		*/
 		return aErrors;
+	}
+
+	/**
+	 * Method stampVersion.
+	 * 
+	 * @param aReviewComponent
+	 *            IReviewComponent
+	 * @param aUpdater
+	 *            String
+	 * @param aNewVersion
+	 *            String
+	 * @return R4EDesignRuleCollection
+	 */
+	public static void stampVersion(IReviewComponent aReviewComponent, String aUpdater, String aNewVersion)
+			throws ResourceHandlingException, OutOfSyncException {
+		if (aReviewComponent instanceof IModelVersioning) {
+			Long bookNum;
+			bookNum = SerializeFactory.getResourceUpdater().checkOut(aReviewComponent, aUpdater);
+			((IModelVersioning) aReviewComponent).setFragmentVersion(aNewVersion);
+			SerializeFactory.getResourceUpdater().checkIn(bookNum);
+		}
 	}
 
 	/**

@@ -60,7 +60,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DEPRECATED(3, "Deprecated", "DEPRECATED");
+	DEPRECATED(3, "Deprecated", "");
 
 	/**
 	 * The '<em><b>None</b></em>' literal value.
@@ -116,7 +116,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #DEPRECATED
-	 * @model name="Deprecated" literal="DEPRECATED"
+	 * @model name="Deprecated" literal=""
 	 * @generated
 	 * @ordered
 	 */

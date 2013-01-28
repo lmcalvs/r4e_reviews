@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EParticipant xmi:id="_xqdAQUkqEeK-F5EIGTlQdQ" id="user" email="user@company.com" sequenceIDCounter="11" reviewCreatedByMe="true">
+    <addedComments href="#_R_WD8EkrEeK-F5EIGTlQdQ"/>
+    <addedComments href="#_UJ53AEkrEeK-F5EIGTlQdQ"/>
+    <addedComments href="#_mxN_MErSEeKNkOrrrfmkrA"/>
+    <addedComments href="#_peD_8ErSEeKNkOrrrfmkrA"/>
+    <addedItems href="user_items.xrer#_f7bMEUrSEeKNkOrrrfmkrA"/>
+    <reviewInstance href="testReviewInf_review.xrer#_xqTPQEkqEeK-F5EIGTlQdQ"/>
+    <roles>R4E_ROLE_REVIEWER</roles>
+  </r4ecore:R4EParticipant>
+  <r4ecore:R4EAnomaly xmi:id="_R_WD8EkrEeK-F5EIGTlQdQ" user="_xqdAQUkqEeK-F5EIGTlQdQ" description="new Global Anomaly description" title="test Global Anomaly" createdOn="2012-12-18T10:55:01.423-0500" state="R4E_ANOMALY_STATE_ASSIGNED" dueDate="2012-12-31T00:00:00.000-0500" rank="R4E_RANK_MAJOR">
+    <type xsi:type="r4ecore:R4ECommentType" xmi:id="_SBoi8EkrEeK-F5EIGTlQdQ"/>
+    <assignedTo>user</assignedTo>
+    <id xmi:id="_R_XSEEkrEeK-F5EIGTlQdQ" sequenceID="1" userID="user"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4EComment xmi:id="_UJ53AEkrEeK-F5EIGTlQdQ" user="_xqdAQUkqEeK-F5EIGTlQdQ" description="This is a test comment for the anomaly" createdOn="2012-12-18T10:55:15.951-0500" anomaly="_R_WD8EkrEeK-F5EIGTlQdQ">
+    <id xmi:id="_UJ53AUkrEeK-F5EIGTlQdQ" sequenceID="2" userID="user"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EAnomaly xmi:id="_mxN_MErSEeKNkOrrrfmkrA" user="_xqdAQUkqEeK-F5EIGTlQdQ" description="new Compare Editor Anomaly description" title="test Compare Editor Anomaly" createdOn="2012-12-20T13:25:17.987-0500" state="R4E_ANOMALY_STATE_ASSIGNED" dueDate="2012-12-31T00:00:00.000-0500" rank="R4E_RANK_MINOR">
+    <type xsi:type="r4ecore:R4ECommentType" xmi:id="_d2lxEErTEeKNkOrrrfmkrA" type="R4E_CLASS_IMPROVEMENT"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_mxfsAErSEeKNkOrrrfmkrA"/>
+    <assignedTo>user</assignedTo>
+    <id xmi:id="_mxN_MUrSEeKNkOrrrfmkrA" sequenceID="10" userID="user"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ETextContent xmi:id="_mxfsAErSEeKNkOrrrfmkrA">
+    <location href="#_mxiIQErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_mxiIQErSEeKNkOrrrfmkrA" startPosition="71381" length="87" startLine="2112" endLine="2112">
+    <file href="#_mxkkgErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_mxkkgErSEeKNkOrrrfmkrA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" versionID="32a5c6bea359694424bd492dcd48c86d1c6794da" repositoryPath="org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" name="R4EUIConstants.java" localVersionID="32a5c6bea359694424bd492dcd48c86d1c6794da"/>
+  <r4ecore:R4EComment xmi:id="_peD_8ErSEeKNkOrrrfmkrA" user="_xqdAQUkqEeK-F5EIGTlQdQ" description="This is a test comment for the anomaly" createdOn="2012-12-20T13:25:36.111-0500" anomaly="_mxN_MErSEeKNkOrrrfmkrA">
+    <id xmi:id="_peD_8UrSEeKNkOrrrfmkrA" sequenceID="11" userID="user"/>
+  </r4ecore:R4EComment>
+</xmi:XMI>

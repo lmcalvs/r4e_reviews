@@ -89,7 +89,7 @@ public class ResourceUtils {
 		if (!ifile.exists()) {
 			StringBuilder sb = new StringBuilder("The file: " + platformUri.toString()
 					+ " does not exists in the workspace");
-			Activator.fTracer.traceError(sb.toString());
+			Activator.fTracer.traceWarning(sb.toString());
 			throw new FileNotFoundException(sb.toString());
 		}
 
@@ -117,7 +117,7 @@ public class ResourceUtils {
 		if (iProject == null) {
 			StringBuilder sb = new StringBuilder("The Project: " + platformUri.toString()
 					+ " does not exists in the workspace");
-			Activator.fTracer.traceError(sb.toString());
+			Activator.fTracer.traceWarning(sb.toString());
 			throw new FileNotFoundException(sb.toString());
 		}
 
@@ -190,8 +190,8 @@ public class ResourceUtils {
 		IProject[] projects = root.getRoot().getProjects();
 		IProject project = null;
 		if (projects != null) {
-			for (int i = 0; i < projects.length; i++) {
-				project = projects[i];
+			for (IProject project2 : projects) {
+				project = project2;
 				if (project.getName().equals(name)) {
 					return project;
 				}
@@ -211,8 +211,7 @@ public class ResourceUtils {
 	 */
 	public static IFile getWorkSpaceFile(java.net.URI aFilePathURI, IProject aProject) {
 		IFile[] files = getWorkSpaceFiles(aFilePathURI);
-		for (int i = 0; i < files.length; i++) {
-			IFile iFile = files[i];
+		for (IFile iFile : files) {
 			if (iFile.getProject().equals(aProject)) {
 				// found
 				return iFile;
@@ -275,4 +274,30 @@ public class ResourceUtils {
 		return retURI;
 	}
 
+	/**
+	 * convert value to a valid file name
+	 * 
+	 * @param stValue
+	 *            - stValue
+	 * @return String
+	 */
+	public static String toValidFileName(String stValue) {
+		String result = null;
+		StringBuilder sb = new StringBuilder();
+
+		if (stValue != null) {
+			int size = stValue.length();
+			for (int i = 0; i < size; i++) {
+				char c = stValue.charAt(i);
+				if (!Character.isLetterOrDigit(c) && c != '-' && c != '_') {
+					sb.append('_');
+				} else {
+					sb.append(c);
+				}
+			}
+			result = sb.toString();
+		}
+
+		return result;
+	}
 }

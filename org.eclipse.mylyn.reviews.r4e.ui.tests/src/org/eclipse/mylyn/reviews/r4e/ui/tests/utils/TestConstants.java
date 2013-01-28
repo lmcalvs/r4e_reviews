@@ -117,7 +117,13 @@ public class TestConstants {
 
 	public static final String PARTICIPANT_ASSIGN_TO = "userA";
 
+	public static final String PARTICIPANT_ASSIGN_TO2 = "user";
+
 	//Anomalies
+
+	public static final String GLOBAL_ANOMALY_TEST_TITLE = "test Global Anomaly";
+
+	public static final String GLOBAL_ANOMALY_TEST_DESCRIPTION = "new Global Anomaly description";
 
 	public static final String COMPARE_EDITOR_ANOMALY_TEST_TITLE = "test Compare Editor Anomaly";
 

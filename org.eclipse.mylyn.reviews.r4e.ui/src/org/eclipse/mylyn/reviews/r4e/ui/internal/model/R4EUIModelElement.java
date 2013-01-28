@@ -21,18 +21,22 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -81,6 +85,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public static final String READONLY_OVERLAY_ICON_FILE = "icons/ovr16/readonlyovr_tsk.gif"; //$NON-NLS-1$
 
 	/**
+	 * Field UNRESOLVED_OVERLAY_ICON_FILE.
+	 */
+	public static final String UNRESOLVED_OVERLAY_ICON_FILE = "icons/ovr16/unresolvedovr_tsk.gif"; //$NON-NLS-1$
+
+	/**
 	 * Field SET_IMAGE_MESSAGE.
 	 */
 	public static final String SET_IMAGE_MESSAGE = "Setting Images"; //$NON-NLS-1$
@@ -123,6 +132,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Field fReadOnly.
 	 */
 	protected boolean fReadOnly = false;
+
+	/**
+	 * Field fResolved.
+	 */
+	protected boolean fResolved = true;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -308,6 +322,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method isResolved.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isResolved()
+	 */
+	public boolean isResolved() {
+		return fResolved;
+	}
+
+	/**
 	 * Close the model element (i.e. disable it)
 	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
@@ -379,6 +403,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getUnresolvedImage.
+	 * 
+	 * @return Image
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getUnresolvedImage()
+	 */
+	public Image getUnresolvedImage() {
+		return UIUtils.loadIcon(UNRESOLVED_OVERLAY_ICON_FILE);
+	}
+
+	/**
 	 * Method setUserReviewed.
 	 * 
 	 * @param aReviewed
@@ -410,6 +444,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException { // $codepro.audit.disable emptyMethod
 		//default implementation
+	}
+
+	/**
+	 * Method setReadOnly.
+	 * 
+	 * @param aReadOnly
+	 *            boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setReadOnly(boolean)
+	 */
+	public void setReadOnly(boolean aReadOnly) {
+		fReadOnly = aReadOnly;
 	}
 
 	/**
@@ -600,6 +645,44 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException { // $codepro.audit.disable emptyMethod -->
 		//default implementation
+	}
+
+	/**
+	 * Check version compatibility between the element(s) to load and the current R4E application and do the conversion
+	 * if necessary, based on user input
+	 * 
+	 * @param aUpgradeRoot
+	 *            - URI
+	 * @param aOldVersion
+	 *            - String
+	 * @param aNewVersion
+	 *            - String
+	 * @param aRecursive
+	 *            - boolean
+	 * @return boolean
+	 */
+	public boolean checkCompatibility(URI aUpgradeRoot, String aElementMsg, String aOldVersion, String aNewVersion,
+			boolean aRecursive) {
+		int checkUpgradeResult;
+		try {
+			checkUpgradeResult = R4EUpgradeController.upgradeCheck(aUpgradeRoot, aElementMsg, aOldVersion, aNewVersion,
+					aRecursive);
+		} catch (IOException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			return false;
+		}
+
+		switch (checkUpgradeResult) {
+		case R4EUIConstants.OPEN_NORMAL:
+			fReadOnly = false;
+			return true;
+		case R4EUIConstants.OPEN_READONLY:
+			fReadOnly = true;
+			return true;
+		default:
+			//Assume Cancel
+			return false;
+		}
 	}
 
 	//Commands

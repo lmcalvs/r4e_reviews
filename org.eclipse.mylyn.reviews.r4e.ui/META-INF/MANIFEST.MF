@@ -26,7 +26,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.r4e.mail.smtp;bundle-version="0.11.0",
  org.eclipse.mylyn.reviews.r4e.report;bundle-version="0.13.0";resolution:=optional,
  org.eclipse.mylyn.reviews.frame.ui;bundle-version="0.13.0",
- org.eclipse.mylyn.reviews.core;bundle-version="1.1.0"
+ org.eclipse.mylyn.reviews.core;bundle-version="1.1.0",
+ org.eclipse.mylyn.reviews.r4e.upgrade
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName

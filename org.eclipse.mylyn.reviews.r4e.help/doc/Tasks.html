@@ -54,7 +54,9 @@
 			<br/> 
 		</p>
 		<h3 id="Disabling_and_Restoring_Elements">Disabling and Restoring Elements</h3>
-		<p>When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the ''Disable ''command from the element's context menu. </p>
+		<p>When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the 
+			<i>Disable </i>command from the element's context menu. 
+		</p>
 		<p>
 			<br/> 
 		</p>
@@ -71,7 +73,8 @@
 		</p>
 		<p>Ideally, disabled elements should never be shown, but there could be a need to restore mistakenly disabled elements. To do so, first go to the Eclipse preferences R4E page, on the 
 			<i>Filters</i> tab and enable the 
-			<i>Show Disabled Elements</i> filter, then return to the Navigator view and select the ''Restore ''command from the disabled element context menu 
+			<i>Show Disabled Elements</i> filter, then return to the Navigator view and select the 
+			<i>Restore </i>command from the disabled element context menu 
 		</p>
 		<p>
 			<br/> 
@@ -256,7 +259,9 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Add a new Review Group reference file by clicking the ''Add ''button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. </li>
+			<li>Add a new Review Group reference file by clicking the 
+				<i>Add </i>button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. 
+			</li>
 			<li>The Review Group Name and Description are also shown in the Preferences Group tab.</li>
 		</ul>
 		<p>
@@ -597,6 +602,9 @@
 		</p>
 		<p>From then on, Postponed anomalies will behave like any other Anomaly and can be handled in the same way.  All changes except the state changes will be local to the imported anomaly i.e. changing the imported anomaly will not change the original one.  When a Postponed Anomaly is modified, the state changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  For instance if the imported anomaly is fixed, the original one will be marked as fixed to convey the fact that the postponed issue is now closed. </p>
 		<p>Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
+		<p>Postponed Anomalies will not be imported/refreshed from Reviews that have non-compatible metadata (Prefixed by the Unknown Tag).  Likewise, it is not possible to alter a Postponed Anomaly if its original Review have non-compatible metadata without first upgrading it to the current metadata version (See 
+			<a href="_r4eOpenUser.html#Version_Compatibility">Version Compatibility</a> for more details on version compatibility)
+		</p>
 		<h2 id="Handling_Design_Rules">Handling Design Rules</h2>
 		<h3 id="Creating_a_Rule_Set">Creating a Rule Set</h3>
 		<p>R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rules. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. </p>
@@ -639,7 +647,9 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Add a new Rule Set reference file by clicking the ''Add ''button and select the appropriate Rule Set File. Take note that all Review Group filename end with "_rule_set.xrer" suffix. </li>
+			<li>Add a new Rule Set reference file by clicking the 
+				<i>Add </i>button and select the appropriate Rule Set File. Take note that all Review Group filename end with "_rule_set.xrer" suffix. 
+			</li>
 			<li>The Rule Set Version and Name are also shown in the Preferences Group tab.</li>
 		</ul>
 		<p>
@@ -855,7 +865,8 @@
 				<ul>
 					<li>The Review name. </li>
 					<li>The current Review phase. Basic and Informal reviews can have only 2 phases, 
-						<i>Started ''and ''Completed</i>. Formal reviews have multiple phases. Refer to the formal review section for more information. 
+						<i>Started </i>and 
+						<i>Completed</i>. Formal reviews have multiple phases. Refer to the formal review section for more information. 
 					</li>
 					<li>A brief description of the review. </li>
 				</ul>
@@ -881,7 +892,8 @@
 			<li>In the Decision Information expandable section (Informal/Formal reviews only)
 				<ul>
 					<li>Meeting data for the decision meeting (Subject, Time, Duration, Location). This can be updated at any time using the 
-						<i>Update ''button. The data can be fetched using the ''Refresh</i> button 
+						<i>Update </i>button. The data can be fetched using the 
+						<i>Refresh</i> button 
 					</li>
 					<li>The Exit Decision that tell whether the review is accepted or if some rework has to be done </li>
 					<li>Participants that were part of the exit decision </li>
@@ -1022,7 +1034,8 @@
 			<li>In the Time Management expandable section
 				<ul>
 					<li>A table that tracks the Time Spent by the participant reviewing the file. Entries can be added (or removed) by the participant at any time by using the 
-						<i>Add ''(or ''Remove</i>) button. The table will also show the cumulative time spent in its header.
+						<i>Add </i>(or 
+						<i>Remove</i>) button. The table will also show the cumulative time spent in its header.
 					</li>
 				</ul>
 			</li>
@@ -1125,7 +1138,9 @@
 		<p>
 			<br/> 
 		</p>
-		<p>Selecting one option and closing the dialog will show up a simple email client pre-filled with all the relevant information. The user is free to modify the information as he sees fit and send the email by clicking the ''OK ''button. </p>
+		<p>Selecting one option and closing the dialog will show up a simple email client pre-filled with all the relevant information. The user is free to modify the information as he sees fit and send the email by clicking the 
+			<i>OK </i>button. 
+		</p>
 		<p>
 			<br/> 
 		</p>
@@ -1138,7 +1153,9 @@
 		</p>
 		<h3 id="Using_Meeting_Notifications">Using Meeting Notifications</h3>
 		<p>Meeting can also be scheduled directly in the workbench using R4E. Meeting data generated is in a VCalendar format that is attached to the Email that will be sent. Meeting data for decision meeting is mandatory for Formal Reviews and optional for other review types. </p>
-		<p>To add meeting data, use the ''Update ''button in the Extra property tab, under the Decision Information section, for the selected Review element. This will open the Meeting Information dialog. </p>
+		<p>To add meeting data, use the 
+			<i>Update </i>button in the Extra property tab, under the Decision Information section, for the selected Review element. This will open the Meeting Information dialog. 
+		</p>
 		<p>
 			<br/> 
 		</p>
@@ -1158,7 +1175,9 @@
 		<p>
 			<img border="0" src="MeetingInfoDate.png"/> 
 		</p>
-		<p>The meeting info stored in the system can be retrieved at all times by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. </p>
+		<p>The meeting info stored in the system can be retrieved at all times by using the 
+			<i>Refresh </i>button in the Extra property tab, under the Decision Information section, for the selected Review element. 
+		</p>
 		<p>
 			<br/>
 		</p>
@@ -1320,7 +1339,9 @@
 			<img border="0" src="FormalAnomalyStates.png"/> 
 		</p>
 		<p>A new Anomaly in a Formal Review is set to 
-			<i>CREATED ''by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to ''ACCEPTED</i>, which means that the anomaly is deemed valid and will be handled and fixed. There is no ''ASSIGNED ''state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
+			<i>CREATED </i>by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to 
+			<i>ACCEPTED</i>, which means that the anomaly is deemed valid and will be handled and fixed. There is no 
+			<i>ASSIGNED </i>state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
 
 			<br/>
 		</p><hr/>

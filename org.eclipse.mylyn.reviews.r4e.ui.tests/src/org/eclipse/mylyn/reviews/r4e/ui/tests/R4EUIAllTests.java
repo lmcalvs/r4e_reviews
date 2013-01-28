@@ -24,7 +24,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.CloneAnomaliesCommentsTest
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.DuplicateAnomalyTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.PostponedAnomaliesTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.PreferencesTests;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.ReviewWithSrangeCharTest;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.ReviewWithStrangeCharTest;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.UpgradeVersionTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.UserReviewedTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.sanity.SanityBasicTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.sanity.SanityInformalTests;
@@ -63,7 +64,8 @@ public class R4EUIAllTests extends TestSuite {
 		suite.addTestSuite(PostponedAnomaliesTests.class);
 		suite.addTestSuite(CloneAnomaliesCommentsTests.class);
 		suite.addTestSuite(DuplicateAnomalyTests.class);
-		suite.addTestSuite(ReviewWithSrangeCharTest.class);
+		suite.addTestSuite(ReviewWithStrangeCharTest.class);
+		suite.addTestSuite(UpgradeVersionTests.class);
 		//TODO Add test cases here
 		//suite.addTestSuite(ReviewGroupTests.class);
 		//suite.addTestSuite(ReviewTests.class);

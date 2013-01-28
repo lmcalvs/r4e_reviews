@@ -279,7 +279,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						String newValue = fTitleText.getText().trim();
 						if (!newValue.equals(modelAnomaly.getTitle())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setTitle(fTitleText.getText());
@@ -340,7 +340,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						String newValue = fDescriptionText.getText().trim();
 						if (!newValue.equals(modelAnomaly.getDescription())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setDescription(fDescriptionText.getText());
@@ -388,7 +388,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 
 						R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
 						if (!newState.equals(((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly().getState())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								if (newState.equals(R4EAnomalyState.REJECTED)
 										&& !((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
 												.getState()
@@ -453,7 +453,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final String newValue = fAssignedToCombo.getText().trim();
 						if (!modelAnomaly.getAssignedTo().contains(newValue)) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.getAssignedTo().clear();
@@ -578,7 +578,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EDesignRuleClass newValue = UIUtils.getClassFromString(fClassCombo.getText());
 						if (null == modelAnomaly.getType()
 								|| !newValue.equals(((R4ECommentType) modelAnomaly.getType()).getType())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
@@ -625,7 +625,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final R4EDesignRuleRank newValue = UIUtils.getRankFromString(fRankCombo.getText());
 						if (!newValue.equals(modelAnomaly.getRank())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setRank(newValue);
@@ -691,7 +691,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 				if (result == Window.OK) {
 					try {
 						if (!fRefreshInProgress
-								&& ((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+								&& ((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 
 							//Set new model data
 							final String currentUser = R4EUIModelController.getReviewer();
@@ -779,7 +779,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 							final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 							final Date newValue = dialog.getDate();
 							if (!newValue.equals(modelAnomaly.getDueDate())) {
-								if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+								if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 
 									final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 											currentUser);
@@ -886,7 +886,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
 						final String newValue = fDecidedByCombo.getText();
 						if (!newValue.equals(modelAnomaly.getDecidedByID())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setDecidedByID(newValue);
@@ -934,7 +934,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
 						final String newValue = fFixedByCombo.getText();
 						if (!newValue.equals(modelAnomaly.getFixedByID())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setFixedByID(newValue);
@@ -983,7 +983,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
 						final String newValue = fFollowUpByCombo.getText();
 						if (!newValue.equals(modelAnomaly.getFollowUpByID())) {
-							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
+							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
 								modelAnomaly.setFollowUpByID(newValue);

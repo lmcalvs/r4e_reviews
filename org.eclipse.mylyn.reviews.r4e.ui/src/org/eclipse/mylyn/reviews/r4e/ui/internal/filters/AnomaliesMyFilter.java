@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipantContainer;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
@@ -61,7 +61,7 @@ public class AnomaliesMyFilter extends ViewerFilter {
 	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
 
 		//Always elements not directly related to anomalies
-		if (aElement instanceof R4EUIReviewGroup || aElement instanceof R4EUIReviewBasic
+		if (aElement instanceof R4EUIReviewGroup || aElement instanceof R4EUIReview
 				|| aElement instanceof R4EUIParticipantContainer || aElement instanceof R4EUIParticipant
 				|| aElement instanceof R4EUIRuleSet || aElement instanceof R4EUIRuleArea
 				|| aElement instanceof R4EUIRuleViolation || aElement instanceof R4EUIRule) {

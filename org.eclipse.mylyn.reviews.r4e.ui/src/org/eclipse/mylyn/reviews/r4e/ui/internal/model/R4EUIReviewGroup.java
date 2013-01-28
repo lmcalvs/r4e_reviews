@@ -19,6 +19,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactory
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -51,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewGroupProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -124,6 +126,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Review Group";
 
+	/**
+	 * Field UNKNOWN_REVIEW_GROUP_TYPE_TOOLTIP. (value is ""Review Group Version Data is not Compatible with the current
+	 * R4E Version. Open Group to Upgrade."")
+	 */
+	private static final String UNKNOWN_REVIEW_GROUP_TYPE_TOOLTIP = "Review Group Version Data is not Compatible with the current R4E Version."
+			+ R4EUIConstants.LINE_FEED + "Open Group to Upgrade.";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -136,12 +145,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	/**
 	 * Field fGroupFileURI.
 	 */
-	private final URI fGroupFileURI;
+	private URI fGroupFileURI = null;
 
 	/**
 	 * Field fReviews.
 	 */
-	private final List<R4EUIReviewBasic> fReviews;
+	private final List<R4EUIReview> fReviews;
 
 	/**
 	 * Field fRuleSets.
@@ -162,12 +171,15 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @param aOpen
 	 *            boolean
 	 */
-	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
-		super(aParent, aGroup.getName());
+	public R4EUIReviewGroup(IR4EUIModelElement aParent, String aGroupPath, R4EReviewGroup aGroup, boolean aOpen) {
+		super(aParent, extractGroupName(aGroupPath));
 		fReadOnly = false;
 		fGroup = aGroup;
-		fGroupFileURI = aGroup.eResource().getURI();
-		fReviews = new ArrayList<R4EUIReviewBasic>();
+		fGroupFileURI = URI.createFileURI(aGroupPath);
+		if (null == fGroup) {
+			fResolved = false;
+		}
+		fReviews = new ArrayList<R4EUIReview>();
 		fRuleSets = new ArrayList<R4EUIRuleSet>();
 		fOpen = aOpen;
 	}
@@ -197,7 +209,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public String getToolTip() {
-		return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fGroupFileURI.devicePath());
+		if (fResolved) {
+			return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fGroupFileURI.devicePath());
+		}
+		return UNKNOWN_REVIEW_GROUP_TYPE_TOOLTIP;
 	}
 
 	/**
@@ -215,9 +230,24 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new ReviewGroupProperties(this);
+			if (fResolved) {
+				return new ReviewGroupProperties(this);
+			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method extractGroupName.
+	 * 
+	 * @param aGroupPath
+	 *            String
+	 * @return String
+	 */
+	private static String extractGroupName(String aGroupPath) {
+		String separator = System.getProperty("file.separator");
+		String tokens[] = aGroupPath.split(separator.equals("\\") ? "\\" + separator : separator);
+		return (tokens[tokens.length - 1]).replaceFirst(R4EUIConstants.GROUP_FILE_SUFFIX, "");
 	}
 
 	//Attributes
@@ -237,7 +267,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @return R4EReviewGroup
 	 */
 	public String getGroupFile() {
-		return URI.decode(fGroupFileURI.devicePath());
+		return fGroupFileURI.toFileString();
 	}
 
 	/**
@@ -327,7 +357,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void close() {
 		//Remove all children references
-		R4EUIReviewBasic review = null;
+		R4EUIReview review = null;
 		final int reviewsSize = fReviews.size();
 		for (int i = 0; i < reviewsSize; i++) {
 
@@ -341,7 +371,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fRuleSets.clear();
 		fOpen = false;
 		fReadOnly = false;
-		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
+		if (null != fGroup) {
+			R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
+		}
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
 	}
 
@@ -354,14 +386,36 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() throws ResourceHandlingException, CompatibilityException {
-		//Load model information
-		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
-		if (checkCompatibility()) {
+		String newVersion = Persistence.Roots.GROUP.getVersion();
+		String oldVersion;
+
+		try {
+			oldVersion = R4EUpgradeController.getVersionFromResourceFile(fGroupFileURI);
+		} catch (IOException e1) {
+			throw new ResourceHandlingException("Cannot find Review Group resource file " + fGroupFileURI, e1);
+		}
+
+		if (checkCompatibility(fGroupFileURI, R4EUIConstants.REVIEW_GROUP_LABEL + " "
+				+ extractGroupName(getGroupFile()), oldVersion, newVersion, false)) {
+			fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
+			fResolved = true;
+
+			//Stamp new version if an upgrade took place
+			if (!oldVersion.equals(newVersion)) {
+				try {
+					R4EUIModelController.stampVersion(fGroup, R4EUIModelController.getReviewer(), newVersion);
+				} catch (OutOfSyncException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
+					return;
+				}
+			}
+
 			final List<IReview> reviews = fGroup.getReviews();
 			if (null != reviews) {
 				final int reviewsSize = reviews.size();
 				R4EReview review = null;
-				R4EUIReviewBasic uiReview = null;
+				R4EUIReview uiReview = null;
 
 				for (int i = 0; i < reviewsSize; i++) {
 					review = (R4EReview) reviews.get(i);
@@ -370,23 +424,30 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 						uiReview = null;
-						if (review.getType().equals(R4EReviewType.FORMAL)) {
-							uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
-							((R4EUIReviewExtended) uiReview).setName(((R4EUIReviewExtended) uiReview).getPhaseString(((R4EReviewState) review.getState()).getState())
-									+ ": " + uiReview.getName());
+
+						//Here we need to check if the review has a compatible version.  Otherwise, it will be displayed as an unknown type
+						if (checkChildReviewCompatibility(review)) {
+							if (review.getType().equals(R4EReviewType.FORMAL)) {
+								uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
+								((R4EUIReviewExtended) uiReview).setName(((R4EUIReviewExtended) uiReview).getPhaseString(((R4EReviewState) review.getState()).getState())
+										+ ": " + uiReview.getName());
+							} else {
+								uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+							}
 						} else {
-							uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+							uiReview = new R4EUIReview(this, review, false);
 						}
 						addChildren(uiReview);
 					}
 				}
 			}
 
-			//Close and Reopen the RulesSet to make sure we have the latest information
+			//Add Rule Sets
 			final List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
 			for (String ruleSetlocation : ruleSetlocations) {
 				for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) getParent()).getRuleSets()) {
-					if (ruleSet.getRuleSet().getName().equals(ruleSetlocation)) {
+					String path = R4EUIRuleSet.extractRuleSetName(ruleSet.getRuleSetFile());
+					if (path.equals(ruleSetlocation)) {
 						fRuleSets.add(ruleSet);
 						break;
 					}
@@ -395,52 +456,36 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			fOpen = true;
 			fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
 		} else {
-			R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
+			close();
 		}
 	}
 
 	/**
-	 * Check version compatibility between the element(s) to load and the current R4E application
+	 * Method checkChildReviewCompatibility
 	 * 
+	 * @param aReview
+	 *            - aReview
 	 * @return boolean
+	 * @throws ResourceHandlingException
 	 */
-	private boolean checkCompatibility() {
-		String currentVersion = Persistence.Roots.GROUP.getVersion();
-		int checkResult = VersionUtils.compareVersions(currentVersion, fGroup.getFragmentVersion());
-		switch (checkResult) {
-		case R4EUIConstants.VERSION_APPLICATION_OLDER:
-			UIUtils.displayCompatibilityErrorDialog();
+	public boolean checkChildReviewCompatibility(R4EReview aReview) throws ResourceHandlingException {
+		String newVersion = Persistence.Roots.REVIEW.getVersion();
+		String validReviewName = ResourceUtils.toValidFileName(aReview.getName());
+		URI upgradeRootUri = URI.createFileURI(getReviewGroup().getFolder() + R4EUIConstants.SEPARATOR
+				+ validReviewName);
+		URI reviewResourceUri = upgradeRootUri.appendSegment(validReviewName + R4EUIConstants.REVIEW_FILE_SUFFIX);
+		String oldVersion;
+		try {
+			oldVersion = R4EUpgradeController.getVersionFromResourceFile(reviewResourceUri);
+		} catch (IOException e1) {
+			throw new ResourceHandlingException("Cannot find Review Group resource file " + reviewResourceUri, e1);
+		}
+
+		try {
+			return R4EUpgradeController.upgradeCompatibilityCheck(reviewResourceUri, oldVersion, newVersion);
+		} catch (IOException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			return false;
-		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			final int result = UIUtils.displayCompatibilityWarningDialog(fGroup.getFragmentVersion(), currentVersion);
-			switch (result) {
-			case R4EUIConstants.OPEN_NORMAL:
-				//Upgrade version immediately
-				try {
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup,
-							R4EUIModelController.getReviewer());
-					fGroup.setFragmentVersion(currentVersion);
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-					return false;
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-					return false;
-				}
-				fReadOnly = false;
-				return true;
-			case R4EUIConstants.OPEN_READONLY:
-				fReadOnly = true;
-				return true;
-			default:
-				//Assume Cancel
-				return false;
-			}
-		default:
-			//Normal case, do nothing
-			fReadOnly = false;
-			return true;
 		}
 	}
 
@@ -473,7 +518,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return fGroup.isEnabled();
+		if (fResolved) {
+			return fGroup.isEnabled();
+		}
+		return true;
 	}
 
 	//Hierarchy
@@ -486,7 +534,35 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement[] getChildren() {
-		return fReviews.toArray(new R4EUIReviewBasic[fReviews.size()]);
+		return fReviews.toArray(new R4EUIReview[fReviews.size()]);
+	}
+
+	/**
+	 * Method replaceReview.
+	 * 
+	 * @param aOldReview
+	 *            - R4EUIReview
+	 * @param aNewReview
+	 *            - R4EUIReview
+	 */
+	public void replaceReview(R4EUIReview aOldReview, R4EUIReview aNewReview) {
+		fReviews.set(fReviews.indexOf(aOldReview), aNewReview);
+	}
+
+	/**
+	 * Method getReview.
+	 * 
+	 * @param aReviewName
+	 *            - String
+	 * @return R4EUIReview
+	 */
+	public R4EUIReview getReview(String aReviewName) {
+		for (R4EUIReview review : fReviews) {
+			if (null != review.getReview() && aReviewName.equals(review.getReview().getName())) {
+				return review;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -523,7 +599,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final R4EReviewType type = ((R4EReview) aModelComponent).getType();
 
 		//Check if review already exists.  If so it cannot be recreated
-		for (R4EUIReviewBasic review : fReviews) {
+		for (R4EUIReview review : fReviews) {
 			if (review.getReview().getName().equals(reviewName)) {
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Error while creating new review ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
@@ -561,7 +637,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
-		fReviews.add((R4EUIReviewBasic) aChildToAdd);
+		fReviews.add((R4EUIReview) aChildToAdd);
 	}
 
 	/**
@@ -584,7 +660,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			R4EUIModelController.setActiveReview(null);
 		}
 
-		final R4EUIReviewBasic removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
+		final R4EUIReview removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
 
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -614,52 +690,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException {
 		//Recursively remove all children
-		for (R4EUIReviewBasic review : fReviews) {
+		for (R4EUIReview review : fReviews) {
 			removeChildren(review, aFileRemove);
 		}
 	}
-
-	//Listeners
-
-/*	*//**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	/*
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-	super.addListener(aProvider);
-	if (null != fReviews) {
-		R4EUIReviewBasic element = null;
-		for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.addListener(aProvider);
-		}
-	}
-	}
-
-	*//**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	/*
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-	super.removeListener(aProvider);
-	if (null != fReviews) {
-		R4EUIReviewBasic element = null;
-		for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.removeListener(aProvider);
-		}
-	}
-	}*/
 
 	//Commands
 
@@ -671,7 +705,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
-		if (!isEnabled() || isOpen()) {
+		if (fResolved && (!isEnabled() || isOpen())) {
 			return false;
 		}
 		return true;
@@ -707,7 +741,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		if (isEnabled() && isOpen()) {
+		if (fResolved && isEnabled() && isOpen()) {
 			return true;
 		}
 		return false;
@@ -743,7 +777,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled() && isOpen() && !isReadOnly()) {
+		if (fResolved && isEnabled() && isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -779,7 +813,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled() && !isReadOnly()) {
+		if (fResolved && !isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -815,7 +849,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled() || isReadOnly()) {
+		if (fResolved && isOpen() || isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;
@@ -841,5 +875,16 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public String getRestoreElementCmdTooltip() {
 		return RESTORE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isShowPropertiesCmd()
+	 */
+	@Override
+	public boolean isShowPropertiesCmd() {
+		return fResolved;
 	}
 }

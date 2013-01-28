@@ -43,7 +43,7 @@ import org.junit.Before;
  * @version $Revision: 1.0 $
  */
 @SuppressWarnings("restriction")
-public class ReviewWithSrangeCharTest extends TestCase {
+public class ReviewWithStrangeCharTest extends TestCase {
 
 	// ------------------------------------------------------------------------
 	// Constant
@@ -70,7 +70,7 @@ public class ReviewWithSrangeCharTest extends TestCase {
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
-		suite.addTestSuite(ReviewWithSrangeCharTest.class);
+		suite.addTestSuite(ReviewWithStrangeCharTest.class);
 		return new R4ETestSetup(suite);
 	}
 

@@ -446,6 +446,10 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/ovr16/duedateovr_tsk.gif"));
 		toolkit.createLabel(r4eClient, "Element is overdue");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/ovr16/unresolvedovr_tsk.gif"));
+		toolkit.createLabel(r4eClient, "Element is not resolvable (Version Mismatch)");
 	}
 
 	/**

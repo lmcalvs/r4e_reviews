@@ -132,6 +132,20 @@ public interface IR4EUIModelElement {
 	Image getReadOnlyImage();
 
 	/**
+	 * Gets the overlay image that indicate that the element is unresolved
+	 * 
+	 * @return Image
+	 */
+	Image getUnresolvedImage();
+
+	/**
+	 * Method isResolved.
+	 * 
+	 * @return boolean
+	 */
+	boolean isResolved();
+
+	/**
 	 * Gets the reviewed flag. Take note that this is not applicable to all model elements
 	 * 
 	 * @return true/false
@@ -195,6 +209,14 @@ public interface IR4EUIModelElement {
 	 * @throws CompatibilityException
 	 */
 	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException, CompatibilityException;
+
+	/**
+	 * Sets the read-only flag.
+	 * 
+	 * @param aReadOnly
+	 *            - the read-only flag (true/false)
+	 */
+	void setReadOnly(boolean aReadOnly);
 
 	/**
 	 * Add assignees to review element. Take note that this is not applicable to all model elements

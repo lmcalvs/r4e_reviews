@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.tests.proxy;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
@@ -187,6 +188,7 @@ public class R4EUITestPreferences extends R4EUITestElement {
 	 * @param aGroupPath
 	 */
 	public void addGroupToPreferences(String aGroupPath) {
+
 		//Inner class that runs the command on the UI thread
 		class AddGroupPreferences implements Runnable {
 
@@ -212,6 +214,19 @@ public class R4EUITestPreferences extends R4EUITestElement {
 		addGroupPreferencesJob.setGroup(aGroupPath);
 		Display.getDefault().syncExec(addGroupPreferencesJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method addGroupToPreferences.
+	 * 
+	 * @param aGroupPath
+	 */
+	public void addGroupToPreferencesWithUpdate(String aGroupPath, int aDialogButtonIndex) {
+
+		//Inject upgrade dialog result
+		R4EUpgradeController.setUpgradeDialogResult(aDialogButtonIndex);
+		addGroupToPreferences(aGroupPath);
+		R4EUpgradeController.setUpgradeDialogResult(-1); //remove injected upgrade dialog result
 	}
 
 	/**
@@ -278,6 +293,19 @@ public class R4EUITestPreferences extends R4EUITestElement {
 		addRuleSetPreferencesJob.setRuleSet(aRuleSetPath);
 		Display.getDefault().syncExec(addRuleSetPreferencesJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method addRuleSetToPreferences.
+	 * 
+	 * @param aRuleSetPath
+	 */
+	public void addRuleSetToPreferencesWithUpdate(String aRuleSetPath, int aDialogButtonIndex) {
+
+		//Inject upgrade dialog result
+		R4EUpgradeController.setUpgradeDialogResult(aDialogButtonIndex);
+		addRuleSetToPreferences(aRuleSetPath);
+		R4EUpgradeController.setUpgradeDialogResult(-1); //remove injected upgrade dialog result
 	}
 
 	/**

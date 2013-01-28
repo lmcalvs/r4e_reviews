@@ -135,17 +135,23 @@ R4E uses Eclipse Capabilities to manage its functionalities. In order to use R4E
 
 === Version Compatibility ===
 
-In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for the Review Group, Rule Set and Review element when opening the element.  There are basically three cases that can occur:
+In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for Review Groups, Rule Sets and Review elements when opening them, or when starting up the Review Navigator for Groups and Rule Sets.  There are basically three cases that can occur:
 
-*Metadata version and R4E plugins version are the same:  In this case R4E opens the element normally.
+*Metadata version and R4E plugin data versions are the same:  In this case R4E opens the element normally.
 
-*Metadata version is more recent than the R4E plugins version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.
+*Metadata version is more recent than the R4E plugin data version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.
 
 [[Image:versionMismatchError.png]]
 
-*Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.
+*Metadata version is older than the R4E plugin data version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  There are 2 possible scenarios that can occur:
+
+**The metadata is compatible with the current R4E plugin data version: In this case, the user can choose to cancel the action, upgrade the metadata version to the current R4E data version, which will permanently change the metadata version for all users, or keep the older metadata version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.
 
 [[Image:versionMismatchInfo.png]]
+
+**The metadata is not compatible with the current R4E plugin data version: In this case, the user can choose to cancel the action or upgrade the metadata version to the current R4E data version, which will permanently change the metadata version for all users.  Non-compatible Reviews under an upgraded (or compatible/read-only Review Group) will be displayed prefixed with "Unknown" tag.  There reviews cannot be used, and opening them will trigger an upgrade dialog.
+
+Review Groups, Reviews and Rule Sets that have uncompatible versions mismatches will not be resolved.  They will be displayed in the Review Navigator with a question mark (?) decorator and their properties will not be available in the Properties View.  The only possible action on them is to open them to trigger the upgrading procedure.
 
 <br>
 
@@ -717,11 +723,11 @@ The reviewer examines review items and logs anomalies. The time spent doing this
 
 === Progress notification  ===
 
-In this scenario, the reviewer has completed a significant portion of the review (for example, a module/subsystem/feature) and wants to immediately inform the author about it. R4E is used to send a progress notification via an email containing the progress details to the author. Several progress notifications can be sent in a given review. 
-
 === Examine and fix/reject anomalies  ===
 
 The author relies on the progress notification information to start the anomaly examination. As a result, anomalies can either be accepted or rejected. Accepted anomalies can then be fixed. 
+
+In this scenario, the reviewer has completed a significant portion of the review (for example, a module/subsystem/feature) and wants to immediately inform the author about it. R4E is used to send a progress notification via an email containing the progress details to the author. Several progress notifications can be sent in a given review. 
 
 === Completion notification  ===
 
@@ -1292,6 +1298,8 @@ R4E will scan all Reviews under the current Review Group and will copy all Anoma
 From then on, Postponed anomalies will behave like any other Anomaly and can be handled in the same way.  All changes except the state changes will be local to the imported anomaly i.e. changing the imported anomaly will not change the original one.  When a Postponed Anomaly is modified, the state changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  For instance if the imported anomaly is fixed, the original one will be marked as fixed to convey the fact that the postponed issue is now closed. 
 
 Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.
+
+Postponed Anomalies will not be imported/refreshed from Reviews that have non-compatible metadata (Prefixed by the Unknown Tag).  Likewise, it is not possible to alter a Postponed Anomaly if its original Review have non-compatible metadata without first upgrading it to the current metadata version (See [[#Version Compatibility]] for more details on version compatibility)
 
 == Handling Design Rules  ==
 

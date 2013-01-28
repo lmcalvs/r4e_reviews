@@ -170,22 +170,6 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.IModelWriter#toValidFileName(java.lang.String)
 	 */
 	public String toValidFileName(String stValue) {
-		String result = null;
-		StringBuilder sb = new StringBuilder();
-
-		if (stValue != null) {
-			int size = stValue.length();
-			for (int i = 0; i < size; i++) {
-				char c = stValue.charAt(i);
-				if (!Character.isLetterOrDigit(c) && c != '-' && c != '_') {
-					sb.append('_');
-				} else {
-					sb.append(c);
-				}
-			}
-			result = sb.toString();
-		}
-
-		return result;
+		return ResourceUtils.toValidFileName(stValue);
 	}
 }

@@ -110,6 +110,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String RULE_SET_FILE_SUFFIX = "_rule_set.xrer";
 
 	/**
+	 * Field REVIEW_FILE_SUFFIX. (value is ""_review.xrer"")
+	 */
+	public static final String REVIEW_FILE_SUFFIX = "_review.xrer";
+
+	/**
 	 * Field VALUE_TRUE_STR. (value is ""true"")
 	 */
 	public static final String VALUE_TRUE_STR = "true";
@@ -143,6 +148,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field INVALID_VALUE. (value is -1)
 	 */
 	public static final int INVALID_VALUE = -1;
+
+	/**
+	 * Field REVIEW_GROUP_LABEL. (value is ""Review Group"")
+	 */
+	public static final String REVIEW_GROUP_LABEL = "Review Group";
+
+	/**
+	 * Field RULE_SET_LABEL. (value is ""Rule Set"")
+	 */
+	public static final String RULE_SET_LABEL = "Rule Set";
+
+	/**
+	 * Field REVIEW_LABEL. (value is ""Review")
+	 */
+	public static final String REVIEW_LABEL = "Review";
 
 	/**
 	 * Field SELECTIONS_LABEL. (value is ""Selections"")
@@ -816,6 +836,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ANOMALY_DESCRIPTION_LABEL_VALUE = "Anomaly Description: ";
 
 	//Review types and phases
+
+	/**
+	 * Field REVIEW_TYPE_UNKNOWN. (value is ""Unknown"") NOTE: This is only used when a Parent group is newly upgraded
+	 * and the review has not been opened yet
+	 */
+	public static final String REVIEW_TYPE_UNKNOWN = "Unknown";
 
 	/**
 	 * Field REVIEW_TYPE_BASIC. (value is ""Basic"")

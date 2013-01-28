@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EItem xmi:id="_f7bMEUrSEeKNkOrrrfmkrA" description="Merge &quot;389468: Fixes for Add Due Date to EMF R4EReview EClass&quot;" addedById="user" repositoryRef="f31c4d450c6d77f6b9dcdcdebaf768402bf3d2c6" authorRep="gerrit@eclipse.org" submitted="2012-11-30T09:58:46.000-0500">
+    <id xmi:id="_f7bMEkrSEeKNkOrrrfmkrA" sequenceID="3" userID="user"/>
+    <addedBy href="user_comments.xrer#_xqdAQUkqEeK-F5EIGTlQdQ"/>
+    <review href="testReviewInf_review.xrer#_xqTPQEkqEeK-F5EIGTlQdQ"/>
+    <fileContextList href="#_gBKnsErSEeKNkOrrrfmkrA"/>
+    <fileContextList href="#_gBLOykrSEeKNkOrrrfmkrA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.r4e.ui</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_gBKnsErSEeKNkOrrrfmkrA" type="MODIFIED">
+    <id xmi:id="_gBKnsUrSEeKNkOrrrfmkrA" sequenceID="4" userID="user"/>
+    <deltas href="#_gBLOwUrSEeKNkOrrrfmkrA"/>
+    <deltas href="#_gBLOxkrSEeKNkOrrrfmkrA"/>
+    <base href="#_gBKns0rSEeKNkOrrrfmkrA"/>
+    <target href="#_gBKntErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_gBKns0rSEeKNkOrrrfmkrA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/properties/general/ReviewProperties.java" versionID="1d1e73c49eeeed16cc50253d639bc0c31c65a84b" repositoryPath="org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/properties/general/ReviewProperties.java" name="ReviewProperties.java" localVersionID="1d1e73c49eeeed16cc50253d639bc0c31c65a84b"/>
+  <r4ecore:R4EFileVersion xmi:id="_gBKntErSEeKNkOrrrfmkrA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/properties/general/ReviewProperties.java" versionID="2308c471414399200e6abcf5ece263b71f7fa728" repositoryPath="org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/properties/general/ReviewProperties.java" name="ReviewProperties.java" localVersionID="2308c471414399200e6abcf5ece263b71f7fa728"/>
+  <r4ecore:R4EDelta xmi:id="_gBLOwUrSEeKNkOrrrfmkrA">
+    <id xmi:id="_gBLOwkrSEeKNkOrrrfmkrA" sequenceID="5" userID="user"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_gBLOw0rSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_gBLOw0rSEeKNkOrrrfmkrA">
+    <location href="#_gBLOxErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_gBLOxErSEeKNkOrrrfmkrA" startPosition="2467" length="67" startLine="70" endLine="70"/>
+  <r4ecore:R4EDelta xmi:id="_gBLOxkrSEeKNkOrrrfmkrA">
+    <id xmi:id="_gBLOx0rSEeKNkOrrrfmkrA" sequenceID="6" userID="user"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_gBLOyErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_gBLOyErSEeKNkOrrrfmkrA">
+    <location href="#_gBLOyUrSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_gBLOyUrSEeKNkOrrrfmkrA" startPosition="2622" length="47" startLine="75" endLine="75"/>
+  <r4ecore:R4EFileContext xmi:id="_gBLOykrSEeKNkOrrrfmkrA" type="MODIFIED">
+    <id xmi:id="_gBLOy0rSEeKNkOrrrfmkrA" sequenceID="7" userID="user"/>
+    <deltas href="#_gBLO0ErSEeKNkOrrrfmkrA"/>
+    <deltas href="#_gBLO1UrSEeKNkOrrrfmkrA"/>
+    <base href="#_gBLOzUrSEeKNkOrrrfmkrA"/>
+    <target href="#_gBLOzkrSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_gBLOzUrSEeKNkOrrrfmkrA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" versionID="d2ee3692729eb40a43288c1dd52c4b0247d1684c" repositoryPath="org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" name="R4EUIConstants.java" localVersionID="d2ee3692729eb40a43288c1dd52c4b0247d1684c"/>
+  <r4ecore:R4EFileVersion xmi:id="_gBLOzkrSEeKNkOrrrfmkrA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" versionID="32a5c6bea359694424bd492dcd48c86d1c6794da" repositoryPath="org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/internal/utils/R4EUIConstants.java" name="R4EUIConstants.java" localVersionID="32a5c6bea359694424bd492dcd48c86d1c6794da"/>
+  <r4ecore:R4EDelta xmi:id="_gBLO0ErSEeKNkOrrrfmkrA">
+    <id xmi:id="_gBLO0UrSEeKNkOrrrfmkrA" sequenceID="8" userID="user"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_gBLO0krSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_gBLO0krSEeKNkOrrrfmkrA">
+    <location href="#_gBLO00rSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_gBLO00rSEeKNkOrrrfmkrA" startPosition="71205" length="79" startLine="2107" endLine="2107"/>
+  <r4ecore:R4EDelta xmi:id="_gBLO1UrSEeKNkOrrrfmkrA">
+    <id xmi:id="_gBLO1krSEeKNkOrrrfmkrA" sequenceID="9" userID="user"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_gBLO10rSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_gBLO10rSEeKNkOrrrfmkrA">
+    <location href="#_gBLO2ErSEeKNkOrrrfmkrA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_gBLO2ErSEeKNkOrrrfmkrA" startPosition="71381" length="87" startLine="2112" endLine="2112"/>
+</xmi:XMI>

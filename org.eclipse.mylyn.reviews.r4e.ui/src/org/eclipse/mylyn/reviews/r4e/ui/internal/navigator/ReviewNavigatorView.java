@@ -65,7 +65,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -545,35 +545,36 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		fReviewTreeViewer.addDoubleClickListener(new IDoubleClickListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			public void doubleClick(DoubleClickEvent event) {
 				R4EUIPlugin.Ftracer.traceInfo("Double-click event received"); //$NON-NLS-1$
-
-				final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-				if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup
-						|| element instanceof R4EUIRuleSet) {
-					try {
-						//open or close review if ReviewElement is double-clicked
-						if (element.isEnabled()) {
-							if (element.isOpen()) {
-								((ReviewNavigatorActionGroup) getActionSet()).closeElementCommand();
-							} else {
-								((ReviewNavigatorActionGroup) getActionSet()).openElementCommand();
+				if (!R4EUIModelController.isJobInProgress()) {
+					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+					final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
+					if (element instanceof R4EUIReview || element instanceof R4EUIReviewGroup
+							|| element instanceof R4EUIRuleSet) {
+						try {
+							//open or close review if ReviewElement is double-clicked
+							if (element.isEnabled()) {
+								if (element.isOpen()) {
+									((ReviewNavigatorActionGroup) getActionSet()).closeElementCommand();
+								} else {
+									((ReviewNavigatorActionGroup) getActionSet()).openElementCommand();
+								}
 							}
+						} catch (ExecutionException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+						} catch (NotDefinedException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+						} catch (NotEnabledException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+						} catch (NotHandledException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 						}
-					} catch (ExecutionException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-					} catch (NotDefinedException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-					} catch (NotEnabledException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-					} catch (NotHandledException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+					} else {
+						EditorProxy.openEditor(getSite().getPage(), selection, false);
 					}
-				} else {
-					EditorProxy.openEditor(getSite().getPage(), selection, false);
 				}
 			}
 		});

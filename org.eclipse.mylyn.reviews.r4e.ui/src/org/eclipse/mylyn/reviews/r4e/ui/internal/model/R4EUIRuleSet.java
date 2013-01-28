@@ -18,6 +18,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.RuleSetProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e.upgrade.ui.R4EUpgradeController;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -103,6 +105,13 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Rule Set";
 
+	/**
+	 * Field UNKNOWN_RULESET_TYPE_TOOLTIP. (value is ""Rule Set Version Data is not Compatible with the current R4E
+	 * Version. Open Rule Set to Upgrade."")
+	 */
+	private static final String UNKNOWN_RULESET_TYPE_TOOLTIP = "Rule Set Version Data is not Compatible with the current R4E Version."
+			+ R4EUIConstants.LINE_FEED + "Open Rule Set to Upgrade.";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -136,11 +145,14 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @param aOpen
 	 *            boolean
 	 */
-	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
-		super(aParent, aRuleSet.getName());
+	public R4EUIRuleSet(IR4EUIModelElement aParent, String aRuleSetPath, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
+		super(aParent, extractRuleSetName(aRuleSetPath));
 		fReadOnly = false;
 		fRuleSet = aRuleSet;
-		fRuleSetFileURI = aRuleSet.eResource().getURI();
+		fRuleSetFileURI = URI.createFileURI(aRuleSetPath);
+		if (null == fRuleSet) {
+			fResolved = false;
+		}
 		fAreas = new ArrayList<R4EUIRuleArea>();
 		fOpen = aOpen;
 	}
@@ -170,7 +182,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public String getToolTip() {
-		return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fRuleSetFileURI.devicePath());
+		if (fResolved) {
+			return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fRuleSetFileURI.devicePath());
+		}
+		return UNKNOWN_RULESET_TYPE_TOOLTIP;
 	}
 
 	/**
@@ -188,9 +203,24 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new RuleSetProperties(this);
+			if (fResolved) {
+				return new RuleSetProperties(this);
+			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method extractRuleSetName.
+	 * 
+	 * @param aRuleSetPath
+	 *            String
+	 * @return String
+	 */
+	public static String extractRuleSetName(String aRuleSetPath) {
+		String separator = System.getProperty("file.separator");
+		String tokens[] = aRuleSetPath.split(separator.equals("\\") ? "\\" + separator : separator);
+		return (tokens[tokens.length - 1]).replaceFirst(R4EUIConstants.RULE_SET_FILE_SUFFIX, "");
 	}
 
 	//Attributes
@@ -210,7 +240,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @return URI
 	 */
 	public String getRuleSetFile() {
-		return fRuleSetFileURI.devicePath();
+		return fRuleSetFileURI.toFileString();
 	}
 
 	/**
@@ -305,7 +335,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		fAreas.clear();
 		fOpen = false;
 		fReadOnly = false;
-		R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+		if (null != fRuleSet) {
+			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+		}
 		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
 	}
 
@@ -317,8 +349,30 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() throws ResourceHandlingException, CompatibilityException {
-		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
-		if (checkCompatibility()) {
+		String newVersion = Persistence.Roots.RULESET.getVersion();
+		String oldVersion;
+		try {
+			oldVersion = R4EUpgradeController.getVersionFromResourceFile(fRuleSetFileURI);
+		} catch (IOException e1) {
+			throw new ResourceHandlingException("Cannot find Review Group resource file " + fRuleSetFileURI, e1);
+		}
+
+		if (checkCompatibility(fRuleSetFileURI, R4EUIConstants.RULE_SET_LABEL + " "
+				+ extractRuleSetName(getRuleSetFile()), oldVersion, newVersion, false)) {
+			fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
+			fResolved = true;
+
+			//Stamp new version if an upgrade took place
+			if (!oldVersion.equals(newVersion)) {
+				try {
+					R4EUIModelController.stampVersion(fRuleSet, R4EUIModelController.getReviewer(), newVersion);
+				} catch (OutOfSyncException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+					return;
+				}
+			}
+
 			final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
 			if (null != areas) {
 				R4EUIRuleArea uiArea = null;
@@ -339,7 +393,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			fOpen = true;
 			fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
 		} else {
-			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+			close();
 		}
 	}
 
@@ -385,51 +439,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	}
 
 	/**
-	 * Check version compatibility between the element(s) to load and the current R4E application
-	 * 
-	 * @return boolean
-	 */
-	private boolean checkCompatibility() {
-		String currentVersion = Persistence.Roots.RULESET.getVersion();
-		int checkResult = VersionUtils.compareVersions(currentVersion, fRuleSet.getFragmentVersion());
-		switch (checkResult) {
-		case R4EUIConstants.VERSION_APPLICATION_OLDER:
-			UIUtils.displayCompatibilityErrorDialog();
-			return false;
-		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			final int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(), currentVersion);
-			switch (result) {
-			case R4EUIConstants.OPEN_NORMAL:
-				//Upgrade version immediately
-				try {
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
-							R4EUIModelController.getReviewer());
-					fRuleSet.setFragmentVersion(currentVersion);
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-					return false;
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-					return false;
-				}
-				fReadOnly = false;
-				return true;
-			case R4EUIConstants.OPEN_READONLY:
-				fReadOnly = true;
-				return true;
-			default:
-				//Assume Cancel
-				return false;
-			}
-		default:
-			//Normal case, do nothing
-			fReadOnly = false;
-			return true;
-		}
-	}
-
-	/**
 	 * Method setEnabled.
 	 * 
 	 * @param aEnabled
@@ -458,7 +467,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return fRuleSet.isEnabled();
+		if (fResolved) {
+			return fRuleSet.isEnabled();
+		}
+		return true;
 	}
 
 	/**
@@ -543,48 +555,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		}
 	}
 
-	//Listeners
-
-/*	*//**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	/*
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-	super.addListener(aProvider);
-	if (null != fAreas) {
-		R4EUIRuleArea element = null;
-		for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.addListener(aProvider);
-		}
-	}
-	}
-
-	*//**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	/*
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-	super.removeListener(aProvider);
-	if (null != fAreas) {
-		R4EUIRuleArea element = null;
-		for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.removeListener(aProvider);
-		}
-	}
-	}*/
-
 	//Commands
 
 	/**
@@ -595,7 +565,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
-		if (!isEnabled() || isOpen()) {
+		if (fResolved && !isEnabled() || isOpen()) {
 			return false;
 		}
 		return true;
@@ -631,7 +601,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		if (isEnabled() && isOpen()) {
+		if (fResolved && isEnabled() && isOpen()) {
 			return true;
 		}
 		return false;
@@ -667,7 +637,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled() && isOpen() && !isReadOnly()) {
+		if (fResolved && isEnabled() && isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -703,7 +673,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled() && !isReadOnly()) {
+		if (fResolved && !isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -717,7 +687,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled() || isReadOnly()) {
+		if (fResolved && isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;
@@ -743,5 +713,16 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	@Override
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isShowPropertiesCmd()
+	 */
+	@Override
+	public boolean isShowPropertiesCmd() {
+		return fResolved;
 	}
 }
