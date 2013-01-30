@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.mylyn.reviews.connector.ui" version="2">
-    <resource path="src/org/eclipse/mylyn/tasks/emf/connector/ui/AbstractEmfConnectorUi.java" type="org.eclipse.mylyn.reviews.connector.ui.AbstractEmfConnectorUi">
+    <resource path="src/org/eclipse/mylyn/reviews/connector/ui/EmfRepositorySettingsPage.java" type="org.eclipse.mylyn.reviews.connector.ui.EmfRepositorySettingsPage">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="AbstractEmfConnector"/>
-                <message_argument value="AbstractEmfConnectorUi"/>
+                <message_argument value="EmfRepositorySettingsPage"/>
+                <message_argument value="getConnector()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/mylyn/reviews/connector/ui/wizards/EmfRepositoryQueryPage.java" type="org.eclipse.mylyn.reviews.connector.ui.wizards.EmfRepositoryQueryPage">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="AbstractEmfConnector"/>
+                <message_argument value="EmfRepositoryQueryPage"/>
                 <message_argument value="getConnector()"/>
             </message_arguments>
         </filter>

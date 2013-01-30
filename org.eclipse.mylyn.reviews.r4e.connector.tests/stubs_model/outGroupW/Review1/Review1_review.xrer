@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_x0yU0ERCEeC2DrmWDHmN2w" fragmentVersion="2.0.0" name="Review1" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500">
+  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_x2N4MERCEeC2DrmWDHmN2w"/>
+  <createdBy href="lmcalvs_comments.xrer#_x02mQURCEeC2DrmWDHmN2w"/>
+</r4ecore:R4EReview>

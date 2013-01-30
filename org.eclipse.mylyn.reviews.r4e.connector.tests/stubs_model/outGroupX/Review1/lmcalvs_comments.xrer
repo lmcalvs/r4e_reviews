@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<r4ecore:R4EParticipant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_oz8TgURPEeC0spkCnDexvg" id="lmcalvs" reviewCreatedByMe="true">
+  <reviewInstance href="Review1_review.xrer#_ozvfMERPEeC0spkCnDexvg"/>
+  <roles>ORGANIZER</roles>
+</r4ecore:R4EParticipant>

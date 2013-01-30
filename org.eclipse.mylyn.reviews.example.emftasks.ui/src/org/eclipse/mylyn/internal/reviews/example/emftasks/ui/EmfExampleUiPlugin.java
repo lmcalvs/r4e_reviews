@@ -54,6 +54,9 @@ public class EmfExampleUiPlugin extends AbstractUIPlugin {
 	}
 
 	public EmfExampleConnectorUi getConnectorUi() {
+		if (ui == null) {
+			ui = new EmfExampleConnectorUi();
+		}
 		return ui;
 	}
 }

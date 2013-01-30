@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_o6yiY0RPEeC0spkCnDexvg" name="Tom10">
+  <invitedToMap xmi:id="_o6yiZURPEeC0spkCnDexvg" key="ReviewSampl">
+    <value href="ReviewSampl/ReviewSampl_review.xrer#_o6x7UERPEeC0spkCnDexvg"/>
+  </invitedToMap>
+  <invitedToMap xmi:id="_pI3apERPEeC0spkCnDexvg" key="ReviewTwo">
+    <value href="ReviewTwo/ReviewTwo_review.xrer#_pI3aoERPEeC0spkCnDexvg"/>
+  </invitedToMap>
+  <group href="Golden_Group_group_root.xrer#_UQxKYERPEeC0spkCnDexvg"/>
+  <createdReviews>ReviewSampl</createdReviews>
+  <createdReviews>ReviewTwo</createdReviews>
+</r4ecore:R4EUserReviews>

@@ -14,6 +14,7 @@ package org.eclipse.mylyn.reviews.connector;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -82,7 +83,6 @@ public abstract class EmfTaskSchema extends AbstractTaskSchema {
 	private boolean keyFieldDefined;
 
 	public void initialize() {
-		boolean keyFieldDefined = false;
 		for (FieldFeature fieldFeature : getSchemaPairs()) {
 			if (fieldFeature.parentField.getKey() == parent.TASK_KEY.getKey()) {
 				keyFieldDefined = true;
@@ -190,16 +190,17 @@ public abstract class EmfTaskSchema extends AbstractTaskSchema {
 		featureByTaskKey.put(field.getKey(), feature);
 	}
 
-	private Field createField(EStructuralFeature feature) {
+	protected Field createField(EStructuralFeature feature, Flag... flags) {
 		String key = getKey(feature);
 		String label = getLabel(feature);
 		String type = getTaskType(feature);
-		Field field = createField(key, label, type, key, Flag.ATTRIBUTE);
+		flags = (Flag[]) ArrayUtils.add(flags, Flag.ATTRIBUTE);
+		Field field = createField(key, label, type, key, flags);
 		addEmfField(feature, field);
 		return field;
 	}
 
-	private Field createField(FieldFeature fieldFeature) {
+	protected Field createField(FieldFeature fieldFeature) {
 		Field parentField = fieldFeature.parentField;
 		EStructuralFeature emfAttribute = fieldFeature.feature;
 		String key = getKey(emfAttribute);

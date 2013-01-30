@@ -220,10 +220,12 @@ public abstract class AbstractEmfConnector extends AbstractRepositoryConnector {
 			taskId = getTaskKey(repository, emfTask);
 			if (StringUtils.isEmpty(taskId) || taskId.equals("0")) { //$NON-NLS-1$
 				taskId = getNextTaskId(client.getRootContainer());
+				if (taskId != null) {
+					TaskAttribute keyAttribute = taskData.getRoot().getAttribute(TaskAttribute.TASK_KEY);
+					keyAttribute.setValue(taskId);
+					oldAttributes.add(keyAttribute);
+				}
 			}
-			TaskAttribute keyAttribute = taskData.getRoot().getAttribute(TaskAttribute.TASK_KEY);
-			keyAttribute.setValue(taskId);
-			oldAttributes.add(keyAttribute);
 			for (Field field : getSchema().getFields()) {
 				oldAttributes.add(taskData.getRoot().getAttribute(field.getKey()));
 			}
@@ -463,7 +465,6 @@ public abstract class AbstractEmfConnector extends AbstractRepositoryConnector {
 		try {
 			EmfClient client = getClient(repository);
 			client.open();
-//			new SELECT(new WHERE(new EObjectAttributeValueCondition(attribute, valueCondition)), where)
 			List<EObject> results;
 			try {
 				results = getQueryEngine(repository).performQuery(query, monitor);
@@ -562,6 +563,15 @@ public abstract class AbstractEmfConnector extends AbstractRepositoryConnector {
 	public abstract EAttribute getContentsNameAttribute();
 
 	public abstract EReference getContainmentReference();
+
+	/**
+	 * The class to be used for task container. By default this is the clss defined by the containment reference.
+	 * 
+	 * @return
+	 */
+	public EClass getContainerClass() {
+		return getContainmentReference().getEContainingClass();
+	}
 
 	public abstract EAttribute[] getSearchAttributes();
 

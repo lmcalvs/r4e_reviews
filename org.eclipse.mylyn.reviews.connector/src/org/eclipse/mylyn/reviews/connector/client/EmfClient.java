@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.mylyn.internal.reviews.connector.EmfCorePlugin;
-import org.eclipse.mylyn.tasks.core.TaskRepository;
-import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.reviews.connector.AbstractEmfConnector;
 import org.eclipse.mylyn.reviews.connector.EmfConfiguration;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.tasks.core.data.TaskData;
 
 /**
  * Manages interaction with specific review file.
@@ -46,6 +46,8 @@ public abstract class EmfClient {
 
 	private EObject taskContainer;
 
+	private boolean reloadOnOpen;
+
 	public EmfClient(TaskRepository repository) {
 		this.repository = repository;
 	}
@@ -59,7 +61,7 @@ public abstract class EmfClient {
 		if (taskContainer != null) {
 			URI uri = URI.createURI(repository.getRepositoryUrl());
 			URI currentUri = taskContainer.eResource().getURI();
-			if (!uri.equals(currentUri)) {
+			if (!uri.equals(currentUri) || reloadOnOpen) {
 				save();
 				close();
 				taskContainer = null;
@@ -81,7 +83,7 @@ public abstract class EmfClient {
 	 */
 	public synchronized void open() throws CoreException {
 		URI uri = URI.createURI(getRepository().getRepositoryUrl());
-		if (taskContainer != null) {
+		if (!reloadOnOpen && taskContainer != null) {
 			URI currentUri = taskContainer.eResource().getURI();
 			if (uri.equals(currentUri)) {
 				return;
@@ -207,6 +209,10 @@ public abstract class EmfClient {
 
 	public TaskRepository getRepository() {
 		return repository;
+	}
+
+	public void setReloadOnOpen(boolean reloadOnOpen) {
+		this.reloadOnOpen = reloadOnOpen;
 	}
 
 	public abstract AbstractEmfConnector getConnector();

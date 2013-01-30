@@ -16,6 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.connector,
  org.eclipse.mylyn.reviews.example.emftasks.model
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Mylyn
 Export-Package: org.eclipse.mylyn.internal.reviews.example.emftasks.core;x-friends:="org.eclipse.mylyn.reviews.connector.tests,org.eclipse.mylyn.reviews.example.emftasks.ui"

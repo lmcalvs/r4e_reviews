@@ -28,7 +28,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -36,10 +35,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.internal.reviews.connector.ui.EmfUiPlugin;
 import org.eclipse.mylyn.reviews.connector.AbstractEmfConnector;
 import org.eclipse.mylyn.reviews.connector.client.EmfClient;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.wizards.AbstractTaskRepositoryPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -191,6 +190,7 @@ public abstract class EmfRepositorySettingsPage extends AbstractTaskRepositoryPa
 	@SuppressWarnings("restriction")
 	@Override
 	public void applyTo(TaskRepository repository) {
+		super.applyTo(repository);
 		repository.setRepositoryUrl(getRepositoryUrl());
 		repository.setRepositoryLabel(labelEditor.getText());
 	}
@@ -224,9 +224,15 @@ public abstract class EmfRepositorySettingsPage extends AbstractTaskRepositoryPa
 			validating = false;
 		}
 		if (client == null) {
-			if (StringUtils.isBlank(repositoryUrl)) {
+			if (StringUtils.isBlank(labelEditor.getText()) && StringUtils.isBlank(repositoryUrl)) {
 				return new Status(IStatus.ERROR, getConnector().getConnectorBundle().getSymbolicName(),
-						"Specify a repository.");
+						"Specify a repository location or specify a repository label to create a new repository.");
+			} else if (StringUtils.isBlank(repositoryUrl)) {
+				return new Status(IStatus.ERROR, getConnector().getConnectorBundle().getSymbolicName(),
+						"Specify a repository location.");
+			} else if (StringUtils.isBlank(labelEditor.getText())) {
+				return new Status(IStatus.ERROR, getConnector().getConnectorBundle().getSymbolicName(),
+						"Specify a repository label.");
 			}
 			try {
 				URI testURI = URI.createURI(repositoryUrl);
@@ -344,7 +350,7 @@ public abstract class EmfRepositorySettingsPage extends AbstractTaskRepositoryPa
 			fileName = StringUtils.deleteWhitespace(labelEditor.getText());
 		}
 		if (fileName != null) {
-			browseDialog.setFileName(fileName);
+			browseDialog.setFileName(getQualifiedName(fileName));
 		}
 		browseDialog.setFilterExtensions(getConnectorUi().getFileNameExtensions());
 		String browseResult = browseDialog.open();
@@ -362,8 +368,7 @@ public abstract class EmfRepositorySettingsPage extends AbstractTaskRepositoryPa
 			ResourceSet resourceSet = new ResourceSetImpl();
 			URI fileURI = URI.createFileURI(browseResult);
 			Resource resource = resourceSet.createResource(fileURI);
-			EReference containmentRef = getConnector().getContainmentReference();
-			EClass eContainingClass = containmentRef.getEContainingClass();
+			EClass eContainingClass = getConnector().getContainerClass();
 			EObject rootObject = eContainingClass.getEPackage().getEFactoryInstance().create(eContainingClass);
 			if (rootObject != null) {
 				resource.getContents().add(rootObject);
@@ -382,9 +387,14 @@ public abstract class EmfRepositorySettingsPage extends AbstractTaskRepositoryPa
 		}
 	}
 
-	@Override
-	public void performFinish(TaskRepository repository) {
-		super.performFinish(repository);
+	/**
+	 * Supports R4E naming issue. Otherwise, not intended for extension.
+	 * 
+	 * @param browseResult
+	 * @return
+	 */
+	protected String getQualifiedName(String browseResult) {
+		return browseResult;
 	}
 
 	@Override

@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mylyn R4E Connector
+Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.connector;singleton:=true
+Bundle-Version: 0.13.0.qualifier
+Bundle-Activator: org.eclipse.mylyn.internal.reviews.r4e.connector.R4EConnectorPlugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.common;bundle-version="2.5.0",
+ org.eclipse.emf.ecore;bundle-version="2.5.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
+ org.eclipse.mylyn.commons.core,
+ org.eclipse.mylyn.commons.net,
+ org.eclipse.mylyn.reviews.core,
+ org.eclipse.mylyn.tasks.core,
+ org.eclipse.mylyn.commons.sdk.util,
+ org.eclipse.mylyn.reviews.r4e.core;bundle-version="0.13.0",
+ org.eclipse.mylyn.reviews.r4e.ui;bundle-version="0.13.0",
+ org.eclipse.mylyn.reviews.connector;bundle-version="0.13.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Eclipse Mylyn
+Export-Package: org.eclipse.mylyn.internal.reviews.r4e.connector;x-friends:="org.eclipse.mylyn.reviews.r4e.connector.ui,org.eclipse.mylyn.reviews.r4e.connector.tests"

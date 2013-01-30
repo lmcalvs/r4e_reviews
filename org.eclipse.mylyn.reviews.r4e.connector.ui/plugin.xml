@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.repositories">
+      <connectorCore
+            id="org.eclipse.mylyn.r4e"
+            class="org.eclipse.mylyn.internal.reviews.r4e.connector.R4EConnector"
+            name="R4E Reviews"/>
+	  <connectorUi
+         brandingIcon="icons/obj16/revgrp_obj.gif"
+         class="org.eclipse.mylyn.internal.reviews.r4e.connector.ui.R4EConnectorUi"
+         id="org.eclipse.mylyn.r4e"
+         name="R4E Reviews"
+         overlayIcon="icons/eview16/overlay-review.png"/>
+   </extension>
+
+
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.editors">
+         <pageFactory
+            class="org.eclipse.mylyn.internal.reviews.r4e.connector.ui.editor.R4ETaskEditorPageFactory"
+            id="org.eclipse.mylyn.reviews.r4e.connector.ui.pageFactory">
+      </pageFactory>   
+   </extension>
+
+
+   
+</plugin>
