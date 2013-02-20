@@ -86,7 +86,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public static RModelFactory init() {
 		try {
-			RModelFactory theRModelFactory = (RModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.r4e.core.model/"); 
+			RModelFactory theRModelFactory = (RModelFactory)EPackage.Registry.INSTANCE.getEFactory(RModelPackage.eNS_URI);
 			if (theRModelFactory != null) {
 				return theRModelFactory;
 			}

@@ -1652,12 +1652,21 @@ public interface RModelPackage extends EPackage {
 	int R4E_ITEM__ADDED_BY = R4EID_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Committed By</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__COMMITTED_BY = R4EID_COMPONENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Review</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__REVIEW = R4EID_COMPONENT_FEATURE_COUNT + 4;
+	int R4E_ITEM__REVIEW = R4EID_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1665,7 +1674,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__NAME = R4EID_COMPONENT_FEATURE_COUNT + 5;
+	int R4E_ITEM__NAME = R4EID_COMPONENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1673,7 +1682,16 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__ID = R4EID_COMPONENT_FEATURE_COUNT + 6;
+	int R4E_ITEM__ID = R4EID_COMPONENT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__REFERENCE = R4EID_COMPONENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -1681,7 +1699,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__DESCRIPTION = R4EID_COMPONENT_FEATURE_COUNT + 7;
+	int R4E_ITEM__DESCRIPTION = R4EID_COMPONENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Added By Id</b></em>' attribute.
@@ -1689,7 +1707,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__ADDED_BY_ID = R4EID_COMPONENT_FEATURE_COUNT + 8;
+	int R4E_ITEM__ADDED_BY_ID = R4EID_COMPONENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>File Context List</b></em>' containment reference list.
@@ -1698,7 +1716,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__FILE_CONTEXT_LIST = R4EID_COMPONENT_FEATURE_COUNT + 9;
+	int R4E_ITEM__FILE_CONTEXT_LIST = R4EID_COMPONENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Repository Ref</b></em>' attribute.
@@ -1706,7 +1724,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__REPOSITORY_REF = R4EID_COMPONENT_FEATURE_COUNT + 10;
+	int R4E_ITEM__REPOSITORY_REF = R4EID_COMPONENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Project UR Is</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
@@ -1715,7 +1733,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__PROJECT_UR_IS = R4EID_COMPONENT_FEATURE_COUNT + 11;
+	int R4E_ITEM__PROJECT_UR_IS = R4EID_COMPONENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Author Rep</b></em>' attribute.
@@ -1723,7 +1741,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__AUTHOR_REP = R4EID_COMPONENT_FEATURE_COUNT + 12;
+	int R4E_ITEM__AUTHOR_REP = R4EID_COMPONENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Submitted</b></em>' attribute.
@@ -1731,7 +1749,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__SUBMITTED = R4EID_COMPONENT_FEATURE_COUNT + 13;
+	int R4E_ITEM__SUBMITTED = R4EID_COMPONENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
@@ -1739,7 +1757,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM__INFO_ATT = R4EID_COMPONENT_FEATURE_COUNT + 14;
+	int R4E_ITEM__INFO_ATT = R4EID_COMPONENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The number of structural features of the '<em>R4E Item</em>' class.
@@ -1747,7 +1765,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ITEM_FEATURE_COUNT = R4EID_COMPONENT_FEATURE_COUNT + 15;
+	int R4E_ITEM_FEATURE_COUNT = R4EID_COMPONENT_FEATURE_COUNT + 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EContentImpl <em>R4E Content</em>}' class.
