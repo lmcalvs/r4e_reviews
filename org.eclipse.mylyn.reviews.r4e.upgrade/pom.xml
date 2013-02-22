@@ -26,4 +26,5 @@
       </plugin>
     </plugins>
   </build>
+  <groupId>org.eclipse.mylyn.reviews.r4e</groupId>
 </project>

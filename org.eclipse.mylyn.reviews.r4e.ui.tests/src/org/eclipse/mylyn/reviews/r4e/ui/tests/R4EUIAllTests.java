@@ -55,7 +55,7 @@ public class R4EUIAllTests extends TestSuite {
 	public static Test suite() {
 
 		//Execute test cases
-		TestSuite suite = new R4EUIAllTests("R4E Core Tests");
+		TestSuite suite = new R4EUIAllTests("R4E UI Tests"); //$NON-NLS-1$
 		suite.addTestSuite(SanitySetupTests.class);
 		suite.addTestSuite(SanityBasicTests.class);
 		suite.addTestSuite(SanityInformalTests.class);

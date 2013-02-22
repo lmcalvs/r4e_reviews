@@ -50,7 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class R4EUITestAnomaly extends R4EUITestElement {
 
 	private static final String NEW_ANOMALY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly";
@@ -559,6 +559,5 @@ public class R4EUITestAnomaly extends R4EUITestElement {
 		when(mockAnomalyDialog.open()).thenReturn(Window.OK);
 
 		fParentProxy.getCommandProxy().progressElement(aCompareEditorAnomaly, null);
-
 	}
 }

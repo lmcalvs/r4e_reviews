@@ -12,14 +12,13 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Initial Contribution for Mylyn Review R4E project
- *   
+ *   Francois Chouinard - Add identifying message to each assert
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.tests.feature;
 
 import java.io.File;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -30,12 +29,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class PreferencesTests extends TestCase {
 
 	// ------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class PreferencesTests extends TestCase {
 	private R4EUIReviewBasic fReview = null;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
@@ -87,8 +87,8 @@ public class PreferencesTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		fProxy = R4EUITestMain.getInstance();
 		createReviewGroups();
@@ -100,11 +100,15 @@ public class PreferencesTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		fProxy = null;
 	}
+
+	// ------------------------------------------------------------------------
+	// Main test case
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method testPreferences
@@ -116,15 +120,23 @@ public class PreferencesTests extends TestCase {
 		removeParentGroupFromPreferences();
 	}
 
+	// ------------------------------------------------------------------------
+	// Helper functions
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Method createReviewGroups
 	 */
 	private void createReviewGroups() {
 
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReviewGroups");
+
 		fParentGroup = null;
 		fNonParentGroup = null;
 
-		//Create Parent Review Group
+		// Create Parent Review Group
+		r4eAssert.setTest("Create Review Group");
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(PARENT_REVIEW_GROUP_NAME)) {
 				fParentGroup = group;
@@ -135,14 +147,15 @@ public class PreferencesTests extends TestCase {
 			fParentGroup = fProxy.getReviewGroupProxy().createReviewGroup(
 					TestUtils.FSharedFolder + File.separator + PARENT_REVIEW_GROUP_NAME, PARENT_REVIEW_GROUP_NAME,
 					PARENT_REVIEW_GROUP_DESCRIPTION, "", new String[0], new String[0], new String[0]);
-			Assert.assertNotNull(fParentGroup);
-			Assert.assertEquals(PARENT_REVIEW_GROUP_NAME, fParentGroup.getReviewGroup().getName());
-			Assert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/" + PARENT_REVIEW_GROUP_NAME,
-					fParentGroup.getReviewGroup().getFolder());
-			Assert.assertEquals(PARENT_REVIEW_GROUP_DESCRIPTION, fParentGroup.getReviewGroup().getDescription());
+			r4eAssert.assertNotNull(fParentGroup);
+			r4eAssert.assertEquals(PARENT_REVIEW_GROUP_NAME, fParentGroup.getReviewGroup().getName());
+			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+					+ PARENT_REVIEW_GROUP_NAME, fParentGroup.getReviewGroup().getFolder());
+			r4eAssert.assertEquals(PARENT_REVIEW_GROUP_DESCRIPTION, fParentGroup.getReviewGroup().getDescription());
 		}
 
-		//Create Non-Parent Review Group
+		// Create Non-Parent Review Group
+		r4eAssert.setTest("Create Non-Parent Review Group");
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(NONPARENT_REVIEW_GROUP_NAME)) {
 				fNonParentGroup = group;
@@ -154,11 +167,12 @@ public class PreferencesTests extends TestCase {
 					TestUtils.FSharedFolder + File.separator + NONPARENT_REVIEW_GROUP_NAME,
 					NONPARENT_REVIEW_GROUP_NAME, NONPARENT_REVIEW_GROUP_DESCRIPTION, "", new String[0], new String[0],
 					new String[0]);
-			Assert.assertNotNull(fNonParentGroup);
-			Assert.assertEquals(NONPARENT_REVIEW_GROUP_NAME, fNonParentGroup.getReviewGroup().getName());
-			Assert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertNotNull(fNonParentGroup);
+			r4eAssert.assertEquals(NONPARENT_REVIEW_GROUP_NAME, fNonParentGroup.getReviewGroup().getName());
+			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
 					+ NONPARENT_REVIEW_GROUP_NAME, fNonParentGroup.getReviewGroup().getFolder());
-			Assert.assertEquals(NONPARENT_REVIEW_GROUP_DESCRIPTION, fNonParentGroup.getReviewGroup().getDescription());
+			r4eAssert.assertEquals(NONPARENT_REVIEW_GROUP_DESCRIPTION, fNonParentGroup.getReviewGroup()
+					.getDescription());
 		}
 	}
 
@@ -166,30 +180,53 @@ public class PreferencesTests extends TestCase {
 	 * Method createReview
 	 */
 	private void createReview() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReview");
+		r4eAssert.setTest("Create Review");
+
 		fReview = fProxy.getReviewProxy().createReview(fParentGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				REVIEW_TEST_NAME, REVIEW_TEST_DESCRIPTION, null, null, new String[0], null, null, null);
-		Assert.assertNotNull(fReview);
-		Assert.assertNotNull(fReview.getParticipantContainer());
-		Assert.assertNotNull(fReview.getAnomalyContainer());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fReview.getReview().getType());
-		Assert.assertEquals(REVIEW_TEST_NAME, fReview.getReview().getName());
-		Assert.assertEquals(REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
-		Assert.assertTrue(fReview.isOpen());
+		r4eAssert.assertNotNull(fReview);
+		r4eAssert.assertNotNull(fReview.getParticipantContainer());
+		r4eAssert.assertNotNull(fReview.getAnomalyContainer());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fReview.getReview().getType());
+		r4eAssert.assertEquals(REVIEW_TEST_NAME, fReview.getReview().getName());
+		r4eAssert.assertEquals(REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
+		r4eAssert.assertTrue(fReview.isOpen());
 	}
+
+	// ------------------------------------------------------------------------
+	// Set review tree table
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method setReviewTreeTableDisplay
 	 */
 	private void setReviewTreeTableDisplay() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("setReviewTreeTableDisplay");
+		r4eAssert.setTest("Change Display");
+
 		fProxy.getCommandProxy().changeDisplay();
-		Assert.assertFalse(R4EUIModelController.getNavigatorView().isDefaultDisplay());
+		r4eAssert.assertFalse(R4EUIModelController.getNavigatorView().isDefaultDisplay());
 	}
+
+	// ------------------------------------------------------------------------
+	// Remove non-parent group tests
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method removeNonParentGroupFromPreferences
 	 */
 	private void removeNonParentGroupFromPreferences() {
-		//Remove Review Group from preferences
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("removeNonParentGroupFromPreferences");
+
+		// Remove Review Group from preferences
+		r4eAssert.setTest("Remove Review Group");
 		String prefsGroup = fNonParentGroup.getReviewGroup().eResource().getURI().toFileString();
 		fProxy.getPreferencesProxy().removeGroupFromPreferences(prefsGroup);
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
@@ -197,14 +234,23 @@ public class PreferencesTests extends TestCase {
 				fail("Group " + prefsGroup + " should not be present since it was removed from preferences");
 			}
 		}
-		Assert.assertFalse(R4EUIModelController.getNavigatorView().isDefaultDisplay());
+		r4eAssert.assertFalse(R4EUIModelController.getNavigatorView().isDefaultDisplay());
 	}
 
+	// ------------------------------------------------------------------------
+	// Remove parent group tests
+	// ------------------------------------------------------------------------
+
 	/**
-	 * Method createOriginalPostponedAnomalies
+	 * Method removeParentGroupFromPreferences
 	 */
 	private void removeParentGroupFromPreferences() {
-		//Remove Review Group from preferences
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("removeParentGroupFromPreferences");
+
+		// Remove Review Group from preferences
+		r4eAssert.setTest("Remove Review Group");
 		String prefsGroup = fParentGroup.getReviewGroup().eResource().getURI().toFileString();
 		fProxy.getPreferencesProxy().removeGroupFromPreferences(prefsGroup);
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
@@ -212,7 +258,7 @@ public class PreferencesTests extends TestCase {
 				fail("Group " + prefsGroup + " should not be present since it was removed from preferences");
 			}
 		}
-		Assert.assertTrue(R4EUIModelController.getNavigatorView().isDefaultDisplay());
+		r4eAssert.assertTrue(R4EUIModelController.getNavigatorView().isDefaultDisplay());
 	}
 
 }

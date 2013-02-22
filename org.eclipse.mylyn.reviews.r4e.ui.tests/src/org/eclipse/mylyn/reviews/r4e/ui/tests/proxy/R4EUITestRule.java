@@ -64,6 +64,5 @@ public class R4EUITestRule extends R4EUITestElement {
 		when(mockRuleDialog.open()).thenReturn(Window.OK);
 
 		return (R4EUIRule) fParentProxy.getCommandProxy().runNewChildElement(aRuleViolation);
-
 	}
 }

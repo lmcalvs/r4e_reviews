@@ -51,7 +51,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class R4EUITestItem extends R4EUITestElement {
 
 	public R4EUITestItem(R4EUITestMain aR4EUITestProxy) {

@@ -12,7 +12,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
+ *   Francois Chouinard - Add identifying message to each assert
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.tests.feature;
@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -36,7 +35,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -52,12 +50,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorAction
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class PostponedAnomaliesTests extends TestCase {
 
 	// ------------------------------------------------------------------------
@@ -143,7 +142,7 @@ public class PostponedAnomaliesTests extends TestCase {
 	private String fOriginalGlobalAnomalyTitle = null;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
@@ -163,8 +162,8 @@ public class PostponedAnomaliesTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		fProxy = R4EUITestMain.getInstance();
 		fProxy.getPreferencesProxy().setGlobalPostponedImport(true);
@@ -183,21 +182,25 @@ public class PostponedAnomaliesTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		fProxy = null;
 	}
 
+	// ------------------------------------------------------------------------
+	// Main test case
+	// ------------------------------------------------------------------------
+
 	/**
-	 * Method testBasicReviews
+	 * Method testPostponedAnomalies
 	 * 
 	 * @throws CoreException
 	 */
 	public void testPostponedAnomalies() throws CoreException {
 		TestUtils.waitForJobs();
 
-		//Global Anomalies
+		// Global Anomalies
 		createOriginalGlobalPostponedAnomalies();
 		createGlobalTargetReview();
 		importGlobalAnomalies();
@@ -205,7 +208,7 @@ public class PostponedAnomaliesTests extends TestCase {
 		changeOriginalGlobalAnomaliesState();
 		fixGlobalPostponedAnomalies();
 
-		//Local Anomalies
+		// Local Anomalies
 		createTargetReview();
 		createTargetReviewItem();
 		createParticipants(fTargetReview);
@@ -215,14 +218,22 @@ public class PostponedAnomaliesTests extends TestCase {
 		fixPostponedAnomalies();
 	}
 
+	// ------------------------------------------------------------------------
+	// Helper functions
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Method createReviewGroups
 	 */
 	private void createReviewGroups() {
 
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReviewGroups");
+
 		fGroup = null;
 
-		//Create Review Group
+		// Create Review Group
+		r4eAssert.setTest("Create Review Group");
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(TestConstants.REVIEW_GROUP_TEST_NAME)) {
 				fGroup = group;
@@ -236,20 +247,21 @@ public class PostponedAnomaliesTests extends TestCase {
 					TestConstants.REVIEW_GROUP_TEST_NAME, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 					TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 					TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
-			Assert.assertNotNull(fGroup);
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
-			Assert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertNotNull(fGroup);
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
+			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
 					+ TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getFolder());
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup().getDescription());
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, fGroup.getReviewGroup()
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup()
+					.getDescription());
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, fGroup.getReviewGroup()
 					.getDefaultEntryCriteria());
 			for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS.length; i++) {
-				Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS[i], fGroup.getReviewGroup()
+				r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS[i], fGroup.getReviewGroup()
 						.getAvailableProjects()
 						.get(i));
 			}
 			for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS.length; i++) {
-				Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS[i], fGroup.getReviewGroup()
+				r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS[i], fGroup.getReviewGroup()
 						.getAvailableComponents()
 						.get(i));
 			}
@@ -261,7 +273,12 @@ public class PostponedAnomaliesTests extends TestCase {
 	 * Method createOriginalReview
 	 */
 	private void createOriginalReview() {
-		//Update Review Group handle
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createOriginalReview");
+
+		// Update Review Group handle
+		r4eAssert.setTest("Update Review Group Handle");
 		for (IR4EUIModelElement elem : R4EUIModelController.getRootElement().getChildren()) {
 			if (fGroupName.equals(elem.getName())) {
 				fGroup = (R4EUIReviewGroup) elem;
@@ -270,91 +287,98 @@ public class PostponedAnomaliesTests extends TestCase {
 		if (!fGroup.isOpen()) {
 			fProxy.getCommandProxy().openElement(fGroup);
 		}
-		Assert.assertTrue(fGroup.isOpen());
+		r4eAssert.assertTrue(fGroup.isOpen());
 
+		// Create Review Group
+		r4eAssert.setTest("Create Review Group");
 		fOriginalReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				ORIGINAL_REVIEW_TEST_NAME, ORIGINAL_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_DUE_DATE,
 				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
 				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
 				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
-		Assert.assertNotNull(fOriginalReview);
-		Assert.assertNotNull(fOriginalReview.getParticipantContainer());
-		Assert.assertNotNull(fOriginalReview.getAnomalyContainer());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fOriginalReview.getReview().getType());
-		Assert.assertEquals(ORIGINAL_REVIEW_TEST_NAME, fOriginalReview.getReview().getName());
-		Assert.assertEquals(ORIGINAL_REVIEW_TEST_DESCRIPTION, fOriginalReview.getReview().getExtraNotes());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fOriginalReview.getReview().getProject());
+		r4eAssert.assertNotNull(fOriginalReview);
+		r4eAssert.assertNotNull(fOriginalReview.getParticipantContainer());
+		r4eAssert.assertNotNull(fOriginalReview.getAnomalyContainer());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fOriginalReview.getReview().getType());
+		r4eAssert.assertEquals(ORIGINAL_REVIEW_TEST_NAME, fOriginalReview.getReview().getName());
+		r4eAssert.assertEquals(ORIGINAL_REVIEW_TEST_DESCRIPTION, fOriginalReview.getReview().getExtraNotes());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fOriginalReview.getReview().getProject());
 		for (int i = 0; i < TestConstants.REVIEW_TEST_COMPONENTS.length; i++) {
-			Assert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fOriginalReview.getReview()
+			r4eAssert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fOriginalReview.getReview()
 					.getComponents()
 					.get(i));
 		}
-		Assert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fOriginalReview.getReview().getEntryCriteria());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fOriginalReview.getReview().getObjectives());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fOriginalReview.getReview()
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fOriginalReview.getReview().getEntryCriteria());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fOriginalReview.getReview().getObjectives());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fOriginalReview.getReview()
 				.getReferenceMaterial());
-		Assert.assertTrue(fOriginalReview.isOpen());
+		r4eAssert.assertTrue(fOriginalReview.isOpen());
 	}
 
 	/**
 	 * Method createOriginalReviewItem
 	 */
 	private void createOriginalReviewItem() throws CoreException {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createOriginalReviewItem");
+
+		r4eAssert.setTest("Create Commit Item");
 		fOriginalItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
-		Assert.assertNotNull(fOriginalItem);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem.getItem().getAddedById());
-		Assert.assertEquals("The.committer@some.com", fOriginalItem.getItem().getAuthorRep());
-		Assert.assertEquals("second Java Commit", fOriginalItem.getItem().getDescription());
-		Assert.assertEquals(4, fOriginalItem.getChildren().length);
+		r4eAssert.assertNotNull(fOriginalItem);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem.getItem().getAddedById());
+		r4eAssert.assertEquals("The.committer@some.com", fOriginalItem.getItem().getAuthorRep());
+		r4eAssert.assertEquals("second Java Commit", fOriginalItem.getItem().getDescription());
+		r4eAssert.assertEquals(4, fOriginalItem.getChildren().length);
 		for (int i = 0; i < fOriginalItem.getChildren().length; i++) {
 			if (((R4EUIFileContext) fOriginalItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE1_PROJ_NAME)) {
 				fOrigAnomalyFileIndex = i; //Used later to add anomalies
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fOriginalItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fOriginalItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
-				Assert.assertEquals(606, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(606, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(25, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(25, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(665, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(665, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(63, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(63, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(733, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(733, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(61, ((R4ETextPosition) fOriginalItem.getItem()
+				r4eAssert.assertEquals(61, ((R4ETextPosition) fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
@@ -365,54 +389,54 @@ public class PostponedAnomaliesTests extends TestCase {
 				fFile1VersionID = fOriginalItem.getFileContexts().get(i).getTargetFileVersion().getVersionID();
 			} else if (((R4EUIFileContext) fOriginalItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE4_PROJ_NAME)) {
-				Assert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getBase());
 
-				Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fOriginalItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE3_PROJ_NAME)) {
-				Assert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getBase());
-				Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem.getItem()
+				r4eAssert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fOriginalItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE2_PROJ_NAME)) {
-				Assert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fOriginalItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fOriginalItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getTarget());
+				r4eAssert.assertNull(fOriginalItem.getItem().getFileContextList().get(i).getTarget());
 			}
 		}
 
+		r4eAssert.setTest("Create Manual Tree Item");
 		fOriginalItem2 = fProxy.getItemProxy().createManualTreeItem(TestUtils.FJavaFile3);
-		Assert.assertNotNull(fOriginalItem2);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem2.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem2.getItem()
+		r4eAssert.assertNotNull(fOriginalItem2);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem2.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getBase()
 				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem2.getItem()
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fOriginalItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getTarget()
 				.getName());
-		Assert.assertEquals(0,
-				((R4ETextPosition) fOriginalItem2.getItem()
-						.getFileContextList()
-						.get(0)
-						.getDeltas()
-						.get(0)
-						.getTarget()
-						.getLocation()).getStartPosition());
-		Assert.assertEquals(755, ((R4ETextPosition) fOriginalItem2.getItem()
+		r4eAssert.assertEquals(0, ((R4ETextPosition) fOriginalItem2.getItem()
+				.getFileContextList()
+				.get(0)
+				.getDeltas()
+				.get(0)
+				.getTarget()
+				.getLocation()).getStartPosition());
+		r4eAssert.assertEquals(755, ((R4ETextPosition) fOriginalItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
@@ -420,27 +444,28 @@ public class PostponedAnomaliesTests extends TestCase {
 				.getTarget()
 				.getLocation()).getLength());
 
+		r4eAssert.setTest("Create Manual Text Item");
 		fOriginalItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
-		Assert.assertNotNull(fOriginalItem3);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem3.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem3.getItem()
+		r4eAssert.assertNotNull(fOriginalItem3);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fOriginalItem3.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getBase()
 				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem3.getItem()
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fOriginalItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getTarget()
 				.getName());
-		Assert.assertEquals(50, ((R4ETextPosition) fOriginalItem3.getItem()
+		r4eAssert.assertEquals(50, ((R4ETextPosition) fOriginalItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(20, ((R4ETextPosition) fOriginalItem3.getItem()
+		r4eAssert.assertEquals(20, ((R4ETextPosition) fOriginalItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
@@ -457,6 +482,11 @@ public class PostponedAnomaliesTests extends TestCase {
 	 * @param aReview
 	 */
 	private void createParticipants(R4EUIReviewBasic aReview) {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createParticipants");
+
+		r4eAssert.setTest("Create Participant");
 		List<R4EParticipant> participants = new ArrayList<R4EParticipant>(1);
 		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
@@ -464,17 +494,26 @@ public class PostponedAnomaliesTests extends TestCase {
 		participants.add(participant);
 		R4EUIParticipant uiParticipant = fProxy.getParticipantProxy().createParticipant(
 				aReview.getParticipantContainer(), participants);
-		Assert.assertNotNull(uiParticipant);
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
-		Assert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
+		r4eAssert.assertNotNull(uiParticipant);
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
+		r4eAssert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Original Postponed Anomalies
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createOriginalPostponedAnomalies
 	 */
 	private void createOriginalPostponedAnomalies() {
-		//Anomaly1
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createOriginalPostponedAnomalies");
+
+		// Anomaly1
+		r4eAssert.setTest("Anomaly 1");
 		R4EUIContent content1 = fOriginalItem.getFileContexts()
 				.get(fOrigAnomalyFileIndex)
 				.getContentsContainerElement()
@@ -484,25 +523,27 @@ public class PostponedAnomaliesTests extends TestCase {
 				ORIGINAL_ANOMALY1_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
 				TestConstants.PARTICIPANT_ASSIGN_TO, null);
-		Assert.assertNotNull(fOriginalAnomaly1);
-		Assert.assertEquals(ORIGINAL_ANOMALY1_TEST_TITLE, fOriginalAnomaly1.getAnomaly().getTitle());
-		Assert.assertEquals(ORIGINAL_ANOMALY1_TEST_DESCRIPTION, fOriginalAnomaly1.getAnomaly().getDescription());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
+		r4eAssert.assertNotNull(fOriginalAnomaly1);
+		r4eAssert.assertEquals(ORIGINAL_ANOMALY1_TEST_TITLE, fOriginalAnomaly1.getAnomaly().getTitle());
+		r4eAssert.assertEquals(ORIGINAL_ANOMALY1_TEST_DESCRIPTION, fOriginalAnomaly1.getAnomaly().getDescription());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				((R4ECommentType) fOriginalAnomaly1.getAnomaly().getType()).getType());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly1.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly1.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly1.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly1.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly1.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO,
+				fOriginalAnomaly1.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly1, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
 		fOriginalAnomaly1Title = fOriginalAnomaly1.getAnomaly().getTitle();
 
-		//Anomaly2
+		// Anomaly2
+		r4eAssert.setTest("Anomaly 2");
 		R4EUIContent content2 = fOriginalItem.getFileContexts()
 				.get(fOrigAnomalyFileIndex)
 				.getContentsContainerElement()
@@ -512,261 +553,302 @@ public class PostponedAnomaliesTests extends TestCase {
 				ORIGINAL_ANOMALY2_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
 				TestConstants.PARTICIPANT_ASSIGN_TO, null);
-		Assert.assertNotNull(fOriginalAnomaly2);
-		Assert.assertEquals(ORIGINAL_ANOMALY2_TEST_TITLE, fOriginalAnomaly2.getAnomaly().getTitle());
-		Assert.assertEquals(ORIGINAL_ANOMALY2_TEST_DESCRIPTION, fOriginalAnomaly2.getAnomaly().getDescription());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
+		r4eAssert.assertNotNull(fOriginalAnomaly2);
+		r4eAssert.assertEquals(ORIGINAL_ANOMALY2_TEST_TITLE, fOriginalAnomaly2.getAnomaly().getTitle());
+		r4eAssert.assertEquals(ORIGINAL_ANOMALY2_TEST_DESCRIPTION, fOriginalAnomaly2.getAnomaly().getDescription());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				((R4ECommentType) fOriginalAnomaly2.getAnomaly().getType()).getType());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly2.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly2.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly2.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly2.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly2.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO,
+				fOriginalAnomaly2.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly2, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
 		fOriginalAnomaly2Title = fOriginalAnomaly2.getAnomaly().getTitle();
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Target Review
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createTargetReview
 	 */
 	private void createTargetReview() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createTargetReview");
+
+		r4eAssert.setTest("Create Review");
 		fTargetReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TARGET_REVIEW_TEST_NAME, TARGET_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_DUE_DATE,
 				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
 				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
 				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
-		Assert.assertNotNull(fTargetReview);
-		Assert.assertNotNull(fTargetReview.getParticipantContainer());
-		Assert.assertNotNull(fTargetReview.getAnomalyContainer());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fTargetReview.getReview().getType());
-		Assert.assertEquals(TARGET_REVIEW_TEST_NAME, fTargetReview.getReview().getName());
-		Assert.assertEquals(TARGET_REVIEW_TEST_DESCRIPTION, fTargetReview.getReview().getExtraNotes());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fTargetReview.getReview().getProject());
+		r4eAssert.assertNotNull(fTargetReview);
+		r4eAssert.assertNotNull(fTargetReview.getParticipantContainer());
+		r4eAssert.assertNotNull(fTargetReview.getAnomalyContainer());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fTargetReview.getReview().getType());
+		r4eAssert.assertEquals(TARGET_REVIEW_TEST_NAME, fTargetReview.getReview().getName());
+		r4eAssert.assertEquals(TARGET_REVIEW_TEST_DESCRIPTION, fTargetReview.getReview().getExtraNotes());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fTargetReview.getReview().getProject());
 		for (int i = 0; i < TestConstants.REVIEW_TEST_COMPONENTS.length; i++) {
-			Assert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i],
-					fTargetReview.getReview().getComponents().get(i));
+			r4eAssert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fTargetReview.getReview()
+					.getComponents()
+					.get(i));
 		}
-		Assert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fTargetReview.getReview().getEntryCriteria());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fTargetReview.getReview().getObjectives());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fTargetReview.getReview()
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fTargetReview.getReview().getEntryCriteria());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fTargetReview.getReview().getObjectives());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fTargetReview.getReview()
 				.getReferenceMaterial());
-		Assert.assertTrue(fTargetReview.isOpen());
+		r4eAssert.assertTrue(fTargetReview.isOpen());
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Target Review Item
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createTargetReviewItem
 	 */
 	private void createTargetReviewItem() throws CoreException {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createTargetReviewItem");
+
+		r4eAssert.setTest("Create Commit Item");
 		fTargetItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
-		Assert.assertNotNull(fTargetItem);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem.getItem().getAddedById());
-		Assert.assertEquals("The.committer@some.com", fTargetItem.getItem().getAuthorRep());
-		Assert.assertEquals("second Java Commit", fTargetItem.getItem().getDescription());
-		Assert.assertEquals(4, fTargetItem.getChildren().length);
+		r4eAssert.assertNotNull(fTargetItem);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem.getItem().getAddedById());
+		r4eAssert.assertEquals("The.committer@some.com", fTargetItem.getItem().getAuthorRep());
+		r4eAssert.assertEquals("second Java Commit", fTargetItem.getItem().getDescription());
+		r4eAssert.assertEquals(4, fTargetItem.getChildren().length);
 		for (int i = 0; i < fTargetItem.getChildren().length; i++) {
 			if (((R4EUIFileContext) fTargetItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE1_PROJ_NAME)) {
 
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fTargetItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fTargetItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
-				Assert.assertEquals(606, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(606, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(25, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(25, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(665, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(665, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(63, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(63, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(733, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(733, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(61, ((R4ETextPosition) fTargetItem.getItem()
+				r4eAssert.assertEquals(61, ((R4ETextPosition) fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
 						((R4EUIFileContext) fTargetItem.getChildren()[i]).getContentsContainerElement().getChildren(),
 						true, R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fTargetItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE4_PROJ_NAME)) {
-				Assert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getBase());
-				Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem.getItem()
+				r4eAssert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fTargetItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE3_PROJ_NAME)) {
-				Assert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getBase());
-				Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem.getItem()
+				r4eAssert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fTargetItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE2_PROJ_NAME)) {
-				Assert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fTargetItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fTargetItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getTarget());
+				r4eAssert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getTarget());
 			}
 		}
 
+		r4eAssert.setTest("Create Manual Tree Item");
 		fTargetItem2 = fProxy.getItemProxy().createManualTreeItem(TestUtils.FJavaFile3);
-		Assert.assertNotNull(fTargetItem2);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem2.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem2.getItem()
+		r4eAssert.assertNotNull(fTargetItem2);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem2.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getBase()
 				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem2.getItem()
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fTargetItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getTarget()
 				.getName());
-		Assert.assertEquals(0, ((R4ETextPosition) fTargetItem2.getItem()
+		r4eAssert.assertEquals(0, ((R4ETextPosition) fTargetItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(755,
-				((R4ETextPosition) fTargetItem2.getItem()
-						.getFileContextList()
-						.get(0)
-						.getDeltas()
-						.get(0)
-						.getTarget()
-						.getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-				((R4EUIFileContext) fTargetItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
-				R4EUIConstants.SELECTION_ANNOTATION_ID));
-
-		fTargetItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
-		Assert.assertNotNull(fTargetItem3);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem3.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem3.getItem()
-				.getFileContextList()
-				.get(0)
-				.getBase()
-				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem3.getItem()
-				.getFileContextList()
-				.get(0)
-				.getTarget()
-				.getName());
-		Assert.assertEquals(50, ((R4ETextPosition) fTargetItem3.getItem()
-				.getFileContextList()
-				.get(0)
-				.getDeltas()
-				.get(0)
-				.getTarget()
-				.getLocation()).getStartPosition());
-		Assert.assertEquals(20, ((R4ETextPosition) fTargetItem3.getItem()
+		r4eAssert.assertEquals(755, ((R4ETextPosition) fTargetItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fTargetItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
+
+		r4eAssert.setTest("Create Manual Text Item");
+		fTargetItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
+		r4eAssert.assertNotNull(fTargetItem3);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fTargetItem3.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem3.getItem()
+				.getFileContextList()
+				.get(0)
+				.getBase()
+				.getName());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fTargetItem3.getItem()
+				.getFileContextList()
+				.get(0)
+				.getTarget()
+				.getName());
+		r4eAssert.assertEquals(50, ((R4ETextPosition) fTargetItem3.getItem()
+				.getFileContextList()
+				.get(0)
+				.getDeltas()
+				.get(0)
+				.getTarget()
+				.getLocation()).getStartPosition());
+		r4eAssert.assertEquals(20, ((R4ETextPosition) fTargetItem3.getItem()
+				.getFileContextList()
+				.get(0)
+				.getDeltas()
+				.get(0)
+				.getTarget()
+				.getLocation()).getLength());
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
 				((R4EUIFileContext) fTargetItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
 				R4EUIConstants.SELECTION_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Import Anomalies
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method importAnomalies
 	 */
 	private void importAnomalies() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("importAnomalies");
+
+		r4eAssert.setTest("Import Postponed Anomaly");
 		fProxy.getCommandProxy().importPostponedAnomalies(fTargetReview);
 
-		//Verify that the postponed anomalies were correctly imported
+		// Verify that the postponed anomalies were correctly imported
 		R4EUIPostponedContainer postponedContainer = fTargetReview.getPostponedContainer();
-		Assert.assertNotNull(postponedContainer);
+		r4eAssert.assertNotNull(postponedContainer);
 
 		R4EUIPostponedFile postponedFile = (R4EUIPostponedFile) postponedContainer.getChildren()[0];
-		Assert.assertNotNull(postponedFile);
-		Assert.assertEquals(fFile1Name, postponedFile.getName());
-		Assert.assertEquals(fFile1VersionID, postponedFile.getTargetFileVersion().getVersionID());
+		r4eAssert.assertNotNull(postponedFile);
+		r4eAssert.assertEquals(fFile1Name, postponedFile.getName());
+		r4eAssert.assertEquals(fFile1VersionID, postponedFile.getTargetFileVersion().getVersionID());
 
+		r4eAssert.setTest("Postponed Anomaly 1");
 		fPostponedAnomaly1 = (R4EUIPostponedAnomaly) postponedFile.getChildren()[0];
-		Assert.assertNotNull(fPostponedAnomaly1);
-		Assert.assertEquals(fOriginalAnomaly1Title, fPostponedAnomaly1.getAnomaly().getTitle());
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fPostponedAnomaly1.getAnomaly().getState());
-		Assert.assertEquals(fOriginalReview.getReview().getName(),
+		r4eAssert.assertNotNull(fPostponedAnomaly1);
+		r4eAssert.assertEquals(fOriginalAnomaly1Title, fPostponedAnomaly1.getAnomaly().getTitle());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fPostponedAnomaly1.getAnomaly().getState());
+		r4eAssert.assertEquals(fOriginalReview.getReview().getName(),
 				fPostponedAnomaly1.getAnomaly().getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME));
 
+		r4eAssert.setTest("Postponed Anomaly 2");
 		fPostponedAnomaly2 = (R4EUIPostponedAnomaly) postponedFile.getChildren()[1];
-		Assert.assertNotNull(fPostponedAnomaly2);
-		Assert.assertEquals(fOriginalAnomaly2Title, fPostponedAnomaly2.getAnomaly().getTitle());
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fPostponedAnomaly2.getAnomaly().getState());
-		Assert.assertEquals(fOriginalReview.getReview().getName(),
+		r4eAssert.assertNotNull(fPostponedAnomaly2);
+		r4eAssert.assertEquals(fOriginalAnomaly2Title, fPostponedAnomaly2.getAnomaly().getTitle());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fPostponedAnomaly2.getAnomaly().getState());
+		r4eAssert.assertEquals(fOriginalReview.getReview().getName(),
 				fPostponedAnomaly2.getAnomaly().getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME));
 
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
 				false, R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Change Postponed Anomaly State
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method changePostponedAnomaliesState
 	 */
 	private void changePostponedAnomaliesState() {
 
-		//Change postponed anomalies states to ASSIGNED
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("changePostponedAnomaliesState");
+
+		// Change postponed anomalies states to ASSIGNED
+		r4eAssert.setTest("Assign Postponed Anomaly");
 		fProxy.getCommandProxy().regressElement(fPostponedAnomaly1);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly1.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly1.getAnomaly().getState());
 		fProxy.getCommandProxy().regressElement(fPostponedAnomaly2);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly2.getAnomaly().getState());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly2.getAnomaly().getState());
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
 				false, R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 
-		//Verify that the original anomalies are also updated
+		// Verify that the original anomalies are also updated
+		r4eAssert.setTest("Verify Original Anomaly");
 		fProxy.getCommandProxy().openElement(fOriginalReview);
-		Assert.assertTrue(fOriginalReview.isOpen());
-		Assert.assertFalse(fTargetReview.isOpen());
+		r4eAssert.assertTrue(fOriginalReview.isOpen());
+		r4eAssert.assertFalse(fTargetReview.isOpen());
 
 		for (IR4EUIModelElement elem : fOriginalReview.getChildren()) {
 			if (elem.getName().equals(fOriginalItemName)) {
@@ -786,162 +868,237 @@ public class PostponedAnomaliesTests extends TestCase {
 						.getChildren()[1];
 			}
 		}
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalAnomaly1.getAnomaly().getState());
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalAnomaly2.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalAnomaly1.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalAnomaly2.getAnomaly().getState());
 	}
+
+	// ------------------------------------------------------------------------
+	// Change Original Anomaly State
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method changeOriginalAnomaliesState
 	 */
 	private void changeOriginalAnomaliesState() {
 
-		//Change original anomalies states back to POSTPONED
-		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly1, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
-		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly2, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("changeOriginalAnomaliesState");
 
-		//Re-import of Target review and make sure the postponed anomalies are back
+		// Change original anomalies states back to POSTPONED
+		r4eAssert.setTest("Postpone Anomaly");
+		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly1, TestConstants.ANOMALY_STATE_POSTPONED);
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
+		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly2, TestConstants.ANOMALY_STATE_POSTPONED);
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
+
+		// Re-import of Target review and make sure the postponed anomalies are back
+		r4eAssert.setTest("Import Anomalies");
 		fProxy.getCommandProxy().openElement(fTargetReview);
-		Assert.assertTrue(fTargetReview.isOpen());
-		Assert.assertFalse(fOriginalReview.isOpen());
+		r4eAssert.assertTrue(fTargetReview.isOpen());
+		r4eAssert.assertFalse(fOriginalReview.isOpen());
 		importAnomalies();
 	}
+
+	// ------------------------------------------------------------------------
+	// Fix Postponed Anomaly
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method fixPostponedAnomalies
 	 */
 	private void fixPostponedAnomalies() {
-		//Set postponed anomalies state to FIXED
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("fixPostponedAnomalies");
+
+		// Set postponed anomalies state to FIXED
+		r4eAssert.setTest("Fix Anomaly");
 		fProxy.getCommandProxy().regressElement(fPostponedAnomaly1);
 		fProxy.getAnomalyProxy().progressAnomaly(fPostponedAnomaly1, TestConstants.ANOMALY_STATE_FIXED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fPostponedAnomaly1.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fPostponedAnomaly1.getAnomaly().getState());
 		fProxy.getCommandProxy().regressElement(fPostponedAnomaly2);
 		fProxy.getAnomalyProxy().progressAnomaly(fPostponedAnomaly2, TestConstants.ANOMALY_STATE_FIXED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fPostponedAnomaly2.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fPostponedAnomaly2.getAnomaly().getState());
 
-		//Re-import anomalies and make sure they are disabled
+		// Re-import anomalies and make sure they are disabled
+		r4eAssert.setTest("Check Anomaly");
 		fProxy.getCommandProxy().importPostponedAnomalies(fTargetReview);
-		Assert.assertEquals(0, fTargetReview.getPostponedContainer().getChildren().length);
+		r4eAssert.assertEquals(0, fTargetReview.getPostponedContainer().getChildren().length);
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Original Global Postponed Anomaly
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createOriginalGlobalPostponedAnomalies
 	 */
 	private void createOriginalGlobalPostponedAnomalies() {
-		//Anomaly1
-		R4EUIAnomalyContainer cont1 = fOriginalReview.getAnomalyContainer();
-		R4EUIAnomalyContainer cont2 = R4EUIModelController.getActiveReview().getAnomalyContainer();
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createOriginalGlobalPostponedAnomalies");
+
+		// Anomaly1
+		r4eAssert.setTest("Create Global Anomaly");
+//		R4EUIAnomalyContainer cont1 = fOriginalReview.getAnomalyContainer();
+//		R4EUIAnomalyContainer cont2 = R4EUIModelController.getActiveReview().getAnomalyContainer();
 		fOriginalGlobalAnomaly = fProxy.getAnomalyProxy().createGlobalAnomaly(fOriginalReview.getAnomalyContainer(),
 				ORIGINAL_GLOBAL_ANOMALY_TEST_TITLE, ORIGINAL_GLOBAL_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, TestConstants.ANOMALY_TEST_RANK_MAJOR,
 				TestConstants.ANOMALY_TEST_DUE_DATE, null, TestConstants.PARTICIPANT_ASSIGN_TO);
-		Assert.assertNotNull(fOriginalGlobalAnomaly);
-		Assert.assertEquals(ORIGINAL_GLOBAL_ANOMALY_TEST_TITLE, fOriginalGlobalAnomaly.getAnomaly().getTitle());
-		Assert.assertEquals(ORIGINAL_GLOBAL_ANOMALY_TEST_DESCRIPTION, fOriginalGlobalAnomaly.getAnomaly()
+		r4eAssert.assertNotNull(fOriginalGlobalAnomaly);
+		r4eAssert.assertEquals(ORIGINAL_GLOBAL_ANOMALY_TEST_TITLE, fOriginalGlobalAnomaly.getAnomaly().getTitle());
+		r4eAssert.assertEquals(ORIGINAL_GLOBAL_ANOMALY_TEST_DESCRIPTION, fOriginalGlobalAnomaly.getAnomaly()
 				.getDescription());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				((R4ECommentType) fOriginalGlobalAnomaly.getAnomaly().getType()).getType());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalGlobalAnomaly.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalGlobalAnomaly.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalGlobalAnomaly.getAnomaly()
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalGlobalAnomaly.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalGlobalAnomaly.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalGlobalAnomaly.getAnomaly()
 				.getAssignedTo()
 				.get(0));
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalGlobalAnomaly, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalGlobalAnomaly.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalGlobalAnomaly.getAnomaly().getState());
 		fOriginalGlobalAnomalyTitle = fOriginalGlobalAnomaly.getAnomaly().getTitle();
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Global Target Review
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createGlobalTargetReview
 	 */
 	private void createGlobalTargetReview() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createGlobalTargetReview");
+
+		r4eAssert.setTest("Create Review");
 		fGlobalTargetReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TARGET_GLOBAL_REVIEW_TEST_NAME, TARGET_GLOBAL_REVIEW_TEST_DESCRIPTION,
 				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
 				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
 				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
-		Assert.assertNotNull(fGlobalTargetReview);
-		Assert.assertNotNull(fGlobalTargetReview.getParticipantContainer());
-		Assert.assertNotNull(fGlobalTargetReview.getAnomalyContainer());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fGlobalTargetReview.getReview().getType());
-		Assert.assertEquals(TARGET_GLOBAL_REVIEW_TEST_NAME, fGlobalTargetReview.getReview().getName());
-		Assert.assertEquals(TARGET_GLOBAL_REVIEW_TEST_DESCRIPTION, fGlobalTargetReview.getReview().getExtraNotes());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fGlobalTargetReview.getReview().getProject());
+		r4eAssert.assertNotNull(fGlobalTargetReview);
+		r4eAssert.assertNotNull(fGlobalTargetReview.getParticipantContainer());
+		r4eAssert.assertNotNull(fGlobalTargetReview.getAnomalyContainer());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fGlobalTargetReview.getReview().getType());
+		r4eAssert.assertEquals(TARGET_GLOBAL_REVIEW_TEST_NAME, fGlobalTargetReview.getReview().getName());
+		r4eAssert.assertEquals(TARGET_GLOBAL_REVIEW_TEST_DESCRIPTION, fGlobalTargetReview.getReview().getExtraNotes());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fGlobalTargetReview.getReview().getProject());
 		for (int i = 0; i < TestConstants.REVIEW_TEST_COMPONENTS.length; i++) {
-			Assert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fGlobalTargetReview.getReview()
+			r4eAssert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fGlobalTargetReview.getReview()
 					.getComponents()
 					.get(i));
 		}
-		Assert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fGlobalTargetReview.getReview()
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fGlobalTargetReview.getReview()
 				.getEntryCriteria());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fGlobalTargetReview.getReview().getObjectives());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fGlobalTargetReview.getReview()
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fGlobalTargetReview.getReview().getObjectives());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fGlobalTargetReview.getReview()
 				.getReferenceMaterial());
-		Assert.assertTrue(fGlobalTargetReview.isOpen());
+		r4eAssert.assertTrue(fGlobalTargetReview.isOpen());
 	}
+
+	// ------------------------------------------------------------------------
+	// Import Global Anomaly 
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method importGlobalAnomalies
 	 */
 	private void importGlobalAnomalies() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("importGlobalAnomalies");
+
+		r4eAssert.setTest("Import Postponed Anomaly");
 		fProxy.getCommandProxy().importPostponedAnomalies(fGlobalTargetReview);
 
-		//Verify that the global postponed anomalies were correctly imported
+		// Verify that the global postponed anomalies were correctly imported
 		R4EUIPostponedContainer postponedContainer = fGlobalTargetReview.getPostponedContainer();
-		Assert.assertNotNull(postponedContainer);
+		r4eAssert.assertNotNull(postponedContainer);
 
+		r4eAssert.setTest("Check Anomaly");
 		fGlobalPostponedAnomaly = (R4EUIPostponedAnomaly) postponedContainer.getAnomalyContainer().getChildren()[0];
-		Assert.assertEquals(fOriginalReview.getReview().getName(), fGlobalPostponedAnomaly.getOriginalReviewName());
-		Assert.assertNotNull(fGlobalPostponedAnomaly);
-		Assert.assertEquals(fOriginalGlobalAnomalyTitle, fGlobalPostponedAnomaly.getAnomaly().getTitle());
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fGlobalPostponedAnomaly.getAnomaly().getState());
+		r4eAssert.assertEquals(fOriginalReview.getReview().getName(), fGlobalPostponedAnomaly.getOriginalReviewName());
+		r4eAssert.assertNotNull(fGlobalPostponedAnomaly);
+		r4eAssert.assertEquals(fOriginalGlobalAnomalyTitle, fGlobalPostponedAnomaly.getAnomaly().getTitle());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fGlobalPostponedAnomaly.getAnomaly().getState());
 	}
+
+	// ------------------------------------------------------------------------
+	// Change Global Postponed Anomaly State 
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method changeGlobalPostponedAnomaliesState
 	 */
 	private void changeGlobalPostponedAnomaliesState() {
 
-		//Change postponed global anomaly states to ASSIGNED
-		fProxy.getCommandProxy().regressElement(fGlobalPostponedAnomaly);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fGlobalPostponedAnomaly.getAnomaly().getState());
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("changeGlobalPostponedAnomaliesState");
 
-		//Verify that the original global anomaly is also updated
+		// Change postponed global anomaly states to ASSIGNED
+		r4eAssert.setTest("Change Postponed Anomaly");
+		fProxy.getCommandProxy().regressElement(fGlobalPostponedAnomaly);
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fGlobalPostponedAnomaly.getAnomaly().getState());
+
+		// Verify that the original global anomaly is also updated
+		r4eAssert.setTest("Verify Anomaly");
 		fProxy.getCommandProxy().openElement(fOriginalReview);
-		Assert.assertTrue(fOriginalReview.isOpen());
-		Assert.assertFalse(fGlobalTargetReview.isOpen());
+		r4eAssert.assertTrue(fOriginalReview.isOpen());
+		r4eAssert.assertFalse(fGlobalTargetReview.isOpen());
 		fOriginalGlobalAnomaly = (R4EUIAnomalyBasic) fOriginalReview.getAnomalyContainer().getChildren()[0];
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalGlobalAnomaly.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fOriginalGlobalAnomaly.getAnomaly().getState());
 	}
+
+	// ------------------------------------------------------------------------
+	// Change Global Postponed Anomaly State 
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method changeOriginalGlobalAnomaliesState
 	 */
 	private void changeOriginalGlobalAnomaliesState() {
 
-		//Change original global anomaly states back to POSTPONED
-		fProxy.getAnomalyProxy().progressAnomaly(fOriginalGlobalAnomaly, TestConstants.ANOMALY_STATE_POSTPONED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalGlobalAnomaly.getAnomaly().getState());
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("changeOriginalGlobalAnomaliesState");
 
-		//Re-import of Target review and make sure the postponed anomalies are back
+		// Change original global anomaly states back to POSTPONED
+		r4eAssert.setTest("Change Global Anomaly");
+		fProxy.getAnomalyProxy().progressAnomaly(fOriginalGlobalAnomaly, TestConstants.ANOMALY_STATE_POSTPONED);
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalGlobalAnomaly.getAnomaly().getState());
+
+		// Re-import of Target review and make sure the postponed anomalies are back
+		r4eAssert.setTest("Verify Anomaly");
 		fProxy.getCommandProxy().openElement(fGlobalTargetReview);
-		Assert.assertTrue(fGlobalTargetReview.isOpen());
-		Assert.assertFalse(fOriginalReview.isOpen());
+		r4eAssert.assertTrue(fGlobalTargetReview.isOpen());
+		r4eAssert.assertFalse(fOriginalReview.isOpen());
 		importGlobalAnomalies();
 	}
+
+	// ------------------------------------------------------------------------
+	// Fix Global Postponed Anomaly State 
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method fixGlobalPostponedAnomalies
 	 */
 	private void fixGlobalPostponedAnomalies() {
-		//Set postponed global anomaly state to FIXED
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("fixGlobalPostponedAnomalies");
+
+		// Set postponed global anomaly state to FIXED
+		r4eAssert.setTest("Change Global Anomaly");
 		fProxy.getCommandProxy().regressElement(fGlobalPostponedAnomaly);
 		fProxy.getAnomalyProxy().progressAnomaly(fGlobalPostponedAnomaly, TestConstants.ANOMALY_STATE_FIXED);
-		Assert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fGlobalPostponedAnomaly.getAnomaly().getState());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fGlobalPostponedAnomaly.getAnomaly().getState());
 
-		//Re-import anomalies and make sure they are disabled
+		// Re-import anomalies and make sure they are disabled
+		r4eAssert.setTest("Verify Anomaly");
 		fProxy.getCommandProxy().importPostponedAnomalies(fGlobalTargetReview);
-		Assert.assertEquals(0, fGlobalTargetReview.getPostponedContainer().getChildren().length);
+		r4eAssert.assertEquals(0, fGlobalTargetReview.getPostponedContainer().getChildren().length);
 	}
 }

@@ -12,7 +12,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
+ *   Francois Chouinard - Add identifying message to each assert
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.tests.feature;
@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -50,12 +49,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorAction
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class CloneAnomaliesCommentsTests extends TestCase {
 
 	// ------------------------------------------------------------------------
@@ -118,12 +118,13 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 
 	private R4EUIAnomalyBasic fClonedAnomaly2 = null;
 
+	@SuppressWarnings("unused")
 	private final R4EUIAnomalyBasic fClonedAnomaly3 = null;
 
 	private R4EUIAnomalyBasic fClonedAnomaly4 = null;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
@@ -143,8 +144,8 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		fProxy = R4EUITestMain.getInstance();
 		createReviewGroups();
@@ -163,14 +164,18 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		fProxy = null;
 	}
 
+	// ------------------------------------------------------------------------
+	// Main test case
+	// ------------------------------------------------------------------------
+
 	/**
-	 * Method testBasicReviews
+	 * Method testCloning
 	 * 
 	 * @throws CoreException
 	 */
@@ -184,14 +189,22 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		cloneCommentsCopyPaste();
 	}
 
+	// ------------------------------------------------------------------------
+	// Helper functions
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Method createReviewGroups
 	 */
 	private void createReviewGroups() {
 
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReviewGroups");
+
 		fGroup = null;
 
-		//Create Review Group
+		// Create Review Group
+		r4eAssert.setTest("Create Review Group");
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(TestConstants.REVIEW_GROUP_TEST_NAME)) {
 				fGroup = group;
@@ -205,20 +218,21 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 					TestConstants.REVIEW_GROUP_TEST_NAME, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 					TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 					TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
-			Assert.assertNotNull(fGroup);
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
-			Assert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertNotNull(fGroup);
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
+			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
 					+ TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getFolder());
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup().getDescription());
-			Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, fGroup.getReviewGroup()
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup()
+					.getDescription());
+			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, fGroup.getReviewGroup()
 					.getDefaultEntryCriteria());
 			for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS.length; i++) {
-				Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS[i], fGroup.getReviewGroup()
+				r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS[i], fGroup.getReviewGroup()
 						.getAvailableProjects()
 						.get(i));
 			}
 			for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS.length; i++) {
-				Assert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS[i], fGroup.getReviewGroup()
+				r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS[i], fGroup.getReviewGroup()
 						.getAvailableComponents()
 						.get(i));
 			}
@@ -227,10 +241,15 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 	}
 
 	/**
-	 * Method createOriginalReview
+	 * Method createReviewItem
 	 */
 	private void createReview() {
-		//Update Review Group handle
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReview");
+
+		// Update Review Group handle
+		r4eAssert.setTest("Update Review Group Handle");
 		for (IR4EUIModelElement elem : R4EUIModelController.getRootElement().getChildren()) {
 			if (fGroupName.equals(elem.getName())) {
 				fGroup = (R4EUIReviewGroup) elem;
@@ -239,184 +258,190 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		if (!fGroup.isOpen()) {
 			fProxy.getCommandProxy().openElement(fGroup);
 		}
-		Assert.assertTrue(fGroup.isOpen());
+		r4eAssert.assertTrue(fGroup.isOpen());
 
+		r4eAssert.setTest("Create Review");
 		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				REVIEW_TEST_NAME, REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_DUE_DATE,
 				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
 				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
 				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
-		Assert.assertNotNull(fReview);
-		Assert.assertNotNull(fReview.getParticipantContainer());
-		Assert.assertNotNull(fReview.getAnomalyContainer());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fReview.getReview().getType());
-		Assert.assertEquals(REVIEW_TEST_NAME, fReview.getReview().getName());
-		Assert.assertEquals(REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fReview.getReview().getProject());
+		r4eAssert.assertNotNull(fReview);
+		r4eAssert.assertNotNull(fReview.getParticipantContainer());
+		r4eAssert.assertNotNull(fReview.getAnomalyContainer());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fReview.getReview().getType());
+		r4eAssert.assertEquals(REVIEW_TEST_NAME, fReview.getReview().getName());
+		r4eAssert.assertEquals(REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fReview.getReview().getProject());
 		for (int i = 0; i < TestConstants.REVIEW_TEST_COMPONENTS.length; i++) {
-			Assert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fReview.getReview().getComponents().get(i));
+			r4eAssert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fReview.getReview().getComponents().get(i));
 		}
-		Assert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fReview.getReview().getEntryCriteria());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fReview.getReview().getObjectives());
-		Assert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fReview.getReview().getReferenceMaterial());
-		Assert.assertTrue(fReview.isOpen());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_ENTRY_CRITERIA, fReview.getReview().getEntryCriteria());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_OBJECTIVES, fReview.getReview().getObjectives());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_REFERENCE_MATERIALS, fReview.getReview()
+				.getReferenceMaterial());
+		r4eAssert.assertTrue(fReview.isOpen());
 	}
 
 	/**
-	 * Method createOriginalReviewItem
+	 * Method createReviewItem
 	 */
 	private void createReviewItem() throws CoreException {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createReviewItem");
+
+		r4eAssert.setTest("Create Commit Item");
 		fItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
-		Assert.assertNotNull(fItem);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fItem.getItem().getAddedById());
-		Assert.assertEquals("The.committer@some.com", fItem.getItem().getAuthorRep());
-		Assert.assertEquals("second Java Commit", fItem.getItem().getDescription());
-		Assert.assertEquals(4, fItem.getChildren().length);
+		r4eAssert.assertNotNull(fItem);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem.getItem().getAddedById());
+		r4eAssert.assertEquals("The.committer@some.com", fItem.getItem().getAuthorRep());
+		r4eAssert.assertEquals("second Java Commit", fItem.getItem().getDescription());
+		r4eAssert.assertEquals(4, fItem.getChildren().length);
 		for (int i = 0; i < fItem.getChildren().length; i++) {
 			if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE1_PROJ_NAME)) {
 				fAnomalyFileIndex = i; //Used later to add anomalies
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE1_PROJ_NAME, fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
-				Assert.assertEquals(606, ((R4ETextPosition) fItem.getItem()
+				r4eAssert.assertEquals(606, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(25,
-						((R4ETextPosition) fItem.getItem()
-								.getFileContextList()
-								.get(i)
-								.getDeltas()
-								.get(0)
-								.getTarget()
-								.getLocation()).getLength());
-				Assert.assertEquals(665, ((R4ETextPosition) fItem.getItem()
+				r4eAssert.assertEquals(25, ((R4ETextPosition) fItem.getItem()
+						.getFileContextList()
+						.get(i)
+						.getDeltas()
+						.get(0)
+						.getTarget()
+						.getLocation()).getLength());
+				r4eAssert.assertEquals(665, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(63,
-						((R4ETextPosition) fItem.getItem()
-								.getFileContextList()
-								.get(i)
-								.getDeltas()
-								.get(1)
-								.getTarget()
-								.getLocation()).getLength());
-				Assert.assertEquals(733, ((R4ETextPosition) fItem.getItem()
+				r4eAssert.assertEquals(63, ((R4ETextPosition) fItem.getItem()
+						.getFileContextList()
+						.get(i)
+						.getDeltas()
+						.get(1)
+						.getTarget()
+						.getLocation()).getLength());
+				r4eAssert.assertEquals(733, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(61,
-						((R4ETextPosition) fItem.getItem()
-								.getFileContextList()
-								.get(i)
-								.getDeltas()
-								.get(2)
-								.getTarget()
-								.getLocation()).getLength());
-				//Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				r4eAssert.assertEquals(61, ((R4ETextPosition) fItem.getItem()
+						.getFileContextList()
+						.get(i)
+						.getDeltas()
+						.get(2)
+						.getTarget()
+						.getLocation()).getLength());
+				//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
 				//		((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
 				//		R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE4_PROJ_NAME)) {
-				Assert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
 
-				Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE3_PROJ_NAME)) {
-				Assert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
-				Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem.getItem()
+				r4eAssert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getTarget()
 						.getName());
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE2_PROJ_NAME)) {
-				Assert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fItem.getItem()
+				r4eAssert.assertEquals(TestUtils.JAVA_FILE2_PROJ_NAME, fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertNull(fItem.getItem().getFileContextList().get(i).getTarget());
+				r4eAssert.assertNull(fItem.getItem().getFileContextList().get(i).getTarget());
 			}
 		}
 
+		r4eAssert.setTest("Create Manual Tree Item");
 		fItem2 = fProxy.getItemProxy().createManualTreeItem(TestUtils.FJavaFile3);
-		Assert.assertNotNull(fItem2);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fItem2.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem2.getItem()
+		r4eAssert.assertNotNull(fItem2);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem2.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getBase()
 				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem2.getItem()
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getTarget()
 				.getName());
-		Assert.assertEquals(0, ((R4ETextPosition) fItem2.getItem()
+		r4eAssert.assertEquals(0, ((R4ETextPosition) fItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(755, ((R4ETextPosition) fItem2.getItem()
+		r4eAssert.assertEquals(755, ((R4ETextPosition) fItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
 				((R4EUIFileContext) fItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
 				R4EUIConstants.SELECTION_ANNOTATION_ID));
 
+		r4eAssert.setTest("Create Manual Text Item");
 		fItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
-		Assert.assertNotNull(fItem3);
-		Assert.assertEquals(R4EUIModelController.getReviewer(), fItem3.getItem().getAddedById());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem3.getItem()
+		r4eAssert.assertNotNull(fItem3);
+		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem3.getItem().getAddedById());
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getBase()
 				.getName());
-		Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem3.getItem()
+		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getTarget()
 				.getName());
-		Assert.assertEquals(50, ((R4ETextPosition) fItem3.getItem()
+		r4eAssert.assertEquals(50, ((R4ETextPosition) fItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(20, ((R4ETextPosition) fItem3.getItem()
+		r4eAssert.assertEquals(20, ((R4ETextPosition) fItem3.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
 				((R4EUIFileContext) fItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
 				R4EUIConstants.SELECTION_ANNOTATION_ID));
 	}
@@ -427,6 +452,11 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 	 * @param aReview
 	 */
 	private void createParticipants(R4EUIReviewBasic aReview) {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createParticipants");
+
+		r4eAssert.setTest("Create Participant");
 		List<R4EParticipant> participants = new ArrayList<R4EParticipant>(1);
 		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
@@ -434,17 +464,22 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		participants.add(participant);
 		R4EUIParticipant uiParticipant = fProxy.getParticipantProxy().createParticipant(
 				aReview.getParticipantContainer(), participants);
-		Assert.assertNotNull(uiParticipant);
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
-		Assert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
+		r4eAssert.assertNotNull(uiParticipant);
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
+		r4eAssert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**
 	 * Method createAnomalies
 	 */
 	private void createAnomalies() {
-		//Anomaly1
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createAnomalies");
+
+		// Anomaly1
+		r4eAssert.setTest("Anomaly 1");
 		R4EUIContent content1 = fItem.getFileContexts()
 				.get(fAnomalyFileIndex)
 				.getContentsContainerElement()
@@ -454,22 +489,23 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				ANOMALY1_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
 				TestConstants.PARTICIPANT_ASSIGN_TO, null);
-		Assert.assertNotNull(fAnomaly1);
-		Assert.assertEquals(ANOMALY1_TEST_TITLE, fAnomaly1.getAnomaly().getTitle());
-		Assert.assertEquals(ANOMALY1_TEST_DESCRIPTION, fAnomaly1.getAnomaly().getDescription());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, ((R4ECommentType) fAnomaly1.getAnomaly()
+		r4eAssert.assertNotNull(fAnomaly1);
+		r4eAssert.assertEquals(ANOMALY1_TEST_TITLE, fAnomaly1.getAnomaly().getTitle());
+		r4eAssert.assertEquals(ANOMALY1_TEST_DESCRIPTION, fAnomaly1.getAnomaly().getDescription());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, ((R4ECommentType) fAnomaly1.getAnomaly()
 				.getType()).getType());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fAnomaly1.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fAnomaly1.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly1.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fAnomaly1.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fAnomaly1.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly1.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 
-		//Anomaly2
+		// Anomaly2
+		r4eAssert.setTest("Anomaly 2");
 		R4EUIContent content2 = fItem.getFileContexts()
 				.get(fAnomalyFileIndex)
 				.getContentsContainerElement()
@@ -479,22 +515,22 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				ANOMALY2_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
 				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
 				TestConstants.PARTICIPANT_ASSIGN_TO, null);
-		Assert.assertNotNull(fAnomaly2);
-		Assert.assertEquals(ANOMALY2_TEST_TITLE, fAnomaly2.getAnomaly().getTitle());
-		Assert.assertEquals(ANOMALY2_TEST_DESCRIPTION, fAnomaly2.getAnomaly().getDescription());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, ((R4ECommentType) fAnomaly2.getAnomaly()
+		r4eAssert.assertNotNull(fAnomaly2);
+		r4eAssert.assertEquals(ANOMALY2_TEST_TITLE, fAnomaly2.getAnomaly().getTitle());
+		r4eAssert.assertEquals(ANOMALY2_TEST_DESCRIPTION, fAnomaly2.getAnomaly().getDescription());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, ((R4ECommentType) fAnomaly2.getAnomaly()
 				.getType()).getType());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fAnomaly2.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fAnomaly2.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly2.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fAnomaly2.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fAnomaly2.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly2.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fAnomaly2.getParent().getChildren(), true,
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fAnomaly2.getParent().getChildren(), true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
@@ -502,77 +538,112 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 	 * Method createComments
 	 */
 	private void createComments() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("createComments");
+
+		r4eAssert.setTest("Anomaly 1 Comment 1");
 		fAnomaly1Comment1 = fProxy.getCommentProxy().createComment(fAnomaly1, ANOMALY1_COMMENT1_TEST);
-		Assert.assertNotNull(fAnomaly1Comment1);
-		Assert.assertEquals(ANOMALY1_COMMENT1_TEST, fAnomaly1Comment1.getComment().getDescription());
+		r4eAssert.assertNotNull(fAnomaly1Comment1);
+		r4eAssert.assertEquals(ANOMALY1_COMMENT1_TEST, fAnomaly1Comment1.getComment().getDescription());
 
+		r4eAssert.setTest("Anomaly 1 Comment 2");
 		fAnomaly1Comment2 = fProxy.getCommentProxy().createComment(fAnomaly1, ANOMALY1_COMMENT2_TEST);
-		Assert.assertNotNull(fAnomaly1Comment2);
-		Assert.assertEquals(ANOMALY1_COMMENT2_TEST, fAnomaly1Comment2.getComment().getDescription());
+		r4eAssert.assertNotNull(fAnomaly1Comment2);
+		r4eAssert.assertEquals(ANOMALY1_COMMENT2_TEST, fAnomaly1Comment2.getComment().getDescription());
 
+		r4eAssert.setTest("Anomaly 2 Comment 1");
 		fAnomaly2Comment1 = fProxy.getCommentProxy().createComment(fAnomaly2, ANOMALY2_COMMENT1_TEST);
-		Assert.assertNotNull(fAnomaly2Comment1);
-		Assert.assertEquals(ANOMALY2_COMMENT1_TEST, fAnomaly2Comment1.getComment().getDescription());
+		r4eAssert.assertNotNull(fAnomaly2Comment1);
+		r4eAssert.assertEquals(ANOMALY2_COMMENT1_TEST, fAnomaly2Comment1.getComment().getDescription());
 
+		r4eAssert.setTest("Anomaly 2 Comment 2");
 		fAnomaly2Comment2 = fProxy.getCommentProxy().createComment(fAnomaly2, ANOMALY2_COMMENT2_TEST);
-		Assert.assertNotNull(fAnomaly2Comment2);
-		Assert.assertEquals(ANOMALY2_COMMENT2_TEST, fAnomaly2Comment2.getComment().getDescription());
+		r4eAssert.assertNotNull(fAnomaly2Comment2);
+		r4eAssert.assertEquals(ANOMALY2_COMMENT2_TEST, fAnomaly2Comment2.getComment().getDescription());
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Anomalies from Editor
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method cloneAnomaliesFromEditor
 	 */
 	private void cloneAnomaliesFromEditor() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneAnomaliesFromEditor");
+
+		r4eAssert.setTest("Clone Anomaly");
 		fClonedAnomaly1 = fProxy.getAnomalyProxy().cloneEditorAnomaly(fItem.getFileContexts().get(fAnomalyFileIndex),
 				20, 50, fAnomaly1, TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_TEST_ID);
 
-		Assert.assertNotNull(fClonedAnomaly1);
-		Assert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly1.getAnomaly().getTitle());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly1.getAnomaly().getDescription());
-		Assert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
+		r4eAssert.assertNotNull(fClonedAnomaly1);
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly1.getAnomaly().getTitle());
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly1.getAnomaly().getDescription());
+		r4eAssert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
 				((R4ECommentType) fClonedAnomaly1.getAnomaly().getType()).getType());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly1.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fClonedAnomaly1.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly1.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
-				20,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
-				50,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly1, true,
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly1.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fClonedAnomaly1.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly1.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(20, ((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly()
+				.getLocations()
+				.get(0)).getLocation()).getStartPosition());
+		r4eAssert.assertEquals(50, ((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly()
+				.getLocations()
+				.get(0)).getLocation()).getLength());
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly1, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Anomalies from External
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method cloneAnomaliesFromExternal
 	 */
 	private void cloneAnomaliesFromExternal() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneAnomaliesFromExternal");
+
+		r4eAssert.setTest("Clone Anomaly");
 		fClonedAnomaly2 = fProxy.getAnomalyProxy().cloneExternalAnomaly(TestUtils.FJavaFile3, fAnomaly2,
 				TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_TEST_ID);
 
-		Assert.assertNotNull(fClonedAnomaly2);
-		Assert.assertEquals(fAnomaly2.getAnomaly().getTitle(), fClonedAnomaly2.getAnomaly().getTitle());
-		Assert.assertEquals(fAnomaly2.getAnomaly().getDescription(), fClonedAnomaly2.getAnomaly().getDescription());
-		Assert.assertEquals(((R4ECommentType) fAnomaly2.getAnomaly().getType()).getType(),
+		r4eAssert.assertNotNull(fClonedAnomaly2);
+		r4eAssert.assertEquals(fAnomaly2.getAnomaly().getTitle(), fClonedAnomaly2.getAnomaly().getTitle());
+		r4eAssert.assertEquals(fAnomaly2.getAnomaly().getDescription(), fClonedAnomaly2.getAnomaly().getDescription());
+		r4eAssert.assertEquals(((R4ECommentType) fAnomaly2.getAnomaly().getType()).getType(),
 				((R4ECommentType) fClonedAnomaly2.getAnomaly().getType()).getType());
-		Assert.assertEquals(fAnomaly2.getAnomaly().getRank(), fClonedAnomaly2.getAnomaly().getRank());
-		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fClonedAnomaly2.getAnomaly().getDueDate());
-		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly2.getAnomaly().getAssignedTo().get(0));
-		Assert.assertEquals(
+		r4eAssert.assertEquals(fAnomaly2.getAnomaly().getRank(), fClonedAnomaly2.getAnomaly().getRank());
+		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fClonedAnomaly2.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly2.getAnomaly().getAssignedTo().get(0));
+		r4eAssert.assertEquals(
 				0,
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(755, ((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly()
+		r4eAssert.assertEquals(755, ((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly()
 				.getLocations()
 				.get(0)).getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly2, false,
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly2, false,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Create Anomalies from DragDrop
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method cloneAnomaliesDragDrop
 	 */
 	private void cloneAnomaliesDragDrop() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneAnomaliesDragDrop");
+
+		r4eAssert.setTest("Drag and Drop");
 		/* TODO drag & drop does not work
 		List<IR4EUIModelElement> elementsCopied = new ArrayList<IR4EUIModelElement>();
 		elementsCopied.add(fAnomaly1);
@@ -584,27 +655,36 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				targetContent);
 
 		fClonedAnomaly3 = (R4EUIAnomalyBasic) elementsDropped.get(0);
-		Assert.assertNotNull(fClonedAnomaly3);
-		Assert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly3.getAnomaly().getTitle());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly3.getAnomaly().getDescription());
-		Assert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
+		r4eAssert.assertNotNull(fClonedAnomaly3);
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly3.getAnomaly().getTitle());
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly3.getAnomaly().getDescription());
+		r4eAssert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
 				((R4ECommentType) fClonedAnomaly3.getAnomaly().getType()).getType());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly3.getAnomaly().getRank());
-		Assert.assertEquals(null, fClonedAnomaly3.getAnomaly().getDueDate());
-		Assert.assertEquals(0, fClonedAnomaly3.getAnomaly().getAssignedTo().size());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly3.getAnomaly().getRank());
+		r4eAssert.assertEquals(null, fClonedAnomaly3.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(0, fClonedAnomaly3.getAnomaly().getAssignedTo().size());
+		r4eAssert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getStartPosition(),
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly3.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly3.getAnomaly().getLocation().get(0)).getLocation()).getLength());
 				*/
 	}
 
+	// ------------------------------------------------------------------------
+	// Create Anomalies CopyPaste
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Method cloneAnomaliesCopyPaste
 	 */
 	private void cloneAnomaliesCopyPaste() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneAnomaliesCopyPaste");
+
+		r4eAssert.setTest("Copy Elements");
 		List<IR4EUIModelElement> elementsCopied = new ArrayList<IR4EUIModelElement>();
 		elementsCopied.add(fAnomaly1);
 		fProxy.getCommandProxy().copyElements(elementsCopied);
@@ -612,30 +692,41 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				.get(0)
 				.getContentsContainerElement()
 				.getChildren()[0];
+
+		r4eAssert.setTest("Paste Elements");
 		List<IR4EUIModelElement> elementsPasted = fProxy.getCommandProxy().pasteElements(targetContent);
 		fClonedAnomaly4 = (R4EUIAnomalyBasic) elementsPasted.get(0);
-		Assert.assertNotNull(fClonedAnomaly4);
-		Assert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly4.getAnomaly().getTitle());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly4.getAnomaly().getDescription());
-		Assert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
+		r4eAssert.assertNotNull(fClonedAnomaly4);
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getTitle(), fClonedAnomaly4.getAnomaly().getTitle());
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getDescription(), fClonedAnomaly4.getAnomaly().getDescription());
+		r4eAssert.assertEquals(((R4ECommentType) fAnomaly1.getAnomaly().getType()).getType(),
 				((R4ECommentType) fClonedAnomaly4.getAnomaly().getType()).getType());
-		Assert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly4.getAnomaly().getRank());
-		Assert.assertEquals(null, fClonedAnomaly4.getAnomaly().getDueDate());
-		Assert.assertEquals(0, fClonedAnomaly4.getAnomaly().getAssignedTo().size());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(fAnomaly1.getAnomaly().getRank(), fClonedAnomaly4.getAnomaly().getRank());
+		r4eAssert.assertEquals(null, fClonedAnomaly4.getAnomaly().getDueDate());
+		r4eAssert.assertEquals(0, fClonedAnomaly4.getAnomaly().getAssignedTo().size());
+		r4eAssert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getStartPosition(),
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
+		r4eAssert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocations().get(0)).getLocation()).getLength());
-		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly4, true,
+		r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly4, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Clone Comment DragDrop
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method cloneCommentsDragDrop
 	 */
 	private void cloneCommentsDragDrop() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneCommentsDragDrop");
+
+		r4eAssert.setTest("Drag and Drop");
 		/* TODO drag & drop does not work
 		List<IR4EUIModelElement> elementsCopied = new ArrayList<IR4EUIModelElement>();
 		elementsCopied.add(fAnomaly1Comment1);
@@ -643,31 +734,42 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		List<IR4EUIModelElement> elementsDropped = fProxy.getCommandProxy().dragDropElements(elementsCopied,
 				fClonedAnomaly1);
 		//NOTE:  For some reason, only the second comment is selected after the paste, so we use another way of verifying the results
-		Assert.assertNotNull(fClonedAnomaly1.getChildren()[0]);
-		Assert.assertEquals(fAnomaly1Comment1.getComment().getDescription(),
+		r4eAssert.assertNotNull(fClonedAnomaly1.getChildren()[0]);
+		r4eAssert.assertEquals(fAnomaly1Comment1.getComment().getDescription(),
 				((R4EUIComment) fClonedAnomaly1.getChildren()[0]).getComment().getDescription());
-		Assert.assertNotNull(fClonedAnomaly1.getChildren()[1]);
-		Assert.assertEquals(fAnomaly1Comment2.getComment().getDescription(),
+		r4eAssert.assertNotNull(fClonedAnomaly1.getChildren()[1]);
+		r4eAssert.assertEquals(fAnomaly1Comment2.getComment().getDescription(),
 				((R4EUIComment) fClonedAnomaly1.getChildren()[1]).getComment().getDescription());
 				*/
 	}
+
+	// ------------------------------------------------------------------------
+	// Clone Comment CopyPaste
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method cloneCommentsCopyPaste
 	 */
 	private void cloneCommentsCopyPaste() {
+
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("cloneCommentsCopyPaste");
+
+		r4eAssert.setTest("Copy Elements");
 		List<IR4EUIModelElement> elementsCopied = new ArrayList<IR4EUIModelElement>();
 		elementsCopied.add(fAnomaly2Comment1);
 		elementsCopied.add(fAnomaly2Comment2);
 		fProxy.getCommandProxy().copyElements(elementsCopied);
+
+		r4eAssert.setTest("Paste Elements");
 		@SuppressWarnings("unused")
 		List<IR4EUIModelElement> elementsPasted = fProxy.getCommandProxy().pasteElements(fClonedAnomaly1);
 		//NOTE:  For some reason, only the second comment is selected after the paste, so we use another way of verifying the results
-		Assert.assertNotNull(fClonedAnomaly1.getChildren()[0]);
-		Assert.assertEquals(fAnomaly2Comment1.getComment().getDescription(),
+		r4eAssert.assertNotNull(fClonedAnomaly1.getChildren()[0]);
+		r4eAssert.assertEquals(fAnomaly2Comment1.getComment().getDescription(),
 				((R4EUIComment) fClonedAnomaly1.getChildren()[0]).getComment().getDescription());
-		Assert.assertNotNull(fClonedAnomaly1.getChildren()[1]);
-		Assert.assertEquals(fAnomaly2Comment2.getComment().getDescription(),
+		r4eAssert.assertNotNull(fClonedAnomaly1.getChildren()[1]);
+		r4eAssert.assertEquals(fAnomaly2Comment2.getComment().getDescription(),
 				((R4EUIComment) fClonedAnomaly1.getChildren()[1]).getComment().getDescription());
 	}
 }

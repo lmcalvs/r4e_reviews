@@ -41,6 +41,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.Job;
@@ -69,7 +70,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class TestUtils {
 
 	// ------------------------------------------------------------------------
@@ -237,15 +238,32 @@ public class TestUtils {
 	public static ReviewNavigatorView FTestNavigatorView;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Test environment setup
 	// ------------------------------------------------------------------------
+
 	public static void setupTestEnvironment() throws CoreException, IOException, URISyntaxException {
 		FExtProject = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUITestPlugin.PLUGIN_ID);
+
 		setupJavaProject();
 		setupCProject();
 		setupTextProject();
 		setupSharedFolder();
 	}
+
+	// ------------------------------------------------------------------------
+	// project cleanup
+	// ------------------------------------------------------------------------
+
+	public static void cleanupTestEnvironment() throws CoreException, IOException {
+		cleanupSharedFolder(FSharedFolder);
+		cleanupProject(FTextIProject, FTextRepository);
+		cleanupProject(FCIProject, FCRepository);
+		cleanupProject(FJavaIProject, FJavaRepository);
+	}
+
+	// ------------------------------------------------------------------------
+	// Projects
+	// ------------------------------------------------------------------------
 
 	private static void setupJavaProject() throws CoreException, IOException, URISyntaxException {
 
@@ -380,48 +398,44 @@ public class TestUtils {
 		FTextFile5 = addFileToProject(FTextIProject, TEXT_FILE5_PROJ_NAME, TEXT_FILE5_EXT_PATH);
 	}
 
+	private static void cleanupProject(IProject aProject, Repository aRepository) throws CoreException, IOException {
+		//Disconnect project from repository
+		disconnectProject(aProject);
+
+		//Delete Repository
+		deleteRepository(aRepository);
+
+		//Delete project
+		deleteProject(aProject);
+	}
+
+	// ------------------------------------------------------------------------
+	// Project helper functions
+	// ------------------------------------------------------------------------
+
 	private static IProject createProject(String aProjectName) throws CoreException, IOException {
 		TestUtils.waitForJobs();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject project = root.getProject(aProjectName);
+		if (project.exists()) {
+			project.delete(true, new NullProgressMonitor());
+		}
 		project.create(null);
 		project.open(null);
 		return project;
 	}
 
-	private static Repository createRepository(IProject aProject) throws CoreException, IOException {
-		TestUtils.waitForJobs();
-		File gitDir = new File(aProject.getLocation().toOSString(), Constants.DOT_GIT);
-		Repository repository = new FileRepository(gitDir);
-		try {
-			repository.create();
-			Config storedConfig = repository.getConfig();
-			storedConfig.setEnum("core", null, "autocrlf", AutoCRLF.FALSE);
-
-		} catch (IllegalStateException e) {
-			//Jusy go on
+	private static void deleteProject(IProject aProject) throws CoreException, IOException {
+		if (aProject.exists()) {
+			aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
+			aProject.close(null);
+			aProject.delete(true, true, null);
+		} else {
+			File f = new File(aProject.getLocation().toOSString());
+			if (f.exists()) {
+				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
+			}
 		}
-		return repository;
-	}
-
-	private static String getWorkDir(Repository aRepository) throws CoreException, IOException {
-		String workDir;
-		try {
-			workDir = aRepository.getWorkTree().getCanonicalPath();
-		} catch (IOException err) {
-			workDir = aRepository.getWorkTree().getAbsolutePath();
-		}
-		workDir = workDir.replace('\\', '/');
-		if (!workDir.endsWith("/")) {
-			workDir += "/"; //$NON-NLS-1$
-		}
-		return workDir;
-	}
-
-	private static void connectProjectWithRepo(IProject aProject, Repository aRepository) throws CoreException,
-			IOException {
-		ConnectProviderOperation op = new ConnectProviderOperation(aProject, aRepository.getDirectory());
-		op.execute(null);
 	}
 
 	private static IJavaProject setProjectAsJava(IProject aProject) throws CoreException, IOException {
@@ -480,6 +494,65 @@ public class TestUtils {
 		return file;
 	}
 
+	// ------------------------------------------------------------------------
+	// Repository helper functions
+	// ------------------------------------------------------------------------
+
+	private static Repository createRepository(IProject aProject) throws CoreException, IOException {
+		TestUtils.waitForJobs();
+		File gitDir = new File(aProject.getLocation().toOSString(), Constants.DOT_GIT);
+		Repository repository = new FileRepository(gitDir);
+		try {
+			repository.create();
+			Config storedConfig = repository.getConfig();
+			storedConfig.setEnum("core", null, "autocrlf", AutoCRLF.FALSE);
+
+		} catch (IllegalStateException e) {
+			//Just go on
+		}
+		return repository;
+	}
+
+	private static void deleteRepository(Repository aRepository) throws CoreException, IOException {
+		Repository repository = aRepository;
+		repository.close();
+		repository = null;
+	}
+
+	private static void connectProjectWithRepo(IProject aProject, Repository aRepository) throws CoreException,
+			IOException {
+		ConnectProviderOperation op = new ConnectProviderOperation(aProject, aRepository.getDirectory());
+		op.execute(null);
+	}
+
+	private static void disconnectProject(IProject aProject) throws CoreException, IOException {
+		Collection<IProject> projects = Collections.singleton(aProject.getProject());
+		DisconnectProviderOperation disconnect = new DisconnectProviderOperation(projects);
+		disconnect.execute(null);
+	}
+
+	public static void addFilesToRepository(List<IResource> aResources) throws CoreException {
+		new AddToIndexOperation(aResources).execute(null);
+	}
+
+	// ------------------------------------------------------------------------
+	// Workspace helper functions
+	// ------------------------------------------------------------------------
+
+	private static String getWorkDir(Repository aRepository) throws CoreException, IOException {
+		String workDir;
+		try {
+			workDir = aRepository.getWorkTree().getCanonicalPath();
+		} catch (IOException err) {
+			workDir = aRepository.getWorkTree().getAbsolutePath();
+		}
+		workDir = workDir.replace('\\', '/');
+		if (!workDir.endsWith("/")) {
+			workDir += "/"; //$NON-NLS-1$
+		}
+		return workDir;
+	}
+
 	public static IFile changeContentOfFile(IFile file, String aNewContentsFilePath) throws CoreException, IOException,
 			URISyntaxException {
 		URL location = FileLocator.find(Platform.getBundle(R4EUITestPlugin.PLUGIN_ID), new Path(aNewContentsFilePath),
@@ -489,10 +562,6 @@ public class TestUtils {
 		file.setContents(newContent, 0, null);
 		newContent.close();
 		return file;
-	}
-
-	public static void addFilesToRepository(List<IResource> aResources) throws CoreException {
-		new AddToIndexOperation(aResources).execute(null);
 	}
 
 	public static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg) throws CoreException {
@@ -514,6 +583,10 @@ public class TestUtils {
 		aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
 	}
 
+	// ------------------------------------------------------------------------
+	// Shared folder
+	// ------------------------------------------------------------------------
+
 	private static void setupSharedFolder() {
 		String dir = System.getProperty("java.io.tmpdir");
 		if (!dir.endsWith(File.separator)) {
@@ -522,6 +595,19 @@ public class TestUtils {
 		dir = dir + "R4ETest";
 		FSharedFolder = dir;
 	}
+
+	private static void cleanupSharedFolder(String aFolder) throws IOException {
+		if (null != aFolder) {
+			File f = new File(aFolder);
+			if (f.exists()) {
+				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------------
+	// Review Navigator
+	// ------------------------------------------------------------------------
 
 	public static void startNavigatorView() {
 		waitForJobs();
@@ -548,13 +634,6 @@ public class TestUtils {
 		});
 	}
 
-	public static void cleanupTestEnvironment() throws CoreException, IOException {
-		cleanupSharedFolder(FSharedFolder + File.separator);
-		cleanupProject(FTextIProject, FTextRepository);
-		cleanupProject(FCIProject, FCRepository);
-		cleanupProject(FJavaIProject, FJavaRepository);
-	}
-
 	public static void stopNavigatorView() {
 		waitForJobs();
 		Display.getDefault().syncExec(new Runnable() {
@@ -564,56 +643,15 @@ public class TestUtils {
 		});
 	}
 
-	private static void cleanupProject(IProject aProject, Repository aRepository) throws CoreException, IOException {
-		//Disconnect project from repository
-		disconnectProject(aProject);
-
-		//Delete Repository
-		deleteRepository(aRepository);
-
-		//Delete project
-		deleteProject(aProject);
-	}
-
-	private static void disconnectProject(IProject aProject) throws CoreException, IOException {
-		Collection<IProject> projects = Collections.singleton(aProject.getProject());
-		DisconnectProviderOperation disconnect = new DisconnectProviderOperation(projects);
-		disconnect.execute(null);
-	}
-
-	private static void deleteRepository(Repository aRepository) throws CoreException, IOException {
-		Repository repository = aRepository;
-		repository.close();
-		repository = null;
-	}
-
-	private static void deleteProject(IProject aProject) throws CoreException, IOException {
-		if (aProject.exists()) {
-			aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
-			aProject.close(null);
-			aProject.delete(true, true, null);
-		} else {
-			File f = new File(aProject.getLocation().toOSString());
-			if (f.exists()) {
-				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
-			}
-		}
-	}
-
-	private static void cleanupSharedFolder(String aFolder) throws IOException {
-		if (null != aFolder) {
-			File f = new File(aFolder);
-			if (f.exists()) {
-				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
-			}
-		}
-	}
+	// ------------------------------------------------------------------------
+	// Misc utils
+	// ------------------------------------------------------------------------
 
 	public static void waitForJobs() {
-		//NOTE: In order to the above to work, no backgroup jobs (such as Usage Data Collector) should be running.
+		//NOTE: In order to the above to work, no background jobs (such as Usage Data Collector) should be running.
 		//otherwise we will be blocked forever here.  An alternative solution is to join our thread to the 
 		//executing job family, but that might make the tests unreliable because we cannot control
-		//scheduling of the jos which might cause livelocks
+		//scheduling of the job which might cause livelocks
 		while (!Job.getJobManager().isIdle()) {
 			delay(1000);
 		}
@@ -635,8 +673,12 @@ public class TestUtils {
 		if (null != display) {
 			long endTimeMillis = System.currentTimeMillis() + aWaitTimeMillis;
 			while (System.currentTimeMillis() < endTimeMillis) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
+				try {
+					if (!display.isDisposed() && !display.readAndDispatch()) {
+						display.sleep();
+					}
+				} catch (Exception e) {
+					// Ignore
 				}
 			}
 			display.update();
@@ -648,6 +690,10 @@ public class TestUtils {
 				//ignore
 			}
 		}
+	}
+
+	public static R4EUIRootElement getRootElement() {
+		return FRootElement;
 	}
 
 	/**
@@ -662,10 +708,6 @@ public class TestUtils {
 		return rootTreeNode;
 	}
 
-	public static R4EUIRootElement getRootElement() {
-		return FRootElement;
-	}
-
 	/**
 	 * Method setDefaultUser
 	 */
@@ -677,4 +719,5 @@ public class TestUtils {
 				.getPreferencesProxy()
 				.getEmail());
 	}
+
 }

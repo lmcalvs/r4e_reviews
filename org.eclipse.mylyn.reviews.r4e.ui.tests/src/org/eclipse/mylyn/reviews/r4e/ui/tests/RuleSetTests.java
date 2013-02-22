@@ -11,12 +11,12 @@
  */
 package org.eclipse.mylyn.reviews.r4e.ui.tests;
 
-import junit.framework.Assert;
+import java.util.concurrent.ExecutionException;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
@@ -26,6 +26,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.sanity.SanitySetupTests;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +34,7 @@ import org.junit.Before;
 /**
  * @author Sebastien Dubois
  */
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "nls" })
 public class RuleSetTests extends TestCase {
 
 	// ------------------------------------------------------------------------
@@ -66,8 +67,8 @@ public class RuleSetTests extends TestCase {
 	/**
 	 * Sets up the fixture, for example, open a network connection. This method is called before a test is executed.
 	 */
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		TestUtils.startNavigatorView();
 	}
@@ -75,8 +76,8 @@ public class RuleSetTests extends TestCase {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@Override
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		fRuleSet = null;
 		TestUtils.stopNavigatorView();
@@ -95,17 +96,22 @@ public class RuleSetTests extends TestCase {
 	public void testNewRuleSet() throws ResourceHandlingException, OutOfSyncException, ExecutionException,
 			NotDefinedException, NotEnabledException, NotHandledException {
 
+		// Assert object
+		R4EAssert r4eAssert = new R4EAssert("testNewRuleSet");
+
 		//Create a Rule Set
+		r4eAssert.setTest("Create a Rule Set");
 		R4EUITestMain proxy = R4EUITestMain.getInstance();
 
 		fRuleSet = proxy.getRuleSetProxy().createRuleSet(TestUtils.FSharedFolder, RULE_SET_TEST_NAME,
 				RULE_SET_TEST_VERSION);
 
-		Assert.assertNotNull(fRuleSet);
-		Assert.assertEquals(RULE_SET_TEST_VERSION, fRuleSet.getRuleSet().getVersion());
-		Assert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString(), fRuleSet.getRuleSet().getFolder());
-		Assert.assertEquals(RULE_SET_TEST_NAME, fRuleSet.getRuleSet().getName());
+		r4eAssert.assertNotNull(fRuleSet);
+		r4eAssert.assertEquals(RULE_SET_TEST_VERSION, fRuleSet.getRuleSet().getVersion());
+		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString(), fRuleSet.getRuleSet().getFolder());
+		r4eAssert.assertEquals(RULE_SET_TEST_NAME, fRuleSet.getRuleSet().getName());
 	}
+
 	/**
 	 * Open Rule Set
 	 * 

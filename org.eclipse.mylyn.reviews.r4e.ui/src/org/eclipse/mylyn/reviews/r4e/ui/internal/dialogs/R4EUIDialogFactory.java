@@ -306,9 +306,10 @@ public class R4EUIDialogFactory {
 	public void setChangeStateDialog(IChangeStateDialog aChangeStateDialog, Class<?> aTargetClass) {
 		if (aTargetClass.equals(R4EUIReviewBasic.class)) {
 			fChangeReviewStateDialog = aChangeStateDialog;
+		} else {
+			//Assume AnomalyChangeStateDialog
+			fChangeAnomalyStateDialog = aChangeStateDialog;
 		}
-		//Assume AnomalyChangeStateDialog
-		fChangeAnomalyStateDialog = aChangeStateDialog;
 	}
 
 	/**
@@ -509,7 +510,6 @@ public class R4EUIDialogFactory {
 	 * @return IRuleInputDialog
 	 */
 	public IRuleInputDialog getRuleInputDialog(R4EDesignRuleViolation aViolation) {
-
 		if (null == fRuleInputDialog) {
 			fRuleInputDialog = new RuleInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
