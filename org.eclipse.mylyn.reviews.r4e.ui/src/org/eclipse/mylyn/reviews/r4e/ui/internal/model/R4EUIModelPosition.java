@@ -19,9 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import org.eclipse.compare.structuremergeviewer.DiffElement;
-import org.eclipse.emf.compare.match.eobject.EObjectIndex.Side;
-import org.eclipse.emf.compare.utils.DiffUtil;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
@@ -38,9 +35,9 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 	// ------------------------------------------------------------------------
 	private R4EModelPosition fPosition;
 
-	private final String fObjectID;
+	private String fObjectID = "";
 
-	private final String fDescription;
+	private String fDescription = "";
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -52,9 +49,14 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 	}
 
 	public R4EUIModelPosition(DiffElement aDiff) {
-		EObject obj = DiffUtil.getElement(aDiff, Side.LEFT, EObject.class);
-		fObjectID = obj.eResource().getURIFragment(obj);
-		fDescription = AdapterUtils.getItemProviderText(aDiff);
+//		EObject obj = DiffUtil.getElement(aDiff, Side.LEFT, EObject.class);
+//		fObjectID = obj.eResource().getURIFragment(obj);
+//	    fDescription = AdapterUtils.getItemProviderText(aDiff);
+	}
+
+	public R4EUIModelPosition(String aObjectId, String aDescription) {
+		fObjectID = aObjectId;
+		fDescription = aDescription;
 	}
 
 	// ------------------------------------------------------------------------

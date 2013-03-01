@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="r4e-emf-compare_2.1_eclipse3.8" sequenceNumber="19">
+<?pde version="3.8"?><target name="r4e-emf-compare_2.1_eclipse3.8_mylyn3.9" sequenceNumber="27">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.reviews.feature.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.test_feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.tigris.subversion.subclipse.feature.group" version="0.0.0"/>
 <unit id="org.tigris.subversion.subclipse.mylyn.feature.group" version="0.0.0"/>
@@ -18,25 +9,8 @@
 <repository location="http://subclipse.tigris.org/update_1.8.x"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.cdt.platform.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.birt.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.ecf.core.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.papyrus.sdk.feature.feature.group" version="0.9.0.v201206131215"/>
-<unit id="org.eclipse.uml2.sdk.feature.group" version="4.0.0.v20120604-0919"/>
-<repository location="http://download.eclipse.org/releases/juno"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.sdk.ide" version="3.8.0.I20120608-1200"/>
 <repository location="http://download.eclipse.org/eclipse/updates/3.8"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.egit.feature.group" version="1.3.0.201202151440-r"/>
-<unit id="org.eclipse.jgit.feature.group" version="1.3.0.201202151440-r"/>
-<unit id="org.eclipse.jgit.source.feature.group" version="1.3.0.201202151440-r"/>
-<unit id="org.eclipse.egit.source.feature.group" version="1.3.0.201202151440-r"/>
-<unit id="org.eclipse.egit.mylyn.feature.group" version="1.3.0.201202151440-r"/>
-<repository location="http://download.eclipse.org/egit/updates-1.3"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="javax.activation" version="1.1.0.v201108011116"/>
@@ -52,16 +26,40 @@
 <unit id="org.objenesis" version="1.0.0.v201105211943"/>
 <unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
 <unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="com.google.guava" version="10.0.1.v201203051515"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.compare.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.rcp.ui.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.diagram.ecoretools.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.diagram.gmf.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.uml2.feature.group" version="2.1.0.201212180932"/>
-<repository location="http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1"/>
+<unit id="org.eclipse.cdt.mylyn.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.reviews.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.test_feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/mylyn/snapshots/weekly"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.birt.feature.group" version="4.2.1.v20120820-ChBG8UGYgRQlJ7y9Lz-wS7nDcRL4"/>
+<unit id="org.eclipse.ecf.core.feature.group" version="3.5.6.v20120610-1946"/>
+<unit id="org.eclipse.egit.feature.group" version="2.1.0.201209190230-r"/>
+<unit id="org.eclipse.mylyn.github.feature.feature.group" version="2.1.0.201209190230-r"/>
+<unit id="org.eclipse.jgit.feature.group" version="2.1.0.201209190230-r"/>
+<unit id="org.eclipse.jgit.pgm.feature.group" version="2.1.0.201209190230-r"/>
+<repository location="http://download.eclipse.org/releases/juno"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.compare.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.rcp.ui.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.ide.ui.source.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.rcp.ui.source.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.source.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.diagram.ecoretools.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.diagram.gmf.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.diagram.papyrus.feature.group" version="2.1.0.201302050831"/>
+<unit id="org.eclipse.emf.compare.uml2.feature.group" version="2.1.0.201302050831"/>
+<repository location="http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1/S201302050831/"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>

@@ -20,6 +20,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
@@ -29,6 +31,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
@@ -40,7 +44,8 @@ import org.eclipse.ui.IEditorInput;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4EFileTypedElement extends LocalResourceTypedElement implements IAdaptable {
+//public class R4EFileTypedElement extends LocalResourceTypedElement implements IAdaptable, URIHandler {
+public class R4EFileTypedElement extends LocalResourceTypedElement implements IAdaptable, URIHandler {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -431,5 +436,57 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	public void setSharedDocumentListener(
 			EditableSharedDocumentAdapter.ISharedDocumentAdapterListener sharedDocumentListener) {
 		this.sharedDocumentListener = sharedDocumentListener;
+	}
+
+	//
+	//
+	//	Method to handle the URIHandlers
+	//
+	//
+	public boolean canHandle(URI uri) {
+		// ignore
+		return false;
+	}
+
+	public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException {
+		// ignore
+		try {
+			return createStream();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
+		// ignore
+		return null;
+	}
+
+	public void delete(URI uri, Map<?, ?> options) throws IOException {
+		// ignore
+
+	}
+
+	public Map<String, ?> contentDescription(URI uri, Map<?, ?> options) throws IOException {
+		// ignore
+
+		return null;
+	}
+
+	public boolean exists(URI uri, Map<?, ?> options) {
+		// ignore
+		return false;
+	}
+
+	public Map<String, ?> getAttributes(URI uri, Map<?, ?> options) {
+		// ignore
+		return null;
+	}
+
+	public void setAttributes(URI uri, Map<String, ?> attributes, Map<?, ?> options) throws IOException {
+		// ignore
+
 	}
 }

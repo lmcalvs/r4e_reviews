@@ -18,7 +18,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -26,6 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -283,6 +287,38 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				public String getName() {
 					return path.lastSegment();
 				}
+
+				@Override
+				public URI getURI() {
+					//URI uriRessource = fileVersion.getResource().getLocationURI(); //return the path from  the git repo
+
+					URI uriRessource = null;
+					try {
+						String platformStr = fileVersion.getPlatformURI();
+						if (platformStr != null) {
+							uriRessource = URIUtil.fromString(fileVersion.getPlatformURI());//Need later to define the IProject							
+						} else {
+							Activator.fTracer.traceWarning("URI NULL for ressource repository path: "
+									+ fileVersion.getRepositoryPath());
+						}
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+
+					Activator.fTracer.traceWarning("for ressource URI: " + uriRessource);
+					return uriRessource;
+				}
+
+				@Override
+				public String getContentIdentifier() {
+					//Test to see and if nothing, do the same on the git repo file 
+					//a String that identifies the version of the subscriber resource
+					IResource res = fileVersion.getResource();
+					String identifier = fileVersion.getVersionID();
+					Activator.fTracer.traceWarning("getContentIdentifier(): "
+							+ (res != null ? res.getLocationURI() : null) + "\n\t version ID: " + identifier);
+					return identifier;
+				}
 			};
 
 		} catch (Exception e) {
@@ -330,8 +366,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				IPath repoPath = new Path(fRepositoryUtil.getRepositoryName(fRepository));
 				String pathString = path.toPortableString();
 				return repoPath.append(Path.fromPortableString(pathString + " " + localId)); // Append localId to
-																								// differentiate
-																								// versions in Repo
+																								// differentiate versions in Repo
 			}
 
 			public InputStream getContents() throws CoreException {

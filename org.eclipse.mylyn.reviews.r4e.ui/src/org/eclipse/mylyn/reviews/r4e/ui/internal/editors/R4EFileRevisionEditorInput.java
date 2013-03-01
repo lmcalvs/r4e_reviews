@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -164,6 +165,10 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			}
+			//Lets test the getRevision from R4EFileRevisionTypedElement
+		} else if (IFileRevision.class.equals(aAdapter)) {
+			R4EUIPlugin.Ftracer.traceInfo(" for IFileRevision: " + fFileVersion.getFileRevision().toString());
+			return fFileVersion.getFileRevision();
 		}
 		return super.getAdapter(aAdapter);
 	}

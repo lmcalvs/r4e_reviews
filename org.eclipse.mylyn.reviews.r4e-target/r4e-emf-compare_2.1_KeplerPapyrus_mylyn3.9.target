@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="r4e-emf-compare_2.1_KeplerPapyrus_mylyn3.9" sequenceNumber="20">
+<?pde version="3.8"?><target name="r4e-emf-compare_2.1_KeplerPapyrus_mylyn3.9" sequenceNumber="22">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
@@ -19,9 +19,6 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.cdt.platform.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/cdt/builds/kepler/nightly"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.birt.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.ecf.core.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
@@ -50,22 +47,23 @@
 <unit id="org.objenesis" version="1.0.0.v201105211943"/>
 <unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
 <unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="com.google.guava" version="10.0.1.v201203051515"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.compare.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.rcp.ui.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.diagram.ecoretools.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.diagram.gmf.feature.group" version="2.1.0.201212180932"/>
-<unit id="org.eclipse.emf.compare.uml2.feature.group" version="2.1.0.201212180932"/>
-<repository location="http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1"/>
+<unit id="org.eclipse.emf.compare.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.compare.rcp.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.compare.diagram.ecoretools.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.compare.diagram.gmf.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.compare.uml2.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1/S201302050831/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.papyrus.extra.sources.feature.feature.group" version="0.10.0.v201301240608"/>
-<unit id="org.eclipse.papyrus.extra.feature.feature.group" version="0.10.0.v201301240608"/>
-<unit id="org.eclipse.papyrus.sdk.sources.feature.feature.group" version="0.10.0.v201301240553"/>
-<unit id="org.eclipse.papyrus.sdk.feature.feature.group" version="0.10.0.v201301240553"/>
+<unit id="org.eclipse.papyrus.extra.sources.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.papyrus.extra.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.papyrus.sdk.sources.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.papyrus.sdk.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/modeling/mdt/papyrus/updates/nightly/kepler/"/>
 </location>
 </locations>

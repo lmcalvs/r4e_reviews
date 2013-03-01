@@ -711,7 +711,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 		//Find all differences between Base and Target files
 		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
-		input.prepareCompareInputNoEditor();
+//		input.prepareCompareInputNoEditor();
 
 		if (UIUtils.isEMFCompareActive() && isModelResource(input)) {
 			//Create model deltas
