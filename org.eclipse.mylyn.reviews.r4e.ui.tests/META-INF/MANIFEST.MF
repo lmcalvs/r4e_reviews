@@ -31,7 +31,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.ldap;bundle-version="0.10.0",
  org.eclipse.mylyn.reviews.r4e.ui,
  org.eclipse.mylyn.reviews.r4e.core,
- org.eclipse.mylyn.reviews.core;bundle-version="1.1.0",
+ org.eclipse.mylyn.reviews.core;bundle-version="2.0.0",
  org.eclipse.mylyn.reviews.r4e.upgrade
 Import-Package: org.apache.commons.io;version="2.0.1",
  org.eclipse.jface.text,
