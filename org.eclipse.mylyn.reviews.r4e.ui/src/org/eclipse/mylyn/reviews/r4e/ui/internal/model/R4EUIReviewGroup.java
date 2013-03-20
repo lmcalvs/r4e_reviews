@@ -887,4 +887,16 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public boolean isShowPropertiesCmd() {
 		return fResolved;
 	}
+
+	/**
+	 * Method isListReviewsCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isListReviewsCmd()
+	 */
+	@Override
+	public boolean isListReviewsCmd() {
+		return isOpen();
+	}
+
 }

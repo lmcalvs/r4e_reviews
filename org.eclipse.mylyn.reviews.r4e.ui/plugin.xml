@@ -971,6 +971,35 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation"
             name="Previous Anomaly">
       </command>
+      <category
+            description="R4E Gerrit Commands"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.gerritCategory"
+            name="R4E Gerrit Commands">
+      </category>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerritCategory"
+            description="List the R4E reviews available on the Gerrit server"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.listReviews"
+            name="List Reviews">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerritCategory"
+            description="Push an R4E review to the Gerrit server"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.pushReview"
+            name="Push Review">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerritCategory"
+            description="Fetch an R4E review from the Gerrit server"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.fetchReview"
+            name="Fetch Review">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerritCategory"
+            description="Delete an R4E review from the Gerrit server"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.deleteReview"
+            name="Delete Review">
+      </command>
 
    </extension>
    <extension
@@ -1490,6 +1519,22 @@
        <handler
              class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.PreviousOpenAnomalyAnnotationHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation">
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.repository.commands.handlers.ListReviewsHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.listReviews">
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.repository.commands.handlers.PushReviewHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.pushReview">
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.repository.commands.handlers.FetchReviewHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.fetchReview">
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.repository.commands.handlers.DeleteReviewHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.deleteReview">
        </handler>
    </extension>
    <extension

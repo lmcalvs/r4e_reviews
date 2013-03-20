@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -62,6 +63,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.repository.R4ELocalRepository;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
@@ -178,9 +180,12 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		File groupFolder = new File(URI.decode(folder.devicePath()));
 		try {
 			checkOrCreateRepo(groupFolder);
+			R4ELocalRepository.getInstance().open(groupFolder);
 		} catch (ReviewsFileStorageException e) {
 			// Attempt to close the group
 			closeR4EReviewGroup(group);
+			throw new ResourceHandlingException(e);
+		} catch (GitAPIException e) {
 			throw new ResourceHandlingException(e);
 		}
 

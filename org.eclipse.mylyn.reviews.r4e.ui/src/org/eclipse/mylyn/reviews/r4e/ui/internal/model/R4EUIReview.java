@@ -221,4 +221,27 @@ public class R4EUIReview extends R4EUIModelElement {
 	public boolean isShowPropertiesCmd() {
 		return false;
 	}
+
+	/**
+	 * Method isPushReviewCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPushReviewCmd()
+	 */
+	@Override
+	public boolean isPushReviewCmd() {
+		return isOpen();
+	}
+
+	/**
+	 * Method isFetchReviewCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isFetchReviewCmd()
+	 */
+	@Override
+	public boolean isFetchReviewCmd() {
+		return isOpen();
+	}
+
 }

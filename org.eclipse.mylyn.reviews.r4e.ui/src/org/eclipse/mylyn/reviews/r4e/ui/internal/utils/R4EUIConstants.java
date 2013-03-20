@@ -2539,4 +2539,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 
 	public static final String COMMENT_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.commentDisabled.Annotation";
 
+	// Gerrit commands
+
+	public static final String GERRIT_LIST_REVIEWS_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.listReviews";
+
+	public static final String GERRIT_LIST_REVIEWS_COMMAND_NAME = "List Reviews...";
+
+	public static final String GERRIT_PUSH_REVIEW_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.pushReview";
+
+	public static final String GERRIT_PUSH_REVIEW_COMMAND_NAME = "Push Review...";
+
+	public static final String GERRIT_FETCH_REVIEW_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.fetchReview";
+
+	public static final String GERRIT_FETCH_REVIEW_COMMAND_NAME = "Fetch Review...";
+
+	public static final String GERRIT_DELETE_REVIEW_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.gerrit.deleteReview";
+
+	public static final String GERRIT_DELETE_REVIEW_COMMAND_NAME = "Delete Review...";
 }

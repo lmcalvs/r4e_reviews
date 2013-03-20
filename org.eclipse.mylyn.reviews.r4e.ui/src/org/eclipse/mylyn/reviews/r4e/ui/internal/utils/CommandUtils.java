@@ -472,7 +472,8 @@ public class CommandUtils {
 				updateFileVersion(tmpFileVersion, aFile);
 
 				// Push a local copy to local review repository, and obtain the local id
-				tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
+				tmpFileVersion.setLocalVersionID(aLocalRepository.addReviewItem(aFile));
+//				tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
 				tmpFileVersion.setVersionID(NO_SOURCE_CONTROL_ID_TEXT);
 			}
 		}

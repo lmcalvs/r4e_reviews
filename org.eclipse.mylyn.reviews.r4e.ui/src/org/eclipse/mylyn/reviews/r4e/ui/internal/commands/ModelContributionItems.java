@@ -90,7 +90,6 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 		if (null != aElement) {
 			if (aElement.isOpenElementCmd()) {
-
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_ELEMENT_COMMAND, R4EUIConstants.OPEN_ELEMENT_COMMAND, null,
 						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
@@ -203,6 +202,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 						R4EUIConstants.NEW_LINKED_ANOMALY_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
+
 			if (aElement.isOpenEditorCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_EDITOR_COMMAND, R4EUIConstants.OPEN_EDITOR_COMMAND, null,
@@ -305,6 +305,51 @@ public class ModelContributionItems extends CompoundContributionItem {
 						R4EUIConstants.SHOW_PROPERTIES_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
+
+			if (aElement.isListReviewsCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.GERRIT_LIST_REVIEWS_COMMAND, R4EUIConstants.GERRIT_LIST_REVIEWS_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.GERRIT_LIST_REVIEWS_COMMAND_NAME, " ",
+						R4EUIConstants.GERRIT_LIST_REVIEWS_COMMAND, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (aElement.isPushReviewCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.GERRIT_PUSH_REVIEW_COMMAND, R4EUIConstants.GERRIT_PUSH_REVIEW_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.GERRIT_PUSH_REVIEW_COMMAND_NAME, " ", R4EUIConstants.GERRIT_PUSH_REVIEW_COMMAND,
+						CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (aElement.isFetchReviewCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.GERRIT_FETCH_REVIEW_COMMAND, R4EUIConstants.GERRIT_FETCH_REVIEW_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.GERRIT_FETCH_REVIEW_COMMAND_NAME, " ",
+						R4EUIConstants.GERRIT_FETCH_REVIEW_COMMAND, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (aElement.isDeleteReviewCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.GERRIT_DELETE_REVIEW_COMMAND, R4EUIConstants.GERRIT_DELETE_REVIEW_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.GERRIT_DELETE_REVIEW_COMMAND_NAME, " ",
+						R4EUIConstants.GERRIT_DELETE_REVIEW_COMMAND, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
 		} else {
 			//When no element is selected, contribute add review group command
 			if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {

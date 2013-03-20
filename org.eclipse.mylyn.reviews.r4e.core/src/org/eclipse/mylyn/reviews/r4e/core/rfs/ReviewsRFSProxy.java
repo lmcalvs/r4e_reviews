@@ -10,6 +10,7 @@
  * 
  * Contributors:
  *   Alvaro Sanchez-Leon - Initial API
+ *   Francois Chouinard - Adapted for a standard git back-end
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
@@ -19,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -31,11 +33,9 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.storage.file.FileRepository;
-import org.eclipse.jgit.util.FS;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.repository.R4ELocalRepository;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.IOUtils;
@@ -51,8 +51,6 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	private static final String DEFAULT_REPO_NAME = "ReviewsRepo.git";
-
 	private ObjectInserter fInserter = null;
 
 	protected Repository fRepository = null;
@@ -66,20 +64,19 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * @param aParentDir
 	 * @throws IOException
 	 */
-	public ReviewsRFSProxy(File aReviewGroupDir, boolean create) throws ReviewsFileStorageException {
-		File repoLoc = new File(aReviewGroupDir, DEFAULT_REPO_NAME);
+	public ReviewsRFSProxy(File repoFolder, boolean create) throws ReviewsFileStorageException {
 		if (create) {
-			fRepository = initializeRepo(repoLoc);
+			fRepository = initializeRepo(repoFolder);
 			// Set writing permissions to the shared location
 			try {
-				FileSupportCommandFactory.getInstance().grantWritePermission(aReviewGroupDir.getAbsolutePath());
+				FileSupportCommandFactory.getInstance().grantWritePermission(repoFolder.getAbsolutePath());
 			} catch (IOException e) {
 				throw new ReviewsFileStorageException(e);
 			}
 		} else {
-			// permissions must have been already set
-			fRepository = openRepository(repoLoc);
+			fRepository = openRepository(repoFolder);
 		}
+
 		fInserter = fRepository.newObjectInserter();
 		fRepositoryUtil = org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil();
 	}
@@ -95,40 +92,108 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * @return
 	 */
 	public static boolean isValidRepo(File dir) {
-		File repoDir = new File(dir, DEFAULT_REPO_NAME);
-		return FileKey.isGitRepository(repoDir, FS.DETECTED);
+		return R4ELocalRepository.isValidRepository(dir);
 	}
 
 	/**
-	 * @param aReviewGroupDir
+	 * @param repoFolder
 	 * @return
 	 * @throws ReviewsFileStorageException
 	 */
-	private Repository initializeRepo(File aReviewGroupDir) throws ReviewsFileStorageException {
+	private Repository initializeRepo(File repoFolder) throws ReviewsFileStorageException {
 		try {
-			Repository newRepo = new FileRepository(aReviewGroupDir);
-			newRepo.create(true);
-			newRepo.getConfig().setString("core", null, "sharedrepository", "0666");
-			newRepo.getConfig().save();
-
-			return newRepo;
-		} catch (IOException e) {
+			return R4ELocalRepository.getInstance().create(repoFolder);
+		} catch (Exception e) {
 			throw new ReviewsFileStorageException(e);
 		}
 	}
 
 	/**
-	 * @param aReviewGroupDir
+	 * @param repoFolder
+	 * @return
 	 * @throws ReviewsFileStorageException
 	 */
-	private Repository openRepository(File aReviewGroupDir) throws ReviewsFileStorageException {
-		Repository r;
+	private Repository openRepository(File repoFolder) throws ReviewsFileStorageException {
 		try {
-			r = FileKey.exact(aReviewGroupDir, FS.DETECTED).open(true);
-		} catch (IOException e) {
+			return R4ELocalRepository.getInstance().open(repoFolder);
+		} catch (Exception e) {
 			throw new ReviewsFileStorageException(e);
 		}
-		return r;
+	}
+
+//	/**
+//	 * @param repoFolder
+//	 * @return
+//	 * @throws ReviewsFileStorageException
+//	 */
+//	private Repository initializeRepo(File repoFolder) throws ReviewsFileStorageException {
+//		try {
+//			fRepoFolderPath = repoFolder.getAbsolutePath();
+//			new File(fRepoFolderPath + File.separator + REVIEW_ITEMS_FOLDER).mkdir();
+//			Git git = Git.init().setDirectory(repoFolder).call();
+//			return git.getRepository();
+//		} catch (Exception e) {
+//			throw new ReviewsFileStorageException(e);
+//		}
+//	}
+
+//	/**
+//	 * @param repoFolder
+//	 * @throws ReviewsFileStorageException
+//	 */
+//	private Repository openRepository(File repoFolder) throws ReviewsFileStorageException {
+//		try {
+//			fRepoFolderPath = repoFolder.getAbsolutePath();
+//			File gitFolder = new File(fRepoFolderPath + GIT_REPO_NAME);
+//			Repository repo = FileKey.exact(gitFolder, FS.DETECTED).open(true);
+//			return repo;
+//		} catch (IOException e) {
+//			throw new ReviewsFileStorageException(e);
+//		}
+//	}
+
+//	/**
+//	 * @param aReviewGroupDir
+//	 * @return
+//	 * @throws ReviewsFileStorageException
+//	 */
+//	private Repository initializeRepo(File aReviewGroupDir) throws ReviewsFileStorageException {
+//		try {
+//			Repository newRepo = new FileRepository(aReviewGroupDir);
+//			newRepo.create(true);
+//			newRepo.getConfig().setString("core", null, "sharedrepository", "0666");
+//			newRepo.getConfig().save();
+//
+//			return newRepo;
+//		} catch (IOException e) {
+//			throw new ReviewsFileStorageException(e);
+//		}
+//	}
+
+//	/**
+//	 * @param aReviewGroupDir
+//	 * @throws ReviewsFileStorageException
+//	 */
+//	private Repository openRepository(File aReviewGroupDir) throws ReviewsFileStorageException {
+//		Repository r;
+//		try {
+//			r = FileKey.exact(aReviewGroupDir, FS.DETECTED).open(true);
+//		} catch (IOException e) {
+//			throw new ReviewsFileStorageException(e);
+//		}
+//		return r;
+//	}
+
+	/**
+	 *
+	 */
+	public String addReviewItem(IFile aFile) throws ReviewsFileStorageException {
+		try {
+			R4ELocalRepository.getInstance().addReviewItem(aFile);
+			return registerReviewBlob(aFile.getContents());
+		} catch (Exception e) {
+			throw new ReviewsFileStorageException(e);
+		}
 	}
 
 	/*
@@ -136,6 +201,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#registerReviewBlob(byte[])
 	 */
+	@SuppressWarnings("nls")
 	public String registerReviewBlob(final byte[] content) throws ReviewsFileStorageException {
 		String id = null;
 		ObjectId objid = null;
@@ -211,7 +277,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
+				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage()); //$NON-NLS-1$
 				Activator.fTracer.traceDebug(sb.toString());
 			}
 
@@ -329,7 +395,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				//bug349739:  Here we first need to prepend the repository name to the artifact path to get the full path to the artifact
 				IPath repoPath = new Path(fRepositoryUtil.getRepositoryName(fRepository));
 				String pathString = path.toPortableString();
-				return repoPath.append(Path.fromPortableString(pathString + " " + localId)); // Append localId to
+				return repoPath.append(Path.fromPortableString(pathString + " " + localId)); // Append localId to //$NON-NLS-1$
 																								// differentiate
 																								// versions in Repo
 			}
@@ -412,7 +478,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
+				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage()); //$NON-NLS-1$
 				Activator.fTracer.traceDebug(sb.toString());
 			}
 		}

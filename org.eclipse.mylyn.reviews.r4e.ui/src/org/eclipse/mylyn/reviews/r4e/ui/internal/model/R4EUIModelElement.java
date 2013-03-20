@@ -1066,4 +1066,45 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public boolean isShowPropertiesCmd() {
 		return true; //default implementation
 	}
+
+	/**
+	 * Method isListReviewsCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isListReviewsCmd()
+	 */
+	public boolean isListReviewsCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isPushReviewCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPushReviewCmd()
+	 */
+	public boolean isPushReviewCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isFetchReviewCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isFetchReviewCmd()
+	 */
+	public boolean isFetchReviewCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isDeleteReviewCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isDeleteReviewCmd()
+	 */
+	public boolean isDeleteReviewCmd() {
+		return false; //default implementation
+	}
+
 }

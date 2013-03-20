@@ -14,7 +14,9 @@ package org.eclipse.mylyn.reviews.r4e.core.rfs.spi;
 import java.io.File;
 import java.io.InputStream;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.core.history.IFileRevision;
@@ -100,5 +102,7 @@ public interface IRFSRegistry {
 	 * @throws ReviewsFileStorageException
 	 */
 	public abstract String blobIdFor(final File content) throws ReviewsFileStorageException;
+
+	public abstract String addReviewItem(IFile aFile) throws ReviewsFileStorageException, CoreException;
 
 }

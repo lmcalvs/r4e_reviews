@@ -649,4 +649,33 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	boolean isShowPropertiesCmd();
+
+	/**
+	 * Method isListReviewsCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isListReviewsCmd();
+
+	/**
+	 * Method isPushReviewCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isPushReviewCmd();
+
+	/**
+	 * Method isFetchReviewCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isFetchReviewCmd();
+
+	/**
+	 * Method isDeleteReviewCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isDeleteReviewCmd();
+
 }
