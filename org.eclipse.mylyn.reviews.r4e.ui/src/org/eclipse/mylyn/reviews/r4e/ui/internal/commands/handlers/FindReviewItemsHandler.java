@@ -19,6 +19,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -36,6 +37,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
@@ -65,7 +67,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EDeltaCompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -703,29 +705,35 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	private void updateFilesWithDeltas(final TempFileContext aFile) throws CoreException {
 
 		//Find all differences between Base and Target files
-		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
-		input.prepareCompareInputNoEditor();
-
-		final DiffUtils diffUtils = new DiffUtils();
-		final List<Diff> diffs;
-
-		fLock.lock();
 		try {
-			diffs = diffUtils.doDiff(false, true, input);
-		} finally {
-			fLock.unlock();
-		}
+			final R4EDeltaCompareEditorInput input = new R4EDeltaCompareEditorInput(aFile.getTarget(), aFile.getBase());
+			input.prepareCompareInput(new NullProgressMonitor());
 
-		//Add Deltas from the list of differences
-		for (Diff diff : diffs) {
-			IR4EUIPosition position = CommandUtils.getPosition(diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR)
-					.getOffset(), diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
-					diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
+			final DiffUtils diffUtils = new DiffUtils();
+			final List<Diff> diffs;
 
-			if ((null == position) || (RangeDifference.NOCHANGE == diff.getKind())) {
-				continue; //Cannot resolve position for this delta or no change
+			fLock.lock();
+			try {
+				diffs = diffUtils.doDiff(false, true, input);
+			} finally {
+				fLock.unlock();
 			}
-			aFile.getPositions().add(position);
+
+			//Add Deltas from the list of differences
+			for (Diff diff : diffs) {
+				IR4EUIPosition position = CommandUtils.getPosition(diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR)
+						.getOffset(), diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
+						diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
+
+				if ((null == position) || (RangeDifference.NOCHANGE == diff.getKind())) {
+					continue; //Cannot resolve position for this delta or no change
+				}
+				aFile.getPositions().add(position);
+			}
+		} catch (InvocationTargetException e) {
+			throw new CoreException(new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, IStatus.OK, e.toString(), e));
+		} catch (InterruptedException e) {
+			throw new CoreException(new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, IStatus.OK, e.toString(), e));
 		}
 	}
 

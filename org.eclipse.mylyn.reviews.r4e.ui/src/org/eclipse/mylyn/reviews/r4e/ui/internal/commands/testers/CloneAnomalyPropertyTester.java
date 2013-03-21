@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -74,8 +75,7 @@ public class CloneAnomalyPropertyTester extends PropertyTester {
 		}
 
 		//Command is disabled if the active review is completed
-		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
-				R4EReviewPhase.COMPLETED)) {
+		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 
@@ -144,7 +144,13 @@ public class CloneAnomalyPropertyTester extends PropertyTester {
 					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
-					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
+
+					if (!UIUtils.isLeftCompareEditorSelected(page.getActiveEditor())) {
+						return false;
+					}
+
+					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getCurrentDiffNode()
+							.getTargetTypedElement();
 					if (null == targetElement) {
 						return false;
 					}

@@ -984,7 +984,8 @@ public class MailServicesProxy {
 			if (input instanceof R4ECompareEditorInput) {
 				//TODO: For now we give the file version of the file on the left side, regardless of whose side the selected input was.
 				//		Later we want to refine this.
-				final ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+				final ITypedElement element = ((R4ECompareEditorInput) input).getCurrentDiffNode()
+						.getTargetTypedElement();
 				if (element instanceof R4EFileTypedElement) {
 					final R4EFileVersion file = ((R4EFileTypedElement) element).getFileVersion();
 					aMsgBody.append("File: " + file.getResource().getProject() + R4EUIConstants.SEPARATOR

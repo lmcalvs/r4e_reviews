@@ -37,14 +37,14 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field fTargetAnnotationModel.
+	 * Field fAnnotationModel.
 	 */
-	protected final IReviewAnnotationModel fTargetAnnotationModel;
+	protected IReviewAnnotationModel fAnnotationModel = null;
 
 	/**
-	 * Field fTargetViewerListener.
+	 * Field fViewerListener.
 	 */
-	protected IEditorInputListener fTargetViewerListener = null;
+	protected IEditorInputListener fViewerListener = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -53,12 +53,14 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	/**
 	 * Constructor for ReviewAnnotationSupport.
 	 * 
-	 * @param aSourceFile
+	 * @param aFileVersion
 	 *            Object
 	 */
-	public ReviewAnnotationSupport(Object aSourceFile) {
-		this.fTargetAnnotationModel = createAnnotationModel(aSourceFile);
-		this.fTargetAnnotationModel.setFile(aSourceFile);
+	public ReviewAnnotationSupport(Object aFileVersion) {
+		if (null != aFileVersion) {
+			this.fAnnotationModel = createAnnotationModel(aFileVersion);
+			this.fAnnotationModel.setFile(aFileVersion);
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -86,23 +88,23 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * Method getTargetEditor.
 	 * 
 	 * @return ITextEditor
-	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#getTargetEditor()
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#getEditor()
 	 */
-	public ITextEditor getTargetEditor() {
-		if (null != fTargetViewerListener) {
-			return fTargetViewerListener.getEditor();
+	public ITextEditor getEditor() {
+		if (null != fViewerListener) {
+			return fViewerListener.getEditor();
 		}
 		return null;
 	}
 
 	/**
-	 * Method getTargetAnnotationModel.
+	 * Method getAnnotationModel.
 	 * 
 	 * @return IReviewAnnotationModel
-	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#getTargetAnnotationModel()
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#getAnnotationModel()
 	 */
-	public IReviewAnnotationModel getTargetAnnotationModel() {
-		return fTargetAnnotationModel;
+	public IReviewAnnotationModel getAnnotationModel() {
+		return fAnnotationModel;
 	}
 
 	/**
@@ -113,8 +115,8 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#setAnnotationModelElement(Object)
 	 */
 	public void setAnnotationModelElement(Object aElement) {
-		if (null != fTargetAnnotationModel) {
-			fTargetAnnotationModel.setFile(aElement);
+		if (null != fAnnotationModel) {
+			fAnnotationModel.setFile(aElement);
 		}
 	}
 
@@ -126,9 +128,11 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#refreshAnnotations(Object)
 	 */
 	public void refreshAnnotations(Object aElement) {
-		if (null != fTargetAnnotationModel) {
-			fTargetAnnotationModel.setFile(aElement);
-			fTargetAnnotationModel.refreshAnnotations();
+		if (null != fAnnotationModel) {
+			if (null != aElement) {
+				fAnnotationModel.setFile(aElement); //Set new file if it has changed
+			}
+			fAnnotationModel.refreshAnnotations();
 		}
 	}
 
@@ -137,11 +141,13 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * 
 	 * @param aElement
 	 *            Object
+	 * @param aFile
+	 *            Object      
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#addAnnotation(Object)
 	 */
-	public void addAnnotation(Object aElement) {
-		if (null != fTargetAnnotationModel) {
-			fTargetAnnotationModel.addAnnotation(aElement);
+	public void addAnnotation(Object aElement, Object aFile) {
+		if (null != fAnnotationModel && aFile.equals(fAnnotationModel.getFile())) {
+			fAnnotationModel.addAnnotation(aElement);
 		}
 	}
 
@@ -150,11 +156,13 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * 
 	 * @param aElement
 	 *            Object
+	 * @param aFile
+	 *            Object
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#updateAnnotation(Object)
 	 */
-	public void updateAnnotation(Object aElement) {
-		if (null != fTargetAnnotationModel) {
-			fTargetAnnotationModel.updateAnnotation(aElement);
+	public void updateAnnotation(Object aElement, Object aFile) {
+		if (null != fAnnotationModel && aFile.equals(fAnnotationModel.getFile())) {
+			fAnnotationModel.updateAnnotation(aElement);
 		}
 	}
 
@@ -163,11 +171,13 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	 * 
 	 * @param aElement
 	 *            Object
+	 * @param aFile
+	 *            Object
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#removeAnnotation(Object)
 	 */
-	public void removeAnnotation(Object aElement) {
-		if (null != fTargetAnnotationModel) {
-			fTargetAnnotationModel.removeAnnotation(aElement);
+	public void removeAnnotation(Object aElement, Object aFile) {
+		if (null != fAnnotationModel && aFile.equals(fAnnotationModel.getFile())) {
+			fAnnotationModel.removeAnnotation(aElement);
 		}
 	}
 
@@ -190,11 +200,11 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 			return false;
 		}
 		final ReviewAnnotationSupport other = (ReviewAnnotationSupport) aObject;
-		if (fTargetAnnotationModel == null) {
-			if (other.fTargetAnnotationModel != null) {
+		if (fAnnotationModel == null) {
+			if (other.fAnnotationModel != null) {
 				return false;
 			}
-		} else if (!fTargetAnnotationModel.equals(other.fTargetAnnotationModel)) {
+		} else if (!fAnnotationModel.equals(other.fAnnotationModel)) {
 			return false;
 		}
 		return true;
@@ -209,7 +219,7 @@ public abstract class ReviewAnnotationSupport implements IReviewAnnotationSuppor
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((fTargetAnnotationModel == null) ? 0 : fTargetAnnotationModel.hashCode());
+		result = (prime * result) + ((fAnnotationModel == null) ? 0 : fAnnotationModel.hashCode());
 		return result;
 	}
 

@@ -31,14 +31,14 @@ public interface IReviewAnnotationSupport {
 	 * 
 	 * @return ITextEditor - the Text Editor instance
 	 */
-	ITextEditor getTargetEditor();
+	ITextEditor getEditor();
 
 	/**
 	 * Gets the Annotation Model connected to the current file.
 	 * 
 	 * @return IReviewAnnotationModel - the Annotation Model
 	 */
-	IReviewAnnotationModel getTargetAnnotationModel();
+	IReviewAnnotationModel getAnnotationModel();
 
 	/**
 	 * Sets the current object instance the Annotation Model is connected to.
@@ -61,23 +61,29 @@ public interface IReviewAnnotationSupport {
 	 * 
 	 * @param aElement
 	 *            - the element source for the new annotation
+	 * @param aFile
+	 *            - the file on which the annotation is applied
 	 */
-	void addAnnotation(Object aElement);
+	void addAnnotation(Object aElement, Object aFile);
 
 	/**
 	 * Update Annotation data in the Annotation Model.
 	 * 
 	 * @param aElement
 	 *            - the element source for the annotation to update
+	 * @param aFile
+	 *            - the file on which the annotation is applied
 	 */
-	void updateAnnotation(Object aElement);
+	void updateAnnotation(Object aElement, Object aFile);
 
 	/**
 	 * Remove an Annotation from the Annotation Model.
 	 * 
 	 * @param aElement
 	 *            - the element source for the annotation to remove
+	 * @param aFile
+	 *            - the file on which the annotation is applied
 	 */
-	void removeAnnotation(Object aElement);
+	void removeAnnotation(Object aElement, Object aFile);
 
 }

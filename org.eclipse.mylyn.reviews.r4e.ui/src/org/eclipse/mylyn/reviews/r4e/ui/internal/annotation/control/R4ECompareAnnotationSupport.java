@@ -38,11 +38,13 @@ public class R4ECompareAnnotationSupport extends ReviewCompareAnnotationSupport 
 	 * 
 	 * @param aViewer
 	 *            Viewer
-	 * @param aFileContext
-	 *            Object
+	 * @param aTargetFile
+	 *            R4EUIFileContext
+	 * @param aBaseFile
+	 *            R4EUIFileContext
 	 */
-	public R4ECompareAnnotationSupport(Viewer aViewer, Object aFileContext) {
-		super(aViewer, aFileContext);
+	public R4ECompareAnnotationSupport(Viewer aViewer, R4EUIFileContext aTargetFile, R4EUIFileContext aBaseFile) {
+		super(aViewer, aTargetFile, aBaseFile);
 	}
 
 	/**

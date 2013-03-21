@@ -22,7 +22,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -40,6 +39,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.core.model.ILocation;
+import org.eclipse.mylyn.reviews.core.model.IReviewItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -47,6 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
@@ -130,10 +131,7 @@ public class CommandUtils {
 			}
 			return updateTargetFile(editorFile);
 		} else if (aInput instanceof R4ECompareEditorInput) {
-			//If we get here, this is because we are trying to act on the compare editor contents
-			//this means that the file we are acting on is already in the local repository
-			//in this case, we only need to provide the versionId of this file
-			final ITypedElement element = ((R4ECompareEditorInput) aInput).getLeftElement();
+			final ITypedElement element = ((R4ECompareEditorInput) aInput).getCurrentDiffNode().getTargetTypedElement();
 			if (element instanceof R4EFileRevisionTypedElement) {
 				return ((R4EFileRevisionTypedElement) element).getFileVersion();
 			} else if (element instanceof R4EFileTypedElement) {
@@ -239,8 +237,10 @@ public class CommandUtils {
 			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
 			//3) The left file is an R4EFileRevisionTypedElement. This means that it is a file in source control.
 			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
-			final ITypedElement leftElement = ((R4ECompareEditorInput) aInput).getLeftElement();
-			final ITypedElement rightElement = ((R4ECompareEditorInput) aInput).getRightElement();
+			final ITypedElement leftElement = ((R4ECompareEditorInput) aInput).getCurrentDiffNode()
+					.getTargetTypedElement();
+			final ITypedElement rightElement = ((R4ECompareEditorInput) aInput).getCurrentDiffNode()
+					.getBaseTypedElement();
 			if (leftElement instanceof R4EFileTypedElement && rightElement instanceof R4EFileRevisionTypedElement) {
 				if (((R4EFileTypedElement) leftElement).getFileVersion()
 						.getVersionID()
@@ -731,49 +731,6 @@ public class CommandUtils {
 	}
 
 	/**
-	 * Method createCompareEditorInput.
-	 * 
-	 * @param aBaseFileVersion
-	 *            R4EFileVersion
-	 * @param aTargetFileVersion
-	 *            R4EFileVersion
-	 * @return R4ECompareEditorInput
-	 */
-	public static R4ECompareEditorInput createCompareEditorInput(R4EFileVersion aBaseFileVersion,
-			R4EFileVersion aTargetFileVersion) {
-
-		final CompareConfiguration config = new CompareConfiguration();
-		config.setRightEditable(false);
-		config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
-
-		//NOTE:  We use the workspace file as input if it is in sync with the file to review,
-		//		 otherwise we use the file to review that is included in the review repository.
-		//		 Only workspace files are editable.
-		final R4EFileRevisionTypedElement ancestor = null; //Might be improved later
-		ITypedElement target = null;
-		if (null != aTargetFileVersion) {
-			if (CommandUtils.useWorkspaceResource(aTargetFileVersion)) {
-				target = new R4EFileTypedElement(aTargetFileVersion);
-				config.setLeftEditable(true);
-			} else {
-				target = new R4EFileRevisionTypedElement(aTargetFileVersion);
-				config.setLeftEditable(false);
-			}
-		}
-		ITypedElement base = null;
-		if (null != aBaseFileVersion) {
-			if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
-				base = new R4EFileTypedElement(aBaseFileVersion);
-				config.setRightEditable(true);
-			} else {
-				base = new R4EFileRevisionTypedElement(aBaseFileVersion);
-				config.setRightEditable(false);
-			}
-		}
-		return new R4ECompareEditorInput(config, ancestor, target, base);
-	}
-
-	/**
 	 * Method getAnomalyPosition.
 	 * 
 	 * @param aAnomaly
@@ -1069,5 +1026,62 @@ public class CommandUtils {
 	 */
 	public static boolean compareStrings(String aStr1, String aStr2) {
 		return ((aStr1 == aStr2) || (aStr1 != null && aStr1.equals(aStr2)));
+	}
+
+	/**
+	 * Method createTypedElement.
+	 * 
+	 * @param aFileVersion
+	 *            R4EFileVersion
+	 * @return ITypedElement
+	 */
+	public static ITypedElement createTypedElement(R4EFileVersion aFileVersion) {
+		//NOTE:  We use the workspace file as input if it is in sync with the file to review,
+		//		 otherwise we use the file to review that is included in the review repository if there is a repository.
+		//       default case is to use an empty typed element with the name set as the same as the other side of the comparison
+		//		 Only workspace files are editable.
+		if (null != aFileVersion) {
+			if (useWorkspaceResource(aFileVersion)) {
+				return new R4EFileTypedElement(aFileVersion);
+			} else {
+				return new R4EFileRevisionTypedElement(aFileVersion);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Method getCommitPrefix.
+	 * 
+	 * @param aItems
+	 *            List<IReviewItem>
+	 * @param aCurrentItem
+	 *            R4EItem
+	 * @return String
+	 */
+	public static String getCommitPrefix(List<IReviewItem> aItems, R4EItem aCurrentItem) {
+		int commitIndex = 1;
+		boolean isManyPatchSets = false;
+		for (IReviewItem item : aItems) {
+			if (item.equals(aCurrentItem)) {
+				continue; //ignore the element itself
+			}
+			String referenceCommitLine = "";
+			if (null != ((R4EItem) item).getDescription()) {
+				referenceCommitLine = ((R4EItem) item).getDescription().split("\n")[0].trim();
+			}
+			String currentCommitLine = aCurrentItem.getDescription().split("\n")[0].trim();
+
+			if (currentCommitLine.equals(referenceCommitLine)) {
+				isManyPatchSets = true;
+				if (((R4EItem) item).getSubmitted().before(aCurrentItem.getSubmitted())) {
+					++commitIndex;
+				}
+			}
+		}
+		if (isManyPatchSets) {
+			return "Commit " + Integer.toString(commitIndex) + ": ";
+		}
+		return "Commit: ";
 	}
 }

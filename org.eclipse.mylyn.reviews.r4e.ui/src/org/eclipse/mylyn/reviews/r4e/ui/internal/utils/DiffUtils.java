@@ -35,7 +35,7 @@ import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EDeltaCompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.ui.IEditorInput;
@@ -74,19 +74,19 @@ public class DiffUtils {
 	 * @param aIgnoreWhitespace
 	 *            boolean
 	 * @param input
-	 *            R4ECompareEditorInput
+	 *            R4EDeltaCompareEditorInput
 	 * @return List<Diff>
 	 * @throws CoreException
 	 */
-	public List<Diff> doDiff(boolean aIsThreeWay, boolean aIgnoreWhitespace, R4ECompareEditorInput input)
+	public List<Diff> doDiff(boolean aIsThreeWay, boolean aIgnoreWhitespace, R4EDeltaCompareEditorInput input)
 			throws CoreException {
 
 		//THese structures will be used to hold found differences
 		List<Diff> changeDiffs = new ArrayList<Diff>();
 
 		//Get documents to compare form input
-		final IDocument lDoc = getDocument(input.getLeftElement());
-		final IDocument rDoc = getDocument(input.getRightElement());
+		final IDocument lDoc = getDocument(input.getTargetElement());
+		final IDocument rDoc = getDocument(input.getBaseElement());
 		final CompareConfiguration config = input.getCompareConfiguration();
 
 		if (null == lDoc || null == rDoc) {

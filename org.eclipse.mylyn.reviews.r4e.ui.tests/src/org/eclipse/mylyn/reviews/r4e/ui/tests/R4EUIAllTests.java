@@ -21,6 +21,7 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.CloneAnomaliesCommentsTests;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.CompareReviewItemsTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.DuplicateAnomalyTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.PostponedAnomaliesTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.feature.PreferencesTests;
@@ -66,6 +67,8 @@ public class R4EUIAllTests extends TestSuite {
 		suite.addTestSuite(DuplicateAnomalyTests.class);
 		suite.addTestSuite(ReviewWithStrangeCharTest.class);
 		suite.addTestSuite(UpgradeVersionTests.class);
+		suite.addTestSuite(CompareReviewItemsTests.class);
+
 		//TODO Add test cases here
 		//suite.addTestSuite(ReviewGroupTests.class);
 		//suite.addTestSuite(ReviewTests.class);

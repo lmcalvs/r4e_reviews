@@ -113,4 +113,12 @@ public interface IReviewAnnotationModel extends IAnnotationModel {
 	 *            - The file the annotation model refers to
 	 */
 	void setFile(Object aFile);
+
+	/**
+	 * Method getFile. Gets the file the current annotation model refers to
+	 * 
+	 * @return Object
+	 *            - The file the annotation model refers to
+	 */
+	Object getFile();
 }

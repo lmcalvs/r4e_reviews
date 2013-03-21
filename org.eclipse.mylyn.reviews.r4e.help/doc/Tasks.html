@@ -54,9 +54,7 @@
 			<br/> 
 		</p>
 		<h3 id="Disabling_and_Restoring_Elements">Disabling and Restoring Elements</h3>
-		<p>When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the 
-			<i>Disable </i>command from the element's context menu. 
-		</p>
+		<p>When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the ''Disable ''command from the element's context menu. </p>
 		<p>
 			<br/> 
 		</p>
@@ -73,8 +71,7 @@
 		</p>
 		<p>Ideally, disabled elements should never be shown, but there could be a need to restore mistakenly disabled elements. To do so, first go to the Eclipse preferences R4E page, on the 
 			<i>Filters</i> tab and enable the 
-			<i>Show Disabled Elements</i> filter, then return to the Navigator view and select the 
-			<i>Restore </i>command from the disabled element context menu 
+			<i>Show Disabled Elements</i> filter, then return to the Navigator view and select the ''Restore ''command from the disabled element context menu 
 		</p>
 		<p>
 			<br/> 
@@ -259,9 +256,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Add a new Review Group reference file by clicking the 
-				<i>Add </i>button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. 
-			</li>
+			<li>Add a new Review Group reference file by clicking the ''Add ''button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. </li>
 			<li>The Review Group Name and Description are also shown in the Preferences Group tab.</li>
 		</ul>
 		<p>
@@ -461,6 +456,23 @@
 		<p>
 			<br/>
 		</p>
+		<pre>When two Review Items have the same first line description, their displayed name in the Review Navigator will include a version number just after the Review Item type (e.g. Commit 1:... and Commit 2:..., where ... are two identical strings).  This will show the users that the two Review Items are two different versions of the same code change.  Of course, the first line of the Review Item description must not be changed for this function to work.
+</pre>
+		<h3 id="Comparing_Review_Items">Comparing Review Items</h3>
+		<p>Is is possible to compare two arbitrary Review Items that are included in the same Review.  Typically this will be used to see the differences between two versions of a given code change.</p>
+		<p>In order to do this, select two Review Items in the Review Navigator (using Ctrl-Left click or Shift-Left click) and then right click on one of the items and select the "Compare Review Items" command from the context menu</p>
+		<p>
+			<img border="0" src="CompareReviewItems.png"/>
+		</p>
+		<p>This will open a Structural Compare Editor that will show the files versions that are different.  The file that belong to the most recently committed Review Item will always be the target files (on the left side) and the files belonging to the oldest Review Item will be the base files (on the right side).</p>
+		<p>Little + decorators show the files that were added in the newest Review Item, whereas - decorators show removed files.</p>
+		<p>To see the differences within a specific file, just double click on it and the lower side of the compare editor will be populated with the content differences between the files.  From the Compare Editor, it is also possible to modify the R4E annotation markers (see 
+			<a href="Tasks.html#Using_Review_Annotations_and_Inline_Comments">R4E Annotations</a>), on either side.
+		</p>
+		<p>For instance, one could verify that anomalies that were written on a previous version of the code change are indeed corrected and change the state of the anomalies on the base version (right side) accordingly, as shown below.</p>
+		<p>
+			<img border="0" src="CompareReviewItemsEditor.png"/>
+		</p>
 		<h3 id="Assigning_Review_Elements">Assigning Review Elements</h3>
 		<p>It is possible to assign specific review  elements (i.e. Review Items, File Contexts, Selections and Deltas) to specific participants.  To do so, use the context command 
 			<i>Assign to Participant</i> for the desired elements.  
@@ -647,9 +659,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Add a new Rule Set reference file by clicking the 
-				<i>Add </i>button and select the appropriate Rule Set File. Take note that all Review Group filename end with "_rule_set.xrer" suffix. 
-			</li>
+			<li>Add a new Rule Set reference file by clicking the ''Add ''button and select the appropriate Rule Set File. Take note that all Review Group filename end with "_rule_set.xrer" suffix. </li>
 			<li>The Rule Set Version and Name are also shown in the Preferences Group tab.</li>
 		</ul>
 		<p>
@@ -865,8 +875,7 @@
 				<ul>
 					<li>The Review name. </li>
 					<li>The current Review phase. Basic and Informal reviews can have only 2 phases, 
-						<i>Started </i>and 
-						<i>Completed</i>. Formal reviews have multiple phases. Refer to the formal review section for more information. 
+						<i>Started ''and ''Completed</i>. Formal reviews have multiple phases. Refer to the formal review section for more information. 
 					</li>
 					<li>A brief description of the review. </li>
 				</ul>
@@ -892,8 +901,7 @@
 			<li>In the Decision Information expandable section (Informal/Formal reviews only)
 				<ul>
 					<li>Meeting data for the decision meeting (Subject, Time, Duration, Location). This can be updated at any time using the 
-						<i>Update </i>button. The data can be fetched using the 
-						<i>Refresh</i> button 
+						<i>Update ''button. The data can be fetched using the ''Refresh</i> button 
 					</li>
 					<li>The Exit Decision that tell whether the review is accepted or if some rework has to be done </li>
 					<li>Participants that were part of the exit decision </li>
@@ -1034,8 +1042,7 @@
 			<li>In the Time Management expandable section
 				<ul>
 					<li>A table that tracks the Time Spent by the participant reviewing the file. Entries can be added (or removed) by the participant at any time by using the 
-						<i>Add </i>(or 
-						<i>Remove</i>) button. The table will also show the cumulative time spent in its header.
+						<i>Add ''(or ''Remove</i>) button. The table will also show the cumulative time spent in its header.
 					</li>
 				</ul>
 			</li>
@@ -1138,9 +1145,7 @@
 		<p>
 			<br/> 
 		</p>
-		<p>Selecting one option and closing the dialog will show up a simple email client pre-filled with all the relevant information. The user is free to modify the information as he sees fit and send the email by clicking the 
-			<i>OK </i>button. 
-		</p>
+		<p>Selecting one option and closing the dialog will show up a simple email client pre-filled with all the relevant information. The user is free to modify the information as he sees fit and send the email by clicking the ''OK ''button. </p>
 		<p>
 			<br/> 
 		</p>
@@ -1153,9 +1158,7 @@
 		</p>
 		<h3 id="Using_Meeting_Notifications">Using Meeting Notifications</h3>
 		<p>Meeting can also be scheduled directly in the workbench using R4E. Meeting data generated is in a VCalendar format that is attached to the Email that will be sent. Meeting data for decision meeting is mandatory for Formal Reviews and optional for other review types. </p>
-		<p>To add meeting data, use the 
-			<i>Update </i>button in the Extra property tab, under the Decision Information section, for the selected Review element. This will open the Meeting Information dialog. 
-		</p>
+		<p>To add meeting data, use the ''Update ''button in the Extra property tab, under the Decision Information section, for the selected Review element. This will open the Meeting Information dialog. </p>
 		<p>
 			<br/> 
 		</p>
@@ -1175,9 +1178,7 @@
 		<p>
 			<img border="0" src="MeetingInfoDate.png"/> 
 		</p>
-		<p>The meeting info stored in the system can be retrieved at all times by using the 
-			<i>Refresh </i>button in the Extra property tab, under the Decision Information section, for the selected Review element. 
-		</p>
+		<p>The meeting info stored in the system can be retrieved at all times by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. </p>
 		<p>
 			<br/>
 		</p>
@@ -1339,9 +1340,7 @@
 			<img border="0" src="FormalAnomalyStates.png"/> 
 		</p>
 		<p>A new Anomaly in a Formal Review is set to 
-			<i>CREATED </i>by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to 
-			<i>ACCEPTED</i>, which means that the anomaly is deemed valid and will be handled and fixed. There is no 
-			<i>ASSIGNED </i>state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
+			<i>CREATED ''by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to ''ACCEPTED</i>, which means that the anomaly is deemed valid and will be handled and fixed. There is no ''ASSIGNED ''state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
 
 			<br/>
 		</p><hr/>

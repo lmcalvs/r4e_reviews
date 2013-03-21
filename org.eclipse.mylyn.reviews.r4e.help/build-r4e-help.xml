@@ -61,7 +61,7 @@
 			<!-- IMPORTANT NOTE2
 				This is now used for reference only, and to verify if anything was changed on
 				the Eclipse web wiki that needs to be included to the local _r4eOpen.mediawiki file.
-			-->
+
 			<mediawiki-to-eclipse-help wikiBaseUrl="${help.doc.url.base}"
 				validate="true"
 				failonvalidationerror="true"
@@ -83,6 +83,7 @@
 					http://wiki.eclipse.org/Reviews/R4E/User_Guide
 				</pageAppendum>
 			</mediawiki-to-eclipse-help>
+			-->
 		</sequential>
 	</target>
 </project>

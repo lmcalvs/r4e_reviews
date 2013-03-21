@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.ISharedImages;
@@ -109,6 +110,25 @@ public class ModelContributionItems extends CompoundContributionItem {
 						aElement.getCloseElementCmdName(), R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC,
 						aElement.getCloseElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
+			}
+
+			if (R4EUIModelController.getNavigatorView().getTreeViewer().getSelection() instanceof IStructuredSelection) {
+				Object[] selections = ((IStructuredSelection) R4EUIModelController.getNavigatorView()
+						.getTreeViewer()
+						.getSelection()).toArray();
+				if (selections.length == 2 && selections[0] instanceof R4EUIReviewItem
+						&& selections[1] instanceof R4EUIReviewItem && ((R4EUIReviewItem) selections[0]).isEnabled()
+						&& ((R4EUIReviewItem) selections[1]).isEnabled()) {
+					params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+							R4EUIConstants.COMPARE_ITEMS_COMMAND, R4EUIConstants.COMPARE_ITEMS_COMMAND, null,
+							ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+									.getBundle()
+									.getEntry(R4EUIConstants.COMPARE_ITEMS_ICON_FILE)), null, null,
+							R4EUIConstants.COMPARE_ITEMS_COMMAND_NAME, R4EUIConstants.COMPARE_ITEMS_COMMAND_MNEMONIC,
+							R4EUIConstants.COMPARE_ITEMS_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null,
+							true);
+					list.add(new CommandContributionItem(params));
+				}
 			}
 
 			if (aElement.isCopyElementCmd()) {

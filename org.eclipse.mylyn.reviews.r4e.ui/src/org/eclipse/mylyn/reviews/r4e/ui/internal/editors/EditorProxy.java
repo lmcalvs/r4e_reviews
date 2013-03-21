@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 import org.eclipse.compare.CompareEditorInput;
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -36,7 +35,6 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
@@ -45,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -68,11 +67,6 @@ public class EditorProxy {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Field R4E_COMPARE_EDITOR_TITLE. (value is ""R4E Compare"")
-	 */
-	private static final String R4E_COMPARE_EDITOR_TITLE = "R4E Compare";
 
 	/**
 	 * Field DEFAULT_EDITOR_NAME. (value is ""org.eclipse.ui.DefaultTextEditor"")
@@ -106,8 +100,6 @@ public class EditorProxy {
 		IR4EUIPosition position = null;
 
 		R4EUIFileContext context = null;
-		R4EFileVersion baseFileVersion = null;
-		R4EFileVersion targetFileVersion = null;
 
 		for (final Iterator<?> iterator = ((IStructuredSelection) aSelection).iterator(); iterator.hasNext();) {
 
@@ -136,102 +128,73 @@ public class EditorProxy {
 			}
 			context = ((R4EUIFileContext) element);
 
-			//Get files from FileContext
-			baseFileVersion = context.getBaseFileVersion();
-			targetFileVersion = context.getTargetFileVersion();
-
 			//If the files are the same (or do not exist), open the single editor
-			if (null == baseFileVersion || null == targetFileVersion
-					|| baseFileVersion.getVersionID().equals(targetFileVersion.getVersionID())) {
+			if (null == context.getBaseFileVersion()
+					|| null == context.getTargetFileVersion()
+					|| context.getBaseFileVersion()
+							.getVersionID()
+							.equals(context.getTargetFileVersion().getVersionID())) {
 				aForceSingleEditor = true;
 			}
 
 			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 			if (context.isFileVersionsComparable() && !aForceSingleEditor) {
-				editor = openCompareEditor(aPage, baseFileVersion, targetFileVersion);
+				editor = openCompareEditor(aPage, context);
 			} else {
-				if (null != targetFileVersion) {
-					editor = openSingleEditor(aPage, context, targetFileVersion, position);
-				} else if (null != baseFileVersion) {
-					//File was removed, open the base then
-					editor = openSingleEditor(aPage, context, baseFileVersion, position);
-				} else {
-					//Show the error, the file was in another project and was not
-					//found when creating the commit review item
-					String error = "Base and target file version not found for this review item";
-					R4EUIPlugin.Ftracer.traceError("Exception: " + error);
-					CoreException exception = new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, error));
-					//Display the error, but do not log in the error log
-					UIUtils.displayCoreErrorDialog(exception, false);
-
-				}
+				editor = openSingleEditor(aPage, context, position);
 			}
 		}
 		return editor;
 	}
 
 	/**
-	 * Method openEditor. Open the editor
+	 * Method openReviewItemCompareEditor. Open the compare editor to compare Review Items
 	 * 
 	 * @param aPage
 	 *            IWorkbenchPage - the current workbench page
-	 * @param aSelection
-	 *            ISelection - the currently selected model element
-	 * @param aForceSingleEditor
-	 *            boolean - flag to force single editor
+	 * @param aTargetItem
+	 *            R4EUIReviewItem - the currently selected target (newer) Review Item
+	 * @param aBaseItem
+	 *            R4EUIReviewItem - the currently selected base (older) Review Item
 	 * @throws CoreException
 	 */
-	public static IEditorPart openSimpleEditor(IWorkbenchPage aPage, ISelection aSelection, boolean aForceSingleEditor) {
+	public static IEditorPart openReviewItemCompareEditor(IWorkbenchPage aPage, R4EUIReviewItem aTargetItem,
+			R4EUIReviewItem aBaseItem) {
 
-		IEditorPart editor = null;
+		//Reuse editor if it is already open on the same input
+		CompareEditorInput input = null;
+		IEditorPart editor = findReusableReviewItemCompareEditor(aPage, aTargetItem, aBaseItem);
 
-		if (aSelection.isEmpty() || !(aSelection instanceof IStructuredSelection)) {
-			return editor;
-		}
-
-		Object element = null;
-		IR4EUIPosition position = null;
-
-		for (final Iterator<?> iterator = ((IStructuredSelection) aSelection).iterator(); iterator.hasNext();) {
-
-			element = iterator.next();
-			if (!(element instanceof R4EFileContext)) {
-				continue;
-			}
-
-			R4EFileContext context = (R4EFileContext) element;
-
-			//Get files from FileContext
-			R4EFileVersion baseFileVersion = context.getBase();
-			R4EFileVersion targetFileVersion = context.getTarget();
-
-			//If the files are the same (or do not exist), open the single editor
-			if (null == baseFileVersion || null == targetFileVersion
-					|| baseFileVersion.getVersionID().equals(targetFileVersion.getVersionID())) {
-				aForceSingleEditor = true;
-			}
-
-			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
-			if (!aForceSingleEditor) {
-				editor = openCompareEditor(aPage, baseFileVersion, targetFileVersion);
-			} else {
-				if (null != targetFileVersion) {
-					editor = openSingleEditor(aPage, null, targetFileVersion, position);
-				} else if (null != baseFileVersion) {
-					//File was removed, open the base then
-					editor = openSingleEditor(aPage, null, baseFileVersion, position);
+		if (null != editor) {
+			//First try to activate current editor.  If it is not possible to display the element in the editor, reuse it if possible, or worse case close and re-open it
+			aPage.activate(editor);
+			if (!UIUtils.selectElementInEditor((R4EReviewItemCompareEditorInput) editor.getEditorInput())) {
+				//Reuse editor whenever possible, otherwise close and re-open it
+				if (editor instanceof IReusableEditor) {
+					aPage.reuseEditor((IReusableEditor) editor, new R4EReviewItemCompareEditorInput(aTargetItem,
+							aBaseItem));
+					//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents TODO
+					return editor;
 				} else {
-					//Show the error, the file was in another project and was not
-					//found when creating the commit review item
-					String error = "Base and target file version not found for this review item";
-					R4EUIPlugin.Ftracer.traceError("Exception: " + error);
-					CoreException exception = new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, error));
-					//Display the error, but do not log in the error log
-					UIUtils.displayCoreErrorDialog(exception, false);
-
+					aPage.closeEditor(editor, true); //Close current editor
 				}
+			} else {
+				return editor;
 			}
 		}
+
+		input = new R4EReviewItemCompareEditorInput(aTargetItem, aBaseItem);
+
+		R4EUIPlugin.Ftracer.traceInfo("Open compare editor on Review Items "
+				+ ((null != aTargetItem) ? aTargetItem.getItem().getId() : "") + " (Target) and "
+				+ ((null != aBaseItem) ? aBaseItem.getItem().getId() : "") + " (Base)");
+		try {
+			editor = aPage.openEditor(input, "org.eclipse.compare.CompareEditor", OpenStrategy.activateOnOpen());
+		} catch (PartInitException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		}
+		//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents TODO
 		return editor;
 	}
 
@@ -242,25 +205,40 @@ public class EditorProxy {
 	 *            IWorkbenchPage - the current workbench page
 	 * @param aContext
 	 *            R4EUIFileContext - the file context
-	 * @param aFileVersion
-	 *            R4EFileVersion - the file version
 	 * @param aPosition
 	 *            IR4EUIPosition - the position to go to in the file
 	 * @return IEditorPart
 	 */
 	private static IEditorPart openSingleEditor(IWorkbenchPage aPage, R4EUIFileContext aContext,
-			R4EFileVersion aFileVersion, IR4EUIPosition aPosition) {
+			IR4EUIPosition aPosition) {
 
+		R4EFileVersion version;
 		IEditorPart editor = null;
+		if (null != aContext.getTargetFileVersion()) {
+			version = aContext.getTargetFileVersion();
+		} else if (null != aContext.getBaseFileVersion()) {
+			//File was removed, open the base then
+			version = aContext.getTargetFileVersion();
+		} else {
+			//Show the error, the file was in another project and was not
+			//found when creating the commit review item
+			String error = "Base and target file version not found for this review item";
+			R4EUIPlugin.Ftracer.traceError("Exception: " + error);
+			CoreException exception = new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, error));
+			//Display the error, but do not log in the error log
+			UIUtils.displayCoreErrorDialog(exception, false);
+			return editor;
+		}
+
 		try {
 			IStorageEditorInput editorInput = null;
 
 			//NOTE:  We use the workspace file as input if it is in sync with the file to review,
 			//		 otherwise we use the file to review that is included in the review repository
-			if (CommandUtils.useWorkspaceResource(aFileVersion)) {
-				editorInput = new R4EFileEditorInput(aFileVersion);
+			if (CommandUtils.useWorkspaceResource(version)) {
+				editorInput = new R4EFileEditorInput(version);
 			} else {
-				editorInput = new R4EFileRevisionEditorInput(aFileVersion);
+				editorInput = new R4EFileRevisionEditorInput(version);
 			}
 			InputStream contents = null;
 			IStorage storage = editorInput.getStorage();
@@ -294,27 +272,24 @@ public class EditorProxy {
 	 * 
 	 * @param aPage
 	 *            IWorkbenchPage - the current workbench page
-	 * @param aBaseFileVersion
-	 *            R4EFileVersion - the base (or reference) file version
-	 * @param aTargetFileVersion
-	 *            R4EFileVersion - the target (or current) file version
+	 * @param aContext
+	 *            R4EUIFileContext - the file Context (base and target) to open
 	 * @return IEditorPart
 	 */
-	private static IEditorPart openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
-			R4EFileVersion aTargetFileVersion) {
+	private static IEditorPart openCompareEditor(IWorkbenchPage aPage, R4EUIFileContext aContext) {
 
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
+		IEditorPart editor = findReusableFileContextCompareEditor(aPage, aContext.getTargetFileVersion(),
+				aContext.getBaseFileVersion());
 
 		if (null != editor) {
 			//First try to activate current editor.  If it is not possible to display the element in the editor, reuse it if possible, or worse case close and re-open it
 			aPage.activate(editor);
-			if (!UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput())) {
+			if (!UIUtils.selectElementInEditor((R4EFileContextCompareEditorInput) editor.getEditorInput())) {
 				//Reuse editor whenever possible, otherwise close and re-open it
 				if (editor instanceof IReusableEditor) {
-					aPage.reuseEditor((IReusableEditor) editor,
-							CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion));
+					aPage.reuseEditor((IReusableEditor) editor, new R4EFileContextCompareEditorInput(aContext));
 					//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
 					return editor;
 				} else {
@@ -324,12 +299,12 @@ public class EditorProxy {
 				return editor;
 			}
 		}
-		input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
-		input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title
+		input = new R4EFileContextCompareEditorInput(aContext);
 
 		R4EUIPlugin.Ftracer.traceInfo("Open compare editor on files "
-				+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
-				+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
+				+ ((null != aContext.getTargetFileVersion()) ? aContext.getTargetFileVersion().getName() : "")
+				+ " (Target) and "
+				+ ((null != aContext.getBaseFileVersion()) ? aContext.getBaseFileVersion().getName() : "") + " (Base)");
 		try {
 			editor = aPage.openEditor(input, "org.eclipse.compare.CompareEditor", OpenStrategy.activateOnOpen());
 		} catch (PartInitException e) {
@@ -341,52 +316,36 @@ public class EditorProxy {
 	}
 
 	/**
-	 * Method findReusableCompareEditor. Find the appropriate compare editor based on the file types
+	 * Method findReusableCompareEditor. Find the appropriate file context compare editor based on the file types
 	 * 
 	 * @param aPage
 	 *            IWorkbenchPage - the current workbench page
-	 * @param aBaseFile
-	 *            R4EFileVersion - the base (or reference) file version
 	 * @param aTargetFile
 	 *            R4EFileVersion - the target file version
+	 * @param aBaseFile
+	 *            R4EFileVersion - the base (or reference) file version
 	 * @return IEditorPart - the editor to use
 	 */
-	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFile,
-			R4EFileVersion aTargetFile) {
+	public static IEditorPart findReusableFileContextCompareEditor(IWorkbenchPage aPage, R4EFileVersion aTargetFile,
+			R4EFileVersion aBaseFile) {
 
 		final IEditorReference[] editorRefs = aPage.getEditorReferences();
 		IEditorPart part = null;
-		R4ECompareEditorInput input = null;
-		ITypedElement left = null;
-		ITypedElement right = null;
+		R4EFileContextCompareEditorInput input = null;
 		// first loop looking for an editor with the same input
 		for (IEditorReference editorRef : editorRefs) {
 			part = editorRef.getEditor(false);
 			if (null != part && part instanceof IReusableEditor) {
 				// check if the editor input type complies with the types given by the caller
-				if (R4ECompareEditorInput.class.isInstance(part.getEditorInput())) {
+				if (R4EFileContextCompareEditorInput.class.isInstance(part.getEditorInput())) {
 					//Now check if the input files are the same as with the found editor
-					input = (R4ECompareEditorInput) part.getEditorInput();
-					left = input.getLeftElement();
-					right = input.getRightElement();
+					input = (R4EFileContextCompareEditorInput) part.getEditorInput();
+					R4EFileVersion leftVersion = input.getCurrentDiffNode().getTargetVersion();
+					R4EFileVersion rightVersion = input.getCurrentDiffNode().getBaseVersion();
 
 					//Case:  No input in editor, that should never happen but guard here just in case
-					if (null == left && null == right) {
+					if (null == leftVersion && null == rightVersion) {
 						return null;
-					}
-
-					//Get the file versions
-					R4EFileVersion leftVersion = null;
-					R4EFileVersion rightVersion = null;
-					if (left instanceof R4EFileRevisionTypedElement) {
-						leftVersion = ((R4EFileRevisionTypedElement) left).getFileVersion();
-					} else if (left instanceof R4EFileTypedElement) {
-						leftVersion = ((R4EFileTypedElement) left).getFileVersion();
-					}
-					if (right instanceof R4EFileRevisionTypedElement) {
-						rightVersion = ((R4EFileRevisionTypedElement) right).getFileVersion();
-					} else if (right instanceof R4EFileTypedElement) {
-						rightVersion = ((R4EFileTypedElement) right).getFileVersion();
 					}
 
 					//Case:  No target file and base is the same
@@ -407,6 +366,73 @@ public class EditorProxy {
 								&& CommandUtils.isSameFileVersion(rightVersion, aBaseFile)) {
 							return part;
 						}
+					}
+				}
+			}
+		}
+		// no re-usable editor found
+		return null;
+	}
+
+	/**
+	 * Method findReusableCompareEditor. Find the appropriate Review Item compare editor based on the file types
+	 * 
+	 * @param aPage
+	 *            IWorkbenchPage - the current workbench page
+	 * @param aTargetItem
+	 *            R4EUIReviewItem - the target review item
+	 * @param aBaseItem
+	 *            R4EUIReviewItem - the base (or reference) review item
+	 * @return IEditorPart - the editor to use
+	 */
+	public static IEditorPart findReusableReviewItemCompareEditor(IWorkbenchPage aPage, R4EUIReviewItem aTargetItem,
+			R4EUIReviewItem aBaseItem) {
+
+		final IEditorReference[] editorRefs = aPage.getEditorReferences();
+		IEditorPart part = null;
+		R4EReviewItemCompareEditorInput input = null;
+		// first loop looking for an editor with the same input
+		for (IEditorReference editorRef : editorRefs) {
+			part = editorRef.getEditor(false);
+			if (null != part && part instanceof IReusableEditor) {
+				// check if the editor input type complies with the types given by the caller
+				if (R4EReviewItemCompareEditorInput.class.isInstance(part.getEditorInput())) {
+					//Now check if the input files are the same as with the found editor
+					input = (R4EReviewItemCompareEditorInput) part.getEditorInput();
+					if ((aBaseItem == null || aBaseItem.equals(input.getBaseReviewItem()))
+							&& aTargetItem.equals(input.getTargetReviewItem())) {
+						return part;
+					}
+				}
+			}
+		}
+		// no re-usable editor found
+		return null;
+	}
+
+	/**
+	 * Method getReviewItemCompareEditorPart. Find the appropriate editor for this review item
+	 * 
+	 * @param aPage
+	 *            IWorkbenchPage - the current workbench page
+	 * @param aItem
+	 *            R4EUIReviewItem - the target review item
+	 * @return IEditorPart - the editor to use
+	 */
+	public static IEditorPart getReviewItemCompareEditorPart(IWorkbenchPage aPage, R4EUIReviewItem aItem) {
+		final IEditorReference[] editorRefs = aPage.getEditorReferences();
+		IEditorPart part = null;
+		R4EReviewItemCompareEditorInput input = null;
+		// first loop looking for an editor with the same input
+		for (IEditorReference editorRef : editorRefs) {
+			part = editorRef.getEditor(false);
+			if (null != part && part instanceof IReusableEditor) {
+				// check if the editor input type complies with the types given by the caller
+				if (R4EReviewItemCompareEditorInput.class.isInstance(part.getEditorInput())) {
+					//Now check if the input review item is the same as with the found editor
+					input = (R4EReviewItemCompareEditorInput) part.getEditorInput();
+					if (aItem.equals(input.getTargetReviewItem()) || aItem.equals(input.getBaseReviewItem())) {
+						return part;
 					}
 				}
 			}

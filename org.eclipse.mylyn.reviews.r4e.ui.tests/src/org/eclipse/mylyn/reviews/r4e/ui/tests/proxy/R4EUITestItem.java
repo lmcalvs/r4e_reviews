@@ -22,8 +22,12 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.compare.ICompareNavigator;
+import org.eclipse.compare.internal.CompareEditorInputNavigator;
+import org.eclipse.compare.internal.CompareStructureViewerSwitchingPane;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
@@ -35,9 +39,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EDiffNode;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmCore;
@@ -45,6 +59,7 @@ import org.eclipse.mylyn.versions.core.ScmRepository;
 import org.eclipse.mylyn.versions.core.spi.ScmConnector;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileRevision;
 import org.eclipse.ui.IEditorPart;
@@ -53,6 +68,8 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 @SuppressWarnings({ "restriction", "nls" })
 public class R4EUITestItem extends R4EUITestElement {
+
+	private static String COMPARE_REVIEW_ITEMS_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.compareItems";
 
 	public R4EUITestItem(R4EUITestMain aR4EUITestProxy) {
 		super(aR4EUITestProxy);
@@ -250,6 +267,121 @@ public class R4EUITestItem extends R4EUITestElement {
 		Display.getDefault().syncExec(createManualTextItemJob);
 		TestUtils.waitForJobs();
 		return createManualTextItemJob.getItem();
+	}
+
+	/**
+	 * Method openCompareReviewItems
+	 * 
+	 * @param aItem1
+	 *            - R4EUIReviewItem
+	 * @param aItem2
+	 *            - R4EUIReviewItem
+	 * @param aAnnotationElement
+	 *            - IR4EUIModelElement
+	 * @param aAnnotationType
+	 *            - String
+	 */
+	public void openCompareReviewItems(final R4EUIReviewItem aItem1, final R4EUIReviewItem aItem2,
+			IR4EUIModelElement aAnnotationElement, String aAnnotationType) {
+
+		//Inner class that runs the command on the UI thread
+		class RunCompareReviewItems implements Runnable {
+			private List<IR4EUIModelElement> elements;
+
+			private IR4EUIModelElement annotationElement;
+
+			private String annotationType;
+
+			public void setElements(List<IR4EUIModelElement> aElements) {
+				elements = aElements;
+			}
+
+			public void setAnnotationElement(IR4EUIModelElement aAnnotationElement) {
+				annotationElement = aAnnotationElement;
+			}
+
+			public void setAnnotationType(String aAnnotationType) {
+				annotationType = aAnnotationType;
+			}
+
+			public void run() {
+				try {
+					R4EAssert r4eAssert = new R4EAssert("openCompareReviewItems");
+					r4eAssert.setTest("Open Compare Review Item");
+
+					//Set focus on Review Navigator Element
+					setFocusOnNavigatorElements(elements);
+					TestUtils.waitForJobs();
+
+					//Compare Review Items
+					fParentProxy.getCommandProxy().executeCommand(COMPARE_REVIEW_ITEMS_COMMAND, null);
+					TestUtils.waitForJobs();
+
+					//Select Range in Editor
+					IEditorPart editor = getCurrentEditor();
+					TestUtils.waitForJobs();
+
+					R4EDiffNode selectedDiffNode = (R4EDiffNode) ((R4ECompareEditorInput) editor.getEditorInput()).getSelectedEdition();
+
+					R4EFileVersion targetVersion = null;
+					R4EFileVersion baseVersion = null;
+
+					for (R4EFileContext file : aItem2.getItem().getFileContextList()) {
+						if (null != file.getTarget()
+								&& file.getTarget().getName().equals(selectedDiffNode.getTargetVersion().getName())) {
+							targetVersion = file.getTarget();
+						}
+					}
+					r4eAssert.assertEquals(targetVersion, selectedDiffNode.getTargetVersion());
+
+					for (R4EFileContext file : aItem1.getItem().getFileContextList()) {
+						if (null != file.getTarget()
+								&& file.getTarget().getName().equals(selectedDiffNode.getBaseVersion().getName())) {
+							baseVersion = file.getTarget();
+						}
+					}
+					r4eAssert.assertEquals(baseVersion, selectedDiffNode.getBaseVersion());
+
+					//Open the content CompareEditor on the selected diffNode
+					final ICompareNavigator navigator = ((R4ECompareEditorInput) editor.getEditorInput()).getNavigator();
+					final Object structuredPane = ((CompareEditorInputNavigator) navigator).getPanes()[0];
+					Tree tree = (Tree) ((CompareStructureViewerSwitchingPane) structuredPane).getChildren()[2];
+					tree.setSelection(tree.getItem(0));
+					Viewer viewer = ((CompareStructureViewerSwitchingPane) structuredPane).getViewer();
+					OpenEvent event = new OpenEvent(viewer, viewer.getSelection());
+					((CompareStructureViewerSwitchingPane) structuredPane).open(event);
+					TestUtils.waitForJobs();
+
+					//Verify that the annotation for the passed in Anomaly is present on the right (base) side
+					R4ECompareAnnotationSupport support = (R4ECompareAnnotationSupport) ((R4ECompareEditorInput) editor.getEditorInput()).getCurrentDiffNode()
+							.getAnnotationSupport();
+					IReviewAnnotation annotation = support.getBaseAnnotationModel().findAnnotation(annotationType,
+							annotationElement);
+					r4eAssert.assertNotNull(annotation);
+
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunCompareReviewItems compareReviewItemsJob = new RunCompareReviewItems();
+		List<IR4EUIModelElement> elements = new ArrayList<IR4EUIModelElement>(2);
+		elements.add(aItem1);
+		elements.add(aItem2);
+		compareReviewItemsJob.setElements(elements);
+		compareReviewItemsJob.setAnnotationElement(aAnnotationElement);
+		compareReviewItemsJob.setAnnotationType(aAnnotationType);
+		Display.getDefault().syncExec(compareReviewItemsJob);
+		TestUtils.waitForJobs();
 	}
 
 	/**

@@ -1177,6 +1177,26 @@ Once a Commit Review Item is created, it will be shown in the Review Navigator. 
 The icons for the files that are new and were added in the commit will be shown decorated with a little [[Image:Addovr tsk.png]] icon The icons for the files that were removed in the commit will be shown decorated with a little [[Image:Removr tsk.png]] icon Files in the commit that are out of sync i.e. for which the version to review and the version present in the users workspace differ will be shown with the &gt; sign prepended to the filename. Such files can be reviewed, but to use the full navigatability provided by the editors, it is strongly recommended that the files be in sync with the workspace whenever possible. 
 
 <br>
+ 
+ When two Review Items have the same first line description, their displayed name in the Review Navigator will include a version number just after the Review Item type (e.g. Commit 1:... and Commit 2:..., where ... are two identical strings).  This will show the users that the two Review Items are two different versions of the same code change.  Of course, the first line of the Review Item description must not be changed for this function to work.
+ 
+=== Comparing Review Items  ===
+
+Is is possible to compare two arbitrary Review Items that are included in the same Review.  Typically this will be used to see the differences between two versions of a given code change.
+
+In order to do this, select two Review Items in the Review Navigator (using Ctrl-Left click or Shift-Left click) and then right click on one of the items and select the "Compare Review Items" command from the context menu
+
+[[Image:CompareReviewItems.png]]
+
+This will open a Structural Compare Editor that will show the files versions that are different.  The file that belong to the most recently committed Review Item will always be the target files (on the left side) and the files belonging to the oldest Review Item will be the base files (on the right side).
+
+Little + decorators show the files that were added in the newest Review Item, whereas - decorators show removed files.
+
+To see the differences within a specific file, just double click on it and the lower side of the compare editor will be populated with the content differences between the files.  From the Compare Editor, it is also possible to modify the R4E annotation markers (see [[#Using Review Annotations and Inline Comments|R4E Annotations]]), on either side.
+
+For instance, one could verify that anomalies that were written on a previous version of the code change are indeed corrected and change the state of the anomalies on the base version (right side) accordingly, as shown below.
+
+[[Image:CompareReviewItemsEditor.png]]
 
 === Assigning Review Elements  ===
 

@@ -1102,7 +1102,7 @@ public class R4EUITestCommands extends R4EUITestElement {
 						//Assume postponed element
 						sourceElement = (R4EUIFileContext) element.getParent().getParent();
 					}
-					IReviewAnnotation annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getTargetAnnotationModel()).findAnnotation(
+					IReviewAnnotation annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getAnnotationModel()).findAnnotation(
 							type, element);
 					if (null == annotation) {
 						return;
@@ -1174,6 +1174,7 @@ public class R4EUITestCommands extends R4EUITestElement {
 					if (null == editor) {
 						return;
 					}
+
 					annotation = ((R4ECompareEditorInput) editor.getEditorInput()).getAnnotationModel().findAnnotation(
 							type, element);
 					if (null == annotation) {
@@ -1181,29 +1182,30 @@ public class R4EUITestCommands extends R4EUITestElement {
 					}
 					closeEditor(editor);
 					TestUtils.waitForJobs();
-				}
-
-				//Open Single editor on first element and check annotations
-				setFocusOnNavigatorElement(element);
-				editor = openEditorOnCurrentElement(true);
-				TestUtils.waitForJobs();
-				if (null == editor) {
-					return;
-				}
-				R4EUIFileContext sourceElement;
-				if (element instanceof R4EUIPostponedAnomaly) {
-					sourceElement = (R4EUIPostponedFile) element.getParent();
 				} else {
-					//Assume postponed element
-					sourceElement = (R4EUIFileContext) element.getParent().getParent();
+
+					//Open Single editor on first element and check annotations
+					setFocusOnNavigatorElement(element);
+					editor = openEditorOnCurrentElement(true);
+					TestUtils.waitForJobs();
+					if (null == editor) {
+						return;
+					}
+					R4EUIFileContext sourceElement;
+					if (element instanceof R4EUIPostponedAnomaly) {
+						sourceElement = (R4EUIPostponedFile) element.getParent();
+					} else {
+						//Assume postponed element
+						sourceElement = (R4EUIFileContext) element.getParent().getParent();
+					}
+					annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getAnnotationModel()).findAnnotation(
+							type, element);
+					if (null == annotation) {
+						return;
+					}
+					closeEditor(editor);
+					TestUtils.waitForJobs();
 				}
-				annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getTargetAnnotationModel()).findAnnotation(
-						type, element);
-				if (null == annotation) {
-					return;
-				}
-				closeEditor(editor);
-				TestUtils.waitForJobs();
 				result = true;
 			}
 		}

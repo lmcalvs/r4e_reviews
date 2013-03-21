@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedEle
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -128,16 +129,19 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
-					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
+
+					if (!UIUtils.isLeftCompareEditorSelected(page.getActiveEditor())) {
+						return false;
+					}
+					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getCurrentDiffNode()
+							.getTargetTypedElement();
 					if (null == targetElement) {
 						return false;
 					}
-					//R4EItem parentItem = null;
-					final ITypedElement element = ((R4ECompareEditorInput) editorInput).getLeftElement();
-
 					//NOTE: For now we only support adding new review items from an R4E Compare Editor.
 					//		Eventually this should be enhanced to include any compare editor input
-					if (!(element instanceof R4EFileRevisionTypedElement) && !(element instanceof R4EFileTypedElement)) {
+					if (!(targetElement instanceof R4EFileRevisionTypedElement)
+							&& !(targetElement instanceof R4EFileTypedElement)) {
 						return false;
 					}
 				}

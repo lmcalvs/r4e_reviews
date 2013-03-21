@@ -22,7 +22,6 @@ import java.lang.reflect.Field;
 import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
 import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -54,13 +53,110 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 	 * 
 	 * @param aViewer
 	 *            Viewer
-	 * @param aSourceFile
+	 * @param aTargetFile
+	 *            Object
+	 * @param aBaseFile
 	 *            Object
 	 */
-	public ReviewCompareAnnotationSupport(Viewer aViewer, Object aSourceFile) {
-		super(aSourceFile);
-		fBaseAnnotationModel = createAnnotationModel(null);
+	public ReviewCompareAnnotationSupport(Viewer aViewer, Object aTargetFile, Object aBaseFile) {
+		super(aTargetFile);
+		if (null != aBaseFile) {
+			fBaseAnnotationModel = createAnnotationModel(aBaseFile);
+			fBaseAnnotationModel.setFile(aBaseFile);
+		} else {
+			fBaseAnnotationModel = null;
+		}
 		install(aViewer);
+	}
+
+	/**
+	 * Method getBaseAnnotationModel.
+	 * 
+	 * @return IReviewAnnotationModel
+	 */
+	public IReviewAnnotationModel getBaseAnnotationModel() {
+		return fBaseAnnotationModel;
+	}
+
+	/**
+	 * Method setAnnotationModelBaseElement.
+	 * 
+	 * @param aElement
+	 *            - Object
+	 */
+	public void setAnnotationModelBaseElement(Object aElement) {
+		if (null != fBaseAnnotationModel) {
+			fBaseAnnotationModel.setFile(aElement);
+		}
+	}
+
+	/**
+	 * Method refreshAnnotations.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#refreshAnnotations(Object)
+	 */
+	@Override
+	public void refreshAnnotations(Object aElement) {
+		super.refreshAnnotations(aElement);
+		if (null != fBaseAnnotationModel) {
+			if (null != aElement) {
+				fBaseAnnotationModel.setFile(aElement); //Set new file if it has changed
+			}
+			fBaseAnnotationModel.refreshAnnotations();
+		}
+	}
+
+	/**
+	 * Method addAnnotation.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @param aFile
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#addAnnotation(Object)
+	 */
+	@Override
+	public void addAnnotation(Object aElement, Object aFile) {
+		super.addAnnotation(aElement, aFile);
+		if (null != fBaseAnnotationModel && null != aFile && aFile.equals(fBaseAnnotationModel.getFile())) {
+			fBaseAnnotationModel.addAnnotation(aElement);
+		}
+	}
+
+	/**
+	 * Method updateAnnotation.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @param aFile
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#updateAnnotation(Object)
+	 */
+	@Override
+	public void updateAnnotation(Object aElement, Object aFile) {
+		super.updateAnnotation(aElement, aFile);
+		if (null != fBaseAnnotationModel && null != aFile && aFile.equals(fBaseAnnotationModel.getFile())) {
+			fBaseAnnotationModel.updateAnnotation(aElement);
+		}
+	}
+
+	/**
+	 * Method removeAnnotation.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @param aFile
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#removeAnnotation(Object)
+	 */
+	@Override
+	public void removeAnnotation(Object aElement, Object aFile) {
+		super.addAnnotation(aElement, aFile);
+		if (null != fBaseAnnotationModel && aFile.equals(fBaseAnnotationModel.getFile())) {
+			fBaseAnnotationModel.removeAnnotation(aElement);
+		}
 	}
 
 	/**
@@ -95,7 +191,7 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 				declaredField.setAccessible(true);
 				final MergeSourceViewer fRight = (MergeSourceViewer) declaredField.get(textMergeViewer);
 
-				fTargetViewerListener = registerInputListener(fLeft, fTargetAnnotationModel);
+				fViewerListener = registerInputListener(fLeft, fAnnotationModel);
 				fBaseViewerListener = registerInputListener(fRight, fBaseAnnotationModel);
 			} catch (Throwable t) {
 				//do nothing for now
@@ -121,10 +217,13 @@ public abstract class ReviewCompareAnnotationSupport extends ReviewAnnotationSup
 	 */
 	private IEditorInputListener registerInputListener(final MergeSourceViewer aViewer,
 			final IReviewAnnotationModel aAnnotationModel) {
-		final ISourceViewer sourceViewer = ReviewAnnotationSupport.getSourceViewer(aViewer);
-		final IEditorInputListener listener = createEditorInputListener(aViewer, aAnnotationModel);
-		if (sourceViewer != null) {
-			sourceViewer.addTextInputListener(listener);
+		IEditorInputListener listener = null;
+		if (null != aAnnotationModel) {
+			final ISourceViewer sourceViewer = ReviewAnnotationSupport.getSourceViewer(aViewer);
+			listener = createEditorInputListener(aViewer, aAnnotationModel);
+			if (sourceViewer != null) {
+				sourceViewer.addTextInputListener(listener);
+			}
 		}
 		return listener;
 	}

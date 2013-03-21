@@ -1287,6 +1287,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String OPEN_EDITOR_COMMAND_MNEMONIC = "E";
 
 	/**
+	 * Field COMPARE_ITEMS_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.compareItems"")
+	 */
+	public static final String COMPARE_ITEMS_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.compareItems";
+
+	/**
+	 * Field COMPARE_ITEMS_ICON_FILE. (value is ""icons/elcl16/compareitems_menu.gif"")
+	 */
+	public static final String COMPARE_ITEMS_ICON_FILE = "icons/elcl16/compareitems_menu.gif";
+
+	/**
+	 * Field COMPARE_ITEMS_COMMAND_NAME. (value is ""Compare Review Items"")
+	 */
+	public static final String COMPARE_ITEMS_COMMAND_NAME = "Compare Review Items";
+
+	/**
+	 * Field COMPARE_ITEMS_COMMAND_TOOLTIP. (value is ""Compare selected Review Items structurally in Compare Editor"")
+	 */
+	public static final String COMPARE_ITEMS_COMMAND_TOOLTIP = "Compare selected Review Items structurally in Compare Editor";
+
+	/**
+	 * Field COMPARE_ITEMS_COMMAND_MNEMONIC. (value is ""C"")
+	 */
+	public static final String COMPARE_ITEMS_COMMAND_MNEMONIC = "C";
+
+	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"")
 	 */
 	public static final String CHANGE_REVIEW_STATE_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState";

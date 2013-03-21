@@ -289,7 +289,7 @@ public class TestUtils {
 		resources.add(FJavaFile1);
 		resources.add(FJavaFile2);
 		addFilesToRepository(resources);
-		commitFiles(FJavaIProject, FJavaRepository, "first Java Commit");
+		commitFiles(FJavaIProject, FJavaRepository, "first Java Commit", false);
 
 		//Update files (Modify File1, Remove File2, Add File 3, Add File4)
 		FJavaFile1 = changeContentOfFile(FJavaFile1, JAVA_FILE1_EXT_MOD_PATH);
@@ -304,7 +304,7 @@ public class TestUtils {
 		resources.add(FJavaFile3);
 		resources.add(FJavaFile4);
 		addFilesToRepository(resources);
-		commitFiles(FJavaIProject, FJavaRepository, "second Java Commit");
+		commitFiles(FJavaIProject, FJavaRepository, "second Java Commit", false);
 
 		//Update files (Modify File4, Add File5, do not commit)
 		FJavaFile4 = changeContentOfFile(FJavaFile4, JAVA_FILE4_EXT_MOD_PATH);
@@ -334,7 +334,7 @@ public class TestUtils {
 		resources.add(FCFile1);
 		resources.add(FCFile2);
 		addFilesToRepository(resources);
-		commitFiles(FCIProject, FCRepository, "first C Commit");
+		commitFiles(FCIProject, FCRepository, "first C Commit", false);
 
 		//Update files (Modify File1, Remove File2, Add File 3, Add File4)
 		FCFile1 = changeContentOfFile(FCFile1, C_FILE1_EXT_MOD_PATH);
@@ -349,7 +349,7 @@ public class TestUtils {
 		resources.add(FCFile3);
 		resources.add(FCFile4);
 		addFilesToRepository(resources);
-		commitFiles(FCIProject, FCRepository, "second C Commit");
+		commitFiles(FCIProject, FCRepository, "second C Commit", false);
 
 		//Update files (Modify File4, Add File5, do not commit)
 		FCFile4 = changeContentOfFile(FCFile4, C_FILE4_EXT_MOD_PATH);
@@ -376,7 +376,7 @@ public class TestUtils {
 		resources.add(FTextFile1);
 		resources.add(FTextFile2);
 		addFilesToRepository(resources);
-		commitFiles(FTextIProject, FTextRepository, "first Text Commit");
+		commitFiles(FTextIProject, FTextRepository, "first Text Commit", false);
 
 		//Update files (Modify File1, Remove File2, Add File 3, Add File4)
 		FTextFile1 = changeContentOfFile(FTextFile1, TEXT_FILE1_EXT_MOD_PATH);
@@ -391,7 +391,7 @@ public class TestUtils {
 		resources.add(FTextFile3);
 		resources.add(FTextFile4);
 		addFilesToRepository(resources);
-		commitFiles(FTextIProject, FTextRepository, "second Text Commit");
+		commitFiles(FTextIProject, FTextRepository, "second Text Commit", false);
 
 		//Update files (Modify File4, Add File5, do not commit)
 		FTextFile4 = changeContentOfFile(FTextFile4, TEXT_FILE4_EXT_MOD_PATH);
@@ -564,10 +564,12 @@ public class TestUtils {
 		return file;
 	}
 
-	public static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg) throws CoreException {
+	public static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg, boolean aAmend)
+			throws CoreException {
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER,
 				aCommitMsg);
 		commitOperation.setCommitAll(true);
+		commitOperation.setAmending(aAmend);
 		commitOperation.setRepository(aRepository);
 		commitOperation.execute(null);
 		aProject.refreshLocal(IResource.DEPTH_INFINITE, null);

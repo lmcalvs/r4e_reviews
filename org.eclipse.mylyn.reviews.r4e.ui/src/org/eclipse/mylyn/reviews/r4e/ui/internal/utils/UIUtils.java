@@ -13,6 +13,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -31,10 +32,14 @@ import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
 import org.eclipse.compare.internal.CompareContentViewerSwitchingPane;
 import org.eclipse.compare.internal.CompareEditorInputNavigator;
+import org.eclipse.compare.internal.CompareEditorSelectionProvider;
 import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -44,10 +49,12 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewCompareAnnotationSupport;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -61,6 +68,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.R4EAnnotationContributionItems;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ESingleAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.UIElementsProvider;
@@ -69,6 +77,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantUnassignDia
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileContextCompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EReviewItemCompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -80,6 +90,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
@@ -927,8 +938,7 @@ public class UIUtils {
 			try {
 				if (aReview instanceof R4EUIReviewExtended) {
 					final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) aReview).getReview());
-					if (aNewPhase.equals(R4EReviewPhase.PREPARATION)
-							&& null == review.getActiveMeeting()) {
+					if (aNewPhase.equals(R4EReviewPhase.PREPARATION) && null == review.getActiveMeeting()) {
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
 								try {
@@ -1170,7 +1180,7 @@ public class UIUtils {
 		//Add Annotation marker for inline commenting (if applicable)
 		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
 		if (null != support) {
-			support.addAnnotation(aSource);
+			support.addAnnotation(aSource, aFile);
 		}
 	}
 
@@ -1186,7 +1196,7 @@ public class UIUtils {
 		//Add Annotation marker for inline commenting (if applicable)
 		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
 		if (null != support) {
-			support.updateAnnotation(aSource);
+			support.updateAnnotation(aSource, aFile);
 		}
 	}
 
@@ -1202,7 +1212,7 @@ public class UIUtils {
 		//Add Annotation marker for inline commenting (if applicable)
 		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
 		if (null != support) {
-			support.removeAnnotation(aSource);
+			support.removeAnnotation(aSource, aFile);
 		}
 	}
 
@@ -1216,15 +1226,17 @@ public class UIUtils {
 	public static IReviewAnnotationSupport getAnnotationSupport(R4EUIFileContext aFile) {
 		IReviewAnnotationSupport support = null;
 
-		//First try to find Compare Editor
-		IEditorPart editor = EditorProxy.findReusableCompareEditor(R4EUIModelController.getNavigatorView()
+		//First try to find File Context Compare Editor
+		IEditorPart editor = EditorProxy.findReusableFileContextCompareEditor(R4EUIModelController.getNavigatorView()
 				.getSite()
-				.getPage(), aFile.getBaseFileVersion(), aFile.getTargetFileVersion());
+				.getPage(), aFile.getTargetFileVersion(), aFile.getBaseFileVersion());
 		if (null != editor) {
 			IEditorInput input = editor.getEditorInput();
-			Viewer viewer = ((R4ECompareEditorInput) input).getContentViewer();
-			if (null != viewer) {
-				support = getCompareAnnotationSupport(viewer, aFile);
+			if (input instanceof R4EFileContextCompareEditorInput) {
+				Viewer viewer = ((R4EFileContextCompareEditorInput) input).getContentViewer();
+				if (null != viewer) {
+					support = getCompareAnnotationSupport(viewer, aFile, null);
+				}
 			}
 		} else {
 			//Try to find Single Editor
@@ -1235,6 +1247,23 @@ public class UIUtils {
 				if (target instanceof SourceViewer) {
 					SourceViewer sourceViewer = (SourceViewer) target;
 					support = getSingleAnnotationSupport(sourceViewer, aFile);
+				}
+			}
+			if (null == editor) {
+				//Finally try to use the Review Item structured editor
+				editor = EditorProxy.getReviewItemCompareEditorPart(R4EUIModelController.getNavigatorView()
+						.getSite()
+						.getPage(), (R4EUIReviewItem) aFile.getParent());
+				if (null != editor) {
+					IEditorInput input = editor.getEditorInput();
+					if (input instanceof R4EReviewItemCompareEditorInput) {
+						Viewer viewer = ((R4EReviewItemCompareEditorInput) input).getContentViewer();
+						if (null != viewer) {
+							support = getCompareAnnotationSupport(viewer,
+									((R4EReviewItemCompareEditorInput) input).getCurrentDiffNode().getTargetFile(),
+									((R4EReviewItemCompareEditorInput) input).getCurrentDiffNode().getBaseFile());
+						}
+					}
 				}
 			}
 		}
@@ -1262,17 +1291,23 @@ public class UIUtils {
 	/**
 	 * Method getCompareAnnotationSupport.
 	 * 
-	 * @param aSourceViewer
-	 *            ISourceViewer
-	 * @param aFileContext
+	 * @param aViewer
+	 *            Viewer
+	 * @param aTargetFile
+	 *            R4EUIFileContext
+	 * @param aBaseFile
 	 *            R4EUIFileContext
 	 * @return IReviewAnnotationSupport
 	 */
-	public static IReviewAnnotationSupport getCompareAnnotationSupport(Viewer aViewer, Object aFileContext) {
-		IReviewAnnotationSupport support = (IReviewAnnotationSupport) aViewer.getData(COMPARE_KEY_ANNOTATION_SUPPORT);
+	public static IReviewAnnotationSupport getCompareAnnotationSupport(Viewer aViewer, R4EUIFileContext aTargetFile,
+			R4EUIFileContext aBaseFile) {
+		ReviewCompareAnnotationSupport support = (ReviewCompareAnnotationSupport) aViewer.getData(COMPARE_KEY_ANNOTATION_SUPPORT);
 		if (support == null) {
-			support = new R4ECompareAnnotationSupport(aViewer, aFileContext);
+			support = new R4ECompareAnnotationSupport(aViewer, aTargetFile, aBaseFile);
 			aViewer.setData(COMPARE_KEY_ANNOTATION_SUPPORT, support);
+		} else {
+			support.setAnnotationModelBaseElement(aBaseFile);
+			support.setAnnotationModelElement(aTargetFile);
 		}
 		return support;
 	}
@@ -1376,5 +1411,60 @@ public class UIUtils {
 
 		}
 		return null;
+	}
+
+	/**
+	 * Method insertAnnotationNavigationCommands.
+	 * 
+	 * @param aManager
+	 *            IToolBarManager
+	 * @param aSupport
+	 *            IReviewAnnotationSupport
+	 */
+	public static void insertAnnotationNavigationCommands(IToolBarManager aManager, IReviewAnnotationSupport aSupport) {
+		if (null == aManager.find(R4EUIConstants.NEXT_ANOMALY_ANNOTATION_COMMAND)) {
+			aManager.add(new Separator());
+			final R4EAnnotationContributionItems r4eItemsManager = new R4EAnnotationContributionItems();
+			final IContributionItem[] items = r4eItemsManager.getR4EContributionItems();
+			for (IContributionItem item : items) {
+				aManager.add(item);
+			}
+			aManager.update(true);
+		}
+	}
+
+	/**
+	 * Method isLeftCompareEditorSelected.
+	 * 
+	 * @param editor
+	 *            IEditorPart
+	 * @return boolean
+	 */
+	public static boolean isLeftCompareEditorSelected(IEditorPart editor) {
+		ISelectionProvider provider = editor.getSite().getSelectionProvider();
+
+		if (provider instanceof CompareEditorSelectionProvider) {
+			final CompareEditorSelectionProvider compareProvide = (CompareEditorSelectionProvider) provider;
+			try {
+				//NOTE:  THis is a hack that we need to do to get which side of the comapre editor is selected
+				//It makes the big assumption that the left side of the compare editor is at array position 0 in fViewers.
+				//This should be improved later and we should find a better way to find what we need.
+				final Class<CompareEditorSelectionProvider> clazz = CompareEditorSelectionProvider.class;
+				Field declaredField = clazz.getDeclaredField("fViewerInFocus"); //$NON-NLS-1$
+				declaredField.setAccessible(true);
+				Object viewerInFocus = declaredField.get(compareProvide);
+				Field declaredField2 = clazz.getDeclaredField("fViewers"); //$NON-NLS-1$
+				declaredField2.setAccessible(true);
+				Object viewers = declaredField2.get(compareProvide);
+				int length = Array.getLength(viewers);
+				Object leftViewer = Array.get(viewers, 0);
+				if (leftViewer.equals(viewerInFocus)) {
+					return true;
+				}
+			} catch (Throwable t) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + t.toString() + " (" + t.getMessage() + ")");
+			}
+		}
+		return false;
 	}
 }

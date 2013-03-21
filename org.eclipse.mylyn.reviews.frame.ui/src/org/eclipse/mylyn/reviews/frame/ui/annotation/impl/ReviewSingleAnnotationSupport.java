@@ -39,7 +39,7 @@ public abstract class ReviewSingleAnnotationSupport extends ReviewAnnotationSupp
 	public ReviewSingleAnnotationSupport(ISourceViewer aSourceViewer, Object aSourceFile) {
 		super(aSourceFile);
 		install(aSourceViewer);
-		fTargetViewerListener.inputDocumentChanged(null, aSourceViewer.getDocument()); //Force annotation updates
+		fViewerListener.inputDocumentChanged(null, aSourceViewer.getDocument()); //Force annotation updates
 	}
 
 	/**
@@ -63,7 +63,7 @@ public abstract class ReviewSingleAnnotationSupport extends ReviewAnnotationSupp
 	@Override
 	protected void install(Object aSourceViewer) {
 		if (aSourceViewer instanceof SourceViewer) {
-			fTargetViewerListener = registerInputListener((ISourceViewer) aSourceViewer, fTargetAnnotationModel);
+			fViewerListener = registerInputListener((ISourceViewer) aSourceViewer, fAnnotationModel);
 		}
 	}
 

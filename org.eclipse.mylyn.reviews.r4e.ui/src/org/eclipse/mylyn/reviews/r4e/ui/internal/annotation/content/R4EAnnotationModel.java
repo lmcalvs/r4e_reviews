@@ -139,7 +139,9 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 */
 	public void setFile(Object aFileContext) {
 		fFileContext = (R4EUIFileContext) aFileContext;
-		fFileContext.registerAnnotationModel(this);
+		if (null != aFileContext) {
+			fFileContext.registerAnnotationModel(this);
+		}
 	}
 
 	/**
@@ -190,6 +192,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 */
 	public void connect(IDocument aDocument) {
 		fDocument = aDocument;
+
 		if (fDocument.getLength() > 0) {
 			for (IReviewAnnotation annotation : fAnnotationsMap.values()) {
 				try {
@@ -212,11 +215,15 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.jface.text.source.IAnnotationModel#disconnect(IDocument)
 	 */
 	public void disconnect(IDocument aDocument) {
+		/* TODO: This is commented out to prevent losing the annotation model when it is connected to multiple
+		 * viewers.  This should be revisited as it may cause listener leaks.
 		for (IReviewAnnotation annotation : fAnnotationsMap.values()) {
 			aDocument.removePosition(annotation.getPosition());
 		}
 		aDocument.removeDocumentListener(fDocumentListener);
 		fDocument = null;
+		refreshAnnotations();
+		*/
 	}
 
 	/**
@@ -496,5 +503,15 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method getFile.
+	 * 
+	 * @return Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel#getFile()
+	 */
+	public Object getFile() {
+		return fFileContext;
 	}
 }

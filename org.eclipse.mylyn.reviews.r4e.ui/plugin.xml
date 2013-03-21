@@ -775,6 +775,12 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Compare Review Items in Compare Editor"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.compareItems"
+            name="Compare Review Items">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
             description="Mark as User Reviewed"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
             name="Mark as User Reviewed">
@@ -1257,6 +1263,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.OpenEditorHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.CompareItemsHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.compareItems">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
