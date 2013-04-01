@@ -3,10 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.eclipse.mylyn</groupId>
-    <artifactId>org.eclipse.mylyn-parent</artifactId>
-    <version>3.9.0-SNAPSHOT</version>
-    <relativePath>../org.eclipse.mylyn/org.eclipse.mylyn-parent</relativePath>
+    <groupId>org.eclipse.mylyn.reviews</groupId>
+    <artifactId>org.eclipse.mylyn.reviews.parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.mylyn.reviews</relativePath>
   </parent>
   <groupId>org.eclipse.mylyn.reviews.r4e</groupId>
   <artifactId>org.eclipse.mylyn.reviews.r4e-parent</artifactId>
@@ -55,6 +55,7 @@
         </property>
       </activation>
       <repositories>
+ <!-- 
         <repository>
           <id>eclipse-mylyn-commons</id>
           <layout>p2</layout>
@@ -80,7 +81,8 @@
           <layout>p2</layout>
           <url>${mylyn-reviews-repository-url}</url>
         </repository>
-		<!--  Orbit is taken from parent pom
+ -->
+ 		<!--  Orbit is taken from parent pom
         <repository>
            <id>eclipse-mylyn-orbit-committers</id>
            <layout>p2</layout>

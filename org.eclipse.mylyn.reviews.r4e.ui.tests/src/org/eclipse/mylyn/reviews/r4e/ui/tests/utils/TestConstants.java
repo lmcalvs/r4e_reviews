@@ -98,6 +98,8 @@ public class TestConstants {
 
 	public static final String REVIEW_TEST_NAME_INF = "testReviewInf";
 
+	public static final String REVIEW_TEST_NAME_INF_COMPARE = "testReviewInfCompare";
+
 	public static final String REVIEW_DUPLICATE_NAME_INF = "testReviewDuplicateInf";
 
 	//The following chars should not be used as strange chars: \/<>:;*"?'
