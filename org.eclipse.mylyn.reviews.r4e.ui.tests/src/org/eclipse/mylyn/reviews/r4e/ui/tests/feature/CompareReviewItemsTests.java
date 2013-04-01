@@ -215,7 +215,7 @@ public class CompareReviewItemsTests extends TestCase {
 
 		r4eAssert.setTest("Create Review");
 		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
-				TestConstants.REVIEW_TEST_NAME_INF, TestConstants.REVIEW_TEST_DESCRIPTION,
+				TestConstants.REVIEW_TEST_NAME_INF_COMPARE, TestConstants.REVIEW_TEST_DESCRIPTION,
 				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
 				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
 				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
@@ -223,7 +223,7 @@ public class CompareReviewItemsTests extends TestCase {
 		r4eAssert.assertNotNull(fReview.getParticipantContainer());
 		r4eAssert.assertNotNull(fReview.getAnomalyContainer());
 		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_TYPE_INFORMAL, fReview.getReview().getType());
-		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_NAME_INF, fReview.getReview().getName());
+		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_NAME_INF_COMPARE, fReview.getReview().getName());
 		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
 		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_DUE_DATE, fReview.getReview().getDueDate());
 		r4eAssert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fReview.getReview().getProject());
@@ -261,7 +261,7 @@ public class CompareReviewItemsTests extends TestCase {
 		r4eAssert.assertNotNull(fItem);
 		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem.getItem().getAddedById());
 		r4eAssert.assertEquals("The.committer@some.com", fItem.getItem().getAuthorRep());
-		r4eAssert.assertEquals("second Java Commit", fItem.getItem().getDescription());
+		r4eAssert.assertEquals("third Java Commit", fItem.getItem().getDescription());
 		r4eAssert.assertEquals(4, fItem.getChildren().length);
 		for (int i = 0; i < fItem.getChildren().length; i++) {
 			if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE1_PROJ_NAME)) {
