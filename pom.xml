@@ -36,12 +36,12 @@
         <enabled>true</enabled>
       </snapshots>
       <id>mylyn-snapshots</id>
-      <url>http://download.eclipse.org/mylyn/snapshots/weekly</url>      
+      <url>http://download.eclipse.org/mylyn/maven/snapshots</url>      
        <layout>default</layout>
     </repository>
     <repository>
       <id>mylyn-releases</id>
-      <url>http://download.eclipse.org/mylyn/releases/latest</url>
+      <url>http://download.eclipse.org/mylyn/mavrn/releases</url>
       <layout>default</layout>
     </repository>
   </repositories>
