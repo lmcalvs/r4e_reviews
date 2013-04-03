@@ -36,12 +36,12 @@
         <enabled>true</enabled>
       </snapshots>
       <id>mylyn-snapshots</id>
-      <url>http://download.eclipse.org/mylyn/maven/snapshots</url>
-      <layout>default</layout>
+      <url>http://download.eclipse.org/mylyn/snapshots/weekly</url>      
+       <layout>default</layout>
     </repository>
     <repository>
       <id>mylyn-releases</id>
-      <url>http://download.eclipse.org/mylyn/maven/releases</url>
+      <url>http://download.eclipse.org/mylyn/releases/latest</url>
       <layout>default</layout>
     </repository>
   </repositories>
@@ -55,6 +55,11 @@
         </property>
       </activation>
       <repositories>
+        <repository>
+          <id>eclipse-mylyn-reviews</id>
+          <layout>p2</layout>
+          <url>${mylyn-reviews-repository-url}</url>
+        </repository>
         <repository>
           <id>eclipse-mylyn-commons</id>
           <layout>p2</layout>
@@ -75,12 +80,7 @@
 			<layout>p2</layout>
 			<url>${mylyn-context-repository-url}</url>
 		</repository>
-        <repository>
-          <id>eclipse-mylyn-reviews</id>
-          <layout>p2</layout>
-          <url>${mylyn-reviews-repository-url}</url>
-        </repository>
-		<!--  Orbit is taken from parent pom
+<!--  Orbit is taken from parent pom
         <repository>
            <id>eclipse-mylyn-orbit-committers</id>
            <layout>p2</layout>
