@@ -12,7 +12,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
+ *   Francois Chouinard - Make the WS and shared drive test-independent
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.tests.utils;
@@ -25,9 +25,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-
-import junit.framework.Assert;
+import java.util.Map;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.CProjectNature;
@@ -69,6 +69,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Assert;
 
 @SuppressWarnings({ "restriction", "nls" })
 public class TestUtils {
@@ -77,12 +78,12 @@ public class TestUtils {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	//Git
-	public final static String AUTHOR = "The Author <The.author@some.com>";
+	// Git
+	private static final String AUTHOR = "The Author <The.author@some.com>";
 
-	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
+	private static final String COMMITTER = "The Commiter <The.committer@some.com>";
 
-	//Java
+	// Java
 	private static final String UI_TEST_JAVA_PROJECT_NAME = "javaProject";
 
 	private static final String JAVA_FILE1_EXT_PATH = "testFiles" + File.separator + "extModCommitFile.java";
@@ -111,7 +112,7 @@ public class TestUtils {
 
 	private static final String JAVA_FILE5_PROJ_NAME = "noVCSFile.java";
 
-	//C
+	// C
 	private static final String UI_TEST_C_PROJECT_NAME = "cProject";
 
 	private static final String C_FILE1_EXT_PATH = "testFiles" + File.separator + "extModCommitFile.cc";
@@ -138,7 +139,7 @@ public class TestUtils {
 
 	private static final String C_FILE5_PROJ_NAME = "noVCSFile.cc";
 
-	//Text
+	// Text
 	private static final String UI_TEST_TEXT_PROJECT_NAME = "textProject";
 
 	private static final String TEXT_FILE1_EXT_PATH = "testFiles" + File.separator + "extModCommitFile.txt";
@@ -165,110 +166,154 @@ public class TestUtils {
 
 	private static final String TEXT_FILE5_PROJ_NAME = "noVCSFile.txt";
 
-	//Test Views
-	public static final String R4E_NAVIGATOR_VIEW_NAME = "org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"; // $codepro.audit.disable constantNamingConvention
+	// Test Views
+	private static final String R4E_NAVIGATOR_VIEW_NAME = "org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"; // $codepro.audit.disable constantNamingConvention
 
 	// ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
 
-	public static String FSharedFolder = null;
+	public String FSharedFolder = null;
 
-	public static IProject FExtProject = null;
+	private IProject FExtProject = null;
 
-	//Java
-	public static IProject FJavaIProject = null;
+	// Java
+	public IProject FJavaIProject = null;
 
-	public static IJavaProject FJavaIJavaProject = null;
+	private IJavaProject FJavaIJavaProject = null;
 
-	public static Repository FJavaRepository = null;
+	public Repository FJavaRepository = null;
 
-	public static String FJavaWorkdirPrefix = null;
+	private String FJavaWorkdirPrefix = null;
 
-	public static IFile FJavaFile1 = null;
+	public IFile FJavaFile1 = null;
 
-	public static IFile FJavaFile2 = null;
+	private IFile FJavaFile2 = null;
 
-	public static IFile FJavaFile3 = null;
+	public IFile FJavaFile3 = null;
 
-	public static IFile FJavaFile4 = null;
+	public IFile FJavaFile4 = null;
 
-	public static IFile FJavaFile5 = null;
+	private IFile FJavaFile5 = null;
 
-	//C
-	public static IProject FCIProject = null;
+	// C
+	public IProject FCIProject = null;
 
-	public static IProject FCICProject = null;
+	private IProject FCICProject = null;
 
-	public static Repository FCRepository = null;
+	private Repository FCRepository = null;
 
-	public static String FCWorkdirPrefix = null;
+	private String FCWorkdirPrefix = null;
 
-	public static IFile FCFile1 = null;
+	private IFile FCFile1 = null;
 
-	public static IFile FCFile2 = null;
+	private IFile FCFile2 = null;
 
-	public static IFile FCFile3 = null;
+	private IFile FCFile3 = null;
 
-	public static IFile FCFile4 = null;
+	private IFile FCFile4 = null;
 
-	public static IFile FCFile5 = null;
+	private IFile FCFile5 = null;
 
-	//Text
-	public static IProject FTextIProject = null;
+	// Text
+	public IProject FTextIProject = null;
 
-	public static Repository FTextRepository = null;
+	private Repository FTextRepository = null;
 
-	public static String FTextWorkdirPrefix = null;
+	private String FTextWorkdirPrefix = null;
 
-	public static IFile FTextFile1 = null;
+	private IFile FTextFile1 = null;
 
-	public static IFile FTextFile2 = null;
+	private IFile FTextFile2 = null;
 
-	public static IFile FTextFile3 = null;
+	private IFile FTextFile3 = null;
 
-	public static IFile FTextFile4 = null;
+	private IFile FTextFile4 = null;
 
-	public static IFile FTextFile5 = null;
+	private IFile FTextFile5 = null;
 
-	//UI Model
-	public static R4EUIRootElement FRootElement;
+	// UI Model
+	private R4EUIRootElement FRootElement;
 
-	//Test View
-	public static ReviewNavigatorView FTestNavigatorView;
+	// Test View
+	private ReviewNavigatorView FTestNavigatorView;
+
+	// ------------------------------------------------------------------------
+	// Factory stuff
+	// ------------------------------------------------------------------------
+
+	/**
+	 * The TestUtils ID
+	 */
+	private String fTestUtilsID = null;
+
+	/**
+	 * TestUtils repository
+	 */
+	private static Map<String, TestUtils> fTestUtils = new HashMap<String, TestUtils>();
+
+	/**
+	 * TestUtils factory. If the requested TestUtils doesn't exist, it will be created.
+	 * 
+	 * @param id
+	 *            the unique TestUtils ID
+	 * @return the corresponding TestUtils
+	 */
+	public static TestUtils get(String id) {
+		TestUtils testUtils = fTestUtils.get(id);
+		if (testUtils == null) {
+			testUtils = new TestUtils(id);
+			fTestUtils.put(id, testUtils);
+		}
+		return testUtils;
+	}
+
+	private TestUtils(String id) {
+		fTestUtilsID = id;
+	}
+
+	/**
+	 * @return the TestUtils ID
+	 */
+	public String getId() {
+		return fTestUtilsID;
+	}
 
 	// ------------------------------------------------------------------------
 	// Test environment setup
 	// ------------------------------------------------------------------------
 
-	public static void setupTestEnvironment() throws CoreException, IOException, URISyntaxException {
+	public void setupTestEnvironment() throws CoreException, IOException, URISyntaxException {
 		FExtProject = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUITestPlugin.PLUGIN_ID);
-
 		setupJavaProject();
 		setupCProject();
 		setupTextProject();
-		setupSharedFolder();
+		setupSharedFolder(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString());
 	}
 
 	// ------------------------------------------------------------------------
-	// project cleanup
+	// Project cleanup
 	// ------------------------------------------------------------------------
 
-	public static void cleanupTestEnvironment() throws CoreException, IOException {
-		cleanupSharedFolder(FSharedFolder);
-		cleanupProject(FTextIProject, FTextRepository);
-		cleanupProject(FCIProject, FCRepository);
-		cleanupProject(FJavaIProject, FJavaRepository);
+	public void cleanupTestEnvironment() {
+		try {
+			cleanupSharedFolder(FSharedFolder);
+			cleanupProject(FTextIProject, FTextRepository);
+			cleanupProject(FCIProject, FCRepository);
+			cleanupProject(FJavaIProject, FJavaRepository);
+		} catch (Exception e) {
+			// Don't care at this point
+		}
 	}
 
 	// ------------------------------------------------------------------------
 	// Projects
 	// ------------------------------------------------------------------------
 
-	private static void setupJavaProject() throws CoreException, IOException, URISyntaxException {
+	private void setupJavaProject() throws CoreException, IOException, URISyntaxException {
 
 		//Create project
-		FJavaIProject = createProject(UI_TEST_JAVA_PROJECT_NAME);
+		FJavaIProject = createProject(fTestUtilsID + "-" + UI_TEST_JAVA_PROJECT_NAME);
 
 		//Create repository
 		FJavaRepository = createRepository(FJavaIProject);
@@ -311,9 +356,9 @@ public class TestUtils {
 		FJavaFile5 = addFileToProject(FJavaIProject, JAVA_FILE5_PROJ_NAME, JAVA_FILE5_EXT_PATH);
 	}
 
-	private static void setupCProject() throws CoreException, IOException, URISyntaxException {
+	private void setupCProject() throws CoreException, IOException, URISyntaxException {
 		//Create project
-		FCIProject = createProject(UI_TEST_C_PROJECT_NAME);
+		FCIProject = createProject(fTestUtilsID + "-" + UI_TEST_C_PROJECT_NAME);
 
 		//Create repository
 		FCRepository = createRepository(FCIProject);
@@ -356,9 +401,9 @@ public class TestUtils {
 		FCFile5 = addFileToProject(FCIProject, C_FILE5_PROJ_NAME, C_FILE5_EXT_PATH);
 	}
 
-	private static void setupTextProject() throws CoreException, IOException, URISyntaxException {
+	private void setupTextProject() throws CoreException, IOException, URISyntaxException {
 		//Create project
-		FTextIProject = createProject(UI_TEST_TEXT_PROJECT_NAME);
+		FTextIProject = createProject(fTestUtilsID + "-" + UI_TEST_TEXT_PROJECT_NAME);
 
 		//Create repository
 		FTextRepository = createRepository(FTextIProject);
@@ -398,7 +443,7 @@ public class TestUtils {
 		FTextFile5 = addFileToProject(FTextIProject, TEXT_FILE5_PROJ_NAME, TEXT_FILE5_EXT_PATH);
 	}
 
-	private static void cleanupProject(IProject aProject, Repository aRepository) throws CoreException, IOException {
+	private void cleanupProject(IProject aProject, Repository aRepository) throws CoreException, IOException {
 		//Disconnect project from repository
 		disconnectProject(aProject);
 
@@ -413,7 +458,7 @@ public class TestUtils {
 	// Project helper functions
 	// ------------------------------------------------------------------------
 
-	private static IProject createProject(String aProjectName) throws CoreException, IOException {
+	private IProject createProject(String aProjectName) throws CoreException, IOException {
 		TestUtils.waitForJobs();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject project = root.getProject(aProjectName);
@@ -425,7 +470,7 @@ public class TestUtils {
 		return project;
 	}
 
-	private static void deleteProject(IProject aProject) throws CoreException, IOException {
+	private void deleteProject(IProject aProject) throws CoreException, IOException {
 		if (aProject.exists()) {
 			aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
 			aProject.close(null);
@@ -438,7 +483,7 @@ public class TestUtils {
 		}
 	}
 
-	private static IJavaProject setProjectAsJava(IProject aProject) throws CoreException, IOException {
+	private IJavaProject setProjectAsJava(IProject aProject) throws CoreException, IOException {
 		IJavaProject javaProject = JavaCore.create(aProject);
 
 		IFolder binFolder = aProject.getFolder("bin");
@@ -460,7 +505,7 @@ public class TestUtils {
 		return javaProject;
 	}
 
-	private static IProject setProjectAsC(IProject aProject) throws CoreException, IOException {
+	private IProject setProjectAsC(IProject aProject) throws CoreException, IOException {
 		IProjectDescription description = aProject.getDescription();
 		description.setNatureIds(new String[] { CProjectNature.C_NATURE_ID });
 		aProject.setDescription(description, null);
@@ -470,8 +515,8 @@ public class TestUtils {
 		return cProject;
 	}
 
-	private static IFile addFileToProject(IProject aProject, String aProjFilepath, String aExtFilePath)
-			throws IOException, CoreException, URISyntaxException {
+	private IFile addFileToProject(IProject aProject, String aProjFilepath, String aExtFilePath) throws IOException,
+			CoreException, URISyntaxException {
 		URL location = FileLocator.find(Platform.getBundle(R4EUITestPlugin.PLUGIN_ID), new Path(aExtFilePath), null);
 		File extFile = new File(FileLocator.toFileURL(location).toURI());
 		FileInputStream content = new FileInputStream(extFile);
@@ -498,7 +543,7 @@ public class TestUtils {
 	// Repository helper functions
 	// ------------------------------------------------------------------------
 
-	private static Repository createRepository(IProject aProject) throws CoreException, IOException {
+	private Repository createRepository(IProject aProject) throws CoreException, IOException {
 		TestUtils.waitForJobs();
 		File gitDir = new File(aProject.getLocation().toOSString(), Constants.DOT_GIT);
 		Repository repository = new FileRepository(gitDir);
@@ -513,25 +558,24 @@ public class TestUtils {
 		return repository;
 	}
 
-	private static void deleteRepository(Repository aRepository) throws CoreException, IOException {
+	private void deleteRepository(Repository aRepository) throws CoreException, IOException {
 		Repository repository = aRepository;
 		repository.close();
 		repository = null;
 	}
 
-	private static void connectProjectWithRepo(IProject aProject, Repository aRepository) throws CoreException,
-			IOException {
+	private void connectProjectWithRepo(IProject aProject, Repository aRepository) throws CoreException, IOException {
 		ConnectProviderOperation op = new ConnectProviderOperation(aProject, aRepository.getDirectory());
 		op.execute(null);
 	}
 
-	private static void disconnectProject(IProject aProject) throws CoreException, IOException {
+	private void disconnectProject(IProject aProject) throws CoreException, IOException {
 		Collection<IProject> projects = Collections.singleton(aProject.getProject());
 		DisconnectProviderOperation disconnect = new DisconnectProviderOperation(projects);
 		disconnect.execute(null);
 	}
 
-	public static void addFilesToRepository(List<IResource> aResources) throws CoreException {
+	private void addFilesToRepository(List<IResource> aResources) throws CoreException {
 		new AddToIndexOperation(aResources).execute(null);
 	}
 
@@ -539,7 +583,7 @@ public class TestUtils {
 	// Workspace helper functions
 	// ------------------------------------------------------------------------
 
-	private static String getWorkDir(Repository aRepository) throws CoreException, IOException {
+	private String getWorkDir(Repository aRepository) throws CoreException, IOException {
 		String workDir;
 		try {
 			workDir = aRepository.getWorkTree().getCanonicalPath();
@@ -553,7 +597,7 @@ public class TestUtils {
 		return workDir;
 	}
 
-	public static IFile changeContentOfFile(IFile file, String aNewContentsFilePath) throws CoreException, IOException,
+	public IFile changeContentOfFile(IFile file, String aNewContentsFilePath) throws CoreException, IOException,
 			URISyntaxException {
 		URL location = FileLocator.find(Platform.getBundle(R4EUITestPlugin.PLUGIN_ID), new Path(aNewContentsFilePath),
 				null);
@@ -564,7 +608,7 @@ public class TestUtils {
 		return file;
 	}
 
-	public static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg, boolean aAmend)
+	public void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg, boolean aAmend)
 			throws CoreException {
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER,
 				aCommitMsg);
@@ -575,7 +619,7 @@ public class TestUtils {
 		aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
 	}
 
-	public static void commitAmendFiles(IProject aProject, Repository aRepository, String aCommitMsg,
+	public void commitAmendFiles(IProject aProject, Repository aRepository, String aCommitMsg,
 			Collection<String> acommitFileList) throws CoreException {
 		CommitOperation commitOperation = new CommitOperation(null, acommitFileList, null, TestUtils.AUTHOR,
 				TestUtils.COMMITTER, aCommitMsg);
@@ -589,16 +633,15 @@ public class TestUtils {
 	// Shared folder
 	// ------------------------------------------------------------------------
 
-	private static void setupSharedFolder() {
-		String dir = System.getProperty("java.io.tmpdir");
+	private void setupSharedFolder(String dir) {
 		if (!dir.endsWith(File.separator)) {
 			dir += File.separator;
 		}
-		dir = dir + "R4ETest";
+		dir = dir + fTestUtilsID + "-shared";
 		FSharedFolder = dir;
 	}
 
-	private static void cleanupSharedFolder(String aFolder) throws IOException {
+	private void cleanupSharedFolder(String aFolder) throws IOException {
 		if (null != aFolder) {
 			File f = new File(aFolder);
 			if (f.exists()) {
@@ -611,7 +654,7 @@ public class TestUtils {
 	// Review Navigator
 	// ------------------------------------------------------------------------
 
-	public static void startNavigatorView() {
+	public void startNavigatorView() {
 		waitForJobs();
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -636,7 +679,7 @@ public class TestUtils {
 		});
 	}
 
-	public static void stopNavigatorView() {
+	public void stopNavigatorView() {
 		waitForJobs();
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -645,10 +688,39 @@ public class TestUtils {
 		});
 	}
 
+	public R4EUIRootElement getRootElement() {
+		return FRootElement;
+	}
+
+	/**
+	 * Get the initial input from the R4E model and populate the UI model with it
+	 * 
+	 * @return the root element of the UI model
+	 */
+	public IR4EUIModelElement getInitalInput() {
+		R4EUIModelController.loadModel();
+		final IR4EUIModelElement rootTreeNode = R4EUIModelController.getRootElement();
+		rootTreeNode.getChildren();
+		return rootTreeNode;
+	}
+
+	/**
+	 * Method setDefaultUser
+	 */
+	public void setDefaultUser(R4EUITestMain proxy) {
+		proxy.getPreferencesProxy().setUser(TestConstants.DEFAULT_USER_ID);
+		proxy.getPreferencesProxy().setEmail(TestConstants.DEFAULT_USER_EMAIL);
+		Assert.assertEquals(TestConstants.DEFAULT_USER_ID, proxy.getPreferencesProxy().getUser());
+		Assert.assertEquals(TestConstants.DEFAULT_USER_EMAIL, proxy.getPreferencesProxy().getEmail());
+	}
+
 	// ------------------------------------------------------------------------
-	// Misc utils
+	// General utilities
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Wait for the ongoing jobs to complete
+	 */
 	public static void waitForJobs() {
 		//NOTE: In order to the above to work, no background jobs (such as Usage Data Collector) should be running.
 		//otherwise we will be blocked forever here.  An alternative solution is to join our thread to the 
@@ -668,12 +740,18 @@ public class TestUtils {
 		*/
 	}
 
-	public static void delay(long aWaitTimeMillis) {
+	/**
+	 * Delay (suspend) this job for a certain duration
+	 * 
+	 * @param delay
+	 *            wait time (ms)
+	 */
+	private static void delay(long delay) {
 		Display display = Display.getCurrent();
 
 		//If this is the UI thread, process input
 		if (null != display) {
-			long endTimeMillis = System.currentTimeMillis() + aWaitTimeMillis;
+			long endTimeMillis = System.currentTimeMillis() + delay;
 			while (System.currentTimeMillis() < endTimeMillis) {
 				try {
 					if (!display.isDisposed() && !display.readAndDispatch()) {
@@ -687,39 +765,11 @@ public class TestUtils {
 		} else {
 			//Just sleep
 			try {
-				Thread.sleep(aWaitTimeMillis);
+				Thread.sleep(delay);
 			} catch (InterruptedException e) {
 				//ignore
 			}
 		}
-	}
-
-	public static R4EUIRootElement getRootElement() {
-		return FRootElement;
-	}
-
-	/**
-	 * Get the initial input from the R4E model and populate the UI model with it
-	 * 
-	 * @return the root element of the UI model
-	 */
-	public static IR4EUIModelElement getInitalInput() {
-		R4EUIModelController.loadModel();
-		final IR4EUIModelElement rootTreeNode = R4EUIModelController.getRootElement();
-		rootTreeNode.getChildren();
-		return rootTreeNode;
-	}
-
-	/**
-	 * Method setDefaultUser
-	 */
-	public static void setDefaultUser() {
-		R4EUITestMain.getInstance().getPreferencesProxy().setUser(TestConstants.DEFAULT_USER_ID);
-		R4EUITestMain.getInstance().getPreferencesProxy().setEmail(TestConstants.DEFAULT_USER_EMAIL);
-		Assert.assertEquals(TestConstants.DEFAULT_USER_ID, R4EUITestMain.getInstance().getPreferencesProxy().getUser());
-		Assert.assertEquals(TestConstants.DEFAULT_USER_EMAIL, R4EUITestMain.getInstance()
-				.getPreferencesProxy()
-				.getEmail());
 	}
 
 }

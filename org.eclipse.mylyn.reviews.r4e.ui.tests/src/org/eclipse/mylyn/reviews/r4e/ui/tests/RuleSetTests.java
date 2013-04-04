@@ -14,7 +14,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.tests;
 import java.util.concurrent.ExecutionException;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.commands.NotEnabledException;
@@ -24,10 +23,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.sanity.SanitySetupTests;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 
@@ -35,7 +32,7 @@ import org.junit.Before;
  * @author Sebastien Dubois
  */
 @SuppressWarnings({ "restriction", "nls" })
-public class RuleSetTests extends TestCase {
+public class RuleSetTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -52,6 +49,24 @@ public class RuleSetTests extends TestCase {
 	private R4EUIRuleSet fRuleSet;
 
 	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "RuleSetTests";
+
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	public RuleSetTests(String suite) {
+		super(suite);
+	}
+
+	public RuleSetTests() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
@@ -61,7 +76,7 @@ public class RuleSetTests extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(SanitySetupTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
 	/**
@@ -70,7 +85,8 @@ public class RuleSetTests extends TestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		TestUtils.startNavigatorView();
+		super.setUp();
+		fTestUtils.startNavigatorView();
 	}
 
 	/**
@@ -80,7 +96,8 @@ public class RuleSetTests extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		fRuleSet = null;
-		TestUtils.stopNavigatorView();
+		fTestUtils.stopNavigatorView();
+		super.tearDown();
 	}
 
 	/**
@@ -101,14 +118,13 @@ public class RuleSetTests extends TestCase {
 
 		//Create a Rule Set
 		r4eAssert.setTest("Create a Rule Set");
-		R4EUITestMain proxy = R4EUITestMain.getInstance();
 
-		fRuleSet = proxy.getRuleSetProxy().createRuleSet(TestUtils.FSharedFolder, RULE_SET_TEST_NAME,
+		fRuleSet = fTestMain.getRuleSetProxy().createRuleSet(fTestUtils.FSharedFolder, RULE_SET_TEST_NAME,
 				RULE_SET_TEST_VERSION);
 
 		r4eAssert.assertNotNull(fRuleSet);
 		r4eAssert.assertEquals(RULE_SET_TEST_VERSION, fRuleSet.getRuleSet().getVersion());
-		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString(), fRuleSet.getRuleSet().getFolder());
+		r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString(), fRuleSet.getRuleSet().getFolder());
 		r4eAssert.assertEquals(RULE_SET_TEST_NAME, fRuleSet.getRuleSet().getName());
 	}
 

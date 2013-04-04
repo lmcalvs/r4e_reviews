@@ -21,7 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.tests.feature;
 import java.io.File;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.CoreException;
@@ -30,8 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
@@ -43,59 +41,58 @@ import org.junit.Before;
  * @version $Revision: 1.0 $
  */
 @SuppressWarnings({ "restriction", "nls" })
-public class ReviewWithStrangeCharTest extends TestCase {
+public class ReviewWithStrangeCharTest extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	private R4EUITestMain fProxy = null;
 
 	private R4EUIReviewGroup fGroup = null;
 
 	private R4EUIReviewBasic fReview = null;
 
 	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "ReviewWithStrangeCharTest";
+
+	public ReviewWithStrangeCharTest(String suite) {
+		super(suite);
+	}
+
+	public ReviewWithStrangeCharTest() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
 	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method suite - Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(ReviewWithStrangeCharTest.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Method setUp - Sets up the fixture, for example, open a network connection. This method is called before a test
-	 * is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 		createReviewGroups();
 		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isHideDeltasFilterSet()) {
-			fProxy.getCommandProxy().toggleHideDeltasFilter();
+			fTestMain.getCommandProxy().toggleHideDeltasFilter();
 		}
 		createReviews();
 	}
 
-	/**
-	 * Method tearDown
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 	}
 
 	// ------------------------------------------------------------------------
@@ -107,6 +104,7 @@ public class ReviewWithStrangeCharTest extends TestCase {
 	 * 
 	 * @throws CoreException
 	 */
+	@org.junit.Test
 	public void testUseStrangeCharInGroupReview() throws CoreException {
 		TestUtils.waitForJobs();
 	}
@@ -135,14 +133,14 @@ public class ReviewWithStrangeCharTest extends TestCase {
 			}
 		}
 		if (null == fGroup) {
-			fGroup = fProxy.getReviewGroupProxy().createReviewGroup(
-					TestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME_STRANGE,
+			fGroup = fTestMain.getReviewGroupProxy().createReviewGroup(
+					fTestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME_STRANGE,
 					TestConstants.REVIEW_GROUP_TEST_NAME_STRANGE, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 					TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 					TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
 			r4eAssert.assertNotNull(fGroup);
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME_STRANGE, fGroup.getReviewGroup().getName());
-			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/" //$NON-NLS-1$
+			r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/" //$NON-NLS-1$
 					+ TestConstants.REVIEW_GROUP_TEST_NAME_STRANGE, fGroup.getReviewGroup().getFolder());
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup()
 					.getDescription());
@@ -172,12 +170,12 @@ public class ReviewWithStrangeCharTest extends TestCase {
 
 		r4eAssert.setTest("Open Review Group");
 		if (!fGroup.isOpen()) {
-			fProxy.getCommandProxy().openElement(fGroup);
+			fTestMain.getCommandProxy().openElement(fGroup);
 		}
 		r4eAssert.assertTrue(fGroup.isOpen());
 
 		r4eAssert.setTest("Create Review");
-		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
+		fReview = fTestMain.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TestConstants.REVIEW_STRANGE_NAME_INF, TestConstants.REVIEW_TEST_DESCRIPTION,
 				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
 				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,

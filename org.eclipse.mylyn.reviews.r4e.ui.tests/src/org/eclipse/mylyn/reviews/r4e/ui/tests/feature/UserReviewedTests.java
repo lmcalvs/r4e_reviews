@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.CoreException;
@@ -38,8 +37,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
@@ -47,7 +46,7 @@ import org.junit.After;
 import org.junit.Before;
 
 @SuppressWarnings({ "restriction", "nls" })
-public class UserReviewedTests extends TestCase {
+public class UserReviewedTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -67,8 +66,6 @@ public class UserReviewedTests extends TestCase {
 	// Member variables
 	// ------------------------------------------------------------------------
 
-	private R4EUITestMain fProxy = null;
-
 	private R4EUIReviewGroup fReviewGroup = null;
 
 	private R4EUIReviewBasic fReview = null;
@@ -86,48 +83,49 @@ public class UserReviewedTests extends TestCase {
 	private String fItemName2 = null;
 
 	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "UserReviewedTests";
+
+	public UserReviewedTests(String suite) {
+		super(suite);
+	}
+
+	public UserReviewedTests() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
 	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method suite - Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(UserReviewedTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Method setUp - Sets up the fixture, for example, open a network connection. This method is called before a test
-	 * is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 		createReviewGroups();
 		createReview();
 		createReviewItems();
 		createParticipants();
 		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isHideDeltasFilterSet()) {
-			fProxy.getCommandProxy().toggleHideDeltasFilter();
+			fTestMain.getCommandProxy().toggleHideDeltasFilter();
 		}
 	}
 
-	/**
-	 * Method tearDown
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 	}
 
 	// ------------------------------------------------------------------------
@@ -139,6 +137,7 @@ public class UserReviewedTests extends TestCase {
 	 * 
 	 * @throws CoreException
 	 */
+	@org.junit.Test
 	public void testUserReviewed() throws CoreException {
 		TestUtils.waitForJobs();
 		setDelta();
@@ -175,12 +174,12 @@ public class UserReviewedTests extends TestCase {
 			}
 		}
 		if (null == fReviewGroup) {
-			fReviewGroup = fProxy.getReviewGroupProxy().createReviewGroup(
-					TestUtils.FSharedFolder + File.separator + PARENT_REVIEW_GROUP_NAME, PARENT_REVIEW_GROUP_NAME,
+			fReviewGroup = fTestMain.getReviewGroupProxy().createReviewGroup(
+					fTestUtils.FSharedFolder + File.separator + PARENT_REVIEW_GROUP_NAME, PARENT_REVIEW_GROUP_NAME,
 					PARENT_REVIEW_GROUP_DESCRIPTION, "", new String[0], new String[0], new String[0]);
 			r4eAssert.assertNotNull(fReviewGroup);
 			r4eAssert.assertEquals(PARENT_REVIEW_GROUP_NAME, fReviewGroup.getReviewGroup().getName());
-			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/"
 					+ PARENT_REVIEW_GROUP_NAME, fReviewGroup.getReviewGroup().getFolder());
 			r4eAssert.assertEquals(PARENT_REVIEW_GROUP_DESCRIPTION, fReviewGroup.getReviewGroup().getDescription());
 		}
@@ -195,7 +194,7 @@ public class UserReviewedTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createReview");
 
 		r4eAssert.setTest("Create Review");
-		fReview = fProxy.getReviewProxy().createReview(fReviewGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
+		fReview = fTestMain.getReviewProxy().createReview(fReviewGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				REVIEW_TEST_NAME, REVIEW_TEST_DESCRIPTION, null, null, new String[0], null, null, null);
 		r4eAssert.assertNotNull(fReview);
 		r4eAssert.assertNotNull(fReview.getParticipantContainer());
@@ -215,13 +214,13 @@ public class UserReviewedTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createReviewItems");
 
 		r4eAssert.setTest("Create Commit Item");
-		fItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
-		fItem2 = fProxy.getItemProxy().createCommitItem(TestUtils.FCIProject, 0);
+		fItem = fTestMain.getItemProxy().createCommitItem(fTestUtils.FJavaIProject, 0);
+		fItem2 = fTestMain.getItemProxy().createCommitItem(fTestUtils.FCIProject, 0);
 		fItemName = fItem.getName();
 		fItemName2 = fItem2.getName();
 
-		fProxy.getCommandProxy().closeElement(fReview);
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		for (IR4EUIModelElement elem : fReview.getChildren()) {
 			if (elem.getName().equals(fItemName)) {
 				fItem = (R4EUIReviewItem) elem;
@@ -250,7 +249,8 @@ public class UserReviewedTests extends TestCase {
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
 		participant.setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
 		participants.add(participant);
-		fParticipant = fProxy.getParticipantProxy().createParticipant(fReview.getParticipantContainer(), participants);
+		fParticipant = fTestMain.getParticipantProxy().createParticipant(fReview.getParticipantContainer(),
+				participants);
 		r4eAssert.assertNotNull(fParticipant);
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fParticipant.getParticipant().getId());
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, fParticipant.getParticipant().getEmail());
@@ -283,14 +283,14 @@ public class UserReviewedTests extends TestCase {
 		r4eAssert.setTest("Mark Delta");
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
-				fProxy.getCommandProxy().changeReviewedState(delta);
+				fTestMain.getCommandProxy().changeReviewedState(delta);
 				break;
 			}
 		}
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review Item");
@@ -316,8 +316,8 @@ public class UserReviewedTests extends TestCase {
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
 				r4eAssert.assertTrue(delta.isUserReviewed());
-				//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(delta, true,
-				//		R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+				r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 				break;
 			}
 		}
@@ -353,12 +353,12 @@ public class UserReviewedTests extends TestCase {
 			if (delta.getName().equals(DELTA1_NAME)) {
 				continue;
 			}
-			fProxy.getCommandProxy().changeReviewedState(delta);
+			fTestMain.getCommandProxy().changeReviewedState(delta);
 		}
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review Items");
@@ -381,8 +381,8 @@ public class UserReviewedTests extends TestCase {
 		r4eAssert.assertFalse(fReview.isUserReviewed());
 		r4eAssert.assertFalse(fItem.isUserReviewed());
 		r4eAssert.assertTrue(file.isUserReviewed());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-		//		file.getContentsContainerElement().getChildren(), true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+				file.getContentsContainerElement().getChildren(), true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			r4eAssert.assertTrue(delta.isUserReviewed());
 		}
@@ -413,11 +413,11 @@ public class UserReviewedTests extends TestCase {
 
 		// Mark file as reviewed
 		r4eAssert.setTest("Mark File as Reviewed");
-		fProxy.getCommandProxy().changeReviewedState(file);
+		fTestMain.getCommandProxy().changeReviewedState(file);
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check File");
@@ -448,8 +448,8 @@ public class UserReviewedTests extends TestCase {
 			}
 		}
 		r4eAssert.assertTrue(file.isUserReviewed());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-		//		file.getContentsContainerElement().getChildren(), true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+				file.getContentsContainerElement().getChildren(), true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			r4eAssert.assertTrue(delta.isUserReviewed());
 		}
@@ -473,12 +473,12 @@ public class UserReviewedTests extends TestCase {
 					|| file.getName().equals(TestUtils.JAVA_FILE2_PROJ_NAME)) {
 				continue;
 			}
-			fProxy.getCommandProxy().changeReviewedState(file);
+			fTestMain.getCommandProxy().changeReviewedState(file);
 		}
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Files");
@@ -520,11 +520,11 @@ public class UserReviewedTests extends TestCase {
 				break;
 			}
 		}
-		fProxy.getCommandProxy().changeReviewedState(fItem2);
+		fTestMain.getCommandProxy().changeReviewedState(fItem2);
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review State");
@@ -557,33 +557,33 @@ public class UserReviewedTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("addReviewItemFromOtherUser");
 
 		r4eAssert.setTest("Close Element");
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
 
 		// Change user
 		r4eAssert.setTest("Change User");
-		String originalUser = fProxy.getPreferencesProxy().getUser();
-		String originalEmail = fProxy.getPreferencesProxy().getEmail();
-		fProxy.getPreferencesProxy().setUser(TestConstants.PARTICIPANT_TEST_ID);
-		fProxy.getPreferencesProxy().setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
+		String originalUser = fTestMain.getPreferencesProxy().getUser();
+		String originalEmail = fTestMain.getPreferencesProxy().getEmail();
+		fTestMain.getPreferencesProxy().setUser(TestConstants.PARTICIPANT_TEST_ID);
+		fTestMain.getPreferencesProxy().setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
 
 		// New user adds new review item
 		r4eAssert.setTest("New User Adds New Review Item");
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
-		fItem3 = fProxy.getItemProxy().createCommitItem(TestUtils.FTextIProject, 0);
+		fItem3 = fTestMain.getItemProxy().createCommitItem(fTestUtils.FTextIProject, 0);
 		r4eAssert.assertNotNull(fItem3);
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
 
 		// Change back user to original one
 		r4eAssert.setTest("Change back to Original User");
-		fProxy.getPreferencesProxy().setUser(originalUser);
-		fProxy.getPreferencesProxy().setEmail(originalEmail);
+		fTestMain.getPreferencesProxy().setUser(originalUser);
+		fTestMain.getPreferencesProxy().setEmail(originalEmail);
 
 		// Verify Reviewed State
 		r4eAssert.setTest("Verify State");
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 		r4eAssert.assertFalse(fReview.isUserReviewed());
 	}
@@ -602,7 +602,7 @@ public class UserReviewedTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("unsetDelta");
 
 		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isHideDeltasFilterSet()) {
-			fProxy.getCommandProxy().toggleHideDeltasFilter();
+			fTestMain.getCommandProxy().toggleHideDeltasFilter();
 		}
 		fItem = null;
 		for (IR4EUIModelElement elem : fReview.getChildren()) {
@@ -626,14 +626,14 @@ public class UserReviewedTests extends TestCase {
 		r4eAssert.setTest("Setup Review State");
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
-				fProxy.getCommandProxy().changeReviewedState(delta);
+				fTestMain.getCommandProxy().changeReviewedState(delta);
 				break;
 			}
 		}
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review State");
@@ -660,10 +660,10 @@ public class UserReviewedTests extends TestCase {
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
 				r4eAssert.assertFalse(delta.isUserReviewed());
-				//r4eAssert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(delta, true,
-				//		R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
-				//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(delta, true,
-				//		R4EUIConstants.DELTA_ANNOTATION_ID));
+				r4eAssert.assertFalse(fTestMain.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+				r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_ANNOTATION_ID));
 				break;
 			}
 		}
@@ -689,13 +689,13 @@ public class UserReviewedTests extends TestCase {
 				break;
 			}
 		}
-		fProxy.getCommandProxy().changeReviewedState(fItem2);
+		fTestMain.getCommandProxy().changeReviewedState(fItem2);
 		r4eAssert.assertFalse(fItem2.isUserReviewed());
 
 		r4eAssert.setTest("Close/Open Review Element");
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review State");
@@ -749,11 +749,11 @@ public class UserReviewedTests extends TestCase {
 
 		// Mark file as reviewed
 		r4eAssert.setTest("Setup Review State");
-		fProxy.getCommandProxy().changeReviewedState(file);
+		fTestMain.getCommandProxy().changeReviewedState(file);
 
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		r4eAssert.assertFalse(fReview.isOpen());
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		r4eAssert.assertTrue(fReview.isOpen());
 
 		r4eAssert.setTest("Check Review State");
@@ -779,10 +779,10 @@ public class UserReviewedTests extends TestCase {
 		r4eAssert.assertFalse(file.isUserReviewed());
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			r4eAssert.assertFalse(delta.isUserReviewed());
-			//r4eAssert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(delta, true,
-			//		R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
-			//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(delta, true,
-			//		R4EUIConstants.DELTA_ANNOTATION_ID));
+			r4eAssert.assertFalse(fTestMain.getCommandProxy().verifyAnnotation(delta, true,
+					R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+			r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(delta, true,
+					R4EUIConstants.DELTA_ANNOTATION_ID));
 		}
 	}
 }

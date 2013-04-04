@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.CoreException;
@@ -51,8 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorAction
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
@@ -63,13 +61,11 @@ import org.junit.Before;
  * @author lmcbout
  */
 @SuppressWarnings({ "restriction", "nls" })
-public class SanityInformalTests extends TestCase {
+public class SanityInformalTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	private R4EUITestMain fProxy = null;
 
 	private R4EUIReviewGroup fGroup = null;
 
@@ -96,45 +92,46 @@ public class SanityInformalTests extends TestCase {
 	private int fAnomalyFileIndex;
 
 	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "SanityInformalTests";
+
+	public SanityInformalTests(String suite) {
+		super(suite);
+	}
+
+	public SanityInformalTests() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
 	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method suite - Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(SanityInformalTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Method setUp - Sets up the fixture, for example, open a network connection. This method is called before a test
-	 * is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 		createReviewGroups();
 		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isHideDeltasFilterSet()) {
-			fProxy.getCommandProxy().toggleHideDeltasFilter();
+			fTestMain.getCommandProxy().toggleHideDeltasFilter();
 		}
 	}
 
-	/**
-	 * Method tearDown
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 	}
 
 	// ------------------------------------------------------------------------
@@ -146,6 +143,7 @@ public class SanityInformalTests extends TestCase {
 	 * 
 	 * @throws CoreException
 	 */
+	@org.junit.Test
 	public void testInformalReviews() throws CoreException {
 		TestUtils.waitForJobs();
 		createReviews();
@@ -187,14 +185,14 @@ public class SanityInformalTests extends TestCase {
 			}
 		}
 		if (null == fGroup) {
-			fGroup = fProxy.getReviewGroupProxy().createReviewGroup(
-					TestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
+			fGroup = fTestMain.getReviewGroupProxy().createReviewGroup(
+					fTestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
 					TestConstants.REVIEW_GROUP_TEST_NAME, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 					TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 					TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
 			r4eAssert.assertNotNull(fGroup);
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
-			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/"
 					+ TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getFolder());
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup()
 					.getDescription());
@@ -234,12 +232,12 @@ public class SanityInformalTests extends TestCase {
 			}
 		}
 		if (!fGroup.isOpen()) {
-			fProxy.getCommandProxy().openElement(fGroup);
+			fTestMain.getCommandProxy().openElement(fGroup);
 		}
 		r4eAssert.assertTrue(fGroup.isOpen());
 
 		r4eAssert.setTest("Create Review");
-		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
+		fReview = fTestMain.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TestConstants.REVIEW_TEST_NAME_INF, TestConstants.REVIEW_TEST_DESCRIPTION,
 				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
 				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
@@ -276,10 +274,10 @@ public class SanityInformalTests extends TestCase {
 
 		// Close and re-open, so the validation takes de-serialized information
 		r4eAssert.setTest("Create Commit Item");
-		fItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
+		fItem = fTestMain.getItemProxy().createCommitItem(fTestUtils.FJavaIProject, 0);
 		String itemName = fItem.getName();
-		fProxy.getCommandProxy().closeElement(fReview);
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		for (IR4EUIModelElement elem : fReview.getChildren()) {
 			if (elem.getName().equals(itemName)) {
 				fItem = (R4EUIReviewItem) elem;
@@ -347,9 +345,9 @@ public class SanityInformalTests extends TestCase {
 						.get(2)
 						.getTarget()
 						.getLocation()).getLength());
-				//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-				//		((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
-				//		R4EUIConstants.DELTA_ANNOTATION_ID));
+				r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+						((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
+						R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE4_PROJ_NAME)) {
 				r4eAssert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
 				r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem.getItem()
@@ -375,7 +373,7 @@ public class SanityInformalTests extends TestCase {
 		}
 
 		r4eAssert.setTest("Create Manual Tree Item");
-		fItem2 = fProxy.getItemProxy().createManualTreeItem(TestUtils.FJavaFile3);
+		fItem2 = fTestMain.getItemProxy().createManualTreeItem(fTestUtils.FJavaFile3);
 		r4eAssert.assertNotNull(fItem2);
 		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem2.getItem().getAddedById());
 		r4eAssert.assertEquals(TestUtils.JAVA_FILE3_PROJ_NAME, fItem2.getItem()
@@ -402,12 +400,12 @@ public class SanityInformalTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-		//		((R4EUIFileContext) fItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
-		//		R4EUIConstants.SELECTION_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 
 		r4eAssert.setTest("Create Manual Text Item");
-		fItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
+		fItem3 = fTestMain.getItemProxy().createManualTextItem(fTestUtils.FJavaFile4, 50, 20);
 		r4eAssert.assertNotNull(fItem3);
 		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem3.getItem().getAddedById());
 		r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem3.getItem()
@@ -434,9 +432,9 @@ public class SanityInformalTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-		//		((R4EUIFileContext) fItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
-		//		R4EUIConstants.SELECTION_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 	}
 
 	// ------------------------------------------------------------------------
@@ -458,7 +456,8 @@ public class SanityInformalTests extends TestCase {
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
 		participant.setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
 		participants.add(participant);
-		fParticipant = fProxy.getParticipantProxy().createParticipant(fReview.getParticipantContainer(), participants);
+		fParticipant = fTestMain.getParticipantProxy().createParticipant(fReview.getParticipantContainer(),
+				participants);
 		r4eAssert.assertNotNull(fParticipant);
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fParticipant.getParticipant().getId());
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, fParticipant.getParticipant().getEmail());
@@ -478,7 +477,7 @@ public class SanityInformalTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createCompareEditorAnomalies");
 
 		r4eAssert.setTest("Create Compare Editor Anomaly");
-		fCompareEditorAnomaly = fProxy.getAnomalyProxy().createCompareEditorAnomaly(
+		fCompareEditorAnomaly = fTestMain.getAnomalyProxy().createCompareEditorAnomaly(
 				fItem.getFileContexts().get(fAnomalyFileIndex), 20, 50,
 				TestConstants.COMPARE_EDITOR_ANOMALY_TEST_TITLE, TestConstants.COMPARE_EDITOR_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_ERRONEOUS, TestConstants.ANOMALY_TEST_RANK_MINOR,
@@ -501,8 +500,8 @@ public class SanityInformalTests extends TestCase {
 		r4eAssert.assertEquals(50, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	// ------------------------------------------------------------------------
@@ -523,10 +522,10 @@ public class SanityInformalTests extends TestCase {
 				.getContentsContainerElement()
 				.getContentsList()
 				.get(0);
-		fLinkedAnomaly = fProxy.getAnomalyProxy().createLinkedAnomaly(content, TestConstants.LINKED_ANOMALY_TEST_TITLE,
-				TestConstants.LINKED_ANOMALY_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
-				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
-				TestConstants.PARTICIPANT_ASSIGN_TO, null);
+		fLinkedAnomaly = fTestMain.getAnomalyProxy().createLinkedAnomaly(content,
+				TestConstants.LINKED_ANOMALY_TEST_TITLE, TestConstants.LINKED_ANOMALY_TEST_DESCRIPTION,
+				TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT, TestConstants.ANOMALY_TEST_RANK_MAJOR,
+				TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		r4eAssert.assertNotNull(fLinkedAnomaly);
 		r4eAssert.assertEquals(TestConstants.LINKED_ANOMALY_TEST_TITLE, fLinkedAnomaly.getAnomaly().getTitle());
 		r4eAssert.assertEquals(TestConstants.LINKED_ANOMALY_TEST_DESCRIPTION, fLinkedAnomaly.getAnomaly()
@@ -542,8 +541,8 @@ public class SanityInformalTests extends TestCase {
 		r4eAssert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	// ------------------------------------------------------------------------
@@ -559,7 +558,7 @@ public class SanityInformalTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createExternalAnomalies");
 
 		r4eAssert.setTest("Create External Anomaly");
-		fExternalAnomaly = fProxy.getAnomalyProxy().createExternalAnomaly(TestUtils.FJavaFile3,
+		fExternalAnomaly = fTestMain.getAnomalyProxy().createExternalAnomaly(fTestUtils.FJavaFile3,
 				TestConstants.EXTERNAL_ANOMALY_TEST_TITLE, TestConstants.EXTERNAL_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_QUESTION, TestConstants.ANOMALY_TEST_RANK_MINOR,
 				TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_ASSIGN_TO, null);
@@ -577,8 +576,8 @@ public class SanityInformalTests extends TestCase {
 		r4eAssert.assertEquals(755, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	// ------------------------------------------------------------------------
@@ -594,7 +593,7 @@ public class SanityInformalTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createComments");
 
 		r4eAssert.setTest("Create Comment");
-		fComment = fProxy.getCommentProxy().createComment(fLinkedAnomaly, TestConstants.COMMENT_TEST);
+		fComment = fTestMain.getCommentProxy().createComment(fLinkedAnomaly, TestConstants.COMMENT_TEST);
 		r4eAssert.assertNotNull(fComment);
 		r4eAssert.assertEquals(TestConstants.COMMENT_TEST, fComment.getComment().getDescription());
 	}
@@ -614,15 +613,15 @@ public class SanityInformalTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("sendQuestionNotifications");
 
 		r4eAssert.setTest("Send Question Notifications");
-		fProxy.getCommandProxy().sendQuestionNotification(fReview);
-		r4eAssert.assertEquals(TestConstants.SEND_QUESTION_REVIEW_TEST_SOURCE, fProxy.getCommandProxy()
+		fTestMain.getCommandProxy().sendQuestionNotification(fReview);
+		r4eAssert.assertEquals(TestConstants.SEND_QUESTION_REVIEW_TEST_SOURCE, fTestMain.getCommandProxy()
 				.getEmailDetails()
 				.getSource());
-		String[] destinations = fProxy.getCommandProxy().getEmailDetails().getDestinations();
+		String[] destinations = fTestMain.getCommandProxy().getEmailDetails().getDestinations();
 		for (int i = 0; i < destinations.length; i++) {
 			r4eAssert.assertEquals(TestConstants.SEND_QUESTION_REVIEW_TEST_DESTINATIONS[i], destinations[i]);
 		}
-		r4eAssert.assertEquals(TestConstants.SEND_QUESTION_REVIEW_TEST_SUBJECT_INFORMAL, fProxy.getCommandProxy()
+		r4eAssert.assertEquals(TestConstants.SEND_QUESTION_REVIEW_TEST_SUBJECT_INFORMAL, fTestMain.getCommandProxy()
 				.getEmailDetails()
 				.getSubject());
 		//TODO:  Assert fails, but Strings seem to be identical???
@@ -655,13 +654,13 @@ public class SanityInformalTests extends TestCase {
 
 		r4eAssert.setTest("Progress Compare Editor Anomaly");
 		r4eAssert.assertNotNull(fCompareEditorAnomaly);
-		fProxy.getAnomalyProxy().progressAnomaly(fCompareEditorAnomaly, TestConstants.ANOMALY_STATE_VERIFIED);
+		fTestMain.getAnomalyProxy().progressAnomaly(fCompareEditorAnomaly, TestConstants.ANOMALY_STATE_VERIFIED);
 
 		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_VERIFIED, fCompareEditorAnomaly.getAnomaly().getState());
-		//r4eAssert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
-		//		R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
+				R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
 	}
 
 	/**
@@ -674,13 +673,13 @@ public class SanityInformalTests extends TestCase {
 
 		r4eAssert.setTest("Progress Linked Anomaly");
 		r4eAssert.assertNotNull(fLinkedAnomaly);
-		fProxy.getAnomalyProxy().progressAnomaly(fLinkedAnomaly, TestConstants.ANOMALY_STATE_FIXED);
+		fTestMain.getAnomalyProxy().progressAnomaly(fLinkedAnomaly, TestConstants.ANOMALY_STATE_FIXED);
 
 		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_FIXED, fLinkedAnomaly.getAnomaly().getState());
-		//r4eAssert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
-		//		R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
+				R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
 	}
 
 	/**
@@ -693,13 +692,13 @@ public class SanityInformalTests extends TestCase {
 
 		r4eAssert.setTest("Progress External Anomaly");
 		r4eAssert.assertNotNull(fExternalAnomaly);
-		fProxy.getAnomalyProxy().progressAnomaly(fExternalAnomaly, TestConstants.ANOMALY_STATE_REJECTED);
+		fTestMain.getAnomalyProxy().progressAnomaly(fExternalAnomaly, TestConstants.ANOMALY_STATE_REJECTED);
 
 		r4eAssert.assertEquals(TestConstants.ANOMALY_STATE_REJECTED, fExternalAnomaly.getAnomaly().getState());
-		//r4eAssert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
-		//		R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
+				R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
 	}
 
 	// ------------------------------------------------------------------------
@@ -719,9 +718,10 @@ public class SanityInformalTests extends TestCase {
 				.getDecision()
 				.getValue()); //Test the default exit decision
 
-		fProxy.getReviewProxy().progressReview(fReview);
+		fTestMain.getReviewProxy().progressReview(fReview);
 		r4eAssert.assertEquals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED, ((R4EReviewState) fReview.getReview()
 				.getState()).getState());
+		r4eAssert.assertNotNull(fReview.getReview().getEndDate());
 	}
 
 	// ------------------------------------------------------------------------
@@ -737,65 +737,65 @@ public class SanityInformalTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("verifySorters");
 
 		r4eAssert.setTest("Initial State");
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
 		// Alpha sorter On/Off
 		r4eAssert.setTest("Alpha Sorter On/Off");
-		fProxy.getCommandProxy().toggleAlphaSorter();
-		ViewerComparator activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		fTestMain.getCommandProxy().toggleAlphaSorter();
+		ViewerComparator activeSorter = fTestMain.getCommandProxy().getActiveSorter();
 		r4eAssert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
 				&& !(activeSorter instanceof ReviewTypeComparator));
-		r4eAssert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
-		fProxy.getCommandProxy().toggleAlphaSorter();
-		r4eAssert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		fTestMain.getCommandProxy().toggleAlphaSorter();
+		r4eAssert.assertTrue(null == fTestMain.getCommandProxy().getActiveSorter());
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
 		// Review Type sorter On/Off
 		r4eAssert.setTest("Review Type Sorter On/Off");
-		fProxy.getCommandProxy().toggleReviewTypeSorter();
-		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		fTestMain.getCommandProxy().toggleReviewTypeSorter();
+		activeSorter = fTestMain.getCommandProxy().getActiveSorter();
 		r4eAssert.assertTrue(null != activeSorter && activeSorter instanceof ReviewTypeComparator);
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
-		fProxy.getCommandProxy().toggleReviewTypeSorter();
-		r4eAssert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		fTestMain.getCommandProxy().toggleReviewTypeSorter();
+		r4eAssert.assertTrue(null == fTestMain.getCommandProxy().getActiveSorter());
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
 		// AlphaSorter -> ReviewTypeSorter
 		r4eAssert.setTest("AlphaSorter -> ReviewTypeSorter");
-		fProxy.getCommandProxy().toggleAlphaSorter();
-		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		fTestMain.getCommandProxy().toggleAlphaSorter();
+		activeSorter = fTestMain.getCommandProxy().getActiveSorter();
 		r4eAssert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
 				&& !(activeSorter instanceof ReviewTypeComparator));
-		r4eAssert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
-		fProxy.getCommandProxy().toggleReviewTypeSorter();
-		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		fTestMain.getCommandProxy().toggleReviewTypeSorter();
+		activeSorter = fTestMain.getCommandProxy().getActiveSorter();
 		r4eAssert.assertTrue(null != activeSorter && activeSorter instanceof ReviewTypeComparator);
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
 		// ReviewTypeSorter -> AlphaSorter
 		r4eAssert.setTest("ReviewTypeSorter -> AlphaSorter");
-		fProxy.getCommandProxy().toggleAlphaSorter();
-		activeSorter = fProxy.getCommandProxy().getActiveSorter();
+		fTestMain.getCommandProxy().toggleAlphaSorter();
+		activeSorter = fTestMain.getCommandProxy().getActiveSorter();
 		r4eAssert.assertTrue(null != activeSorter && activeSorter instanceof NavigatorElementComparator
 				&& !(activeSorter instanceof ReviewTypeComparator));
-		r4eAssert.assertTrue(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 
 		// Remove AlphaSorter
 		r4eAssert.setTest("Remove AlphaSorter");
-		fProxy.getCommandProxy().toggleAlphaSorter();
-		r4eAssert.assertTrue(null == fProxy.getCommandProxy().getActiveSorter());
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
-		r4eAssert.assertFalse(fProxy.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
+		fTestMain.getCommandProxy().toggleAlphaSorter();
+		r4eAssert.assertTrue(null == fTestMain.getCommandProxy().getActiveSorter());
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.ALPHA_SORTER_COMMAND));
+		r4eAssert.assertFalse(fTestMain.getCommandProxy().getCommandState(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND));
 	}
 }
