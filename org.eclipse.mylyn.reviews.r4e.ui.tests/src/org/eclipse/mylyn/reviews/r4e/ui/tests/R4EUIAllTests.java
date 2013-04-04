@@ -82,7 +82,8 @@ public class R4EUIAllTests extends TestSuite {
 		//suite.addTestSuite(RuleTests.class);
 		//suite.addTestSuite(PostponedElementsTests.class);
 
-		return new R4ETestSetup(suite);
+//		return new R4ETestSetup(suite);
+		return suite;
 	}
 
 	/**

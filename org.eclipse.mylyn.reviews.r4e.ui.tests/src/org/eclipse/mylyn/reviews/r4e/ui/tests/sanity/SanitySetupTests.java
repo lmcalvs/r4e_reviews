@@ -21,7 +21,6 @@ import java.io.File;
 import java.net.URL;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.commands.ExecutionException;
@@ -39,8 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
@@ -48,49 +46,45 @@ import org.junit.After;
 import org.junit.Before;
 
 @SuppressWarnings({ "restriction", "nls" })
-public class SanitySetupTests extends TestCase {
+public class SanitySetupTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
-	// Member variables
+	// Constructors
 	// ------------------------------------------------------------------------
 
-	private R4EUITestMain fProxy = null;
+	private static final String TEST_SUITE_ID = "SanitySetupTests";
+
+	public SanitySetupTests(String suite) {
+		super(suite);
+	}
+
+	public SanitySetupTests() {
+		super(TEST_SUITE_ID);
+	}
 
 	// ------------------------------------------------------------------------
 	// Housekeeping
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(SanitySetupTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Sets up the fixture, for example, open a network connection. This method is called before a test is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 	}
 
-	/**
-	 * Cleanup after the test has completed
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 	}
 
 	// ------------------------------------------------------------------------
@@ -108,6 +102,7 @@ public class SanitySetupTests extends TestCase {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
+	@org.junit.Test
 	public void testSetup() {
 		TestUtils.waitForJobs();
 		createRuleSetSetup();
@@ -136,42 +131,42 @@ public class SanitySetupTests extends TestCase {
 
 		// Create a Rule Set
 		r4eAssert.setTest("Create RuleSet");
-		R4EUIRuleSet newRuleSet = fProxy.getRuleSetProxy().createRuleSet(TestUtils.FSharedFolder,
+		R4EUIRuleSet newRuleSet = fTestMain.getRuleSetProxy().createRuleSet(fTestUtils.FSharedFolder,
 				TestConstants.RULE_SET_TEST_NAME, TestConstants.RULE_SET_TEST_VERSION);
 		r4eAssert.assertNotNull(newRuleSet);
 		r4eAssert.assertEquals(TestConstants.RULE_SET_TEST_VERSION, newRuleSet.getRuleSet().getVersion());
-		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString(), newRuleSet.getRuleSet()
+		r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString(), newRuleSet.getRuleSet()
 				.getFolder());
 		r4eAssert.assertEquals(TestConstants.RULE_SET_TEST_NAME, newRuleSet.getRuleSet().getName());
 
 		// Create a Second Rule Set
 		r4eAssert.setTest("Create 2nd RuleSet");
-		R4EUIRuleSet newRuleSet2 = fProxy.getRuleSetProxy().createRuleSet(TestUtils.FSharedFolder,
+		R4EUIRuleSet newRuleSet2 = fTestMain.getRuleSetProxy().createRuleSet(fTestUtils.FSharedFolder,
 				TestConstants.RULE_SET_TEST_NAME2, TestConstants.RULE_SET_TEST_VERSION);
 		String newRuleSet2Name = newRuleSet2.getName();
 		r4eAssert.assertNotNull(newRuleSet2);
 		r4eAssert.assertEquals(TestConstants.RULE_SET_TEST_VERSION, newRuleSet2.getRuleSet().getVersion());
-		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString(), newRuleSet2.getRuleSet()
+		r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString(), newRuleSet2.getRuleSet()
 				.getFolder());
 		r4eAssert.assertEquals(TestConstants.RULE_SET_TEST_NAME2, newRuleSet2.getRuleSet().getName());
 
 		// Create Rule Area
 		r4eAssert.setTest("Create Rule Area");
-		R4EUIRuleArea newRuleArea = fProxy.getRuleAreaProxy().createRuleArea(newRuleSet,
+		R4EUIRuleArea newRuleArea = fTestMain.getRuleAreaProxy().createRuleArea(newRuleSet,
 				TestConstants.RULE_AREA_TEST_NAME);
 		r4eAssert.assertNotNull(newRuleArea);
 		r4eAssert.assertEquals(TestConstants.RULE_AREA_TEST_NAME, newRuleArea.getArea().getName());
 
 		// Create Rule Violation
 		r4eAssert.setTest("Create Rule Violation");
-		R4EUIRuleViolation newRuleViolation = fProxy.getRuleViolationProxy().createRuleViolation(newRuleArea,
+		R4EUIRuleViolation newRuleViolation = fTestMain.getRuleViolationProxy().createRuleViolation(newRuleArea,
 				TestConstants.RULE_VIOLATION_TEST_NAME);
 		r4eAssert.assertNotNull(newRuleViolation);
 		r4eAssert.assertEquals(TestConstants.RULE_VIOLATION_TEST_NAME, newRuleViolation.getViolation().getName());
 
 		// Create Rule
 		r4eAssert.setTest("Create Rule");
-		R4EUIRule newRule = fProxy.getRuleProxy().createRule(newRuleViolation, TestConstants.RULE_TEST_ID,
+		R4EUIRule newRule = fTestMain.getRuleProxy().createRule(newRuleViolation, TestConstants.RULE_TEST_ID,
 				TestConstants.RULE_TEST_TITLE, TestConstants.RULE_TEST_DESCRIPTION,
 				UIUtils.getClassFromString(TestConstants.RULE_TEST_CLASS),
 				UIUtils.getRankFromString(TestConstants.RULE_TEST_RANK));
@@ -184,12 +179,12 @@ public class SanitySetupTests extends TestCase {
 
 		// Close a Rule Set
 		r4eAssert.setTest("Close RuleSet");
-		fProxy.getCommandProxy().closeElement(newRuleSet);
+		fTestMain.getCommandProxy().closeElement(newRuleSet);
 		r4eAssert.assertFalse(newRuleSet.isOpen());
 
 		//Open the Closed Rule Set
 		r4eAssert.setTest("Re-Open RuleSet");
-		fProxy.getCommandProxy().openElement(newRuleSet);
+		fTestMain.getCommandProxy().openElement(newRuleSet);
 		r4eAssert.assertTrue(newRuleSet.isOpen());
 		r4eAssert.assertEquals(TestConstants.RULE_TEST_ID,
 				((R4EUIRule) newRuleSet.getChildren()[0].getChildren()[0].getChildren()[0]).getRule().getId());
@@ -197,7 +192,7 @@ public class SanitySetupTests extends TestCase {
 		// Remove Rule Set from preferences
 		r4eAssert.setTest("Remove RuleSet");
 		String prefsRuleSet = newRuleSet2.getRuleSet().eResource().getURI().toFileString();
-		fProxy.getPreferencesProxy().removeRuleSetFromPreferences(prefsRuleSet);
+		fTestMain.getPreferencesProxy().removeRuleSetFromPreferences(prefsRuleSet);
 		for (R4EUIRuleSet ruleSet : R4EUIModelController.getRootElement().getRuleSets()) {
 			if (ruleSet.getRuleSet().getName().equals(newRuleSet2.getRuleSet().getName())) {
 				fail("RuleSet " + prefsRuleSet + " should not be present since it was removed from preferences");
@@ -207,7 +202,7 @@ public class SanitySetupTests extends TestCase {
 		// Add back Rule Set to preferences
 		r4eAssert.setTest("Put Back RuleSet");
 		boolean ruleSetFound = false;
-		fProxy.getPreferencesProxy().addRuleSetToPreferences(prefsRuleSet);
+		fTestMain.getPreferencesProxy().addRuleSetToPreferences(prefsRuleSet);
 		for (R4EUIRuleSet ruleSet : R4EUIModelController.getRootElement().getRuleSets()) {
 			if (ruleSet.getRuleSet().getName().equals(newRuleSet2.getRuleSet().getName())) {
 				ruleSetFound = true;
@@ -221,7 +216,7 @@ public class SanitySetupTests extends TestCase {
 				newRuleSet2 = (R4EUIRuleSet) elem;
 			}
 		}
-		fProxy.getCommandProxy().openElement(newRuleSet2);
+		fTestMain.getCommandProxy().openElement(newRuleSet2);
 		r4eAssert.assertTrue(newRuleSet2.isOpen());
 	}
 
@@ -246,14 +241,14 @@ public class SanitySetupTests extends TestCase {
 
 		// Create Review Group
 		r4eAssert.setTest("Create Review Group");
-		R4EUIReviewGroup newGroup = fProxy.getReviewGroupProxy().createReviewGroup(
-				TestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
+		R4EUIReviewGroup newGroup = fTestMain.getReviewGroupProxy().createReviewGroup(
+				fTestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
 				TestConstants.REVIEW_GROUP_TEST_NAME, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 				TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 				TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
 		r4eAssert.assertNotNull(newGroup);
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, newGroup.getReviewGroup().getName());
-		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+		r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/"
 				+ TestConstants.REVIEW_GROUP_TEST_NAME, newGroup.getReviewGroup().getFolder());
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, newGroup.getReviewGroup().getDescription());
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, newGroup.getReviewGroup()
@@ -272,14 +267,14 @@ public class SanitySetupTests extends TestCase {
 
 		// Create a second Review Group
 		r4eAssert.setTest("Create 2nd Review Group");
-		R4EUIReviewGroup newGroup2 = fProxy.getReviewGroupProxy().createReviewGroup(
-				TestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME2,
+		R4EUIReviewGroup newGroup2 = fTestMain.getReviewGroupProxy().createReviewGroup(
+				fTestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME2,
 				TestConstants.REVIEW_GROUP_TEST_NAME2, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 				TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 				TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
 		r4eAssert.assertNotNull(newGroup2);
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME2, newGroup2.getReviewGroup().getName());
-		r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+		r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/"
 				+ TestConstants.REVIEW_GROUP_TEST_NAME2, newGroup2.getReviewGroup().getFolder());
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, newGroup2.getReviewGroup().getDescription());
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, newGroup2.getReviewGroup()
@@ -297,18 +292,18 @@ public class SanitySetupTests extends TestCase {
 
 		// Close a Review Group
 		r4eAssert.setTest("Close Review Group");
-		fProxy.getCommandProxy().closeElement(newGroup);
+		fTestMain.getCommandProxy().closeElement(newGroup);
 		r4eAssert.assertFalse(newGroup.isOpen());
 
 		// Open the closed Review Group
 		r4eAssert.setTest("Re-Open Review Group");
-		fProxy.getCommandProxy().openElement(newGroup);
+		fTestMain.getCommandProxy().openElement(newGroup);
 		r4eAssert.assertTrue(newGroup.isOpen());
 
 		// Remove Review Group from preferences
 		r4eAssert.setTest("Remove Review Group");
 		String prefsGroup = newGroup2.getReviewGroup().eResource().getURI().toFileString();
-		fProxy.getPreferencesProxy().removeGroupFromPreferences(prefsGroup);
+		fTestMain.getPreferencesProxy().removeGroupFromPreferences(prefsGroup);
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(newGroup2.getReviewGroup().getName())) {
 				fail("Group " + prefsGroup + " should not be present since it was removed from preferences");
@@ -318,7 +313,7 @@ public class SanitySetupTests extends TestCase {
 		// Add back Review Group to preferences
 		r4eAssert.setTest("Add Removed Review Group");
 		boolean groupFound = false;
-		fProxy.getPreferencesProxy().addGroupToPreferences(prefsGroup);
+		fTestMain.getPreferencesProxy().addGroupToPreferences(prefsGroup);
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getReviewGroup().getName().equals(newGroup2.getReviewGroup().getName())) {
 				groupFound = true;
@@ -334,30 +329,30 @@ public class SanitySetupTests extends TestCase {
 				newGroup = (R4EUIReviewGroup) elem;
 			}
 		}
-		fProxy.getCommandProxy().openElement(newGroup);
+		fTestMain.getCommandProxy().openElement(newGroup);
 		r4eAssert.assertTrue(newGroup.isOpen());
 
 		// Update Review Group properties
 		r4eAssert.setTest("Update Properties");
-		fProxy.getReviewGroupProxy().changeReviewGroupDescription(newGroup,
+		fTestMain.getReviewGroupProxy().changeReviewGroupDescription(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_DESCRIPTION2);
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION2, newGroup.getReviewGroup().getDescription());
-		fProxy.getReviewGroupProxy().changeReviewGroupDefaultEntryCriteria(newGroup,
+		fTestMain.getReviewGroupProxy().changeReviewGroupDefaultEntryCriteria(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA2);
 		r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA2, newGroup.getReviewGroup()
 				.getDefaultEntryCriteria());
-		fProxy.getReviewGroupProxy().removeReviewGroupAvailableProject(newGroup,
+		fTestMain.getReviewGroupProxy().removeReviewGroupAvailableProject(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_REM_AVAILABLE_PROJECT);
-		fProxy.getReviewGroupProxy().addReviewGroupAvailableProject(newGroup,
+		fTestMain.getReviewGroupProxy().addReviewGroupAvailableProject(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_ADD_AVAILABLE_PROJECT);
 		for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS2.length; i++) {
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS2[i], newGroup.getReviewGroup()
 					.getAvailableProjects()
 					.get(i));
 		}
-		fProxy.getReviewGroupProxy().removeReviewGroupAvailableComponent(newGroup,
+		fTestMain.getReviewGroupProxy().removeReviewGroupAvailableComponent(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_REM_AVAILABLE_COMPONENT);
-		fProxy.getReviewGroupProxy().addReviewGroupAvailableComponent(newGroup,
+		fTestMain.getReviewGroupProxy().addReviewGroupAvailableComponent(newGroup,
 				TestConstants.REVIEW_GROUP_TEST_ADD_AVAILABLE_COMPONENT);
 		for (int i = 0; i < TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS2.length; i++) {
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS2[i], newGroup.getReviewGroup()
@@ -367,7 +362,7 @@ public class SanitySetupTests extends TestCase {
 
 		for (R4EUIRuleSet ruleSet : R4EUIModelController.getRootElement().getRuleSets()) {
 			if (ruleSet.getName().equals(TestConstants.RULE_SET_TEST_NAME2)) {
-				fProxy.getReviewGroupProxy().addReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
+				fTestMain.getReviewGroupProxy().addReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
 				r4eAssert.assertEquals(ruleSet.getRuleSet().getName(), newGroup.getReviewGroup()
 						.getDesignRuleLocations()
 						.get(0));
@@ -377,9 +372,9 @@ public class SanitySetupTests extends TestCase {
 
 		for (R4EUIRuleSet ruleSet : R4EUIModelController.getRootElement().getRuleSets()) {
 			if (ruleSet.getName().equals(TestConstants.RULE_SET_TEST_NAME)) {
-				fProxy.getReviewGroupProxy().addReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
+				fTestMain.getReviewGroupProxy().addReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
 			} else if (ruleSet.getName().equals(TestConstants.RULE_SET_TEST_NAME2)) {
-				fProxy.getReviewGroupProxy().removeReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
+				fTestMain.getReviewGroupProxy().removeReviewGroupRuleSet(newGroup, ruleSet.getRuleSet().getName());
 			}
 		}
 
@@ -407,10 +402,10 @@ public class SanitySetupTests extends TestCase {
 
 		// Verify R4E help is present
 		r4eAssert.setTest("Help Presence");
-		URL openUrl = fProxy.getHelp("/org.eclipse.mylyn.reviews.r4e.help/help/Reviews/R4E/User_Guide/User-Guide.html");
+		URL openUrl = fTestMain.getHelp("/org.eclipse.mylyn.reviews.r4e.help/help/Reviews/R4E/User_Guide/User-Guide.html");
 		r4eAssert.assertNotNull(openUrl);
 
-		URL ericssonUrl = fProxy.getHelp("/com.ericsson.reviews.r4e.help/doc/r4eEricsson.html");
+		URL ericssonUrl = fTestMain.getHelp("/com.ericsson.reviews.r4e.help/doc/r4eEricsson.html");
 		r4eAssert.assertNotNull(ericssonUrl);
 	}
 

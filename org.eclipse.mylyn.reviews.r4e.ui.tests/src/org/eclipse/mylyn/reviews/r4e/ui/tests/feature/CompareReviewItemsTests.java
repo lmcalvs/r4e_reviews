@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.CoreException;
@@ -45,8 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EAssert;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
@@ -54,7 +52,7 @@ import org.junit.After;
 import org.junit.Before;
 
 @SuppressWarnings("restriction")
-public class CompareReviewItemsTests extends TestCase {
+public class CompareReviewItemsTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -69,8 +67,6 @@ public class CompareReviewItemsTests extends TestCase {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	private R4EUITestMain fProxy = null;
 
 	private R4EUIReviewGroup fGroup = null;
 
@@ -89,33 +85,39 @@ public class CompareReviewItemsTests extends TestCase {
 	private R4EUIAnomalyBasic fCompareEditorAnomaly = null;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "CompareReviewItemsTests";
+
+	public CompareReviewItemsTests(String suite) {
+		super(suite);
+	}
+
+	public CompareReviewItemsTests() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
+	// Life cycle
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method suite - Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(CompareReviewItemsTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Method setUp - Sets up the fixture, for example, open a network connection. This method is called before a test
-	 * is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Override
 	@Before
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 		createReviewGroup();
 		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isHideDeltasFilterSet()) {
-			fProxy.getCommandProxy().toggleHideDeltasFilter();
+			fTestMain.getCommandProxy().toggleHideDeltasFilter();
 		}
 		createReview();
 		createReviewItems();
@@ -123,15 +125,10 @@ public class CompareReviewItemsTests extends TestCase {
 		createCompareEditorAnomalies();
 	}
 
-	/**
-	 * Method tearDown
-	 * 
-	 * @throws java.lang.Exception
-	 */
 	@Override
 	@After
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 	}
 
 	/**
@@ -139,11 +136,16 @@ public class CompareReviewItemsTests extends TestCase {
 	 * 
 	 * @throws CoreException
 	 */
+	@org.junit.Test
 	public void testCompareReviewItems() throws CoreException, IOException, URISyntaxException {
 		TestUtils.waitForJobs();
 		commitNewReviewItemVersion();
 		compareReviewItemsVersions();
 	}
+
+	// ------------------------------------------------------------------------
+	// Helper functions
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method createReviewGroup
@@ -165,14 +167,14 @@ public class CompareReviewItemsTests extends TestCase {
 			}
 		}
 		if (null == fGroup) {
-			fGroup = fProxy.getReviewGroupProxy().createReviewGroup(
-					TestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
+			fGroup = fTestMain.getReviewGroupProxy().createReviewGroup(
+					fTestUtils.FSharedFolder + File.separator + TestConstants.REVIEW_GROUP_TEST_NAME,
 					TestConstants.REVIEW_GROUP_TEST_NAME, TestConstants.REVIEW_GROUP_TEST_DESCRIPTION,
 					TestConstants.REVIEW_GROUP_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_GROUP_TEST_AVAILABLE_PROJECTS,
 					TestConstants.REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS, new String[0]);
 			r4eAssert.assertNotNull(fGroup);
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getName());
-			r4eAssert.assertEquals(new Path(TestUtils.FSharedFolder).toPortableString() + "/"
+			r4eAssert.assertEquals(new Path(fTestUtils.FSharedFolder).toPortableString() + "/"
 					+ TestConstants.REVIEW_GROUP_TEST_NAME, fGroup.getReviewGroup().getFolder());
 			r4eAssert.assertEquals(TestConstants.REVIEW_GROUP_TEST_DESCRIPTION, fGroup.getReviewGroup()
 					.getDescription());
@@ -209,12 +211,12 @@ public class CompareReviewItemsTests extends TestCase {
 
 		r4eAssert.setTest("Open Review Group");
 		if (!fGroup.isOpen()) {
-			fProxy.getCommandProxy().openElement(fGroup);
+			fTestMain.getCommandProxy().openElement(fGroup);
 		}
 		r4eAssert.assertTrue(fGroup.isOpen());
 
 		r4eAssert.setTest("Create Review");
-		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
+		fReview = fTestMain.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TestConstants.REVIEW_TEST_NAME_INF_COMPARE, TestConstants.REVIEW_TEST_DESCRIPTION,
 				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
 				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
@@ -246,11 +248,11 @@ public class CompareReviewItemsTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createReviewItems");
 
 		r4eAssert.setTest("Create Commit Item");
-		fItem = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
+		fItem = fTestMain.getItemProxy().createCommitItem(fTestUtils.FJavaIProject, 0);
 		//close and re-open, so the validation takes de-serialized information
 		String itemName = fItem.getName();
-		fProxy.getCommandProxy().closeElement(fReview);
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 		for (IR4EUIModelElement elem : fReview.getChildren()) {
 			if (elem.getName().equals(itemName)) {
 				fItem = (R4EUIReviewItem) elem;
@@ -261,7 +263,7 @@ public class CompareReviewItemsTests extends TestCase {
 		r4eAssert.assertNotNull(fItem);
 		r4eAssert.assertEquals(R4EUIModelController.getReviewer(), fItem.getItem().getAddedById());
 		r4eAssert.assertEquals("The.committer@some.com", fItem.getItem().getAuthorRep());
-		r4eAssert.assertEquals("third Java Commit", fItem.getItem().getDescription());
+		r4eAssert.assertEquals("second Java Commit", fItem.getItem().getDescription());
 		r4eAssert.assertEquals(4, fItem.getChildren().length);
 		for (int i = 0; i < fItem.getChildren().length; i++) {
 			if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE1_PROJ_NAME)) {
@@ -318,9 +320,9 @@ public class CompareReviewItemsTests extends TestCase {
 						.get(2)
 						.getTarget()
 						.getLocation()).getLength());
-				//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
-				//		((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
-				//		R4EUIConstants.DELTA_ANNOTATION_ID));
+				r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotations(
+						((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
+						R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE4_PROJ_NAME)) {
 				r4eAssert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
 				r4eAssert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem.getItem()
@@ -361,7 +363,8 @@ public class CompareReviewItemsTests extends TestCase {
 		participant.setId(TestConstants.PARTICIPANT_TEST_ID);
 		participant.setEmail(TestConstants.PARTICIPANT_TEST_EMAIL);
 		participants.add(participant);
-		fParticipant = fProxy.getParticipantProxy().createParticipant(fReview.getParticipantContainer(), participants);
+		fParticipant = fTestMain.getParticipantProxy().createParticipant(fReview.getParticipantContainer(),
+				participants);
 		r4eAssert.assertNotNull(fParticipant);
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fParticipant.getParticipant().getId());
 		r4eAssert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, fParticipant.getParticipant().getEmail());
@@ -377,7 +380,7 @@ public class CompareReviewItemsTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("createCompareEditorAnomalies");
 
 		r4eAssert.setTest("Create Compare Editor Anomaly");
-		fCompareEditorAnomaly = fProxy.getAnomalyProxy().createCompareEditorAnomaly(
+		fCompareEditorAnomaly = fTestMain.getAnomalyProxy().createCompareEditorAnomaly(
 				fItem.getFileContexts().get(fAnomalyFileIndex), 20, 50,
 				TestConstants.COMPARE_EDITOR_ANOMALY_TEST_TITLE, TestConstants.COMPARE_EDITOR_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_ERRONEOUS, TestConstants.ANOMALY_TEST_RANK_MINOR,
@@ -400,9 +403,13 @@ public class CompareReviewItemsTests extends TestCase {
 		r4eAssert.assertEquals(50, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getLength());
-		//r4eAssert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
-		//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
+		r4eAssert.assertTrue(fTestMain.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
+
+	// ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method commitNewReviewItemVersion
@@ -413,13 +420,13 @@ public class CompareReviewItemsTests extends TestCase {
 		R4EAssert r4eAssert = new R4EAssert("commitNewReviewItemVersion");
 
 		r4eAssert.setTest("Commit New Review Item Version");
-		TestUtils.FJavaFile1 = TestUtils.changeContentOfFile(TestUtils.FJavaFile1, JAVA_FILE12_EXT_MOD_PATH);
-		TestUtils.commitFiles(TestUtils.FJavaIProject, TestUtils.FJavaRepository, "second Java Commit", true);
+		fTestUtils.FJavaFile1 = fTestUtils.changeContentOfFile(fTestUtils.FJavaFile1, JAVA_FILE12_EXT_MOD_PATH);
+		fTestUtils.commitFiles(fTestUtils.FJavaIProject, fTestUtils.FJavaRepository, "second Java Commit", true);
 
-		fItem2 = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
+		fItem2 = fTestMain.getItemProxy().createCommitItem(fTestUtils.FJavaIProject, 0);
 		//close and re-open, so the validation takes de-serialized information
-		fProxy.getCommandProxy().closeElement(fReview);
-		fProxy.getCommandProxy().openElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().openElement(fReview);
 
 		for (IR4EUIModelElement elem : fReview.getChildren()) {
 			if (elem.getName().equals(REVIEW_ITEM_COMMIT_1)) {
@@ -479,7 +486,7 @@ public class CompareReviewItemsTests extends TestCase {
 				.get(fAnomalyFileIndex)
 				.getAnomalyContainerElement()
 				.getChildren()[0];
-		fProxy.getItemProxy().openCompareReviewItems(fItem, fItem2, fCompareEditorAnomaly,
+		fTestMain.getItemProxy().openCompareReviewItems(fItem, fItem2, fCompareEditorAnomaly,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID);
 	}
 }

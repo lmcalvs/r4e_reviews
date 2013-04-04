@@ -102,7 +102,7 @@ public class R4EUITestMain {
 	/**
 	 * Constructor for R4ECommandProxy.
 	 */
-	private R4EUITestMain() {
+	public R4EUITestMain() {
 		fCommandProxy = new R4EUITestCommands(this);
 		fPreferencesProxy = new R4EUITestPreferences(this);
 		fReviewGroupProxy = new R4EUITestReviewGroup(this);
@@ -121,17 +121,17 @@ public class R4EUITestMain {
 	// Methods
 	// ------------------------------------------------------------------------
 
-	/**
-	 * Method getInstance.
-	 * 
-	 * @return R4EUITestProxy
-	 */
-	public static R4EUITestMain getInstance() {
-		if (null == FInstance) {
-			FInstance = new R4EUITestMain();
-		}
-		return FInstance;
-	}
+//	/**
+//	 * Method getInstance.
+//	 * 
+//	 * @return R4EUITestProxy
+//	 */
+//	public static R4EUITestMain getInstance() {
+//		if (null == FInstance) {
+//			FInstance = new R4EUITestMain();
+//		}
+//		return FInstance;
+//	}
 
 	/**
 	 * Method getCommandProxy.

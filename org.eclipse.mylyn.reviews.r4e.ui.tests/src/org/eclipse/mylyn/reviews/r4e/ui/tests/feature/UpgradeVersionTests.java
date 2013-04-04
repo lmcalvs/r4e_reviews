@@ -23,7 +23,6 @@ import java.util.GregorianCalendar;
 
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.apache.commons.io.FileUtils;
@@ -49,16 +48,15 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
-import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
+import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestCase;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.R4EDummyCompatibleUpgrader;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 
-@SuppressWarnings("restriction")
-public class UpgradeVersionTests extends TestCase {
+@SuppressWarnings({ "restriction", "nls" })
+public class UpgradeVersionTests extends R4ETestCase {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -94,8 +92,6 @@ public class UpgradeVersionTests extends TestCase {
 	// Member variables
 	// ------------------------------------------------------------------------
 
-	private R4EUITestMain fProxy = null;
-
 	private R4EUIReviewGroup fReviewGroup = null;
 
 	private R4EUIRuleSet fRuleSet = null;
@@ -111,30 +107,36 @@ public class UpgradeVersionTests extends TestCase {
 	private URI fCompatibleRuleSetFileURI;
 
 	// ------------------------------------------------------------------------
-	// Methods
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	private static final String TEST_SUITE_ID = "UpgradeVersionTests";
+
+	public UpgradeVersionTests(String suite) {
+		super(suite);
+	}
+
+	public UpgradeVersionTests() {
+		super(TEST_SUITE_ID);
+	}
+
+	// ------------------------------------------------------------------------
+	// Life cycle
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method suite - Sets up the global test environment, if not already done at the suite level.
-	 * 
-	 * @return Test
+	 * @return Test the test suite
 	 */
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(UpgradeVersionTests.class);
-		return new R4ETestSetup(suite);
+		return suite;
 	}
 
-	/**
-	 * Method setUp - Sets up the fixture, for example, open a network connection. This method is called before a test
-	 * is executed.
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
-		fProxy = R4EUITestMain.getInstance();
+		super.setUp();
 
 		//Copy own files to target test directory
 		String baseTargetDir = System.getProperty(ROOT_TEST_DIR);
@@ -166,24 +168,24 @@ public class UpgradeVersionTests extends TestCase {
 		new R4EDummyCompatibleUpgrader();
 	}
 
-	/**
-	 * Method tearDown
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@Override
 	@After
+	@Override
 	public void tearDown() throws Exception {
-		fProxy = null;
+		super.tearDown();
 		// remove test directory
 		if (fRootTestDir != null && fRootTestDir.exists()) {
 			FileUtils.deleteDirectory(fRootTestDir);
 		}
 	}
 
+	// ------------------------------------------------------------------------
+	// Main test case (pretty light...)
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Method testUpgrades
 	 */
+	@org.junit.Test
 	public void testUpgrades() {
 		TestUtils.waitForJobs();
 		verifyCompatibleUpgradeCancelled();
@@ -211,8 +213,8 @@ public class UpgradeVersionTests extends TestCase {
 				COMPATIBLE_NO_UPGRADE_BUTTON_INDEX, true, true);
 		openRuleSet(COMPATIBLE_UPGRADE_TEST_NAME, fCompatibleRuleSetFileURI, COMPATIBLE_NO_UPGRADE_BUTTON_INDEX, true,
 				true);
-		fProxy.getCommandProxy().closeElement(fReviewGroup);
-		fProxy.getCommandProxy().closeElement(fRuleSet);
+		fTestMain.getCommandProxy().closeElement(fReviewGroup);
+		fTestMain.getCommandProxy().closeElement(fRuleSet);
 	}
 
 	/**
@@ -222,7 +224,7 @@ public class UpgradeVersionTests extends TestCase {
 		openReviewGroup(COMPATIBLE_UPGRADE_TEST_NAME, fCompatibleReviewGroupFileURI, UPGRADE_BUTTON_INDEX, true, false);
 		openRuleSet(COMPATIBLE_UPGRADE_TEST_NAME, fCompatibleRuleSetFileURI, UPGRADE_BUTTON_INDEX, true, false);
 		openReview(COMPATIBLE_NO_UPGRADE_BUTTON_INDEX, true, true);
-		fProxy.getCommandProxy().closeElement(fReview);
+		fTestMain.getCommandProxy().closeElement(fReview);
 		openReview(UPGRADE_BUTTON_INDEX, false, true);
 	}
 
@@ -238,7 +240,7 @@ public class UpgradeVersionTests extends TestCase {
 	 */
 	private void addReviewGroupToPreferences(String aGroupName, URI aReviewGroupUri, boolean aGroupResolved) {
 		R4EUIReviewGroup reviewGroupFound = null;
-		fProxy.getPreferencesProxy().addGroupToPreferences(aReviewGroupUri.toFileString());
+		fTestMain.getPreferencesProxy().addGroupToPreferences(aReviewGroupUri.toFileString());
 		for (R4EUIReviewGroup group : R4EUIModelController.getRootElement().getGroups()) {
 			if (group.getName().equals(aGroupName)) {
 				reviewGroupFound = group;
@@ -270,7 +272,7 @@ public class UpgradeVersionTests extends TestCase {
 				fReviewGroup = (R4EUIReviewGroup) elem;
 			}
 		}
-		fProxy.getCommandProxy().openElementWithUpdate(fReviewGroup, aUpgradeDialogIndexButton);
+		fTestMain.getCommandProxy().openElementWithUpdate(fReviewGroup, aUpgradeDialogIndexButton);
 		Assert.assertNotNull(fReviewGroup);
 
 		if (aResolved) {
@@ -307,7 +309,7 @@ public class UpgradeVersionTests extends TestCase {
 	 */
 	private void addRuleSetToPreferences(String aRuleSetName, URI aRuleSetUri, boolean aRuleSetResolved) {
 		R4EUIRuleSet ruleSetFound = null;
-		fProxy.getPreferencesProxy().addRuleSetToPreferences(aRuleSetUri.toFileString());
+		fTestMain.getPreferencesProxy().addRuleSetToPreferences(aRuleSetUri.toFileString());
 		for (R4EUIRuleSet ruleSet : R4EUIModelController.getRootElement().getRuleSets()) {
 			if (ruleSet.getName().equals(aRuleSetName)) {
 				ruleSetFound = ruleSet;
@@ -339,7 +341,7 @@ public class UpgradeVersionTests extends TestCase {
 				fRuleSet = (R4EUIRuleSet) elem;
 			}
 		}
-		fProxy.getCommandProxy().openElementWithUpdate(fRuleSet, aUpgradeDialogIndexButton);
+		fTestMain.getCommandProxy().openElementWithUpdate(fRuleSet, aUpgradeDialogIndexButton);
 		Assert.assertNotNull(fRuleSet);
 
 		if (aResolved) {
@@ -381,7 +383,7 @@ public class UpgradeVersionTests extends TestCase {
 	 */
 	private void openReview(int aUpgradeDialogIndexButton, boolean aAssertReadOnly, boolean aReviewOpen) {
 		fReview = (R4EUIReview) fReviewGroup.getChildren()[0];
-		fProxy.getCommandProxy().openElementWithUpdate(fReview, aUpgradeDialogIndexButton);
+		fTestMain.getCommandProxy().openElementWithUpdate(fReview, aUpgradeDialogIndexButton);
 		fReview = (R4EUIReview) fReviewGroup.getChildren()[0]; //Need to recheck here after update
 		Assert.assertNotNull(fReview);
 
