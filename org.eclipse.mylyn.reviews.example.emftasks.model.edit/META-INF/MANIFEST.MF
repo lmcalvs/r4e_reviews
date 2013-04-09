@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mylyn Emf Example Tasks Model Edit Support
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.example.emftasks.model.edit;singleton:=true
-Bundle-Version: 0.13.0.qualifier
+Bundle-Version: 0.14.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.mylyn.reviews.example.emftasks.provider.EmfTasksEditPlugin$Implementation
 Bundle-Vendor: Eclipse Mylyn
