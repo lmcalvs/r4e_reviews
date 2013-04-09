@@ -218,7 +218,7 @@ public class EditorProxy {
 			version = aContext.getTargetFileVersion();
 		} else if (null != aContext.getBaseFileVersion()) {
 			//File was removed, open the base then
-			version = aContext.getTargetFileVersion();
+			version = aContext.getBaseFileVersion();
 		} else {
 			//Show the error, the file was in another project and was not
 			//found when creating the commit review item
