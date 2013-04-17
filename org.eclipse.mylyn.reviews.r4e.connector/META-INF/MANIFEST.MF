@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mylyn R4E Connector
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.connector;singleton:=true
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 0.20.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.internal.reviews.r4e.connector.R4EConnectorPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.common;bundle-version="2.5.0",

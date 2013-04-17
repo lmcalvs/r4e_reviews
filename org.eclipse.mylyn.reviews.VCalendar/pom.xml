@@ -5,10 +5,10 @@
   <parent>
     <artifactId>org.eclipse.mylyn.reviews.r4e-parent</artifactId>
     <groupId>org.eclipse.mylyn.reviews.r4e</groupId>
-    <version>0.14.0-SNAPSHOT</version>
+    <version>0.20.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.eclipse.mylyn.reviews.VCalendar</artifactId>
-  <version>0.14.0-SNAPSHOT</version>
+  <version>0.20.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <build>
     <plugins>
