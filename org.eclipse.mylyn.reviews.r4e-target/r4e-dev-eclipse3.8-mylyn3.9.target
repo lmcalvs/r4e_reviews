@@ -51,6 +51,7 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.gerrit.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
