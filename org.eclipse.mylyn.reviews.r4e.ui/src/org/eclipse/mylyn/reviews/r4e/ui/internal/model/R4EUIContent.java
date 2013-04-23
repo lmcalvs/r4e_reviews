@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -277,7 +278,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 
 		//Add this content to the reviewed contents for this user
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
-		user.getReviewedContent().add(fContent.getR4eId());
+		user.getReviewedContent().add(fContent.getId());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
@@ -295,7 +296,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (null != user) {
 			//Remove this content from the reviewed contents for this user
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
-			user.getReviewedContent().remove(fContent.getR4eId());
+			user.getReviewedContent().remove(fContent.getId());
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 	}
@@ -342,7 +343,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fContent,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fContent.getAssignedTo();
+			final EList<String> assignedParticipants = fContent.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 				((R4EUIReviewBasic) getParent().getParent().getParent().getParent()).getParticipant(
@@ -370,7 +371,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			//Set new partcipants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fContent,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fContent.getAssignedTo();
+			final EList<String> assignedParticipants = fContent.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}
@@ -438,7 +439,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -470,7 +471,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			//We can only paste if there is a least 1 Anomaly in the clipboard
 			Object element = null;
 			ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
@@ -519,7 +520,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -536,7 +537,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -553,7 +554,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fContent.getAssignedTo().size() > 0) {
 			return true;
 		}
@@ -571,7 +572,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -613,7 +614,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		if (isEnabled()
 				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 		return true;

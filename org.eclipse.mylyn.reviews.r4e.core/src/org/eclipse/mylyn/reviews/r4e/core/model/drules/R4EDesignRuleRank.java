@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- * Alvaro Sanchez-Leon  - Initial API and implementation
+ *    Alvaro Sanchez-Leon - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules;
@@ -29,98 +29,98 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EDesignRuleRank implements Enumerator {
 	/**
-	 * The '<em><b>None</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #NONE_VALUE
+	 * The '<em><b>R4E RANK NONE</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_RANK_NONE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	NONE(0, "None", "NONE"), /**
-	 * The '<em><b>Minor</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #MINOR_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	MINOR(1, "Minor", "MINOR"), /**
-	 * The '<em><b>Major</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #MAJOR_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	MAJOR(2, "Major", "MAJOR"), /**
-	 * The '<em><b>Deprecated</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DEPRECATED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEPRECATED(3, "Deprecated", "");
+	R4E_RANK_NONE(0, "R4E_RANK_NONE", "R4E_RANK_NONE"),
 
 	/**
-	 * The '<em><b>None</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>None</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #NONE
-	 * @model name="None" literal="NONE"
+	 * The '<em><b>R4E RANK MINOR</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_RANK_MINOR_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int NONE_VALUE = 0;
+	R4E_RANK_MINOR(1, "R4E_RANK_MINOR", "R4E_RANK_MINOR"),
 
 	/**
-	 * The '<em><b>Minor</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Minor</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #MINOR
-	 * @model name="Minor" literal="MINOR"
+	 * The '<em><b>R4E RANK MAJOR</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_RANK_MAJOR_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MINOR_VALUE = 1;
+	R4E_RANK_MAJOR(2, "R4E_RANK_MAJOR", "R4E_RANK_MAJOR"), /**
+	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_RANK_DEPRECATED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	R4E_RANK_DEPRECATED(3, "R4E_RANK_DEPRECATED", "");
 
 	/**
-	 * The '<em><b>Major</b></em>' literal value.
+	 * The '<em><b>R4E RANK NONE</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Major</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK NONE</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #MAJOR
-	 * @model name="Major" literal="MAJOR"
+	 * @see #R4E_RANK_NONE
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MAJOR_VALUE = 2;
+	public static final int R4E_RANK_NONE_VALUE = 0;
 
 	/**
-	 * The '<em><b>Deprecated</b></em>' literal value.
+	 * The '<em><b>R4E RANK MINOR</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Deprecated</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E RANK MINOR</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #DEPRECATED
-	 * @model name="Deprecated" literal=""
+	 * @see #R4E_RANK_MINOR
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DEPRECATED_VALUE = 3;
+	public static final int R4E_RANK_MINOR_VALUE = 1;
+
+	/**
+	 * The '<em><b>R4E RANK MAJOR</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E RANK MAJOR</b></em>' literal object isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_RANK_MAJOR
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_RANK_MAJOR_VALUE = 2;
+
+	/**
+	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E RANK DEPRECATED</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_RANK_DEPRECATED
+	 * @model literal=""
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_RANK_DEPRECATED_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>R4E Design Rule Rank</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc
@@ -129,10 +129,10 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EDesignRuleRank[] VALUES_ARRAY = new R4EDesignRuleRank[] {
-			NONE,
-			MINOR,
-			MAJOR,
-			DEPRECATED,
+			R4E_RANK_NONE,
+			R4E_RANK_MINOR,
+			R4E_RANK_MAJOR,
+			R4E_RANK_DEPRECATED,
 		};
 
 	/**
@@ -183,10 +183,10 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 */
 	public static R4EDesignRuleRank get(int value) {
 		switch (value) {
-			case NONE_VALUE: return NONE;
-			case MINOR_VALUE: return MINOR;
-			case MAJOR_VALUE: return MAJOR;
-			case DEPRECATED_VALUE: return DEPRECATED;
+			case R4E_RANK_NONE_VALUE: return R4E_RANK_NONE;
+			case R4E_RANK_MINOR_VALUE: return R4E_RANK_MINOR;
+			case R4E_RANK_MAJOR_VALUE: return R4E_RANK_MAJOR;
+			case R4E_RANK_DEPRECATED_VALUE: return R4E_RANK_DEPRECATED;
 		}
 		return null;
 	}

@@ -149,8 +149,8 @@ public class RuleProperties extends ModelElementProperties {
 			} else if (RULE_RANK_ID.equals(aId)) {
 				//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 				final int rankValue = ((R4EUIRule) getElement()).getRule().getRank().getValue();
-				final int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.DEPRECATED_VALUE
-						? R4EDesignRuleRank.MINOR_VALUE
+				final int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+						? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 						: rankValue);
 				return UIUtils.getRanks()[intValue];
 			}

@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
@@ -89,7 +90,7 @@ public class R4EAnomalyAnnotation extends R4EAnnotation {
 	 */
 	@Override
 	public R4EID getId() {
-		return ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getR4eId();
+		return ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getId();
 	}
 
 	/**
@@ -135,20 +136,20 @@ public class R4EAnomalyAnnotation extends R4EAnnotation {
 		//Details
 		final List<String> detailsValues = new ArrayList<String>();
 		detailsValues.add(R4EUIConstants.AUTHOR_LABEL
-				+ ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getAuthor().getId());
+				+ ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getUser().getId());
 		final R4ECommentType commentType = (R4ECommentType) ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getType();
 		if (null != commentType) {
 			detailsValues.add(R4EUIConstants.CLASS_LABEL + (UIUtils.getClassStr(commentType.getType())));
 		}
 		final R4EDesignRuleRank rank = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getRank();
-		if ((null != rank) && !rank.equals(R4EDesignRuleRank.NONE)) {
+		if ((null != rank) && !rank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
 			detailsValues.add(R4EUIConstants.RANK_LABEL + UIUtils.getRankStr(rank));
 		}
 		final String ruleId = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getRuleID();
 		if ((null != ruleId) && !ruleId.equals("")) { //$NON-NLS-1$
 			detailsValues.add(R4EUIConstants.RULE_ID_LABEL + ruleId);
 		}
-		final List<String> assignees = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getAssignedTo();
+		final EList<String> assignees = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getAssignedTo();
 		if (((null != assignees) && (assignees.size() > 0)) && !assignees.get(0).equals("")) { //$NON-NLS-1$
 			detailsValues.add(R4EUIConstants.ASSIGNED_TO_LABEL + assignees.get(0));
 		}

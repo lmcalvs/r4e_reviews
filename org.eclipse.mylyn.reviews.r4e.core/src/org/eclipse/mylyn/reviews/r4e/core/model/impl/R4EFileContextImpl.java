@@ -16,8 +16,6 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -91,7 +89,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EContextType TYPE_EDEFAULT = R4EContextType.UNDEFINED;
+	protected static final R4EContextType TYPE_EDEFAULT = R4EContextType.R4E_UNDEFINED;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -134,7 +132,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<R4EDelta> getDeltas() {
+	public EList<R4EDelta> getDeltas() {
 		if (deltas == null) {
 			deltas = new EObjectContainmentEList.Resolving<R4EDelta>(R4EDelta.class, this, RModelPackage.R4E_FILE_CONTEXT__DELTAS);
 		}
@@ -288,11 +286,11 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, String> getInfoAtt() {
+	public EMap<String, String> getInfoAtt() {
 		if (infoAtt == null) {
 			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_FILE_CONTEXT__INFO_ATT);
 		}
-		return infoAtt.map();
+		return infoAtt;
 	}
 
 	/**
@@ -309,7 +307,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				return basicSetTarget(null, msgs);
 			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -332,8 +330,8 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
 				return getType();
 			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
-				if (coreType) return ((EMap.InternalMapView<String, String>)getInfoAtt()).eMap();
-				else return getInfoAtt();
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -360,7 +358,7 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 				setType((R4EContextType)newValue);
 				return;
 			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

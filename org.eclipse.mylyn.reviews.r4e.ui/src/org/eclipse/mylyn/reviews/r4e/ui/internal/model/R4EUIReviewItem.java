@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -207,7 +208,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			//assign participants
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fItem.getAssignedTo();
+			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 				((R4EUIReviewBasic) getParent()).getParticipant(participant.getId(), true);
@@ -238,7 +239,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			//unassign participants
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fItem.getAssignedTo();
+			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}
@@ -424,7 +425,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -472,7 +473,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		if (isEnabled()
 				|| isReadOnly()
 				|| ((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 		return true;
@@ -488,7 +489,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -504,7 +505,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public boolean isAssignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -520,7 +521,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fItem.getAssignedTo().size() > 0) {
 			return true;
 		}

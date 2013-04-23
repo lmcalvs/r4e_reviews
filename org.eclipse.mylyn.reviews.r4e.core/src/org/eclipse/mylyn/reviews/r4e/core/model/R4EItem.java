@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,10 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.mylyn.reviews.frame.core.model.Item;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Item</b></em>'. <!-- end-user-doc -->
@@ -41,7 +41,7 @@ import org.eclipse.mylyn.reviews.core.model.IReviewItem;
  * @model
  * @generated
  */
-public interface R4EItem extends R4EIDComponent, IReviewItem {
+public interface R4EItem extends R4EIDComponent, Item {
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -106,7 +106,7 @@ public interface R4EItem extends R4EIDComponent, IReviewItem {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	List<R4EFileContext> getFileContextList();
+	EList<R4EFileContext> getFileContextList();
 
 	/**
 	 * Returns the value of the '<em><b>Repository Ref</b></em>' attribute.
@@ -147,7 +147,7 @@ public interface R4EItem extends R4EIDComponent, IReviewItem {
 	 * @model
 	 * @generated
 	 */
-	List<String> getProjectURIs();
+	EList<String> getProjectURIs();
 
 	/**
 	 * Returns the value of the '<em><b>Author Rep</b></em>' attribute.
@@ -213,6 +213,6 @@ public interface R4EItem extends R4EIDComponent, IReviewItem {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	Map<String, String> getInfoAtt();
+	EMap<String, String> getInfoAtt();
 
 } // R4EItem

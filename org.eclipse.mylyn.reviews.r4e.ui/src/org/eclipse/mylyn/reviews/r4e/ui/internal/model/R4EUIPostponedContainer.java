@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -163,7 +164,7 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	 */
 	@Override
 	public void open() {
-		final List<R4EFileContext> files = fItem.getFileContextList();
+		final EList<R4EFileContext> files = fItem.getFileContextList();
 		if (null != files) {
 			R4EUIPostponedFile uiFile = null;
 			final int filesSize = files.size();

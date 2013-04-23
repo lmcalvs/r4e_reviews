@@ -9,22 +9,21 @@
  * Description:
  * 
  * Contributors:
- * Alvaro Sanchez-Leon  - Initial API and implementation
+ *    Alvaro Sanchez-Leon - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
+
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
@@ -93,12 +92,12 @@ public class DRModelAdapterFactory extends AdapterFactoryImpl {
 				return createR4EDesignRuleViolationAdapter();
 			}
 			@Override
-			public Adapter caseReviewComponent(IReviewComponent object) {
+			public Adapter caseReviewComponent(ReviewComponent object) {
 				return createReviewComponentAdapter();
 			}
 			@Override
-			public Adapter caseModelVersioning(IModelVersioning object) {
-				return createModelVersioningAdapter();
+			public Adapter caseSubModelRoot(SubModelRoot object) {
+				return createSubModelRootAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -172,12 +171,12 @@ public class DRModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReviewComponent <em>Review Component</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent <em>Review Component</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that we can
 	 * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
 	 * end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReviewComponent
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent
 	 * @generated
 	 */
 	public Adapter createReviewComponentAdapter() {
@@ -185,15 +184,16 @@ public class DRModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IModelVersioning <em>Model Versioning</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that we can
-	 * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-	 * end-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
+	 * <em>Sub Model Root</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
+	 * -->
+	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IModelVersioning
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
 	 * @generated
 	 */
-	public Adapter createModelVersioningAdapter() {
+	public Adapter createSubModelRootAdapter() {
 		return null;
 	}
 

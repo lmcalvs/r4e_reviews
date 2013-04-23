@@ -22,7 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -284,7 +284,7 @@ public interface IR4EUIModelElement {
 	 * @return the new serialization elements objects
 	 * @throws ResourceHandlingException
 	 */
-	List<IReviewComponent> createChildModelDataElement() throws ResourceHandlingException;
+	List<ReviewComponent> createChildModelDataElement() throws ResourceHandlingException;
 
 	/**
 	 * Set serialization model data by copying it from the passed-in object
@@ -294,7 +294,7 @@ public interface IR4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException;
+	void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException;
 
 	//Properties
 
@@ -336,7 +336,7 @@ public interface IR4EUIModelElement {
 	 * @throws OutOfSyncException
 	 * @throws CompatibilityException
 	 */
-	IR4EUIModelElement createChildren(IReviewComponent tempModelComponent) throws ResourceHandlingException,
+	IR4EUIModelElement createChildren(ReviewComponent tempModelComponent) throws ResourceHandlingException,
 			OutOfSyncException, CompatibilityException;
 
 	/**

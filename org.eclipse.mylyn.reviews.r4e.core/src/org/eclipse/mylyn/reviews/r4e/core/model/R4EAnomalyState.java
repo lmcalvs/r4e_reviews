@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,190 +29,194 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EAnomalyState implements Enumerator {
 	/**
-	 * The '<em><b>Created</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #CREATED_VALUE
+	 * The '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_CREATED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	CREATED(5, "Created", "CREATED"), /**
-	 * The '<em><b>Assigned</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ASSIGNED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ASSIGNED(4, "Assigned", "ASSIGNED"), /**
-	 * The '<em><b>Accepted</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ACCEPTED(0, "Accepted", "ACCEPTED"), /**
-	 * The '<em><b>Fixed</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #FIXED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	FIXED(7, "Fixed", "FIXED"), /**
-	 * The '<em><b>Duplicated</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DUPLICATED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DUPLICATED(1, "Duplicated", "DUPLICATED"), /**
-	 * The '<em><b>Rejected</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #REJECTED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	REJECTED(2, "Rejected", "REJECTED"), /**
-	 * The '<em><b>Deferred</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DEFERRED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEFERRED(3, "Deferred", "DEFERRED"), /**
-	 * The '<em><b>Verified</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #VERIFIED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	VERIFIED(6, "Verified", "VERIFIED");
+	R4E_ANOMALY_STATE_CREATED(5, "R4E_ANOMALY_STATE_CREATED", "R4E_ANOMALY_STATE_CREATED"),
 
 	/**
-	 * The '<em><b>Created</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Created</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #CREATED
-	 * @model name="Created" literal="CREATED"
+	 * The '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_ASSIGNED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CREATED_VALUE = 5;
+	R4E_ANOMALY_STATE_ASSIGNED(4, "R4E_ANOMALY_STATE_ASSIGNED", "R4E_ANOMALY_STATE_ASSIGNED"),
 
 	/**
-	 * The '<em><b>Assigned</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Assigned</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #ASSIGNED
-	 * @model name="Assigned" literal="ASSIGNED"
+	 * The '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_ACCEPTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ASSIGNED_VALUE = 4;
+	R4E_ANOMALY_STATE_ACCEPTED(0, "R4E_ANOMALY_STATE_ACCEPTED", "R4E_ANOMALY_STATE_ACCEPTED"),
 
 	/**
-	 * The '<em><b>Accepted</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Accepted</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED
-	 * @model name="Accepted" literal="ACCEPTED"
+	 * The '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_FIXED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ACCEPTED_VALUE = 0;
+	R4E_ANOMALY_STATE_FIXED(7, "R4E_ANOMALY_STATE_FIXED", "R4E_ANOMALY_STATE_FIXED"),
 
 	/**
-	 * The '<em><b>Fixed</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Fixed</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #FIXED
-	 * @model name="Fixed" literal="FIXED"
+	 * The '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_DUPLICATED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int FIXED_VALUE = 7;
+	R4E_ANOMALY_STATE_DUPLICATED(1, "R4E_ANOMALY_STATE_DUPLICATED", "R4E_ANOMALY_STATE_DUPLICATED"),
 
 	/**
-	 * The '<em><b>Duplicated</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Duplicated</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #DUPLICATED
-	 * @model name="Duplicated" literal="DUPLICATED"
+	 * The '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_REJECTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DUPLICATED_VALUE = 1;
+	R4E_ANOMALY_STATE_REJECTED(2, "R4E_ANOMALY_STATE_REJECTED", "R4E_ANOMALY_STATE_REJECTED"),
 
 	/**
-	 * The '<em><b>Rejected</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Rejected</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #REJECTED
-	 * @model name="Rejected" literal="REJECTED"
+	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_DEFERRED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int REJECTED_VALUE = 2;
+	R4E_ANOMALY_STATE_DEFERRED(3, "R4E_ANOMALY_STATE_DEFERRED", "R4E_ANOMALY_STATE_DEFERRED"), /**
+	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_VERIFIED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	R4E_ANOMALY_STATE_VERIFIED(6, "R4E_ANOMALY_STATE_VERIFIED", "R4E_ANOMALY_STATE_VERIFIED");
 
 	/**
-	 * The '<em><b>Deferred</b></em>' literal value.
+	 * The '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Deferred</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #DEFERRED
-	 * @model name="Deferred" literal="DEFERRED"
+	 * @see #R4E_ANOMALY_STATE_CREATED
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DEFERRED_VALUE = 3;
+	public static final int R4E_ANOMALY_STATE_CREATED_VALUE = 5;
 
 	/**
-	 * The '<em><b>Verified</b></em>' literal value.
+	 * The '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Verified</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E ANOMALY STATE ASSIGNED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #VERIFIED
-	 * @model name="Verified" literal="VERIFIED"
+	 * @see #R4E_ANOMALY_STATE_ASSIGNED
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int VERIFIED_VALUE = 6;
+	public static final int R4E_ANOMALY_STATE_ASSIGNED_VALUE = 4;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE ACCEPTED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_ACCEPTED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_ACCEPTED_VALUE = 0;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE FIXED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_FIXED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_FIXED_VALUE = 7;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE DUPLICATED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_DUPLICATED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_DUPLICATED_VALUE = 1;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE REJECTED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_REJECTED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_REJECTED_VALUE = 2;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_DEFERRED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_DEFERRED_VALUE = 3;
+
+	/**
+	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_ANOMALY_STATE_VERIFIED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_ANOMALY_STATE_VERIFIED_VALUE = 6;
 
 	/**
 	 * An array of all the '<em><b>R4E Anomaly State</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc
@@ -221,14 +225,14 @@ public enum R4EAnomalyState implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EAnomalyState[] VALUES_ARRAY = new R4EAnomalyState[] {
-			CREATED,
-			ASSIGNED,
-			ACCEPTED,
-			FIXED,
-			DUPLICATED,
-			REJECTED,
-			DEFERRED,
-			VERIFIED,
+			R4E_ANOMALY_STATE_CREATED,
+			R4E_ANOMALY_STATE_ASSIGNED,
+			R4E_ANOMALY_STATE_ACCEPTED,
+			R4E_ANOMALY_STATE_FIXED,
+			R4E_ANOMALY_STATE_DUPLICATED,
+			R4E_ANOMALY_STATE_REJECTED,
+			R4E_ANOMALY_STATE_DEFERRED,
+			R4E_ANOMALY_STATE_VERIFIED,
 		};
 
 	/**
@@ -279,14 +283,14 @@ public enum R4EAnomalyState implements Enumerator {
 	 */
 	public static R4EAnomalyState get(int value) {
 		switch (value) {
-			case CREATED_VALUE: return CREATED;
-			case ASSIGNED_VALUE: return ASSIGNED;
-			case ACCEPTED_VALUE: return ACCEPTED;
-			case FIXED_VALUE: return FIXED;
-			case DUPLICATED_VALUE: return DUPLICATED;
-			case REJECTED_VALUE: return REJECTED;
-			case DEFERRED_VALUE: return DEFERRED;
-			case VERIFIED_VALUE: return VERIFIED;
+			case R4E_ANOMALY_STATE_CREATED_VALUE: return R4E_ANOMALY_STATE_CREATED;
+			case R4E_ANOMALY_STATE_ASSIGNED_VALUE: return R4E_ANOMALY_STATE_ASSIGNED;
+			case R4E_ANOMALY_STATE_ACCEPTED_VALUE: return R4E_ANOMALY_STATE_ACCEPTED;
+			case R4E_ANOMALY_STATE_FIXED_VALUE: return R4E_ANOMALY_STATE_FIXED;
+			case R4E_ANOMALY_STATE_DUPLICATED_VALUE: return R4E_ANOMALY_STATE_DUPLICATED;
+			case R4E_ANOMALY_STATE_REJECTED_VALUE: return R4E_ANOMALY_STATE_REJECTED;
+			case R4E_ANOMALY_STATE_DEFERRED_VALUE: return R4E_ANOMALY_STATE_DEFERRED;
+			case R4E_ANOMALY_STATE_VERIFIED_VALUE: return R4E_ANOMALY_STATE_VERIFIED;
 		}
 		return null;
 	}

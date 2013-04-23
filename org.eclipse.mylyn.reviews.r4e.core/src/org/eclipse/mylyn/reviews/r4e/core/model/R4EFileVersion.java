@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,10 +14,11 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import java.util.Map;
-
 import org.eclipse.core.resources.IResource;
+
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
@@ -232,6 +233,6 @@ public interface R4EFileVersion extends EObject {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	Map<String, String> getInfoAtt();
+	EMap<String, String> getInfoAtt();
 
 } // R4EFileVersion

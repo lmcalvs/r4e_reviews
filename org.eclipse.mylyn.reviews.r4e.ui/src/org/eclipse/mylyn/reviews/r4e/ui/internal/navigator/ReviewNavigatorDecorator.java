@@ -309,7 +309,7 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	public Color decorateForeground(Object aElement) {
 		if (aElement instanceof R4EUIReviewBasic) {
 			if (((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
-					R4EReviewPhase.COMPLETED)) {
+					R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
 			}
 		}

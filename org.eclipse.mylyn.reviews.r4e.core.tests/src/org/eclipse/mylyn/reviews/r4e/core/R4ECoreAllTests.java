@@ -23,7 +23,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.PersistenceTest;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ChangeResControllerTest;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CommonTest;
 import org.eclipse.mylyn.reviews.r4e.core.model.tests.ModelTests;
-import org.eclipse.mylyn.reviews.r4e.core.utils.CommonModelFileConverterTest;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.OSPermissionTest;
 
 /**
@@ -54,7 +53,6 @@ public class R4ECoreAllTests extends TestSuite {
 		suite.addTestSuite(OSPermissionTest.class);
 		suite.addTestSuite(ChangeResControllerTest.class);
 		suite.addTestSuite(CommonTest.class);
-		suite.addTestSuite(CommonModelFileConverterTest.class);
 		return suite;
 	}
 

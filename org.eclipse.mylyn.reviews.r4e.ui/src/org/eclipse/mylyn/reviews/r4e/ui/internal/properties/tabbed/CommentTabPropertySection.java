@@ -159,7 +159,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EComment modelComment = ((R4EUIComment) fProperties.getElement()).getComment();
-		fAuthorText.setText(modelComment.getAuthor().getId());
+		fAuthorText.setText(modelComment.getUser().getId());
 		fCreationDateText.setText(modelComment.getCreatedOn().toString());
 		fDescriptionText.setText(modelComment.getDescription());
 		fDescriptionText.getParent().layout();
@@ -176,7 +176,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 				|| fProperties.getElement().isReadOnly()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fAuthorText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fCreationDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);

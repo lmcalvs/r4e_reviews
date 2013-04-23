@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.mylyn.reviews.internal.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.LocationImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -36,7 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *
  * @generated
  */
-public abstract class R4EContentImpl extends Location implements R4EContent {
+public abstract class R4EContentImpl extends LocationImpl implements R4EContent {
 	/**
 	 * The cached value of the '{@link #getLocation() <em>Location</em>}' containment reference.
 	 * <!-- begin-user-doc -->

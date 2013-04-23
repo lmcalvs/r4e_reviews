@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -47,7 +48,7 @@ public class TResReader extends R4EReader implements IModelReader {
 			return null;
 		}
 
-		List<EObject> eObjects = getObjects(aRootPath, resSet);
+		EList<EObject> eObjects = getObjects(aRootPath, resSet);
 		return findType(type, eObjects);
 	}
 
@@ -58,7 +59,7 @@ public class TResReader extends R4EReader implements IModelReader {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private <T> T findType(Class<T> type, List<EObject> eObjects) {
+	private <T> T findType(Class<T> type, EList<EObject> eObjects) {
 		T element = null;
 		for (EObject eobject : eObjects) {
 			if (type.isAssignableFrom(eobject.getClass())) {
@@ -85,7 +86,7 @@ public class TResReader extends R4EReader implements IModelReader {
 	// }
 	//
 	// List<T> resElements = new ArrayList<T>();
-	// List<EObject> eObjects = getObjects(aRootPath);
+	// EList<EObject> eObjects = getObjects(aRootPath);
 	//
 	// for (EObject eobject : eObjects) {
 	// if (type.isAssignableFrom(eobject.getClass())) {
@@ -103,7 +104,7 @@ public class TResReader extends R4EReader implements IModelReader {
 	 * @return
 	 * @throws ResourceHandlingException
 	 */
-	private List<EObject> getObjects(URI resourcePath) throws ResourceHandlingException {
+	private EList<EObject> getObjects(URI resourcePath) throws ResourceHandlingException {
 		// Create the resouce pointing to the specified URI
 		Resource resource = createResourceSetWithResource(resourcePath);
 		return getObjects(resourcePath, resource);
@@ -115,7 +116,7 @@ public class TResReader extends R4EReader implements IModelReader {
 	 * @return
 	 * @throws ResourceHandlingException
 	 */
-	private List<EObject> getObjects(URI resourcePath, ResourceSet resSet) throws ResourceHandlingException {
+	private EList<EObject> getObjects(URI resourcePath, ResourceSet resSet) throws ResourceHandlingException {
 		Resource resource = createResource(resourcePath, resSet);
 		return getObjects(resourcePath, resource);
 	}
@@ -127,7 +128,7 @@ public class TResReader extends R4EReader implements IModelReader {
 	 * @return
 	 * @throws ResourceHandlingException
 	 */
-	private List<EObject> getObjects(URI resourcePath, Resource resource) throws ResourceHandlingException {
+	private EList<EObject> getObjects(URI resourcePath, Resource resource) throws ResourceHandlingException {
 		// Load resources
 		try {
 			resource.load(null);
@@ -137,7 +138,7 @@ public class TResReader extends R4EReader implements IModelReader {
 			throw exception;
 		}
 
-		List<EObject> eObjects = resource.getContents();
+		EList<EObject> eObjects = resource.getContents();
 		return eObjects;
 	}
 

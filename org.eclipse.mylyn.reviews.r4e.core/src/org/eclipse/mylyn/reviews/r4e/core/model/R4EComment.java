@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,9 +15,9 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import java.util.Date;
-import java.util.Map;
 
-import org.eclipse.mylyn.reviews.core.model.IComment;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Comment</b></em>'. <!-- end-user-doc -->
@@ -35,7 +35,8 @@ import org.eclipse.mylyn.reviews.core.model.IComment;
  * @model
  * @generated
  */
-public interface R4EComment extends IComment, R4EReviewComponent, R4EIDComponent {
+public interface R4EComment extends Comment, R4EReviewComponent, R4EIDComponent {
+
 	/**
 	 * Returns the value of the '<em><b>Created On</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -100,6 +101,5 @@ public interface R4EComment extends IComment, R4EReviewComponent, R4EIDComponent
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	Map<String, String> getInfoAtt();
-
+	EMap<String, String> getInfoAtt();
 } // R4EComment

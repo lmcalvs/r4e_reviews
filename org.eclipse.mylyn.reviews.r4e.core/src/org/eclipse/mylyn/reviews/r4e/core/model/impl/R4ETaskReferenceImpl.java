@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,12 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.mylyn.reviews.internal.core.model.TaskReference;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.TaskReferenceImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -37,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * 
  * @generated
  */
-public class R4ETaskReferenceImpl extends TaskReference implements R4ETaskReference {
+public class R4ETaskReferenceImpl extends TaskReferenceImpl implements R4ETaskReference {
 	/**
 	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -69,7 +67,7 @@ public class R4ETaskReferenceImpl extends TaskReference implements R4ETaskRefere
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAssignedTo() {
+	public EList<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_TASK_REFERENCE__ASSIGNED_TO);
 		}

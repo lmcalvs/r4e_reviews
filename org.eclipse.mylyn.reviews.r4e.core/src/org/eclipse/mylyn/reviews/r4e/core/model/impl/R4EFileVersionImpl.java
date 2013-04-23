@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,22 +14,25 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
-import java.util.Map;
-
 import org.eclipse.core.resources.IResource;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
@@ -358,11 +361,11 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, String> getInfoAtt() {
+	public EMap<String, String> getInfoAtt() {
 		if (infoAtt == null) {
 			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_FILE_VERSION__INFO_ATT);
 		}
-		return infoAtt.map();
+		return infoAtt;
 	}
 
 	/**
@@ -373,7 +376,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -400,8 +403,8 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 			case RModelPackage.R4E_FILE_VERSION__FILE_REVISION:
 				return getFileRevision();
 			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
-				if (coreType) return ((EMap.InternalMapView<String, String>)getInfoAtt()).eMap();
-				else return getInfoAtt();
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -435,7 +438,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 				setFileRevision((IFileRevision)newValue);
 				return;
 			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

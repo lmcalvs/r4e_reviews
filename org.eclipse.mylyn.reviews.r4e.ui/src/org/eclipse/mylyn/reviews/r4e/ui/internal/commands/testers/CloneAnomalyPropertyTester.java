@@ -21,13 +21,13 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers;
 import java.util.AbstractList;
 import java.util.AbstractSet;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -75,19 +75,20 @@ public class CloneAnomalyPropertyTester extends PropertyTester {
 		}
 
 		//Command is disabled if the active review is completed
-		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
+		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+				R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 
 		//Command is disabled if there is no anomaly available for cloning
-		List<ITopic> anomalies = activeReview.getReview().getTopics();
+		EList<Topic> anomalies = activeReview.getReview().getTopics();
 		if (anomalies.isEmpty()) {
 			return false;
 		}
 		boolean isLocalAnomalies = false;
 		int anomaliesSize = anomalies.size();
 		for (int i = 0; i < anomaliesSize; i++) {
-			if (!anomalies.get(i).getLocations().isEmpty()) {
+			if (!anomalies.get(i).getLocation().isEmpty()) {
 				isLocalAnomalies = true;
 				break;
 			}

@@ -68,29 +68,13 @@ public class UpgradeVersionTests extends TestCase {
 
 	public static final String UPGRADE_TEST_DIR = "r4eUpgradeTest"; //$NON-NLS-1$
 
-	public static final String NON_COMPATIBLE_UPGRADE_TEST_NAME = "nonCompatibleUpgradeTest"; //$NON-NLS-1$
-
 	public static final String COMPATIBLE_UPGRADE_TEST_NAME = "compatibleUpgradeTest"; //$NON-NLS-1$
 
 	public static final String UPGRADE_TEST_PARENT_DIR_STR = "testFiles"; //$NON-NLS-1$
 
-	public static final String NON_COMPATIBLE_UPGRADE_GROUP_TEST_FILE_STR = "nonCompatibleUpgradeTest_group_root.xrer"; //$NON-NLS-1$
-
-	public static final String NON_COMPATIBLE_UPGRADE_RULESET_TEST_FILE_STR = "nonCompatibleUpgradeTest_rule_set.xrer"; //$NON-NLS-1$
-
 	public static final String COMPATIBLE_UPGRADE_GROUP_TEST_FILE_STR = "compatibleUpgradeTest_group_root.xrer"; //$NON-NLS-1$
 
 	public static final String COMPATIBLE_UPGRADE_RULESET_TEST_FILE_STR = "compatibleUpgradeTest_rule_set.xrer"; //$NON-NLS-1$
-
-	public static final URI NON_COMPATIBLE_UPGRADE_GROUP_TEST_FILE_URI = URI.createFileURI(UPGRADE_TEST_PARENT_DIR_STR
-			+ File.separator + NON_COMPATIBLE_UPGRADE_TEST_NAME + File.separator
-			+ NON_COMPATIBLE_UPGRADE_GROUP_TEST_FILE_STR);
-
-	public static final URI NON_COMPATIBLE_UPGRADE_RULESET_TEST_FILE_URI = URI.createFileURI(UPGRADE_TEST_PARENT_DIR_STR
-			+ File.separator
-			+ NON_COMPATIBLE_UPGRADE_TEST_NAME
-			+ File.separator
-			+ NON_COMPATIBLE_UPGRADE_RULESET_TEST_FILE_STR);
 
 	public static final URI COMPATIBLE_UPGRADE_GROUP_TEST_FILE_URI = URI.createFileURI(UPGRADE_TEST_PARENT_DIR_STR
 			+ File.separator + COMPATIBLE_UPGRADE_TEST_NAME + File.separator + COMPATIBLE_UPGRADE_GROUP_TEST_FILE_STR);
@@ -99,8 +83,6 @@ public class UpgradeVersionTests extends TestCase {
 			+ File.separator + COMPATIBLE_UPGRADE_TEST_NAME + File.separator + COMPATIBLE_UPGRADE_RULESET_TEST_FILE_STR);
 
 	private static int UPGRADE_BUTTON_INDEX = 0;
-
-	private static int NONCOMPATIBLE_CANCEL_BUTTON_INDEX = 1;
 
 	private static int COMPATIBLE_NO_UPGRADE_BUTTON_INDEX = 1;
 
@@ -123,8 +105,6 @@ public class UpgradeVersionTests extends TestCase {
 	protected static File fRootTestDir = null;
 
 	private URI fNonCompatibleReviewGroupFileURI;
-
-	private URI fNonCompatibleRuleSetFileURI;
 
 	private URI fCompatibleReviewGroupFileURI;
 
@@ -163,24 +143,6 @@ public class UpgradeVersionTests extends TestCase {
 		}
 
 		fRootTestDir = new File(baseTargetDir + UPGRADE_TEST_DIR + File.separator + System.currentTimeMillis());
-
-		//*** Non-compatible upgrade tests ***
-
-		// Take the directory name to be used as copy destination
-		File nonCompatibleSourceTestDir = new File(
-				URI.decode(NON_COMPATIBLE_UPGRADE_GROUP_TEST_FILE_URI.trimSegments(1).devicePath()));
-		String nonCompatibleTargetTestDirStr = fRootTestDir.toString() + nonCompatibleSourceTestDir.getName();
-		File nonCompatibleTargetTestDir = new File(nonCompatibleTargetTestDirStr);
-
-		// Determine the location of the group file in the destination folder
-		URI nonCompatibleTargetTestRootURI = URI.createFileURI(nonCompatibleTargetTestDir.getAbsolutePath());
-		String nonCompatibleTargetTestGroupFile = NON_COMPATIBLE_UPGRADE_GROUP_TEST_FILE_URI.lastSegment();
-		fNonCompatibleReviewGroupFileURI = nonCompatibleTargetTestRootURI.appendSegment(nonCompatibleTargetTestGroupFile);
-		String nonCompatibleTargetTestRuleSetFile = NON_COMPATIBLE_UPGRADE_RULESET_TEST_FILE_URI.lastSegment();
-		fNonCompatibleRuleSetFileURI = nonCompatibleTargetTestRootURI.appendSegment(nonCompatibleTargetTestRuleSetFile);
-
-		// Copy source dir to test dir
-		FileUtils.copyDirectory(nonCompatibleSourceTestDir, nonCompatibleTargetTestDir);
 
 		//*** Compatible upgrade tests ***
 
@@ -224,34 +186,9 @@ public class UpgradeVersionTests extends TestCase {
 	 */
 	public void testUpgrades() {
 		TestUtils.waitForJobs();
-		verifyNonCompatibleUpgradeCancelled();
-		verifyNonCompatibleUpgradeOK();
 		verifyCompatibleUpgradeCancelled();
 		verifyCompatibleNoUpgrade();
 		verifyCompatibleUpgradeOK();
-	}
-
-	/**
-	 * Method verifyNonCompatibleUpgradeCancelled
-	 */
-	private void verifyNonCompatibleUpgradeCancelled() {
-		addReviewGroupToPreferences(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleReviewGroupFileURI, false);
-		openReviewGroup(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleReviewGroupFileURI,
-				NONCOMPATIBLE_CANCEL_BUTTON_INDEX, false, false);
-		addRuleSetToPreferences(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleRuleSetFileURI, false);
-		openRuleSet(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleRuleSetFileURI, NONCOMPATIBLE_CANCEL_BUTTON_INDEX,
-				false, false);
-	}
-
-	/**
-	 * Method verifyNonCompatibleUpgradeOK
-	 */
-	private void verifyNonCompatibleUpgradeOK() {
-		openReviewGroup(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleReviewGroupFileURI, UPGRADE_BUTTON_INDEX, true,
-				false);
-		openRuleSet(NON_COMPATIBLE_UPGRADE_TEST_NAME, fNonCompatibleRuleSetFileURI, UPGRADE_BUTTON_INDEX, true, false);
-		openReview(NONCOMPATIBLE_CANCEL_BUTTON_INDEX, false, false);
-		openReview(UPGRADE_BUTTON_INDEX, false, true);
 	}
 
 	/**
@@ -473,7 +410,7 @@ public class UpgradeVersionTests extends TestCase {
 			Assert.assertEquals(aAssertReadOnly, participant.isReadOnly());
 			Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, participant.getParticipant().getId());
 			Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, participant.getParticipant().getEmail());
-			Assert.assertEquals(R4EUserRole.REVIEWER, participant.getParticipant().getRoles().get(0));
+			Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, participant.getParticipant().getRoles().get(0));
 
 			//Verify Global Anomaly
 			Assert.assertNotNull(review.getAnomalyContainer());
@@ -549,10 +486,10 @@ public class UpgradeVersionTests extends TestCase {
 			Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO2, anomaly.getAnomaly().getAssignedTo().get(0));
 			Assert.assertEquals(
 					71381,
-					((R4ETextPosition) ((R4ETextContent) anomaly.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+					((R4ETextPosition) ((R4ETextContent) anomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 			Assert.assertEquals(
 					87,
-					((R4ETextPosition) ((R4ETextContent) anomaly.getAnomaly().getLocations().get(0)).getLocation()).getLength());
+					((R4ETextPosition) ((R4ETextContent) anomaly.getAnomaly().getLocation().get(0)).getLocation()).getLength());
 			//Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(anomaly, true,
 			//		R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 

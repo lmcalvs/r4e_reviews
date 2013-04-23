@@ -15,6 +15,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -339,7 +340,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			}
 		}
 
-		java.util.List<String> projects = modelItem.getProjectURIs();
+		EList<String> projects = modelItem.getProjectURIs();
 		fProjectIdList.setItems(projects.toArray(new String[projects.size()]));
 		fRepositoryText.setText(null != modelItem.getRepositoryRef() ? modelItem.getRepositoryRef() : "");
 		if (null != modelItem.getSubmitted()) {
@@ -354,7 +355,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fDescriptionText.setText("");
 		}
 
-		final java.util.List<String> assignedParticipants = modelItem.getAssignedTo();
+		final EList<String> assignedParticipants = modelItem.getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 
 		setEnabledFields();
@@ -370,7 +371,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 				|| fProperties.getElement().isReadOnly()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fAuthorText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAuthorRepText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fRepositoryText.setForeground(UIUtils.DISABLED_FONT_COLOR);

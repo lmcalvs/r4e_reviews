@@ -15,29 +15,27 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.util;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.mylyn.reviews.core.model.IComment;
-import org.eclipse.mylyn.reviews.core.model.ICommentType;
-import org.eclipse.mylyn.reviews.core.model.IDated;
-import org.eclipse.mylyn.reviews.core.model.IIndexed;
-import org.eclipse.mylyn.reviews.core.model.ILocation;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.core.model.IReview;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
-import org.eclipse.mylyn.reviews.core.model.IReviewGroup;
-import org.eclipse.mylyn.reviews.core.model.IReviewItem;
-import org.eclipse.mylyn.reviews.core.model.IReviewState;
-import org.eclipse.mylyn.reviews.core.model.ITaskReference;
-import org.eclipse.mylyn.reviews.core.model.ITopic;
-import org.eclipse.mylyn.reviews.core.model.ITopicContainer;
-import org.eclipse.mylyn.reviews.core.model.IUser;
+import org.eclipse.mylyn.reviews.frame.core.model.Comment;
+import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
+import org.eclipse.mylyn.reviews.frame.core.model.Item;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
@@ -49,14 +47,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
@@ -118,8 +114,8 @@ public class RModelSwitch<T> extends Switch<T> {
 				T result = caseR4EReviewGroup(r4EReviewGroup);
 				if (result == null) result = caseReviewGroup(r4EReviewGroup);
 				if (result == null) result = caseR4EReviewComponent(r4EReviewGroup);
-				if (result == null) result = caseModelVersioning(r4EReviewGroup);
 				if (result == null) result = caseReviewComponent(r4EReviewGroup);
+				if (result == null) result = caseSubModelRoot(r4EReviewGroup);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -128,10 +124,8 @@ public class RModelSwitch<T> extends Switch<T> {
 				T result = caseR4EReview(r4EReview);
 				if (result == null) result = caseReview(r4EReview);
 				if (result == null) result = caseR4EReviewComponent(r4EReview);
-				if (result == null) result = caseModelVersioning(r4EReview);
-				if (result == null) result = caseTopicContainer(r4EReview);
-				if (result == null) result = caseDated(r4EReview);
 				if (result == null) result = caseReviewComponent(r4EReview);
+				if (result == null) result = caseSubModelRoot(r4EReview);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -143,8 +137,6 @@ public class RModelSwitch<T> extends Switch<T> {
 				if (result == null) result = caseComment(r4EAnomaly);
 				if (result == null) result = caseR4EIDComponent(r4EAnomaly);
 				if (result == null) result = caseReviewComponent(r4EAnomaly);
-				if (result == null) result = caseIndexed(r4EAnomaly);
-				if (result == null) result = caseDated(r4EAnomaly);
 				if (result == null) result = caseR4EReviewComponent(r4EAnomaly);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -155,10 +147,8 @@ public class RModelSwitch<T> extends Switch<T> {
 				if (result == null) result = caseR4EReview(r4EFormalReview);
 				if (result == null) result = caseReview(r4EFormalReview);
 				if (result == null) result = caseR4EReviewComponent(r4EFormalReview);
-				if (result == null) result = caseModelVersioning(r4EFormalReview);
-				if (result == null) result = caseTopicContainer(r4EFormalReview);
-				if (result == null) result = caseDated(r4EFormalReview);
 				if (result == null) result = caseReviewComponent(r4EFormalReview);
+				if (result == null) result = caseSubModelRoot(r4EFormalReview);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -198,9 +188,8 @@ public class RModelSwitch<T> extends Switch<T> {
 				R4EItem r4EItem = (R4EItem)theEObject;
 				T result = caseR4EItem(r4EItem);
 				if (result == null) result = caseR4EIDComponent(r4EItem);
-				if (result == null) result = caseReviewItem(r4EItem);
+				if (result == null) result = caseItem(r4EItem);
 				if (result == null) result = caseR4EReviewComponent(r4EItem);
-				if (result == null) result = caseTopicContainer(r4EItem);
 				if (result == null) result = caseReviewComponent(r4EItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -210,7 +199,6 @@ public class RModelSwitch<T> extends Switch<T> {
 				T result = caseR4ETextContent(r4ETextContent);
 				if (result == null) result = caseR4EContent(r4ETextContent);
 				if (result == null) result = caseLocation(r4ETextContent);
-				if (result == null) result = caseIndexed(r4ETextContent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -250,8 +238,6 @@ public class RModelSwitch<T> extends Switch<T> {
 				if (result == null) result = caseComment(r4EComment);
 				if (result == null) result = caseR4EIDComponent(r4EComment);
 				if (result == null) result = caseReviewComponent(r4EComment);
-				if (result == null) result = caseIndexed(r4EComment);
-				if (result == null) result = caseDated(r4EComment);
 				if (result == null) result = caseR4EReviewComponent(r4EComment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -298,7 +284,6 @@ public class RModelSwitch<T> extends Switch<T> {
 				R4EContent r4EContent = (R4EContent)theEObject;
 				T result = caseR4EContent(r4EContent);
 				if (result == null) result = caseLocation(r4EContent);
-				if (result == null) result = caseIndexed(r4EContent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -889,7 +874,22 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewComponent(IReviewComponent object) {
+	public T caseReviewComponent(ReviewComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'. <!-- begin-user-doc
+	 * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubModelRoot(SubModelRoot object) {
 		return null;
 	}
 
@@ -902,52 +902,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewGroup(IReviewGroup object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Versioning</em>'. <!-- begin-user-doc
-	 * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc
-	 * -->
-	 * 
-	 * @param object
-	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Versioning</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseModelVersioning(IModelVersioning object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Topic Container</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Topic Container</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTopicContainer(ITopicContainer object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dated</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dated</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDated(IDated object) {
+	public T caseReviewGroup(ReviewGroup object) {
 		return null;
 	}
 
@@ -960,22 +915,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReview(IReview object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Indexed</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Indexed</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIndexed(IIndexed object) {
+	public T caseReview(Review object) {
 		return null;
 	}
 
@@ -988,7 +928,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseComment(IComment object) {
+	public T caseComment(Comment object) {
 		return null;
 	}
 
@@ -1001,7 +941,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTopic(ITopic object) {
+	public T caseTopic(Topic object) {
 		return null;
 	}
 
@@ -1014,33 +954,20 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUser(IUser object) {
+	public T caseUser(User object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Review Item</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Review Item</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseReviewItem(IReviewItem object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Item</em>'.
 	 * <!-- begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Item</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLocation(ILocation object) {
+	public T caseItem(Item object) {
 		return null;
 	}
 
@@ -1053,7 +980,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCommentType(ICommentType object) {
+	public T caseCommentType(CommentType object) {
 		return null;
 	}
 
@@ -1068,7 +995,7 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTaskReference(ITaskReference object) {
+	public T caseTaskReference(TaskReference object) {
 		return null;
 	}
 
@@ -1081,7 +1008,20 @@ public class RModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewState(IReviewState object) {
+	public T caseReviewState(ReviewState object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLocation(Location object) {
 		return null;
 	}
 

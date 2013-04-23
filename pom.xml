@@ -26,6 +26,7 @@
     <system>Bugzilla</system>
   </issueManagement>
 	<properties>
+    	<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/r4e/org.eclipse.mylyn.reviews.r4e.git</tycho.scmUrl>
 		<mockito-version>1.8.4</mockito-version>
 		<junit-version>4.8.1</junit-version>
 	</properties>
@@ -37,7 +38,7 @@
       </snapshots>
       <id>mylyn-snapshots</id>
       <url>http://download.eclipse.org/mylyn/maven/snapshots</url>      
-       <layout>default</layout>
+      <layout>default</layout>
     </repository>
     <repository>
       <id>mylyn-releases</id>
@@ -56,11 +57,6 @@
       </activation>
       <repositories>
         <repository>
-          <id>eclipse-mylyn-reviews</id>
-          <layout>p2</layout>
-          <url>${mylyn-reviews-repository-url}</url>
-        </repository>
-        <repository>
           <id>eclipse-mylyn-commons</id>
           <layout>p2</layout>
           <url>${mylyn-commons-repository-url}</url>
@@ -70,16 +66,16 @@
           <layout>p2</layout>
           <url>${mylyn-versions-repository-url}</url>
         </repository>
-		<repository>
-			<id>eclipse-mylyn-tasks</id>
-			<layout>p2</layout>
-			<url>${mylyn-tasks-repository-url}</url>
-		</repository>
-		<repository>
-			<id>eclipse-mylyn-context</id>
-			<layout>p2</layout>
-			<url>${mylyn-context-repository-url}</url>
-		</repository>
+        <repository>
+          <id>eclipse-mylyn-reviews</id>
+          <layout>p2</layout>
+          <url>${mylyn-reviews-repository-url}</url>
+        </repository>
+        <repository>
+          <id>eclipse-mylyn-tasks</id>
+          <layout>p2</layout>
+          <url>${mylyn-tasks-repository-url}</url>
+        </repository>
 <!--  Orbit is taken from parent pom
         <repository>
            <id>eclipse-mylyn-orbit-committers</id>
@@ -87,6 +83,11 @@
            <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
          </repository>
 -->
+        <repository>
+          <id>eclipse-mylyn-reviews-r4e</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/r4e/updates/</url>
+        </repository>
       </repositories>
       <modules>
          <module>org.eclipse.mylyn.reviews.r4e-site</module>
@@ -167,6 +168,7 @@
   </dependencyManagement>
 
   <modules>
+     <module>org.eclipse.mylyn.reviews.frame.core</module>
      <module>org.eclipse.mylyn.reviews.frame.ui</module>
      <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
      <module>org.eclipse.mylyn.reviews.notifications</module>
@@ -198,6 +200,6 @@
      <module>org.eclipse.mylyn.reviews.example.feature</module>
      <module>org.eclipse.mylyn.reviews.r4e.connector</module>
      <module>org.eclipse.mylyn.reviews.r4e.connector.ui</module>
-     <module>org.eclipse.mylyn.reviews.r4e.connector.tests</module>
+     <!--  module>org.eclipse.mylyn.reviews.r4e.connector.tests</module -->
    </modules>
 </project>

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -402,7 +403,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 
 		//Add this content to the reviewed contents for this user
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
-		user.getReviewedContent().add(fFile.getR4eId());
+		user.getReviewedContent().add(fFile.getId());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
@@ -420,7 +421,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		if (null != user) {
 			//Remove this content from the reviewed contents for this user
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
-			user.getReviewedContent().remove(fFile.getR4eId());
+			user.getReviewedContent().remove(fFile.getId());
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 	}
@@ -466,7 +467,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fFile.getAssignedTo();
+			final EList<String> assignedParticipants = fFile.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 				((R4EUIReviewBasic) getParent().getParent()).getParticipant(participant.getId(), true);
@@ -497,7 +498,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
-			final List<String> assignedParticipants = fFile.getAssignedTo();
+			final EList<String> assignedParticipants = fFile.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}
@@ -879,7 +880,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -895,7 +896,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public boolean isAssignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -911,7 +912,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fFile.getAssignedTo().size() > 0) {
 			return true;
 		}

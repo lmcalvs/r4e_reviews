@@ -422,8 +422,8 @@ public class NewReviewItemHandler extends AbstractHandler {
 		final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 		addedItems.add(uiReviewItem.getItem());
 		final R4EReview review = uiReview.getReview();
-		if (review.getType().equals(R4EReviewType.FORMAL)) {
-			if (((R4EFormalReview) review).getCurrent().getType().equals(R4EReviewPhase.PREPARATION)) {
+		if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+			if (((R4EFormalReview) review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 				MailServicesProxy.sendItemsAddedNotification(addedItems);
 			}
 		}

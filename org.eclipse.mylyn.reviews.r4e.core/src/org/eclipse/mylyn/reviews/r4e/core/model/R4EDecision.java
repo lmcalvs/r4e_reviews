@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,98 +29,102 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EDecision implements Enumerator {
 	/**
-	 * The '<em><b>None</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #NONE_VALUE
+	 * The '<em><b>R4E REVIEW DECISION NONE</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_NONE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	NONE(0, "None", "NONE"), /**
-	 * The '<em><b>Accepted</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ACCEPTED(1, "Accepted", "ACCEPTED"), /**
-	 * The '<em><b>Accepted Followup</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED_FOLLOWUP_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ACCEPTED_FOLLOWUP(2, "AcceptedFollowup", "FOLLOWUP"), /**
-	 * The '<em><b>Rejected</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #REJECTED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	REJECTED(3, "Rejected", "REJECTED");
+	R4E_REVIEW_DECISION_NONE(0, "R4E_REVIEW_DECISION_NONE", "R4E_REVIEW_DECISION_NONE"),
 
 	/**
-	 * The '<em><b>None</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>None</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #NONE
-	 * @model name="None" literal="NONE"
+	 * The '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_ACCEPTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int NONE_VALUE = 0;
+	R4E_REVIEW_DECISION_ACCEPTED(1, "R4E_REVIEW_DECISION_ACCEPTED", "R4E_REVIEW_DECISION_ACCEPTED"),
 
 	/**
-	 * The '<em><b>Accepted</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Accepted</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED
-	 * @model name="Accepted" literal="ACCEPTED"
+	 * The '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ACCEPTED_VALUE = 1;
+	R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP(2, "R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP",
+			"R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP"),
 
 	/**
-	 * The '<em><b>Accepted Followup</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Accepted Followup</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #ACCEPTED_FOLLOWUP
-	 * @model name="AcceptedFollowup" literal="FOLLOWUP"
+	 * The '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_REJECTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ACCEPTED_FOLLOWUP_VALUE = 2;
+	R4E_REVIEW_DECISION_REJECTED(3, "R4E_REVIEW_DECISION_REJECTED", "R4E_REVIEW_DECISION_REJECTED");
 
 	/**
-	 * The '<em><b>Rejected</b></em>' literal value.
+	 * The '<em><b>R4E REVIEW DECISION NONE</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Rejected</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW DECISION NONE</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #REJECTED
-	 * @model name="Rejected" literal="REJECTED"
+	 * @see #R4E_REVIEW_DECISION_NONE
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int REJECTED_VALUE = 3;
+	public static final int R4E_REVIEW_DECISION_NONE_VALUE = 0;
+
+	/**
+	 * The '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_ACCEPTED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_DECISION_ACCEPTED_VALUE = 1;
+
+	/**
+	 * The '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW DECISION ACCEPTED FOLLOWUP</b></em>' literal object isn't clear, there
+	 * really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP_VALUE = 2;
+
+	/**
+	 * The '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW DECISION REJECTED</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_DECISION_REJECTED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_DECISION_REJECTED_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>R4E Decision</b></em>' enumerators.
@@ -128,10 +132,10 @@ public enum R4EDecision implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EDecision[] VALUES_ARRAY = new R4EDecision[] {
-			NONE,
-			ACCEPTED,
-			ACCEPTED_FOLLOWUP,
-			REJECTED,
+			R4E_REVIEW_DECISION_NONE,
+			R4E_REVIEW_DECISION_ACCEPTED,
+			R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP,
+			R4E_REVIEW_DECISION_REJECTED,
 		};
 
 	/**
@@ -182,10 +186,10 @@ public enum R4EDecision implements Enumerator {
 	 */
 	public static R4EDecision get(int value) {
 		switch (value) {
-			case NONE_VALUE: return NONE;
-			case ACCEPTED_VALUE: return ACCEPTED;
-			case ACCEPTED_FOLLOWUP_VALUE: return ACCEPTED_FOLLOWUP;
-			case REJECTED_VALUE: return REJECTED;
+			case R4E_REVIEW_DECISION_NONE_VALUE: return R4E_REVIEW_DECISION_NONE;
+			case R4E_REVIEW_DECISION_ACCEPTED_VALUE: return R4E_REVIEW_DECISION_ACCEPTED;
+			case R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP_VALUE: return R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP;
+			case R4E_REVIEW_DECISION_REJECTED_VALUE: return R4E_REVIEW_DECISION_REJECTED;
 		}
 		return null;
 	}

@@ -28,14 +28,14 @@ import org.eclipse.mylyn.reviews.r4e.upgrade.upgraders.impl.R4EDefaultCompatible
 public class R4EDummyCompatibleUpgrader extends R4EDefaultCompatibleUpgrader {
 
 	/**
-	 * Field BASE_VERSION. Value is ""1.9.9""
+	 * Field BASE_VERSION. Value is ""0.7.0""
 	 */
-	private static final String BASE_VERSION = "1.9.9"; //$NON-NLS-1$
+	private static final String BASE_VERSION = "0.7.0"; //$NON-NLS-1$
 
 	/**
-	 * Field TARGET_VERSION. Value is ""2.0.0""
+	 * Field TARGET_VERSION. Value is ""0.8.0""
 	 */
-	private static final String TARGET_VERSION = "2.0.0"; //$NON-NLS-1$ //Dummy version used only for testing
+	private static final String TARGET_VERSION = "0.8.0"; //$NON-NLS-1$ //Dummy version used only for testing
 
 	/**
 	 * Constructor

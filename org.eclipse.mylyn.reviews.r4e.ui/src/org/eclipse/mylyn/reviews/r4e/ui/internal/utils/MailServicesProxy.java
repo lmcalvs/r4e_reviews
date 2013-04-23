@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -420,13 +421,13 @@ public class MailServicesProxy {
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		for (R4EParticipant participant : participants) {
 			if (isEmailValid(participant)) {
-				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.FORMAL))) {
+				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
 					destinations.add(participant.getEmail());
 				} else {
 					//If this is a formal review, only send mail if we have the proper role
-					if ((participant.getRoles().contains(R4EUserRole.LEAD)
-							|| participant.getRoles().contains(R4EUserRole.ORGANIZER) || participant.getRoles()
-							.contains(R4EUserRole.AUTHOR))) {
+					if ((participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
+							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || participant.getRoles()
+							.contains(R4EUserRole.R4E_ROLE_AUTHOR))) {
 						destinations.add(participant.getEmail());
 					}
 				}
@@ -445,13 +446,13 @@ public class MailServicesProxy {
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants(false);
 		for (R4EParticipant participant : participants) {
 			if (isEmailValid(participant)) {
-				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.FORMAL))) {
+				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
 					destinations.add(participant.getEmail());
 				} else {
 					//If this is a formal review, only send mail if we have the proper role
-					if ((participant.getRoles().contains(R4EUserRole.LEAD)
-							|| participant.getRoles().contains(R4EUserRole.ORGANIZER) || participant.getRoles()
-							.contains(R4EUserRole.AUTHOR))) {
+					if ((participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
+							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || participant.getRoles()
+							.contains(R4EUserRole.R4E_ROLE_AUTHOR))) {
 						destinations.add(participant.getEmail());
 					}
 				}
@@ -470,8 +471,8 @@ public class MailServicesProxy {
 	/*  TODO not used for now, could be added later to narrow down destinations for anomaly questions
 	private static String[] createAnomalyCreatorDestination(R4EUIAnomalyBasic aAnomaly) {
 		final ArrayList<String> destinations = new ArrayList<String>();
-		if (!R4EUIModelController.getReviewer().equals(aAnomaly.getAnomaly().getAuthor().getId())) {
-			R4EParticipant participant = (R4EParticipant) aAnomaly.getAnomaly().getAuthor();
+		if (!R4EUIModelController.getReviewer().equals(aAnomaly.getAnomaly().getUser().getId())) {
+			R4EParticipant participant = (R4EParticipant) aAnomaly.getAnomaly().getUser();
 			if (isEmailValid(participant)) {
 				destinations.add(participant.getEmail());
 			}
@@ -569,7 +570,7 @@ public class MailServicesProxy {
 					msgBody.append("Review Item -> " + ((R4EItem) component).getDescription() + LINE_FEED_MSG_PART);
 				}
 				msgBody.append("Eclipse Project: File Path (Repository | Project)[: Line range]" + LINE_FEED_MSG_PART);
-				List<R4EFileContext> contexts = ((R4EItem) component).getFileContextList();
+				EList<R4EFileContext> contexts = ((R4EItem) component).getFileContextList();
 				for (R4EFileContext context : contexts) {
 					R4EFileVersion fileVersion = context.getTarget();
 					if (null != fileVersion) {
@@ -589,7 +590,7 @@ public class MailServicesProxy {
 						//Line Range
 						if (context.getDeltas().size() > 0) {
 							msgBody.append(": ");
-							List<R4EDelta> deltas = context.getDeltas();
+							EList<R4EDelta> deltas = context.getDeltas();
 							for (R4EDelta delta : deltas) {
 								msgBody.append(buildLineTag(delta) + ", ");
 							}
@@ -659,7 +660,7 @@ public class MailServicesProxy {
 				R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) context.getAnomalyContainerElement()
 						.getChildren();
 				for (R4EUIAnomalyBasic anomaly : anomalies) {
-					if (anomaly.getAnomaly().getAuthor().getId().equals(R4EUIModelController.getReviewer())) {
+					if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
 						++numTotalAnomalies; //Specific anomalies
 					}
 				}
@@ -669,7 +670,7 @@ public class MailServicesProxy {
 				.getAnomalyContainer()
 				.getChildren();
 		for (R4EUIAnomalyBasic anomaly : globalAnomalies) {
-			if (anomaly.getAnomaly().getAuthor().getId().equals(R4EUIModelController.getReviewer())) {
+			if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
 				++numTotalAnomalies; //Global Anomalies
 			}
 		}
@@ -729,7 +730,7 @@ public class MailServicesProxy {
 							msgBody.append(TAB_MSG_PART + "Anomaly: " + "Line Range: Title: Description"
 									+ LINE_FEED_MSG_PART);
 						}
-						if (anomaly.getAnomaly().getAuthor().getId().equals(R4EUIModelController.getReviewer())) {
+						if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
 							//Add anomaly
 							msgBody.append(TAB_MSG_PART + TAB_MSG_PART + "   " + anomaly.getPosition().toString()
 									+ ": " + anomaly.getAnomaly().getTitle() + ": "
@@ -753,7 +754,7 @@ public class MailServicesProxy {
 			msgBody.append("Global Anomalies: " + LINE_FEED_MSG_PART);
 		}
 		for (R4EUIAnomalyBasic globalAnomaly : globalAnomalies) {
-			if (globalAnomaly.getAnomaly().getAuthor().getId().equals(R4EUIModelController.getReviewer())) {
+			if (globalAnomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
 				//Add anomaly
 				msgBody.append(globalAnomaly.getAnomaly().getTitle() + ": "
 						+ globalAnomaly.getAnomaly().getDescription() + LINE_FEED_MSG_PART);

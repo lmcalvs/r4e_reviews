@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
@@ -98,7 +99,7 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 		addChildren(uiSelection);
 
 		//If parent file is assigned, assign the Selection too
-		final List<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext()
+		final EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext()
 				.getAssignedTo();
 		final List<R4EParticipant> participantsToAssign = new ArrayList<R4EParticipant>();
 		for (String parentAssignedParticipant : parentAssignedParticipants) {
@@ -124,7 +125,7 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	 */
 	@Override
 	public void open() {
-		final List<R4EDelta> selections = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
+		final EList<R4EDelta> selections = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
 		if (null != selections) {
 			R4EUITextPosition position = null;
 			R4EUISelection newSelection = null;

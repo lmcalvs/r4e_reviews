@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_xqTPQEkqEeK-F5EIGTlQdQ" fragmentVersion="0.12.0" name="testReviewInf" project="ProjectX" entryCriteria="testReview entry criteria" extraNotes="testReview description" objectives="testReview objectives" referenceMaterial="testReview reference materials" startDate="2012-12-18T10:51:24.595-0500" dueDate="2012-12-31T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
-  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_xrhXQEkqEeK-F5EIGTlQdQ"/>
-  <components>core</components>
-  <components>docs</components>
-  <decision xmi:id="_xsDiwEkqEeK-F5EIGTlQdQ" value="R4E_REVIEW_DECISION_ACCEPTED"/>
-  <createdBy href="user_comments.xrer#_xqdAQUkqEeK-F5EIGTlQdQ"/>
-</r4ecore:R4EReview>

@@ -9,6 +9,7 @@
  *     Ericsson AB - initial API and implementation
  *******************************************************************************/
 
+
 package org.eclipse.mylyn.reviews.r4e.core.utils;
 
 import java.io.BufferedWriter;
@@ -19,12 +20,14 @@ import java.util.Date;
 
 import org.eclipse.core.runtime.Platform;
 
+
 // ESCA-JAVA0100:
 /**
- * This class implements a simple trace facility using Eclipse that can be used to send debugging output to the console
- * and/or to file. It supports various levels of tracing
+ * This class implements a simple trace facility using Eclipse that can be used to send debugging
+ * output to the console and/or to file.  It supports various levels of tracing
  * 
  * @author Sebastien Dubois
+ * 
  */
 public class Tracer {
 
@@ -32,50 +35,46 @@ public class Tracer {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	static final int DEFAULT_STACK_TRACE_ELEMENT = 3;
-
+    static final int DEFAULT_STACK_TRACE_ELEMENT = 3;
+	
+    
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
 
-	static boolean ERROR = false;
-
-	static boolean WARNING = false;
-
-	static boolean INFO = false;
-
-	static boolean DEBUG = false;
-
-	private String fPluginID;
-
-	private BufferedWriter fTraceFile;
-
+    static boolean ERROR = false;
+    static boolean WARNING = false;
+    static boolean INFO = false;
+    static boolean DEBUG = false;
+    
+	private String fPluginID; 
+	private BufferedWriter	fTraceFile;
 	private SimpleDateFormat fTimeFormat;
+	private StringBuilder	fTraceMessage;
+	private boolean			fLogToConsole;
 
-	private StringBuilder fTraceMessage;
-
-	private boolean fLogToConsole;
-
+	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-
+	
 	public Tracer() {
-		fTraceFile = null;
+		fTraceFile	= null;
 		fTimeFormat = new SimpleDateFormat("HH:mm:ss:SSS");
 		fTraceMessage = new StringBuilder();
 		fLogToConsole = true;
 	}
-
+	
+	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-
+	
 	/**
 	 * Initialize the tracer object
 	 * 
-	 * @param aPluginId
-	 *            - the calling plugin ID (as a String object)
+	 * @param aPluginId - the calling plugin ID (as a String object)
+	 * 
 	 */
 	public void init(String aPluginId) {
 
@@ -87,27 +86,27 @@ public class Tracer {
 		if (traceKey != null) {
 			ERROR = (Boolean.valueOf(traceKey)).booleanValue();
 		}
-
+		
 		traceKey = Platform.getDebugOption(fPluginID + "/warning");
 		if (traceKey != null) {
 			WARNING = (Boolean.valueOf(traceKey)).booleanValue();
 		}
-
+		
 		traceKey = Platform.getDebugOption(fPluginID + "/info");
 		if (traceKey != null) {
 			INFO = (Boolean.valueOf(traceKey)).booleanValue();
 		}
-
+		
 		traceKey = Platform.getDebugOption(fPluginID + "/debug");
 		if (traceKey != null) {
 			DEBUG = (Boolean.valueOf(traceKey)).booleanValue();
-		}
-
+		}	
+		
 		traceKey = Platform.getDebugOption(fPluginID + "/consoleLog");
 		if (traceKey != null) {
 			fLogToConsole = (Boolean.valueOf(traceKey)).booleanValue();
-		}
-
+		}	
+		
 		traceKey = Platform.getDebugOption(fPluginID + "/logfile");
 		if (traceKey != null) {
 			try {
@@ -119,8 +118,10 @@ public class Tracer {
 		}
 	}
 
+	
 	/**
 	 * Close the trace output logfile (if used)
+	 * 
 	 */
 	public void closeLogfile() {
 		if (fTraceFile == null) {
@@ -135,7 +136,7 @@ public class Tracer {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * @param newValue
 	 * @return
@@ -145,7 +146,7 @@ public class Tracer {
 		ERROR = newValue;
 		return oldValue;
 	}
-
+	
 	/**
 	 * @param newValue
 	 * @return
@@ -166,6 +167,7 @@ public class Tracer {
 		return oldValue;
 	}
 
+
 	/**
 	 * @param newValue
 	 * @return
@@ -179,7 +181,7 @@ public class Tracer {
 	public static boolean isError() {
 		return ERROR;
 	}
-
+	
 	public static boolean isDebug() {
 		return DEBUG;
 	}
@@ -191,17 +193,17 @@ public class Tracer {
 	public static boolean isWarning() {
 		return WARNING;
 	}
-
+	
 	/**
 	 * Output an error trace
 	 * 
-	 * @param aMsg
-	 *            - the trace message to output
+	 * @param aMsg - the trace message to output
+	 * 
 	 */
 	public void traceError(String aMsg) {
 		if (ERROR) {
 			fTraceMessage.setLength(0);
-			// Timestamp
+			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" E");
 			writeThread(fTraceMessage);
@@ -210,17 +212,17 @@ public class Tracer {
 			outputTrace(fTraceMessage);
 		}
 	}
-
+	
 	/**
 	 * Output a warning trace
 	 * 
-	 * @param aMsg
-	 *            - the trace message to output
+	 * @param aMsg - the trace message to output
+	 * 
 	 */
 	public void traceWarning(String aMsg) {
 		if (WARNING) {
 			fTraceMessage.setLength(0);
-			// Timestamp
+			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" W");
 			writeThread(fTraceMessage);
@@ -229,17 +231,17 @@ public class Tracer {
 			outputTrace(fTraceMessage);
 		}
 	}
-
+	
 	/**
 	 * Output an info trace
 	 * 
-	 * @param aMsg
-	 *            - the trace message to output
+	 * @param aMsg - the trace message to output
+	 * 
 	 */
 	public void traceInfo(String aMsg) {
 		if (INFO) {
 			fTraceMessage.setLength(0);
-			// Timestamp
+			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" I");
 			writeThread(fTraceMessage);
@@ -248,17 +250,17 @@ public class Tracer {
 			outputTrace(fTraceMessage);
 		}
 	}
-
+	
 	/**
 	 * Output a debug trace
 	 * 
-	 * @param aMsg
-	 *            - the trace message to output
+	 * @param aMsg - the trace message to output
+	 * 
 	 */
 	public void traceDebug(String aMsg) {
 		if (DEBUG) {
 			fTraceMessage.setLength(0);
-			// Timestamp
+			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" D");
 			writeThread(fTraceMessage);
@@ -267,32 +269,35 @@ public class Tracer {
 			outputTrace(fTraceMessage);
 		}
 	}
-
+	
+	
 	/**
 	 * Write timestamp header
 	 * 
-	 * @param aSb
-	 *            - the StringBuilder object (trace line) to append to
+	 * @param aSb - the StringBuilder object (trace line) to append to
+	 * 
 	 */
 	private void writeTimestamp(StringBuilder aSb) {
 		aSb.append("[" + fTimeFormat.format(new Date()) + "]");
 	}
-
+	
+	
 	/**
 	 * Write thread header
 	 * 
-	 * @param aSb
-	 *            - the StringBuilder object (trace line) to append to
+	 * @param aSb - the StringBuilder object (trace line) to append to
+	 * 
 	 */
 	private static void writeThread(StringBuilder aSb) {
 		aSb.append(" T=" + Thread.currentThread().getName());
 	}
-
+	
+	
 	/**
 	 * Write location header
 	 * 
-	 * @param aSb
-	 *            - the StringBuilder object (trace line) to append to
+	 * @param aSb - the StringBuilder object (trace line) to append to
+	 * 
 	 */
 	private static void writeLocation(StringBuilder aSb) {
 		int traceElement = DEFAULT_STACK_TRACE_ELEMENT;
@@ -311,20 +316,21 @@ public class Tracer {
 			}
 		}
 	}
-
+	
+	
 	/**
 	 * Write trace to console/file
 	 * 
-	 * @param aSb
-	 *            - the StringBuilder object (trace line) to output
+	 * @param aSb - the StringBuilder object (trace line) to output
+	 * 
 	 */
 	private void outputTrace(StringBuilder aSb) {
-
+		
 		if (fLogToConsole) {
 			// ESCA-JAVA0266:
 			System.out.println(aSb);
 		}
-
+		
 		if (fTraceFile != null) {
 			try {
 				fTraceFile.write(aSb.toString());
@@ -336,5 +342,6 @@ public class Tracer {
 			}
 		}
 	}
-
+	
 }
+

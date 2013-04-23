@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,11 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.core.model.IReview;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review</b></em>'. <!-- end-user-doc -->
@@ -38,13 +37,13 @@ import org.eclipse.mylyn.reviews.core.model.IReview;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getIdsMap <em>Ids Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,7 +51,7 @@ import org.eclipse.mylyn.reviews.core.model.IReview;
  * @model
  * @generated
  */
-public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning {
+public interface R4EReview extends Review, R4EReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -116,7 +115,7 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * @model
 	 * @generated
 	 */
-	List<String> getComponents();
+	EList<String> getComponents();
 
 	/**
 	 * Returns the value of the '<em><b>Entry Criteria</b></em>' attribute.
@@ -222,8 +221,8 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * Returns the value of the '<em><b>Decision</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Decision</em>' containment reference isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of the '<em>Decision</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Decision</em>' containment reference.
@@ -319,37 +318,11 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	void setDueDate(Date value);
 
 	/**
-	 * Returns the value of the '<em><b>Modified Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Modified Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Modified Date</em>' attribute.
-	 * @see #setModifiedDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ModifiedDate()
-	 * @model
-	 * @generated
-	 */
-	Date getModifiedDate();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Modified Date</em>' attribute.
-	 * @see #getModifiedDate()
-	 * @generated
-	 */
-	void setModifiedDate(Date value);
-
-	/**
 	 * Returns the value of the '<em><b>Anomaly Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Anomaly Template</em>' containment reference isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of the '<em>Anomaly Template</em>' reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Anomaly Template</em>' containment reference.
@@ -411,32 +384,7 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapToUsers<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EUser>" transient="true" derived="true"
 	 * @generated
 	 */
-	Map<String, R4EUser> getUsersMap();
-
-	/**
-	 * Returns the value of the '<em><b>Created By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Created By</em>' reference isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Created By</em>' reference.
-	 * @see #setCreatedBy(R4EUser)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_CreatedBy()
-	 * @model required="true"
-	 * @generated
-	 */
-	R4EUser getCreatedBy();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Created By</em>' reference.
-	 * @see #getCreatedBy()
-	 * @generated
-	 */
-	void setCreatedBy(R4EUser value);
+	EMap<String, R4EUser> getUsersMap();
 
 	/**
 	 * Returns the value of the '<em><b>Ids Map</b></em>' map.
@@ -444,7 +392,8 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Ids Map</em>' map isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Ids Map</em>' reference list isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ids Map</em>' map.
@@ -452,7 +401,7 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapIDToComponent<org.eclipse.mylyn.reviews.r4e.core.model.R4EID, org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent>" transient="true" derived="true"
 	 * @generated
 	 */
-	Map<R4EID, R4EIDComponent> getIdsMap();
+	EMap<R4EID, R4EIDComponent> getIdsMap();
 
 	/**
 	 * Returns the value of the '<em><b>Active Meeting</b></em>' containment reference.
@@ -478,5 +427,56 @@ public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning
 	 * @generated
 	 */
 	void setActiveMeeting(R4EMeetingData value);
+
+	/**
+	 * Returns the value of the '<em><b>Modified Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Modified Date</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Modified Date</em>' attribute.
+	 * @see #setModifiedDate(Date)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ModifiedDate()
+	 * @model
+	 * @generated
+	 */
+	Date getModifiedDate();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Modified Date</em>' attribute.
+	 * @see #getModifiedDate()
+	 * @generated
+	 */
+	void setModifiedDate(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Created By</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Created By</em>' reference isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Created By</em>' reference.
+	 * @see #setCreatedBy(R4EUser)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_CreatedBy()
+	 * @model required="true"
+	 * @generated
+	 */
+	R4EUser getCreatedBy();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Created By</em>' reference.
+	 * @see #getCreatedBy()
+	 * @generated
+	 */
+	void setCreatedBy(R4EUser value);
 
 } // R4EReview

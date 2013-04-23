@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,75 +29,72 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EReviewType implements Enumerator {
 	/**
-	 * The '<em><b>Basic</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #BASIC_VALUE
+	 * The '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_TYPE_BASIC_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	BASIC(0, "Basic", "BASIC"), /**
-	 * The '<em><b>Informal</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #INFORMAL_VALUE
+	R4E_REVIEW_TYPE_BASIC(0, "R4E_REVIEW_TYPE_BASIC", "R4E_REVIEW_TYPE_BASIC"), /**
+	 * The '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_TYPE_INFORMAL_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	INFORMAL(1, "Informal", "INFORMAL"), /**
-	 * The '<em><b>Formal</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #FORMAL_VALUE
+	R4E_REVIEW_TYPE_INFORMAL(1, "R4E_REVIEW_TYPE_INFORMAL", "R4E_REVIEW_TYPE_INFORMAL"), /**
+	 * The '<em><b>R4E REVIEW TYPE FORMAL</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_TYPE_FORMAL_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	FORMAL(2, "Formal", "FORMAL");
+	R4E_REVIEW_TYPE_FORMAL(2, "R4E_REVIEW_TYPE_FORMAL", "R4E_REVIEW_TYPE_FORMAL");
 
 	/**
-	 * The '<em><b>Basic</b></em>' literal value.
+	 * The '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Basic</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW TYPE BASIC</b></em>' literal object isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #BASIC
-	 * @model name="Basic" literal="BASIC"
+	 * @see #R4E_REVIEW_TYPE_BASIC
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int BASIC_VALUE = 0;
+	public static final int R4E_REVIEW_TYPE_BASIC_VALUE = 0;
 
 	/**
-	 * The '<em><b>Informal</b></em>' literal value.
+	 * The '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Informal</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW TYPE INFORMAL</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #INFORMAL
-	 * @model name="Informal" literal="INFORMAL"
+	 * @see #R4E_REVIEW_TYPE_INFORMAL
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int INFORMAL_VALUE = 1;
+	public static final int R4E_REVIEW_TYPE_INFORMAL_VALUE = 1;
 
 	/**
-	 * The '<em><b>Formal</b></em>' literal value.
+	 * The '<em><b>R4E REVIEW TYPE FORMAL</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Formal</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E Review Type Formal</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #FORMAL
-	 * @model name="Formal" literal="FORMAL"
+	 * @see #R4E_REVIEW_TYPE_FORMAL
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int FORMAL_VALUE = 2;
+	public static final int R4E_REVIEW_TYPE_FORMAL_VALUE = 2;
 
 	/**
 	 * An array of all the '<em><b>R4E Review Type</b></em>' enumerators.
@@ -105,9 +102,9 @@ public enum R4EReviewType implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EReviewType[] VALUES_ARRAY = new R4EReviewType[] {
-			BASIC,
-			INFORMAL,
-			FORMAL,
+			R4E_REVIEW_TYPE_BASIC,
+			R4E_REVIEW_TYPE_INFORMAL,
+			R4E_REVIEW_TYPE_FORMAL,
 		};
 
 	/**
@@ -158,9 +155,9 @@ public enum R4EReviewType implements Enumerator {
 	 */
 	public static R4EReviewType get(int value) {
 		switch (value) {
-			case BASIC_VALUE: return BASIC;
-			case INFORMAL_VALUE: return INFORMAL;
-			case FORMAL_VALUE: return FORMAL;
+			case R4E_REVIEW_TYPE_BASIC_VALUE: return R4E_REVIEW_TYPE_BASIC;
+			case R4E_REVIEW_TYPE_INFORMAL_VALUE: return R4E_REVIEW_TYPE_INFORMAL;
+			case R4E_REVIEW_TYPE_FORMAL_VALUE: return R4E_REVIEW_TYPE_FORMAL;
 		}
 		return null;
 	}

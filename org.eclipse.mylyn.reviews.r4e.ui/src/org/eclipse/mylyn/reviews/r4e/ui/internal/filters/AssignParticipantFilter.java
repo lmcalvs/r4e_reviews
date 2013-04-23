@@ -144,7 +144,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 		} else if (aElement instanceof R4EUIAnomalyBasic) {
 			if (0 == ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size()
 					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().contains(fParticipant)
-					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getAuthor().getId().equals(fParticipant)) {
+					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getUser().getId().equals(fParticipant)) {
 				return true;
 			}
 			return false;
@@ -160,7 +160,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 			for (IR4EUIModelElement child : ((R4EUIAnomalyContainer) aElement).getChildren()) {
 				if (0 == ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size()
 						|| ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().contains(fParticipant)
-						|| ((R4EUIAnomalyBasic) child).getAnomaly().getAuthor().getId().equals(fParticipant)) {
+						|| ((R4EUIAnomalyBasic) child).getAnomaly().getUser().getId().equals(fParticipant)) {
 					return true;
 				}
 			}

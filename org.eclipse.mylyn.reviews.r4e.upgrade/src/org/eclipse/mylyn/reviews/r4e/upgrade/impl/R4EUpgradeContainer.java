@@ -22,8 +22,7 @@ import java.util.Map;
 
 import org.eclipse.mylyn.reviews.r4e.upgrade.IR4EVersionUpgrader;
 import org.eclipse.mylyn.reviews.r4e.upgrade.UpgradePath;
-import org.eclipse.mylyn.reviews.r4e.upgrade.upgraders.impl.R4E_0120_200_Upgrader;
-import org.eclipse.mylyn.reviews.r4e.upgrade.upgraders.impl.R4E_100_200_Upgrader;
+import org.eclipse.mylyn.reviews.r4e.upgrade.upgraders.impl.R4E_012_020_Upgrader;
 
 /**
  * @author Sebastien Dubois
@@ -41,8 +40,7 @@ public class R4EUpgradeContainer {
 	 */
 	public static void initializeUpgraders() {
 		//NOTE:  This code should be modified to include new upgraders.
-		new R4E_100_200_Upgrader();
-		new R4E_0120_200_Upgrader();
+		new R4E_012_020_Upgrader();
 	}
 
 	/**

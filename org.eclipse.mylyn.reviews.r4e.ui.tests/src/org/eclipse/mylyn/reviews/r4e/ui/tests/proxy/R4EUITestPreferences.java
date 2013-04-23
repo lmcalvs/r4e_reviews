@@ -56,7 +56,7 @@ public class R4EUITestPreferences extends R4EUITestElement {
 				PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(null, PREFERENCES_PAGE_ID, null,
 						null);
 				R4EPreferencePage preferences = (R4EPreferencePage) dialog.getSelectedPage();
-				setUser(preferences.getAuthor());
+				setUser(preferences.getUser());
 				preferences.performOk();
 				dialog.close();
 			}

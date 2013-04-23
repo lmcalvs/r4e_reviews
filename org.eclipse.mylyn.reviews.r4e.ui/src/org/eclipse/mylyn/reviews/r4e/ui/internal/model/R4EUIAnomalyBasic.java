@@ -33,8 +33,8 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.IComment;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Comment;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
@@ -283,9 +283,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Comment from user and set it in model data
-		final List<IReviewComponent> tempComments = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempComments = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
 
 		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
@@ -309,7 +309,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly,
@@ -334,8 +334,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	public void setExtraModelData(IReviewComponent aModelComponent) throws ResourceHandlingException,
-			OutOfSyncException {
+	public void setExtraModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly,
 				R4EUIModelController.getReviewer());
 		fAnomaly.setDueDate(((R4EAnomaly) aModelComponent).getDueDate());
@@ -385,7 +384,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @return String - the new tooltip
 	 */
 	public static String buildAnomalyToolTip(R4EAnomaly aAnomaly) {
-		return aAnomaly.getAuthor().getId() + ": " + aAnomaly.getDescription();
+		return aAnomaly.getUser().getId() + ": " + aAnomaly.getDescription();
 	}
 
 	/**
@@ -469,7 +468,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() {
-		final List<IComment> comments = fAnomaly.getComments();
+		final List<Comment> comments = fAnomaly.getComments();
 		if (null != comments) {
 			R4EComment r4eComment = null;
 			final int commentsSize = comments.size();
@@ -510,7 +509,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException, CompatibilityException {
 		final String user = R4EUIModelController.getReviewer();
 		R4EParticipant participant = null;
@@ -523,7 +522,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		}
 		final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment, R4EUIModelController.getReviewer());
-		comment.setDescription(((IComment) aModelComponent).getDescription());
+		comment.setDescription(((Comment) aModelComponent).getDescription());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		final R4EUIComment addedChild = new R4EUIComment(this, comment);
 		addChildren(addedChild);
@@ -706,7 +705,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& getParent().getParent() instanceof R4EUIFileContext) {
 			return true;
 		}
@@ -746,7 +745,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			//We can only paste if there is a least 1 Comment in the clipboard
 			Object element = null;
 			ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
@@ -795,7 +794,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -834,7 +833,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (isEnabled()
 				&& !isReadOnly()
 				&& null != R4EUIModelController.getActiveReview()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -874,8 +873,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			return false;
 		}
 		R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState();
-		if (isEnabled() || isReadOnly() || phase.equals(R4EReviewPhase.COMPLETED)
-				|| phase.equals(R4EReviewPhase.REWORK)) {
+		if (isEnabled() || isReadOnly() || phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
+				|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 			return false;
 		}
 		return true;
@@ -998,7 +997,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 						element = getParent().getParent();
 					}
 					if (!((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(
-							R4EReviewPhase.COMPLETED)) {
+							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 						return true;
 					}
 				}

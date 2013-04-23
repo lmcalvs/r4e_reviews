@@ -17,8 +17,8 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Map;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -38,7 +38,7 @@ public class GroupSampl {
 
 	private final static String _DEFAULT_ENTRY_CRITERIA = "-Entry Criteria";
 
-	private final static String _VERSION = "0.13.0";
+	private final static String _VERSION = "0.8.0";
 
 	private final static String[] _AVAILABLE_PROJECTS = new String[] { "P1", "P2", "P3" };
 
@@ -103,7 +103,7 @@ public class GroupSampl {
 		// LOCAL REFERENCES
 		R4EAnomalyType anomalyTypeTemplate;
 		R4EAnomalyType anomalyTypeReference;
-		Map<String, R4EAnomalyType> anomalyTypMap = fgroup.getAnomalyTypeKeyToReference();
+		EMap<String, R4EAnomalyType> anomalyTypeMap = fgroup.getAnomalyTypeKeyToReference();
 		for (String type : _AVAILABLE_ANOMALY_TYPES) {
 			anomalyTypeTemplate = RModelFactoryExt.eINSTANCE.createR4EAnomalyType();
 			anomalyTypeReference = RModelFactoryExt.eINSTANCE.createR4EAnomalyType();
@@ -115,7 +115,7 @@ public class GroupSampl {
 			fgroup.getAvailableAnomalyTypes().add(anomalyTypeTemplate);
 
 			// RWCommon reference used when creating anomalies
-			anomalyTypMap.put(type, anomalyTypeReference);
+			anomalyTypeMap.put(type, anomalyTypeReference);
 		}
 
 		try {

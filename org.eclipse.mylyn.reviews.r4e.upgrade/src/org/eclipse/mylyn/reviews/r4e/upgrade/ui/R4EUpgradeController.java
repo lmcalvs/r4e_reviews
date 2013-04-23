@@ -48,9 +48,9 @@ public class R4EUpgradeController {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field FRAGMENT_VERSION_DEFAULT.  (value is ""1.0.0"")
+	 * Field FRAGMENT_VERSION_DEFAULT.  (value is ""0.8.0"")
 	 */
-	public static final String FRAGMENT_VERSION_DEFAULT = "1.0.0";
+	public static final String FRAGMENT_VERSION_DEFAULT = "0.8.0";
 
 	/**
 	 * Field VERSION_APPLICATION_OLDER. (value is 1)

@@ -16,7 +16,6 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -132,7 +131,7 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<R4EReviewPhaseInfo> getPhases() {
+	public EList<R4EReviewPhaseInfo> getPhases() {
 		if (phases == null) {
 			phases = new EObjectContainmentEList.Resolving<R4EReviewPhaseInfo>(R4EReviewPhaseInfo.class, this, RModelPackage.R4E_FORMAL_REVIEW__PHASES);
 		}

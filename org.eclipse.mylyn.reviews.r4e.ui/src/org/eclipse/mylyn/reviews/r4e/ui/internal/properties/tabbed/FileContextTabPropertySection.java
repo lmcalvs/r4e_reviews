@@ -12,9 +12,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -519,7 +518,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFileVersionText.setText("");
 		}
 
-		final List<String> assignedParticipants = modelFile.getAssignedTo();
+		final EList<String> assignedParticipants = modelFile.getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 
 		setEnabledFields();
@@ -542,7 +541,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 				|| fProperties.getElement().isReadOnly()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fBaseFileNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fBaseFilePathRepositoryText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fBaseFilePathAbsoluteText.setForeground(UIUtils.DISABLED_FONT_COLOR);

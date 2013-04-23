@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
@@ -107,9 +107,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		final List<IReviewComponent> tempReviewGroups = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempReviewGroups = new ArrayList<ReviewComponent>();
 
 		final IReviewGroupInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewGroupInputDialog();
 		dialog.create();
@@ -141,7 +141,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
 	 */
-	public IReviewComponent createRuleSetElement() {
+	public ReviewComponent createRuleSetElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRuleCollection tempRuleSet = null;
 		final IRuleSetInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleSetInputDialog();
@@ -319,14 +319,14 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 
 		if (aModelComponent instanceof R4EReviewGroup) {
 			final String groupName = ((R4EReviewGroup) aModelComponent).getName();
 			//Check if group already exists.  If so it cannot be recreated
 			for (R4EUIReviewGroup group : fReviewGroups) {
-				if (group.getReviewGroup().getName().equals(groupName)) {
+				if (group.getName().equals(groupName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Error while creating new Review Group ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
 									0, "Review Group " + groupName + " already exists", null), IStatus.ERROR);
@@ -365,7 +365,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			final String ruleSetName = ((R4EDesignRuleCollection) aModelComponent).getName();
 			//Check if group already exists.  If so it cannot be recreated
 			for (R4EUIRuleSet ruleSet : fRuleSets) {
-				if (ruleSet.getRuleSet().getName().equals(ruleSetName)) {
+				if (ruleSet.getName().equals(ruleSetName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Error while creating new Rule Set  ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									"Rule Set " + ruleSetName + " already exists", null), IStatus.ERROR);

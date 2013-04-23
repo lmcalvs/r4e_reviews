@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
@@ -108,9 +108,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Participants from user and set them in model data
-		final List<IReviewComponent> tempParticipants = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempParticipants = new ArrayList<ReviewComponent>();
 		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(true);
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -259,7 +259,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 
 		R4EUIParticipant addedChild = null;
@@ -334,7 +334,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			final R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview()
 					.getReview()
 					.getState()).getState();
-			if (!phase.equals(R4EReviewPhase.COMPLETED)) {
+			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 				return true;
 			}
 		}

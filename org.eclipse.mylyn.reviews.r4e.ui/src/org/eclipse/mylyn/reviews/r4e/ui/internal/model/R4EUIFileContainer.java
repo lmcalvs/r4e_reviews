@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -174,7 +175,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() {
-		final List<R4EFileContext> files = fItem.getFileContextList();
+		final EList<R4EFileContext> files = fItem.getFileContextList();
 		if (null != files) {
 			R4EUIFileContext uiFileContext = null;
 			final int filesSize = files.size();
@@ -236,7 +237,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 				//Check if the file contexts are part of the reviewed content
 				for (R4EUIFileContext uiFile : fFileContexts) {
 					uiFile.verifyUserReviewed();
-					if (user.getReviewedContent().contains(uiFile.getFileContext().getR4eId())) {
+					if (user.getReviewedContent().contains(uiFile.getFileContext().getId())) {
 						uiFile.setUserReviewed(true, true, false);
 					}
 				}

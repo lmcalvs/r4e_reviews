@@ -112,7 +112,7 @@ public class CommentProperties extends ModelElementProperties {
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (COMMENT_AUTHOR_ID.equals(aId)) {
-			return ((R4EUIComment) getElement()).getComment().getAuthor().getId();
+			return ((R4EUIComment) getElement()).getComment().getUser().getId();
 		} else if (COMMENT_CREATION_DATE_ID.equals(aId)) {
 			return ((R4EUIComment) getElement()).getComment().getCreatedOn().toString();
 		} else if (COMMENT_DESCRIPTION_ID.equals(aId)) {

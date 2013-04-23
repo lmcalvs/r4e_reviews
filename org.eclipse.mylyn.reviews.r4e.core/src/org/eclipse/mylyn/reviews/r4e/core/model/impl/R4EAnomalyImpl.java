@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -16,8 +16,6 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,7 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.internal.core.model.Topic;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.TopicImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -48,7 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAssignedTo <em>Assigned To</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getR4eId <em>R4e Id</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getCreatedOn <em>Created On</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAnomaly <em>Anomaly</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getInfoAtt <em>Info Att</em>}</li>
@@ -68,7 +66,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  *
  * @generated
  */
-public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
+public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	/**
 	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -80,14 +78,14 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	protected EList<String> assignedTo;
 
 	/**
-	 * The cached value of the '{@link #getR4eId() <em>R4e Id</em>}' containment reference.
+	 * The cached value of the '{@link #getId() <em>Id</em>}' containment reference.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * @see #getR4eId()
+	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
-	protected R4EID r4eId;
+	protected R4EID id;
 
 	/**
 	 * The default value of the '{@link #getCreatedOn() <em>Created On</em>}' attribute.
@@ -137,7 +135,7 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EAnomalyState STATE_EDEFAULT = R4EAnomalyState.CREATED;
+	protected static final R4EAnomalyState STATE_EDEFAULT = R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
 
 	/**
 	 * The cached value of the '{@link #getState() <em>State</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -177,7 +175,7 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.NONE;
+	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.R4E_RANK_NONE;
 
 	/**
 	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -350,73 +348,11 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAssignedTo() {
+	public EList<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_ANOMALY__ASSIGNED_TO);
 		}
 		return assignedTo;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EID getR4eId() {
-		if (r4eId != null && r4eId.eIsProxy()) {
-			InternalEObject oldR4eId = (InternalEObject)r4eId;
-			r4eId = (R4EID)eResolveProxy(oldR4eId);
-			if (r4eId != oldR4eId) {
-				InternalEObject newR4eId = (InternalEObject)r4eId;
-				NotificationChain msgs = oldR4eId.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__R4E_ID, null, null);
-				if (newR4eId.eInternalContainer() == null) {
-					msgs = newR4eId.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__R4E_ID, null, msgs);
-				}
-				if (msgs != null) msgs.dispatch();
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__R4E_ID, oldR4eId, r4eId));
-			}
-		}
-		return r4eId;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EID basicGetR4eId() {
-		return r4eId;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetR4eId(R4EID newR4eId, NotificationChain msgs) {
-		R4EID oldR4eId = r4eId;
-		r4eId = newR4eId;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__R4E_ID, oldR4eId, newR4eId);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setR4eId(R4EID newR4eId) {
-		if (newR4eId != r4eId) {
-			NotificationChain msgs = null;
-			if (r4eId != null)
-				msgs = ((InternalEObject)r4eId).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__R4E_ID, null, msgs);
-			if (newR4eId != null)
-				msgs = ((InternalEObject)newR4eId).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__R4E_ID, null, msgs);
-			msgs = basicSetR4eId(newR4eId, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__R4E_ID, newR4eId, newR4eId));
 	}
 
 	/**
@@ -477,11 +413,11 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, String> getInfoAtt() {
+	public EMap<String, String> getInfoAtt() {
 		if (infoAtt == null) {
 			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_ANOMALY__INFO_ATT);
 		}
-		return infoAtt.map();
+		return infoAtt;
 	}
 
 	/**
@@ -729,13 +665,75 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	public R4EID getId() {
+		if (id != null && id.eIsProxy()) {
+			InternalEObject oldId = (InternalEObject)id;
+			id = (R4EID)eResolveProxy(oldId);
+			if (id != oldId) {
+				InternalEObject newId = (InternalEObject)id;
+				NotificationChain msgs = oldId.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__ID, null, null);
+				if (newId.eInternalContainer() == null) {
+					msgs = newId.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__ID, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__ID, oldId, id));
+			}
+		}
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EID basicGetId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetId(R4EID newId, NotificationChain msgs) {
+		R4EID oldId = id;
+		id = newId;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__ID, oldId, newId);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(R4EID newId) {
+		if (newId != id) {
+			NotificationChain msgs = null;
+			if (id != null)
+				msgs = ((InternalEObject)id).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__ID, null, msgs);
+			if (newId != null)
+				msgs = ((InternalEObject)newId).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_ANOMALY__ID, null, msgs);
+			msgs = basicSetId(newId, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__ID, newId, newId));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RModelPackage.R4E_ANOMALY__R4E_ID:
-				return basicSetR4eId(null, msgs);
+			case RModelPackage.R4E_ANOMALY__ID:
+				return basicSetId(null, msgs);
 			case RModelPackage.R4E_ANOMALY__INFO_ATT:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -749,17 +747,17 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 		switch (featureID) {
 			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
 				return getAssignedTo();
-			case RModelPackage.R4E_ANOMALY__R4E_ID:
-				if (resolve) return getR4eId();
-				return basicGetR4eId();
+			case RModelPackage.R4E_ANOMALY__ID:
+				if (resolve) return getId();
+				return basicGetId();
 			case RModelPackage.R4E_ANOMALY__CREATED_ON:
 				return getCreatedOn();
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
 				if (resolve) return getAnomaly();
 				return basicGetAnomaly();
 			case RModelPackage.R4E_ANOMALY__INFO_ATT:
-				if (coreType) return ((EMap.InternalMapView<String, String>)getInfoAtt()).eMap();
-				else return getInfoAtt();
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 			case RModelPackage.R4E_ANOMALY__STATE:
 				return getState();
 			case RModelPackage.R4E_ANOMALY__DUE_DATE:
@@ -800,8 +798,8 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 				getAssignedTo().clear();
 				getAssignedTo().addAll((Collection<? extends String>)newValue);
 				return;
-			case RModelPackage.R4E_ANOMALY__R4E_ID:
-				setR4eId((R4EID)newValue);
+			case RModelPackage.R4E_ANOMALY__ID:
+				setId((R4EID)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__CREATED_ON:
 				setCreatedOn((Date)newValue);
@@ -810,7 +808,7 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 				setAnomaly((R4EAnomaly)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__INFO_ATT:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__STATE:
 				setState((R4EAnomalyState)newValue);
@@ -859,8 +857,8 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
 				getAssignedTo().clear();
 				return;
-			case RModelPackage.R4E_ANOMALY__R4E_ID:
-				setR4eId((R4EID)null);
+			case RModelPackage.R4E_ANOMALY__ID:
+				setId((R4EID)null);
 				return;
 			case RModelPackage.R4E_ANOMALY__CREATED_ON:
 				setCreatedOn(CREATED_ON_EDEFAULT);
@@ -917,8 +915,8 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 		switch (featureID) {
 			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
 				return assignedTo != null && !assignedTo.isEmpty();
-			case RModelPackage.R4E_ANOMALY__R4E_ID:
-				return r4eId != null;
+			case RModelPackage.R4E_ANOMALY__ID:
+				return id != null;
 			case RModelPackage.R4E_ANOMALY__CREATED_ON:
 				return CREATED_ON_EDEFAULT == null ? createdOn != null : !CREATED_ON_EDEFAULT.equals(createdOn);
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
@@ -965,7 +963,7 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 		}
 		if (baseClass == R4EIDComponent.class) {
 			switch (derivedFeatureID) {
-				case RModelPackage.R4E_ANOMALY__R4E_ID: return RModelPackage.R4EID_COMPONENT__R4E_ID;
+				case RModelPackage.R4E_ANOMALY__ID: return RModelPackage.R4EID_COMPONENT__ID;
 				default: return -1;
 			}
 		}
@@ -994,7 +992,7 @@ public class R4EAnomalyImpl extends Topic implements R4EAnomaly {
 		}
 		if (baseClass == R4EIDComponent.class) {
 			switch (baseFeatureID) {
-				case RModelPackage.R4EID_COMPONENT__R4E_ID: return RModelPackage.R4E_ANOMALY__R4E_ID;
+				case RModelPackage.R4EID_COMPONENT__ID: return RModelPackage.R4E_ANOMALY__ID;
 				default: return -1;
 			}
 		}

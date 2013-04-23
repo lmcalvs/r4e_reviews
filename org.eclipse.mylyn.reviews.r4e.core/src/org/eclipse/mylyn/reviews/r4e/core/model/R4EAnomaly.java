@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -16,7 +16,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import java.util.Date;
 
-import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
@@ -44,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * @model
  * @generated
  */
-public interface R4EAnomaly extends ITopic, R4EReviewComponent, R4EComment {
+public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	/**
 	 * Returns the value of the '<em><b>State</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState}.
@@ -323,5 +323,4 @@ public interface R4EAnomaly extends ITopic, R4EReviewComponent, R4EComment {
 	 * @generated
 	 */
 	void setFollowUpByID(String value);
-
 } // R4EAnomaly

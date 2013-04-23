@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
@@ -165,9 +165,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Rule Violations from user and set it in model data
-		final List<IReviewComponent> tempViolations = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempViolations = new ArrayList<ReviewComponent>();
 
 		final IRuleViolationInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleViolationInputDialog();
 		final int result = dialog.open();
@@ -309,7 +309,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 		final R4EDesignRuleViolation violation = R4EUIModelController.FModelExt.createR4EDesignRuleViolation(fArea);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(violation,

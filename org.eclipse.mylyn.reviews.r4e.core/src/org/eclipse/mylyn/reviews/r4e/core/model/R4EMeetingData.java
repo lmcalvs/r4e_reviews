@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,8 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import java.util.List;
-
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -229,7 +228,7 @@ public interface R4EMeetingData extends EObject {
 	 * @model
 	 * @generated
 	 */
-	List<String> getReceivers();
+	EList<String> getReceivers();
 
 	/**
 	 * Returns the value of the '<em><b>Body</b></em>' attribute.

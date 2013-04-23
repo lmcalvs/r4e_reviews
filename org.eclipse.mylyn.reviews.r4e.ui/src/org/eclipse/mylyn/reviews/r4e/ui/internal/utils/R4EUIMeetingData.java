@@ -14,6 +14,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
@@ -289,7 +290,7 @@ public class R4EUIMeetingData implements IMeetingData {
 	 * @return String[]
 	 */
 	public String[] getReceivers() {
-		final List<String> receiversRaw = fMeetingData.getReceivers();
+		final EList<String> receiversRaw = fMeetingData.getReceivers();
 		List<String> receiversFiltered = new ArrayList<String>();
 		//Remove invalid entries
 		for (String entry : receiversRaw) {

@@ -84,12 +84,12 @@ public class NextStatePropertyTester extends PropertyTester {
 			} else if (aElement instanceof R4EUIReviewBasic) {
 				if (((R4EUIReviewBasic) aElement).isOpen()
 						&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
-								R4EReviewPhase.STARTED)) {
+								R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
 					return true;
 				}
 			} else if (aElement instanceof R4EUIAnomalyExtended) {
 				if (!((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState()
-						.equals(R4EReviewPhase.COMPLETED)
+						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
 						&& 0 < ((R4EUIAnomalyExtended) aElement).getNextAvailableStates().length) {
 					return true;
 				}

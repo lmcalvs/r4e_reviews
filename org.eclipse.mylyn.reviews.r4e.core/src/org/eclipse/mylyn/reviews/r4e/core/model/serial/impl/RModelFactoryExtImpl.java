@@ -17,14 +17,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
@@ -87,8 +89,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory
-	 * #createR4EReviewGroup(org.eclipse. emf.common.util.URI, java.lang.String)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory#createR4EReviewGroup(org.eclipse.
+	 * emf.common.util.URI, java.lang.String)
 	 */
 	public R4EReviewGroup createR4EReviewGroup(URI aFolderPath, String aGroupName) throws ResourceHandlingException {
 
@@ -96,8 +98,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// create a new ResourceSet and resource for the given group
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
 		R4EReviewGroup group = RModelFactory.eINSTANCE.createR4EReviewGroup();
-		// Set the revision level fragment and sub model version start at the
-		// same level
+		// Set the revision level fragment and sub model version start at the same level
 		group.setFragmentVersion(Roots.GROUP.getVersion());
 		resource.getContents().add(group);
 
@@ -135,8 +136,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory
-	 * #openR4EReviewGroup(org.eclipse.emf .common.util.URI)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory#openR4EReviewGroup(org.eclipse.emf
+	 * .common.util.URI)
 	 */
 	public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException,
 			CompatibilityException {
@@ -146,8 +147,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		String fragmentVersion = group.getFragmentVersion();
 		String appVersionLevel = Roots.GROUP.getVersion();
 
-		// validate if the group just opened is compatible with the current
-		// application
+		// validate if the group just opened is compatible with the current application
 		validateCompatibility(Roots.GROUP, group.getName(), fragmentVersion, appVersionLevel, group);
 
 		// Load resources from all participants
@@ -165,8 +165,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		// Build the mapping references to anomaly types
-		List<R4EAnomalyType> anomTypes = group.getAvailableAnomalyTypes();
-		for (R4EAnomalyType r4eAnomalyType : anomTypes) {
+		EList<R4EAnomalyType> anomTypes = group.getAvailableAnomalyTypes();
+		for (Iterator<R4EAnomalyType> iterator = anomTypes.iterator(); iterator.hasNext();) {
+			R4EAnomalyType r4eAnomalyType = iterator.next();
 			group.getAnomalyTypeKeyToReference().put(r4eAnomalyType.getType(), r4eAnomalyType);
 		}
 
@@ -188,7 +189,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	}
 
 	private void validateCompatibility(Roots aRoot, String aName, String aFragmentVersionInDisk,
-			String appVersionLevel, IModelVersioning root) throws CompatibilityException {
+			String appVersionLevel, SubModelRoot root) throws CompatibilityException {
 		int compatibility = VersionUtils.compareVersions(appVersionLevel, aFragmentVersionInDisk);
 		if (compatibility < 0) {
 			// Not able to continue, not forward compatible
@@ -201,8 +202,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 				closeR4EDesignRuleCollection((R4EDesignRuleCollection) root);
 			}
 
-			// Attempting to load a serialised model with a higher model version
-			// than the current one supported by the
+			// Attempting to load a serialised model with a higher model version than the current one supported by the
 			// application
 			StringBuilder sb = new StringBuilder("The " + aRoot.getName() + " \"" + aName
 					+ "\" is using a newer data format, please upgrade the application to the latest version");
@@ -230,7 +230,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 		// keep reference to all userReviews within group
 		group.getUserReviews().put(usrReviews.getName(), usrReviews);
-		List<String> reviewNames = usrReviews.getCreatedReviews();
+		EList<String> reviewNames = usrReviews.getCreatedReviews();
 		// Add enabled reviews to overall review map
 		for (String revName : reviewNames) {
 			R4EReview review = usrReviews.getInvitedToMap().get(revName);
@@ -245,8 +245,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory
-	 * #closeR4EReviewGroup(org.eclipse.mylyn
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory#closeR4EReviewGroup(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.R4EReviewGroup)
 	 */
 	public String closeR4EReviewGroup(R4EReviewGroup aReviewGroup) {
@@ -267,7 +266,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			return sb.toString();
 		}
 
-		List<Resource> resList = resSet.getResources();
+		EList<Resource> resList = resSet.getResources();
 
 		// unload then all
 		for (Resource res : resList) {
@@ -283,10 +282,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #createR4EReview(org.eclipse.mylyn
-	 * .reviews.r4e.core.model.R4EReviewGroup, java.lang.String,
-	 * java.lang.String)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EReview(org.eclipse.mylyn
+	 * .reviews.r4e.core.model.R4EReviewGroup, java.lang.String, java.lang.String)
 	 */
 	public R4EReview createR4EReview(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser)
 			throws ResourceHandlingException {
@@ -314,13 +311,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		Resource groupResource = createReviewInputCheck(aReviewGroup, aReviewName);
 		ResourceSet resSet = groupResource.getResourceSet();
 		URI groupFilePath = groupResource.getURI();
-		groupFilePath = ResourceUtils.getFolderPath(groupFilePath); /*
-																	 * To
-																	 * directory
-																	 */
+		groupFilePath = ResourceUtils.getFolderPath(groupFilePath); /* To directory */
 
-		// Set the revision level for the fragment and track the current one for
-		// the application
+		// Set the revision level for the fragment and track the current one for the application
 		review.setFragmentVersion(Roots.REVIEW.getVersion());
 
 		// Associate review to a resource
@@ -329,27 +322,26 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		Resource reviewResource = resSet.createResource(reviewURI);
 		reviewResource.getContents().add(review);
 
-		// UPDATE TRANSIENT REFERENCES WITH GROUP, USER GROUP, REVIEW AND
-		// PARTICIPANT
+		// UPDATE TRANSIENT REFERENCES WITH GROUP, USER GROUP, REVIEW AND PARTICIPANT
 		aReviewGroup.getReviewsMap().put(aReviewName, review);
 		aReviewGroup.getReviews().add(review);
 
 		// CREATE PARTICIPANT resource and save it under the review folder
 		// create the participant default roles
 		List<R4EUserRole> role = new ArrayList<R4EUserRole>();
-		role.add(R4EUserRole.ORGANIZER);
-		role.add(R4EUserRole.LEAD);
+		role.add(R4EUserRole.R4E_ROLE_ORGANIZER);
+		role.add(R4EUserRole.R4E_ROLE_LEAD);
 		R4EParticipant participant = (R4EParticipant) createR4EUser(review, aCreatedByUser, role, true);
 
 		// Update pending associations to Review
 		Date now = new Date(new Date().getTime());
 		R4EReviewState state = RModelFactory.eINSTANCE.createR4EReviewState();
-		state.setState(R4EReviewPhase.STARTED);
+		state.setState(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		review.setCreatedBy(participant);
 		review.setStartDate(now);
 		review.getUsersMap().put(participant.getId(), participant);
 		review.setState(state);
-		review.setType(R4EReviewType.BASIC);
+		review.setType(R4EReviewType.R4E_REVIEW_TYPE_BASIC);
 
 		// SAVE REVIEW
 		fWriter.saveResource(reviewResource);
@@ -359,10 +351,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #createR4EFormalReview(org.eclipse
-	 * .mylyn.reviews.r4e.core.model.R4EReviewGroup, java.lang.String,
-	 * java.lang.String)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EFormalReview(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReviewGroup, java.lang.String, java.lang.String)
 	 */
 	public R4EFormalReview createR4EFormalReview(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser)
 			throws ResourceHandlingException {
@@ -381,8 +371,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #createR4EReviewPhaseInfo(org.eclipse
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EReviewPhaseInfo(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EFormalReview)
 	 */
 	public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview aReview) throws ResourceHandlingException {
@@ -405,8 +394,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #createR4EMeetingData(org.eclipse
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EMeetingData(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EReview)
 	 */
 	public R4EMeetingData createR4EMeetingData(R4EReview aReview) throws ResourceHandlingException {
@@ -464,7 +452,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		Resource ureviewsRes = null;
 		if (uReviews == null) {
 			uReviews = RModelFactory.eINSTANCE.createR4EUserReviews();
-			// create a user URI
+			//create a user URI
 			URI uri = defineParticipantResURI(aCreatedByUser, groupFilePath);
 
 			ureviewsRes = resSet.createResource(uri);
@@ -477,7 +465,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		uReviews.setGroup(aReviewGroup);
-		List<String> reviewList = uReviews.getCreatedReviews();
+		EList<String> reviewList = uReviews.getCreatedReviews();
 		if (!(reviewList.contains(review.getName())) && participant.isReviewCreatedByMe()) {
 			reviewList.add(review.getName());
 		}
@@ -516,8 +504,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			return null;
 		}
 
-		// when the review is closed the element is marked as proxy and it's
-		// ready to be reloaded upon request.
+		// when the review is closed the element is marked as proxy and it's ready to be reloaded upon request.
 		R4EReview review = aReviewGroup.getReviewsMap().get(aReviewName);
 		if (review == null) {
 			StringBuilder sb = new StringBuilder("Not able to find Review: " + aReviewName + "\tin group: "
@@ -534,8 +521,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// read review meta-data version from the loaded review
 		String fragmentVersion = review.getFragmentVersion();
 		String appVersionLevel = Roots.REVIEW.getVersion();
-		// Validate compatibility of the review data just loaded against the
-		// current version level of the application
+		// Validate compatibility of the review data just loaded against the current version level of the application
 		validateCompatibility(Roots.REVIEW, review.getName(), fragmentVersion, appVersionLevel, review);
 
 		URI folder = ResourceUtils.getFolderPath(review.eResource().getURI());
@@ -546,7 +532,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 				loadUsrData(review, uri);
 			}
 		} catch (ResourceHandlingException e) {
-			// try to close the partly opened review
+			//try to close the partly opened review
 			closeR4EReview(review);
 			throw e;
 		}
@@ -582,10 +568,10 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 		review.getUsersMap().put(participant.getId(), participant);
 		// update refs to comments and particpant
-		List<R4EComment> comments = participant.getAddedComments();
+		EList<R4EComment> comments = participant.getAddedComments();
 		if (comments != null) {
 			for (R4EComment comment : comments) {
-				review.getIdsMap().put(comment.getR4eId(), comment);
+				review.getIdsMap().put(comment.getId(), comment);
 				if (comment instanceof R4EAnomaly) {
 					review.getTopics().add((R4EAnomaly) comment);
 				} else {
@@ -598,7 +584,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		// update refs to items
-		List<R4EItem> items = participant.getAddedItems();
+		EList<R4EItem> items = participant.getAddedItems();
 		if (items != null && items.size() > 0) {
 			R4EItem anItem = items.get(0);
 
@@ -607,18 +593,20 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 			// Get: Items
 			for (R4EItem item : items) {
-				Map<R4EID, R4EIDComponent> idsMap = review.getIdsMap();
-				idsMap.put(item.getR4eId(), item);
-				review.getItems().add(item);
+				EMap<R4EID, R4EIDComponent> idsMap = review.getIdsMap();
+				idsMap.put(item.getId(), item);
+				review.getReviewItems().add(item);
 
 				// Get: file contexts
-				List<R4EFileContext> fileCtxt = item.getFileContextList();
-				for (R4EFileContext r4eFileContext : fileCtxt) {
-					idsMap.put(r4eFileContext.getR4eId(), r4eFileContext);
+				EList<R4EFileContext> fileCtxt = item.getFileContextList();
+				for (Iterator<R4EFileContext> iterator = fileCtxt.iterator(); iterator.hasNext();) {
+					R4EFileContext r4eFileContext = iterator.next();
+					idsMap.put(r4eFileContext.getId(), r4eFileContext);
 					// Get: Deltas
-					List<R4EDelta> deltas = r4eFileContext.getDeltas();
-					for (R4EDelta delta : deltas) {
-						idsMap.put(delta.getR4eId(), delta);
+					EList<R4EDelta> deltas = r4eFileContext.getDeltas();
+					for (Iterator<R4EDelta> iterator2 = deltas.iterator(); iterator2.hasNext();) {
+						R4EDelta delta = iterator2.next();
+						idsMap.put(delta.getId(), delta);
 					}
 				}
 			}
@@ -629,8 +617,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #closeR4EReview(org.eclipse.mylyn .reviews.r4e.core.model.R4EReview)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#closeR4EReview(org.eclipse.mylyn
+	 * .reviews.r4e.core.model.R4EReview)
 	 */
 	public String closeR4EReview(R4EReview aReview) {
 		// Get all participants
@@ -638,17 +626,18 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		Collection<R4EUser> participants = aReview.getUsersMap().values();
 		if (participants != null) {
 			// Release resources associated to each participant
-			for (R4EUser r4eUser : participants) {
-				R4EParticipant participant = (R4EParticipant) r4eUser;
+			for (Iterator<R4EUser> iterator = participants.iterator(); iterator.hasNext();) {
+				R4EParticipant participant = (R4EParticipant) iterator.next();
 				resource = participant.eResource();
 				// participant + its comments
 				if (resource != null) {
 					resource.unload();
 				}
-				List<R4EItem> items = participant.getAddedItems();
+				EList<R4EItem> items = participant.getAddedItems();
 				if (items != null && items.size() > 0) {
 					// items per participant
-					for (R4EItem r4eItem : items) {
+					for (Iterator<R4EItem> iterator2 = items.iterator(); iterator2.hasNext();) {
+						R4EItem r4eItem = iterator2.next();
 						resource = r4eItem.eResource();
 						if (resource != null) {
 							resource.unload();
@@ -678,9 +667,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory
-	 * #deleteR4EReview(org.eclipse.mylyn .reviews.r4e.core.model.R4EReview,
-	 * boolean)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#deleteR4EReview(org.eclipse.mylyn
+	 * .reviews.r4e.core.model.R4EReview, boolean)
 	 */
 	public String deleteR4EReview(R4EReview aReview, boolean aDeleteOnDisk) throws ResourceHandlingException {
 		StringBuilder sb = new StringBuilder();
@@ -700,19 +688,17 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		R4EReviewGroup group = (R4EReviewGroup) aReview.eContainer();
 		group.getReviewsMap().remove(reviewName);
 
-		// // TODO: This action would require to update each user reviews file,
-		// where permissions may be an issue. For
+		// // TODO: This action would require to update each user reviews file, where permissions may be an issue. For
 		// the
 		// // moment only mark the review as disabled and unload resources
 		// EMap<String, R4EUserReviews> usrReviews = group.getUserReviews();
 		// if (usrReviews != null && usrReviews.size() > 0) {
 		// Collection<R4EUserReviews> reviews = usrReviews.values();
-		// for (Iterator<R4EUserReviews> iterator = reviews.iterator();
-		// iterator.hasNext();) {
+		// for (Iterator<R4EUserReviews> iterator = reviews.iterator(); iterator.hasNext();) {
 		// R4EUserReviews r4eUserReviews = (R4EUserReviews) iterator.next();
 		//
 		// // created list
-		// List<String> createdList = r4eUserReviews.getCreatedReviews();
+		// EList<String> createdList = r4eUserReviews.getCreatedReviews();
 		// if (createdList != null && createdList.size() > 0) {
 		// createdList.remove(reviewName);
 		// }
@@ -744,8 +730,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * 
 	 * /* (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4EItem(org.eclipse.mylyn
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EItem(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.R4EParticipant)
 	 */
 	public R4EItem createR4EItem(R4EParticipant aParticipant) throws ResourceHandlingException {
@@ -771,11 +757,11 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		item.setAddedBy(aParticipant);
 		item.setAddedById(aParticipant.getId());
 		item.setReview(review);
-		item.setR4eId(itemID);
+		item.setId(itemID);
 
 		// update derived references to the review
 		review.getIdsMap().put(itemID, item);
-		review.getItems().add(item);
+		review.getReviewItems().add(item);
 
 		// Verify if an item already exists to append to the same resource
 		int addedItems = aParticipant.getAddedItems().size();
@@ -794,8 +780,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			// crate item resource
 			URI usrURI = usrResource.getURI();
 			URI reviewFolderURI = ResourceUtils.getFolderPath(usrURI);
-			// create a uri for the new participant, the user is serialized
-			// within the comments resource
+			// create a uri for the new participant, the user is serialized within the comments resource
 			URI itemURI = fWriter.createResourceURI(aParticipant.getId(), reviewFolderURI, ResourceType.USER_ITEM);
 			// create a Resource for the Participant
 			itemResource = resSet.createResource(itemURI);
@@ -806,8 +791,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// update resource
 		itemResource.getContents().add(item);
 
-		// Save persistence changes affecting the Participant and the actual
-		// items
+		// Save persistence changes affecting the Participant and the actual items
 		fWriter.saveResource(itemResource);
 		fWriter.saveResource(usrResource);
 
@@ -817,8 +801,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#deleteR4EItem(org.eclipse.mylyn
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#deleteR4EItem(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.R4EItem, boolean)
 	 */
 	public void deleteR4EItem(R4EItem aItem, boolean aDeleteOnDisk) throws ResourceHandlingException {
@@ -832,23 +816,22 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		// TODO: To consider before implementing actual resource removal
-		// Removing other elements may have references to this item (e.g
-		// reviewed items)
-		// Removing all references may present reading and writing conflicts and
-		// file permissions issues, since the
+		// Removing other elements may have references to this item (e.g reviewed items)
+		// Removing all references may present reading and writing conflicts and file permissions issues, since the
 		// references may be across different users.
-		// removing items may cause reshuffle of the references between items,
-		// and cause incorrect references indexes on
+		// removing items may cause reshuffle of the references between items, and cause incorrect references indexes on
 		// EMF
 		// Disable the item itself
 		aItem.setEnabled(false);
 		// Disable all related deltas
-		List<R4EFileContext> fileContextList = aItem.getFileContextList();
+		EList<R4EFileContext> fileContextList = aItem.getFileContextList();
 		if (fileContextList != null && fileContextList.size() > 0) {
-			for (R4EFileContext fileContext : fileContextList) {
-				List<R4EDelta> deltas = fileContext.getDeltas();
+			for (Iterator<R4EFileContext> iterator = fileContextList.iterator(); iterator.hasNext();) {
+				R4EFileContext fileContext = iterator.next();
+				EList<R4EDelta> deltas = fileContext.getDeltas();
 				if (deltas != null && deltas.size() > 0) {
-					for (R4EDelta delta : deltas) {
+					for (Iterator<R4EDelta> iterator2 = deltas.iterator(); iterator2.hasNext();) {
+						R4EDelta delta = iterator2.next();
 						delta.setEnabled(false);
 					}
 				}
@@ -865,8 +848,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4EFileContext(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EFileContext(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EItem)
 	 */
 	public R4EFileContext createR4EFileContext(R4EItem item) throws ResourceHandlingException {
@@ -889,7 +872,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		contextID.setUserID(user.getId());
 
 		// Associate new fileContext with ID
-		fileContext.setR4eId(contextID);
+		fileContext.setId(contextID);
 		// Register ID to idMap at the review level
 		user.getReviewInstance().getIdsMap().put(contextID, fileContext);
 
@@ -901,8 +884,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4EBaseFileVersion(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EBaseFileVersion(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EFileContext)
 	 */
 	public R4EFileVersion createR4EBaseFileVersion(R4EFileContext context) throws ResourceHandlingException {
@@ -915,8 +898,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4ETargetFileVersion(org
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4ETargetFileVersion(org
 	 * .eclipse.mylyn.reviews.r4e.core.model.R4EFileContext)
 	 */
 	public R4EFileVersion createR4ETargetFileVersion(R4EFileContext context) throws ResourceHandlingException {
@@ -948,8 +931,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4EDelta(org.eclipse.mylyn
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EDelta(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.R4EFileContext)
 	 */
 	public R4EDelta createR4EDelta(R4EFileContext context) throws ResourceHandlingException {
@@ -977,7 +960,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		deltaID.setUserID(user.getId());
 
 		// Associate new delta to ID
-		delta.setR4eId(deltaID);
+		delta.setId(deltaID);
 		// Register ID to idMap at the review level
 		user.getReviewInstance().getIdsMap().put(deltaID, delta);
 		// Associate delta to the context resource
@@ -992,8 +975,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#deleteR4EDelta(org.eclipse.mylyn
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#deleteR4EDelta(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.R4EDelta)
 	 */
 	public void deleteR4EDelta(R4EDelta delta) throws ResourceHandlingException {
@@ -1012,8 +995,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4EBaseTextContent(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EBaseTextContent(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EDelta)
 	 */
 	public R4ETextContent createR4EBaseTextContent(R4EDelta delta) throws ResourceHandlingException {
@@ -1023,8 +1006,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4ETargetTextContent(org
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4ETargetTextContent(org
 	 * .eclipse.mylyn.reviews.r4e.core.model.R4EDelta)
 	 */
 	public R4ETextContent createR4ETargetTextContent(R4EDelta delta) throws ResourceHandlingException {
@@ -1059,8 +1042,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserItemResFactory#createR4ETextPosition(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4ETextPosition(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4ETextContent)
 	 */
 	public R4ETextPosition createR4ETextPosition(R4ETextContent content) throws ResourceHandlingException {
@@ -1087,10 +1070,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#createR4EParticipant(org.eclipse
-	 * .mylyn.reviews.r4e.core.model.R4EReview, java.lang.String,
-	 * java.util.List)
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EParticipant(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReview, java.lang.String, java.util.List)
 	 */
 	public R4EParticipant createR4EParticipant(R4EReview aReview, String aParticipantId, List<R4EUserRole> aRoles)
 			throws ResourceHandlingException {
@@ -1134,16 +1116,16 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			if (participant.eResource() == null) {
 				sb.append("A participant with the same Id already exist in unknown state: " + aUserId);
 				sb.append("/nClose and reopen review, to reset the state of the elements");
-				// participant exists but is not associated to a resource, e.g.
-				// unknown state of references
+				// participant exists but is not associated to a resource, e.g. unknown state of references
 				throw new ResourceHandlingException(sb.toString());
 			} else {
 				// user already exists
 				// update roles (in case there are new ones)
 				if (aRoles != null && participant instanceof R4EParticipant) {
 					R4EParticipant dParticipant = (R4EParticipant) participant;
-					List<R4EUserRole> eRoles = dParticipant.getRoles();
-					for (R4EUserRole role : aRoles) {
+					EList<R4EUserRole> eRoles = dParticipant.getRoles();
+					for (Iterator<R4EUserRole> iterator = aRoles.iterator(); iterator.hasNext();) {
+						R4EUserRole role = iterator.next();
 						if (!(eRoles.contains(role))) {
 							eRoles.add(role);
 						}
@@ -1181,8 +1163,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 		participant.getGroupPaths().add(containerResource.getURI().toString());
 
-		// find the review file uri to create the resource for the new
-		// participant
+		// find the review file uri to create the resource for the new participant
 		URI folderPath = containerResource.getURI();
 		// convert to folder
 		folderPath = ResourceUtils.getFolderPath(folderPath);
@@ -1217,7 +1198,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 		// roles
 		if (aRoles != null && aRoles.size() > 0) {
-			for (R4EUserRole r4eUserRole : aRoles) {
+			for (Iterator<R4EUserRole> iterator = aRoles.iterator(); iterator.hasNext();) {
+				R4EUserRole r4eUserRole = iterator.next();
 				participant.getRoles().add(r4eUserRole);
 			}
 		}
@@ -1253,8 +1235,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#createR4EAnomaly(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomaly(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EParticipant)
 	 */
 	public R4EAnomaly createR4EAnomaly(R4EParticipant aAnomalyCreator) throws ResourceHandlingException {
@@ -1285,10 +1267,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#createR4EComment(org.eclipse
-	 * .mylyn.reviews.r4e.core.model.R4EParticipant,
-	 * org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly)
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EComment(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EParticipant, org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly)
 	 */
 	public R4EComment createR4EComment(R4EParticipant aParticipant, R4EAnomaly aContainerAnomaly)
 			throws ResourceHandlingException {
@@ -1315,8 +1296,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#createR4ETextContent(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4ETextContent(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EAnomaly)
 	 */
 	public R4ETextContent createR4ETextContent(R4EAnomaly anomaly) throws ResourceHandlingException {
@@ -1327,7 +1308,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		R4ETextContent txtContent = RModelFactoryExt.eINSTANCE.createR4ETextContent();
-		anomaly.getLocations().add(txtContent);
+		anomaly.getLocation().add(txtContent);
 
 		// Associate to Resource and save
 		anomaly.eResource().getContents().add(txtContent);
@@ -1356,8 +1337,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#createR4EFileVersion(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EFileVersion(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition)
 	 */
 	public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition txtPosition) throws ResourceHandlingException {
@@ -1379,8 +1360,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#deleteR4EComment(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#deleteR4EComment(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EComment, boolean)
 	 */
 	public void deleteR4EComment(R4EComment aComment, boolean aDeleteOnDisk) throws ResourceHandlingException {
@@ -1401,8 +1382,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.
-	 * UserCommentResFactory#deleteR4EAnomaly(org.eclipse
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#deleteR4EAnomaly(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EAnomaly, boolean)
 	 */
 	public void deleteR4EAnomaly(R4EAnomaly aAnomaly, boolean aDeleteOnDisk) throws ResourceHandlingException {
@@ -1416,14 +1397,14 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	private void updCommonCommentRefs(R4EParticipant aCommentCreator, R4EComment aComment) {
 		Date createdOn = new Date();
 		aCommentCreator.getAddedComments().add(aComment);
-		aComment.setAuthor(aCommentCreator);
+		aComment.setUser(aCommentCreator);
 		aComment.setCreatedOn(createdOn);
 
 		// Assign the unique id to the comment
 		R4EID id = RModelFactory.eINSTANCE.createR4EID();
 		id.setUserID(aCommentCreator.getId());
 		id.setSequenceID(aCommentCreator.getSequenceIDCounterNext());
-		aComment.setR4eId(id);
+		aComment.setId(id);
 
 		// update references from review
 		aCommentCreator.getReviewInstance().getIdsMap().put(id, aComment);
@@ -1432,8 +1413,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence#
-	 * testWritePermissions(org.eclipse.emf.common.util.URI)
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence#testWritePermissions(org.eclipse.emf.common.util.URI)
 	 */
 	public boolean testWritePermissions(URI aLocation) throws ResourceHandlingException {
 		if (aLocation == null) {
@@ -1455,9 +1436,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence#PollDirUpdates
-	 * (org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence#PollDirUpdates(org.eclipse.emf.ecore.EObject)
 	 */
 	public List<Resource> pollDirUpdates(EObject atElementLoc) {
 		// TODO Implement me
@@ -1485,9 +1464,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #createR4EDesignRuleCollection(org.eclipse .emf.common.util.URI,
-	 * java.lang.String)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI, java.lang.String)
 	 */
 	public R4EDesignRuleCollection createR4EDesignRuleCollection(URI aFolderPath, String aRuleCollectionName)
 			throws ResourceHandlingException {
@@ -1499,8 +1477,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
 		resource.getContents().add(ruleSet);
 
-		// Set the revision level fragment and sub model version start at the
-		// same level
+		// Set the revision level fragment and sub model version start at the same level
 		ruleSet.setFragmentVersion(Roots.RULESET.getVersion());
 
 		// Update the resource
@@ -1517,8 +1494,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #openR4EDesignRuleCollection(org.eclipse .emf.common.util.URI)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#openR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI)
 	 */
 	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException,
 			CompatibilityException {
@@ -1532,8 +1509,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// read the rule set meta-data version just loaded
 		String fragmentVersion = ruleSet.getFragmentVersion();
 		String appVersionLevel = Roots.RULESET.getVersion();
-		// Validate compatibility of the rule set data just loaded against the
-		// current version level of the application
+		// Validate compatibility of the rule set data just loaded against the current version level of the application
 		validateCompatibility(Roots.RULESET, ruleSet.getName(), fragmentVersion, appVersionLevel, ruleSet);
 
 		return ruleSet;
@@ -1543,13 +1519,11 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #closeR4EDesignRuleCollection(org.eclipse
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#closeR4EDesignRuleCollection(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
 	 */
 	public String closeR4EDesignRuleCollection(R4EDesignRuleCollection aDesRuleCollection) {
-		// TODO: Make generic as closing a review group is currently fairly
-		// similar
+		// TODO: Make generic as closing a review group is currently fairly similar
 		StringBuilder sb = new StringBuilder();
 
 		// Obtain all resources
@@ -1566,7 +1540,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			Activator.fTracer.traceDebug(sb.toString());
 			return sb.toString();
 		}
-		List<Resource> resList = resSet.getResources();
+		EList<Resource> resList = resSet.getResources();
 
 		for (Resource res : resList) {
 			res.unload();
@@ -1578,8 +1552,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #createR4EDesignRuleArea(org.eclipse
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleArea(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
 	 */
 	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection)
@@ -1609,8 +1582,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #createR4EDesignRuleViolation(org.eclipse
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleViolation(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea)
 	 */
 	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleArea aRuleArea)
@@ -1641,8 +1613,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory
-	 * #createR4EDesignRule(org.eclipse.mylyn
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRule(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.drules.R4EDesignRuleViolation)
 	 */
 	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException {
@@ -1668,7 +1639,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	}
 
 	public R4EReview copyR4EReview(URI origGroup, URI destGroup, String origReviewName, String destReviewName) {
-		// Copier copier = new Copier();
+		//		Copier copier = new Copier();
 
 		return null;
 	}

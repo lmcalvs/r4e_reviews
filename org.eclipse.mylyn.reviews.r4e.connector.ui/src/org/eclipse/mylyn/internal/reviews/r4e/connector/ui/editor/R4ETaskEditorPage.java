@@ -23,7 +23,7 @@ import org.eclipse.mylyn.internal.reviews.r4e.connector.R4EConnector;
 import org.eclipse.mylyn.internal.reviews.r4e.connector.R4EConnectorPlugin;
 import org.eclipse.mylyn.internal.reviews.r4e.connector.ui.R4EUiPlugin;
 import org.eclipse.mylyn.reviews.connector.AbstractEmfConnector;
-import org.eclipse.mylyn.reviews.core.model.IReview;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
@@ -46,7 +46,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
  */
 public class R4ETaskEditorPage extends AbstractTaskEditorPage {
 
-	private IReview review;
+	private Review review;
 
 	public R4ETaskEditorPage(TaskEditor editor) {
 		super(editor, R4EConnector.CONNECTOR_KIND);
@@ -67,7 +67,7 @@ public class R4ETaskEditorPage extends AbstractTaskEditorPage {
 
 	private void forceModelUpdate() {
 		try {
-			review = (IReview) ((AbstractEmfConnector) getConnector()).getTaskObject(getTaskRepository(),
+			review = (Review) ((AbstractEmfConnector) getConnector()).getTaskObject(getTaskRepository(),
 					getTask().getTaskId(), new NullProgressMonitor());
 			//TODO This is totally ugly hack, but we need to make sure the model loads here.
 			try {
@@ -117,7 +117,7 @@ public class R4ETaskEditorPage extends AbstractTaskEditorPage {
 		super.refresh();
 	}
 
-	public synchronized IReview getReview() {
+	public synchronized Review getReview() {
 		return review;
 	}
 }

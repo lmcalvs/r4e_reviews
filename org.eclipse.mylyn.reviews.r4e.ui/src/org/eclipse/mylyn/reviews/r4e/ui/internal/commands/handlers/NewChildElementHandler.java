@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -75,7 +75,7 @@ public class NewChildElementHandler extends AbstractHandler {
 		//Get data from user
 		if (null != element) {
 			try {
-				final List<IReviewComponent> tempModelComponents = element.createChildModelDataElement();
+				final List<ReviewComponent> tempModelComponents = element.createChildModelDataElement();
 
 				//Create actual model element
 				final Job job = new Job(COMMAND_MESSAGE) {
@@ -91,7 +91,7 @@ public class NewChildElementHandler extends AbstractHandler {
 						R4EUIModelController.setJobInProgress(true);
 						monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
-						for (final IReviewComponent tempModelComponent : tempModelComponents) {
+						for (final ReviewComponent tempModelComponent : tempModelComponents) {
 							R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());
 							IR4EUIModelElement newElement = null;
 							try {

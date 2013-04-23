@@ -21,24 +21,20 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.mylyn.reviews.core.model.IComment;
-import org.eclipse.mylyn.reviews.core.model.ICommentType;
-import org.eclipse.mylyn.reviews.core.model.IDated;
-import org.eclipse.mylyn.reviews.core.model.IIndexed;
-import org.eclipse.mylyn.reviews.core.model.ILocation;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.core.model.IReview;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
-import org.eclipse.mylyn.reviews.core.model.IReviewGroup;
-import org.eclipse.mylyn.reviews.core.model.IReviewItem;
-import org.eclipse.mylyn.reviews.core.model.IReviewState;
-import org.eclipse.mylyn.reviews.core.model.ITaskReference;
-import org.eclipse.mylyn.reviews.core.model.ITopic;
-import org.eclipse.mylyn.reviews.core.model.ITopicContainer;
-import org.eclipse.mylyn.reviews.core.model.IUser;
+import org.eclipse.mylyn.reviews.frame.core.model.Comment;
+import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
+import org.eclipse.mylyn.reviews.frame.core.model.Item;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
@@ -50,14 +46,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
@@ -253,63 +247,51 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 				return createR4EMeetingDataAdapter();
 			}
 			@Override
-			public Adapter caseReviewComponent(IReviewComponent object) {
+			public Adapter caseReviewComponent(ReviewComponent object) {
 				return createReviewComponentAdapter();
 			}
 			@Override
-			public Adapter caseReviewGroup(IReviewGroup object) {
+			public Adapter caseSubModelRoot(SubModelRoot object) {
+				return createSubModelRootAdapter();
+			}
+			@Override
+			public Adapter caseReviewGroup(ReviewGroup object) {
 				return createReviewGroupAdapter();
 			}
 			@Override
-			public Adapter caseModelVersioning(IModelVersioning object) {
-				return createModelVersioningAdapter();
-			}
-			@Override
-			public Adapter caseTopicContainer(ITopicContainer object) {
-				return createTopicContainerAdapter();
-			}
-			@Override
-			public Adapter caseDated(IDated object) {
-				return createDatedAdapter();
-			}
-			@Override
-			public Adapter caseReview(IReview object) {
+			public Adapter caseReview(Review object) {
 				return createReviewAdapter();
 			}
 			@Override
-			public Adapter caseIndexed(IIndexed object) {
-				return createIndexedAdapter();
-			}
-			@Override
-			public Adapter caseComment(IComment object) {
+			public Adapter caseComment(Comment object) {
 				return createCommentAdapter();
 			}
 			@Override
-			public Adapter caseTopic(ITopic object) {
+			public Adapter caseTopic(Topic object) {
 				return createTopicAdapter();
 			}
 			@Override
-			public Adapter caseUser(IUser object) {
+			public Adapter caseUser(User object) {
 				return createUserAdapter();
 			}
 			@Override
-			public Adapter caseReviewItem(IReviewItem object) {
-				return createReviewItemAdapter();
+			public Adapter caseItem(Item object) {
+				return createItemAdapter();
 			}
 			@Override
-			public Adapter caseLocation(ILocation object) {
+			public Adapter caseLocation(Location object) {
 				return createLocationAdapter();
 			}
 			@Override
-			public Adapter caseCommentType(ICommentType object) {
+			public Adapter caseCommentType(CommentType object) {
 				return createCommentTypeAdapter();
 			}
 			@Override
-			public Adapter caseTaskReference(ITaskReference object) {
+			public Adapter caseTaskReference(TaskReference object) {
 				return createTaskReferenceAdapter();
 			}
 			@Override
-			public Adapter caseReviewState(IReviewState object) {
+			public Adapter caseReviewState(ReviewState object) {
 				return createReviewStateAdapter();
 			}
 			@Override
@@ -779,12 +761,12 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReviewComponent <em>Review Component</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent <em>Review Component</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that we can
 	 * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
 	 * end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReviewComponent
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent
 	 * @generated
 	 */
 	public Adapter createReviewComponentAdapter() {
@@ -792,13 +774,27 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReviewGroup
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
+	 * <em>Sub Model Root</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
+	 * -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
+	 * @generated
+	 */
+	public Adapter createSubModelRootAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup
 	 * <em>Review Group</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
 	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReviewGroup
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup
 	 * @generated
 	 */
 	public Adapter createReviewGroupAdapter() {
@@ -806,52 +802,11 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IModelVersioning <em>Model Versioning</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that we can
-	 * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-	 * end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IModelVersioning
-	 * @generated
-	 */
-	public Adapter createModelVersioningAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ITopicContainer <em>Topic Container</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.ITopicContainer
-	 * @generated
-	 */
-	public Adapter createTopicContainerAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IDated <em>Dated</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IDated
-	 * @generated
-	 */
-	public Adapter createDatedAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReview <em>Review</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.Review <em>Review</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
 	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReview
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Review
 	 * @generated
 	 */
 	public Adapter createReviewAdapter() {
@@ -859,25 +814,11 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IIndexed <em>Indexed</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IIndexed
-	 * @generated
-	 */
-	public Adapter createIndexedAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IComment <em>Comment</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment <em>Comment</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
 	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IComment
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Comment
 	 * @generated
 	 */
 	public Adapter createCommentAdapter() {
@@ -885,11 +826,11 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ITopic <em>Topic</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.Topic <em>Topic</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.ITopic
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Topic
 	 * @generated
 	 */
 	public Adapter createTopicAdapter() {
@@ -897,11 +838,11 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IUser <em>User</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
-	 * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.User <em>User</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IUser
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.User
 	 * @generated
 	 */
 	public Adapter createUserAdapter() {
@@ -909,27 +850,25 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReviewItem
-	 * <em>Review Item</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
-	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
-	 * -->
-	 * 
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.Item <em>Item</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+	 * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReviewItem
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Item
 	 * @generated
 	 */
-	public Adapter createReviewItemAdapter() {
+	public Adapter createItemAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ICommentType
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.CommentType
 	 * <em>Comment Type</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
 	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.ICommentType
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.CommentType
 	 * @generated
 	 */
 	public Adapter createCommentTypeAdapter() {
@@ -937,13 +876,13 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ITaskReference
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.TaskReference
 	 * <em>Task Reference</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
 	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.ITaskReference
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.TaskReference
 	 * @generated
 	 */
 	public Adapter createTaskReferenceAdapter() {
@@ -951,13 +890,13 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.IReviewState
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewState
 	 * <em>Review State</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
 	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.IReviewState
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewState
 	 * @generated
 	 */
 	public Adapter createReviewStateAdapter() {
@@ -965,13 +904,13 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.core.model.ILocation
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.Location
 	 * <em>Location</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
 	 * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.mylyn.reviews.core.model.ILocation
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Location
 	 * @generated
 	 */
 	public Adapter createLocationAdapter() {

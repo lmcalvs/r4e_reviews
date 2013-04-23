@@ -297,10 +297,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						if (R4EUIModelController.getActiveReview()
 								.getReview()
 								.getType()
-								.equals(R4EReviewType.BASIC)) {
-							newParticipant.getRoles().add(R4EUserRole.LEAD);
+								.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+							newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
 						} else {
-							newParticipant.getRoles().add(R4EUserRole.REVIEWER);
+							newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
 						}
 					}
 				}

@@ -73,7 +73,8 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 		}
 
 		//Command is disabled if the active review is completed
-		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
+		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+				R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 

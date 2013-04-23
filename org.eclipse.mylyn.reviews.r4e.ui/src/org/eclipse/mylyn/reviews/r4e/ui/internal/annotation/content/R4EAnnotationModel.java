@@ -369,9 +369,9 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	public void removeAnnotation(Object aAnnotationContent) {
 		R4EID id = null;
 		if (aAnnotationContent instanceof R4EUIAnomalyBasic) {
-			id = ((R4EUIAnomalyBasic) aAnnotationContent).getAnomaly().getR4eId();
+			id = ((R4EUIAnomalyBasic) aAnnotationContent).getAnomaly().getId();
 		} else if (aAnnotationContent instanceof R4EUIContent) {
-			id = ((R4EUIContent) aAnnotationContent).getContent().getR4eId();
+			id = ((R4EUIContent) aAnnotationContent).getContent().getId();
 		}
 		if (null != id) {
 			final IReviewAnnotation removedAnnotation = fAnnotationsMap.remove(id);

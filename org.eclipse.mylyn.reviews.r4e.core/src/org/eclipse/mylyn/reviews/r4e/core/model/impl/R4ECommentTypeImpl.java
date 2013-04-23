@@ -1,6 +1,7 @@
 /**
+/**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -17,7 +18,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.mylyn.reviews.internal.core.model.CommentType;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
@@ -34,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
  * 
  * @generated
  */
-public class R4ECommentTypeImpl extends CommentType implements R4ECommentType {
+public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentType {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
 	 * -->
@@ -43,7 +44,7 @@ public class R4ECommentTypeImpl extends CommentType implements R4ECommentType {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EDesignRuleClass TYPE_EDEFAULT = R4EDesignRuleClass.ERRONEOUS;
+	protected static final R4EDesignRuleClass TYPE_EDEFAULT = R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc

@@ -15,6 +15,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -422,7 +423,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 				fDescriptionText.setText("");
 			}
 
-			List<String> availableProjects = modelGroup.getAvailableProjects();
+		EList<String> availableProjects = modelGroup.getAvailableProjects();
 			final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
 			fAvailableProjects.removeAll();
 			Item item = null;
@@ -442,7 +443,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			}
 			fAvailableProjects.updateButtons();
 
-			List<String> availableComponents = modelGroup.getAvailableComponents();
+		EList<String> availableComponents = modelGroup.getAvailableComponents();
 			final String[] components = availableComponents.toArray(new String[availableComponents.size()]);
 			fAvailableComponents.removeAll();
 			String component = null;
@@ -467,7 +468,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
 			final List<String> tmpRuleSetLocations = new ArrayList<String>();
 			//Fixed warning, see Bug 391614
-			List<String> ruleLocations = modelGroup.getDesignRuleLocations();
+		EList<String> ruleLocations = modelGroup.getDesignRuleLocations();
 			final String[] ruleSetsLocations = ruleLocations.toArray(new String[ruleLocations.size()]);
 			for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 				if (uiRuleSet.isEnabled()) {

@@ -33,8 +33,8 @@ import org.eclipse.mylyn.reviews.connector.EmfConfiguration;
 import org.eclipse.mylyn.reviews.connector.EmfTaskSchema;
 import org.eclipse.mylyn.reviews.connector.EmfTaskSchema.FieldFeature;
 import org.eclipse.mylyn.reviews.connector.client.EmfClient;
-import org.eclipse.mylyn.reviews.core.model.IUser;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
@@ -112,19 +112,22 @@ public class R4EConnector extends AbstractEmfConnector {
 
 			@Override
 			public boolean isSupported(EStructuralFeature feature) {
-				return (feature != ReviewsPackage.Literals.MODEL_VERSIONING__FRAGMENT_VERSION)
-						&& (feature != ReviewsPackage.Literals.REVIEW__ID)
-						&& (feature != ReviewsPackage.Literals.DATED__CREATION_DATE)
-						&& (feature != ReviewsPackage.Literals.DATED__MODIFICATION_DATE)
+				return (feature != ModelPackage.Literals.SUB_MODEL_ROOT__FRAGMENT_VERSION)
+						&& (feature != ModelPackage.Literals.SUB_MODEL_ROOT__APPLICATION_VERSION)
+						&& (feature != ModelPackage.Literals.SUB_MODEL_ROOT__COMPATIBILITY)
+						&& (feature != ModelPackage.Literals.REVIEW__ID)
+						&& (feature != RModelPackage.Literals.R4E_REVIEW__START_DATE)
+						&& (feature != RModelPackage.Literals.R4E_REVIEW__MODIFIED_DATE)
 						&& (feature != RModelPackage.Literals.R4E_REVIEW_COMPONENT__ASSIGNED_TO)
-						&& (feature != ReviewsPackage.Literals.REVIEW_COMPONENT__ENABLED) && super.isSupported(feature);
+						&& (feature != RModelPackage.Literals.R4E_REVIEW__COMPONENTS) //TODO:  Removed for now as the editor has issues displaying EList values
+						&& (feature != ModelPackage.Literals.REVIEW_COMPONENT__ENABLED) && super.isSupported(feature);
 			}
 
 			@Override
 			public void initialize() {
 				super.initialize();
 				createField(RModelPackage.Literals.R4E_REVIEW__PROJECT, Flag.READ_ONLY);
-				createField(RModelPackage.Literals.R4E_REVIEW__COMPONENTS, Flag.READ_ONLY);
+				//createField(RModelPackage.Literals.R4E_REVIEW__COMPONENTS, Flag.READ_ONLY);  //TODO:  Removed for now as the editor has issues displaying EList values
 			}
 
 			@Override
@@ -158,7 +161,7 @@ public class R4EConnector extends AbstractEmfConnector {
 					"Couldn't open review for task: " + taskId, e));
 		}
 
-		IUser owner = review.getCreatedBy();
+		User owner = review.getCreatedBy();
 		if (owner != null && owner.getEmail() != null) {
 			TaskAttribute attribute = taskData.getRoot().getAttribute(parentSchema.USER_ASSIGNED.getKey());
 			attribute.setValue(owner.getEmail());
@@ -176,7 +179,7 @@ public class R4EConnector extends AbstractEmfConnector {
 		if (attribute == null) {
 			attribute = taskData.getRoot().createAttribute(R4E_REVIEW_ITEM_COUNT_KEY);
 		} else {
-			String newSize = Integer.toString(review.getItems().size());
+			String newSize = Integer.toString(review.getReviewItems().size());
 			if (attribute.getValue().equals(newSize)) {
 				attribute.setValue(newSize);
 			}
@@ -206,7 +209,7 @@ public class R4EConnector extends AbstractEmfConnector {
 
 	@Override
 	public EReference getContainmentReference() {
-		return ReviewsPackage.Literals.REVIEW_GROUP__REVIEWS;
+		return ModelPackage.Literals.REVIEW_GROUP__REVIEWS;
 	}
 
 	@Override

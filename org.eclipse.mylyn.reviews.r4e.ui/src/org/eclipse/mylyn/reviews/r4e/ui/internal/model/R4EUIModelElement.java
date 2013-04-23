@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
@@ -516,7 +516,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//default implementation
 		return null;
 	}
@@ -530,7 +530,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
-	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		//default implementation
 	}
 
@@ -586,7 +586,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws OutOfSyncException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws OutOfSyncException,
 			CompatibilityException, ResourceHandlingException { // $codepro.audit.disable unnecessaryExceptions
 		return null;
 		// default implementation

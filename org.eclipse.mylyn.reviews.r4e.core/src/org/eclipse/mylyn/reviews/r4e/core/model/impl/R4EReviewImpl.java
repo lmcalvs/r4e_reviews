@@ -1,6 +1,7 @@
 /**
+/**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -16,8 +17,6 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,9 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.internal.core.model.Review;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
@@ -43,6 +40,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review</b></em>'. <!-- end-user-doc -->
@@ -50,7 +50,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getAssignedTo <em>Assigned To</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getFragmentVersion <em>Fragment Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getComponents <em>Components</em>}</li>
@@ -62,19 +61,19 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getDueDate <em>Due Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getModifiedDate <em>Modified Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getUsersMap <em>Users Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getCreatedBy <em>Created By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getIdsMap <em>Ids Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getActiveMeeting <em>Active Meeting</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getModifiedDate <em>Modified Date</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class R4EReviewImpl extends Review implements R4EReview {
+public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	/**
 	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -84,26 +83,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * @ordered
 	 */
 	protected EList<String> assignedTo;
-
-	/**
-	 * The default value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @see #getFragmentVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String FRAGMENT_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @see #getFragmentVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fragmentVersion = FRAGMENT_VERSION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -306,26 +285,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	protected Date dueDate = DUE_DATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getModifiedDate() <em>Modified Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModifiedDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date MODIFIED_DATE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getModifiedDate() <em>Modified Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModifiedDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date modifiedDate = MODIFIED_DATE_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getAnomalyTemplate() <em>Anomaly Template</em>}' containment reference. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -343,7 +302,7 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EReviewType TYPE_EDEFAULT = R4EReviewType.BASIC;
+	protected static final R4EReviewType TYPE_EDEFAULT = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -396,6 +355,26 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	protected R4EMeetingData activeMeeting;
 
 	/**
+	 * The default value of the '{@link #getModifiedDate() <em>Modified Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getModifiedDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date MODIFIED_DATE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getModifiedDate() <em>Modified Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getModifiedDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date modifiedDate = MODIFIED_DATE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -416,53 +395,11 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAssignedTo() {
+	public EList<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW__ASSIGNED_TO);
 		}
 		return assignedTo;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getFragmentVersion() {
-		return fragmentVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFragmentVersion(String newFragmentVersion) {
-		String oldFragmentVersion = fragmentVersion;
-		fragmentVersion = newFragmentVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__FRAGMENT_VERSION, oldFragmentVersion, fragmentVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc --> <!-- begin-user-doc --> In R4E, the name is the same as ID. <!--
-	 * end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return getName();
-	}
-
-	/**
-	 * <!-- begin-user-doc --> In R4E, the name is the same as ID so it is not appropriate to set a value for it. <!--
-	 * end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	@Override
-	public void setId(String newId) {
-		throw new UnsupportedOperationException("This value is derived in R4E. Use setName() instead.");
 	}
 
 	/**
@@ -507,7 +444,7 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getComponents() {
+	public EList<String> getComponents() {
 		if (components == null) {
 			components = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW__COMPONENTS);
 		}
@@ -713,25 +650,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModifiedDate(Date newModifiedDate) {
-		Date oldModifiedDate = modifiedDate;
-		modifiedDate = newModifiedDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__MODIFIED_DATE, oldModifiedDate, modifiedDate));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public R4EAnomaly getAnomalyTemplate() {
 		if (anomalyTemplate != null && anomalyTemplate.eIsProxy()) {
 			InternalEObject oldAnomalyTemplate = (InternalEObject)anomalyTemplate;
@@ -813,57 +731,22 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, R4EUser> getUsersMap() {
+	public EMap<String, R4EUser> getUsersMap() {
 		if (usersMap == null) {
 			usersMap = new EcoreEMap<String,R4EUser>(RModelPackage.Literals.MAP_TO_USERS, MapToUsersImpl.class, this, RModelPackage.R4E_REVIEW__USERS_MAP);
 		}
-		return usersMap.map();
+		return usersMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4EUser getCreatedBy() {
-		if (createdBy != null && createdBy.eIsProxy()) {
-			InternalEObject oldCreatedBy = (InternalEObject)createdBy;
-			createdBy = (R4EUser)eResolveProxy(oldCreatedBy);
-			if (createdBy != oldCreatedBy) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_REVIEW__CREATED_BY, oldCreatedBy, createdBy));
-			}
-		}
-		return createdBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EUser basicGetCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCreatedBy(R4EUser newCreatedBy) {
-		R4EUser oldCreatedBy = createdBy;
-		createdBy = newCreatedBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__CREATED_BY, oldCreatedBy, createdBy));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Map<R4EID, R4EIDComponent> getIdsMap() {
+	public EMap<R4EID, R4EIDComponent> getIdsMap() {
 		if (idsMap == null) {
 			idsMap = new EcoreEMap<R4EID,R4EIDComponent>(RModelPackage.Literals.MAP_ID_TO_COMPONENT, MapIDToComponentImpl.class, this, RModelPackage.R4E_REVIEW__IDS_MAP);
 		}
-		return idsMap.map();
+		return idsMap;
 	}
 
 	/**
@@ -929,6 +812,62 @@ public class R4EReviewImpl extends Review implements R4EReview {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModifiedDate(Date newModifiedDate) {
+		Date oldModifiedDate = modifiedDate;
+		modifiedDate = newModifiedDate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__MODIFIED_DATE, oldModifiedDate, modifiedDate));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EUser getCreatedBy() {
+		if (createdBy != null && createdBy.eIsProxy()) {
+			InternalEObject oldCreatedBy = (InternalEObject)createdBy;
+			createdBy = (R4EUser)eResolveProxy(oldCreatedBy);
+			if (createdBy != oldCreatedBy) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_REVIEW__CREATED_BY, oldCreatedBy, createdBy));
+			}
+		}
+		return createdBy;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EUser basicGetCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCreatedBy(R4EUser newCreatedBy) {
+		R4EUser oldCreatedBy = createdBy;
+		createdBy = newCreatedBy;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__CREATED_BY, oldCreatedBy, createdBy));
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -940,9 +879,9 @@ public class R4EReviewImpl extends Review implements R4EReview {
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				return basicSetAnomalyTemplate(null, msgs);
 			case RModelPackage.R4E_REVIEW__USERS_MAP:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, R4EUser>)getUsersMap()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getUsersMap()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
-				return ((InternalEList<?>)((EMap.InternalMapView<R4EID, R4EIDComponent>)getIdsMap()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getIdsMap()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
 				return basicSetActiveMeeting(null, msgs);
 		}
@@ -958,8 +897,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__ASSIGNED_TO:
 				return getAssignedTo();
-			case RModelPackage.R4E_REVIEW__FRAGMENT_VERSION:
-				return getFragmentVersion();
 			case RModelPackage.R4E_REVIEW__NAME:
 				return getName();
 			case RModelPackage.R4E_REVIEW__PROJECT:
@@ -983,25 +920,25 @@ public class R4EReviewImpl extends Review implements R4EReview {
 				return getEndDate();
 			case RModelPackage.R4E_REVIEW__DUE_DATE:
 				return getDueDate();
-			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
-				return getModifiedDate();
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				if (resolve) return getAnomalyTemplate();
 				return basicGetAnomalyTemplate();
 			case RModelPackage.R4E_REVIEW__TYPE:
 				return getType();
 			case RModelPackage.R4E_REVIEW__USERS_MAP:
-				if (coreType) return ((EMap.InternalMapView<String, R4EUser>)getUsersMap()).eMap();
-				else return getUsersMap();
+				if (coreType) return getUsersMap();
+				else return getUsersMap().map();
 			case RModelPackage.R4E_REVIEW__CREATED_BY:
 				if (resolve) return getCreatedBy();
 				return basicGetCreatedBy();
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
-				if (coreType) return ((EMap.InternalMapView<R4EID, R4EIDComponent>)getIdsMap()).eMap();
-				else return getIdsMap();
+				if (coreType) return getIdsMap();
+				else return getIdsMap().map();
 			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
 				if (resolve) return getActiveMeeting();
 				return basicGetActiveMeeting();
+			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
+				return getModifiedDate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1017,9 +954,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 			case RModelPackage.R4E_REVIEW__ASSIGNED_TO:
 				getAssignedTo().clear();
 				getAssignedTo().addAll((Collection<? extends String>)newValue);
-				return;
-			case RModelPackage.R4E_REVIEW__FRAGMENT_VERSION:
-				setFragmentVersion((String)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__NAME:
 				setName((String)newValue);
@@ -1055,9 +989,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 			case RModelPackage.R4E_REVIEW__DUE_DATE:
 				setDueDate((Date)newValue);
 				return;
-			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
-				setModifiedDate((Date)newValue);
-				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)newValue);
 				return;
@@ -1065,16 +996,19 @@ public class R4EReviewImpl extends Review implements R4EReview {
 				setType((R4EReviewType)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__USERS_MAP:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, R4EUser>)getUsersMap()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getUsersMap()).set(newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__CREATED_BY:
 				setCreatedBy((R4EUser)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<R4EID, R4EIDComponent>)getIdsMap()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getIdsMap()).set(newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
 				setActiveMeeting((R4EMeetingData)newValue);
+				return;
+			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
+				setModifiedDate((Date)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1089,9 +1023,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__ASSIGNED_TO:
 				getAssignedTo().clear();
-				return;
-			case RModelPackage.R4E_REVIEW__FRAGMENT_VERSION:
-				setFragmentVersion(FRAGMENT_VERSION_EDEFAULT);
 				return;
 			case RModelPackage.R4E_REVIEW__NAME:
 				setName(NAME_EDEFAULT);
@@ -1126,9 +1057,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 			case RModelPackage.R4E_REVIEW__DUE_DATE:
 				setDueDate(DUE_DATE_EDEFAULT);
 				return;
-			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
-				setModifiedDate(MODIFIED_DATE_EDEFAULT);
-				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)null);
 				return;
@@ -1147,6 +1075,9 @@ public class R4EReviewImpl extends Review implements R4EReview {
 			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
 				setActiveMeeting((R4EMeetingData)null);
 				return;
+			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
+				setModifiedDate(MODIFIED_DATE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1160,8 +1091,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__ASSIGNED_TO:
 				return assignedTo != null && !assignedTo.isEmpty();
-			case RModelPackage.R4E_REVIEW__FRAGMENT_VERSION:
-				return FRAGMENT_VERSION_EDEFAULT == null ? fragmentVersion != null : !FRAGMENT_VERSION_EDEFAULT.equals(fragmentVersion);
 			case RModelPackage.R4E_REVIEW__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case RModelPackage.R4E_REVIEW__PROJECT:
@@ -1184,8 +1113,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
 			case RModelPackage.R4E_REVIEW__DUE_DATE:
 				return DUE_DATE_EDEFAULT == null ? dueDate != null : !DUE_DATE_EDEFAULT.equals(dueDate);
-			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
-				return MODIFIED_DATE_EDEFAULT == null ? modifiedDate != null : !MODIFIED_DATE_EDEFAULT.equals(modifiedDate);
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				return anomalyTemplate != null;
 			case RModelPackage.R4E_REVIEW__TYPE:
@@ -1198,6 +1125,8 @@ public class R4EReviewImpl extends Review implements R4EReview {
 				return idsMap != null && !idsMap.isEmpty();
 			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
 				return activeMeeting != null;
+			case RModelPackage.R4E_REVIEW__MODIFIED_DATE:
+				return MODIFIED_DATE_EDEFAULT == null ? modifiedDate != null : !MODIFIED_DATE_EDEFAULT.equals(modifiedDate);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1211,12 +1140,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		if (baseClass == R4EReviewComponent.class) {
 			switch (derivedFeatureID) {
 				case RModelPackage.R4E_REVIEW__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO;
-				default: return -1;
-			}
-		}
-		if (baseClass == IModelVersioning.class) {
-			switch (derivedFeatureID) {
-				case RModelPackage.R4E_REVIEW__FRAGMENT_VERSION: return ReviewsPackage.MODEL_VERSIONING__FRAGMENT_VERSION;
 				default: return -1;
 			}
 		}
@@ -1235,12 +1158,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 				default: return -1;
 			}
 		}
-		if (baseClass == IModelVersioning.class) {
-			switch (baseFeatureID) {
-				case ReviewsPackage.MODEL_VERSIONING__FRAGMENT_VERSION: return RModelPackage.R4E_REVIEW__FRAGMENT_VERSION;
-				default: return -1;
-			}
-		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
@@ -1255,8 +1172,6 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (assignedTo: ");
 		result.append(assignedTo);
-		result.append(", fragmentVersion: ");
-		result.append(fragmentVersion);
 		result.append(", name: ");
 		result.append(name);
 		result.append(", project: ");
@@ -1277,12 +1192,29 @@ public class R4EReviewImpl extends Review implements R4EReview {
 		result.append(endDate);
 		result.append(", dueDate: ");
 		result.append(dueDate);
-		result.append(", modifiedDate: ");
-		result.append(modifiedDate);
 		result.append(", type: ");
 		result.append(type);
+		result.append(", modifiedDate: ");
+		result.append(modifiedDate);
 		result.append(')');
 		return result.toString();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getCompatibility()
+	 */
+	public int getCompatibility() {
+		return VersionUtils.compareVersions(Roots.REVIEW.getVersion(), fragmentVersion);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getApplicationVersion()
+	 */
+	public String getApplicationVersion() {
+		return Persistence.Roots.REVIEW.getVersion();
+	}
 } //R4EReviewImpl

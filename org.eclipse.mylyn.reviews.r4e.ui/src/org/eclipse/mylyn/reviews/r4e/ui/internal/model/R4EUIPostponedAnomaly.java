@@ -19,15 +19,14 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.IOException;
-import java.util.Map;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.mylyn.reviews.core.model.IComment;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Comment;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -184,7 +183,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	public void updateAnomaly(R4EAnomaly aPostponedAnomaly) throws ResourceHandlingException, OutOfSyncException {
 
 		//Disable the anomaly if it is not postponed anymore
-		if (aPostponedAnomaly.getState().equals(R4EAnomalyState.DEFERRED)) {
+		if (aPostponedAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
 			fAnomaly.setEnabled(aPostponedAnomaly.isEnabled());
 			//Close Anomaly if disabled
 			if (!fAnomaly.isEnabled()) {
@@ -246,7 +245,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		if (null == originalReview) {
 			return false;
 		}
-
+		
 		String newVersion = Persistence.Roots.REVIEW.getVersion();
 		String validReviewName = ResourceUtils.toValidFileName(origReviewName);
 		URI upgradeRootUri = URI.createFileURI(uiGroup.getReviewGroup().getFolder() + R4EUIConstants.SEPARATOR
@@ -291,10 +290,10 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		//Check if the creator of the postponed anomaly is a participant of the current review.  If not, it will be 
 		//created and disabled after the postponed anomaly is created
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		R4EParticipant participant = uiReview.getParticipant(aPostponedComment.getAuthor().getId(), false);
+		R4EParticipant participant = uiReview.getParticipant(aPostponedComment.getUser().getId(), false);
 		boolean isParticipant = true;
 		if (null == participant) {
-			participant = uiReview.getParticipant(aPostponedComment.getAuthor().getId(), true);
+			participant = uiReview.getParticipant(aPostponedComment.getUser().getId(), true);
 			isParticipant = false;
 		}
 
@@ -304,7 +303,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment, R4EUIModelController.getReviewer());
 		comment.setDescription(aPostponedComment.getDescription());
 		comment.setCreatedOn(aPostponedComment.getCreatedOn());
-		final Map<String, String> info = comment.getInfoAtt(); //We use the R4EComment attribute map to store the original comment ID
+		final EMap<String, String> info = comment.getInfoAtt(); //We use the R4EComment attribute map to store the original comment ID
 		info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_COMMENT_ID, CommandUtils.buildOriginalCommentID(aPostponedComment));
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -333,7 +332,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException, CompatibilityException {
 
 		//First create the children on the original anomaly...
@@ -352,7 +351,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 			origComment = R4EUIModelController.FModelExt.createR4EComment(participantInOrigReview, origAnomaly);
 			final Long origBookNum = R4EUIModelController.FResourceUpdater.checkOut(origComment,
 					participantInOrigReview.getId());
-			origComment.setDescription(((IComment) aModelComponent).getDescription());
+			origComment.setDescription(((Comment) aModelComponent).getDescription());
 			R4EUIModelController.FResourceUpdater.checkIn(origBookNum);
 		}
 		//Close original review

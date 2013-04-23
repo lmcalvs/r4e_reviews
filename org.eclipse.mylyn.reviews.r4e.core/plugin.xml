@@ -26,18 +26,4 @@
             class="org.eclipse.mylyn.reviews.r4e.core.model.util.RModelResourceFactoryImpl"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated drules -->
-      <package
-            uri="http://org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore/1.0"
-            class="org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage"
-            genModel="model/drules.genmodel"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated drules -->
-      <parser
-            type="drules"
-            class="org.eclipse.mylyn.reviews.r4e.core.model.drules.util.DRModelResourceFactoryImpl"/>
-   </extension>
 </plugin>

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,21 +15,23 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
@@ -142,11 +144,11 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, R4EReview> getInvitedToMap() {
+	public EMap<String, R4EReview> getInvitedToMap() {
 		if (invitedToMap == null) {
 			invitedToMap = new EcoreEMap<String,R4EReview>(RModelPackage.Literals.MAP_NAME_TO_REVIEW, MapNameToReviewImpl.class, this, RModelPackage.R4E_USER_REVIEWS__INVITED_TO_MAP);
 		}
-		return invitedToMap.map();
+		return invitedToMap;
 	}
 
 	/**
@@ -188,7 +190,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getCreatedReviews() {
+	public EList<String> getCreatedReviews() {
 		if (createdReviews == null) {
 			createdReviews = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_USER_REVIEWS__CREATED_REVIEWS);
 		}
@@ -203,7 +205,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RModelPackage.R4E_USER_REVIEWS__INVITED_TO_MAP:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, R4EReview>)getInvitedToMap()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getInvitedToMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -218,8 +220,8 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 			case RModelPackage.R4E_USER_REVIEWS__NAME:
 				return getName();
 			case RModelPackage.R4E_USER_REVIEWS__INVITED_TO_MAP:
-				if (coreType) return ((EMap.InternalMapView<String, R4EReview>)getInvitedToMap()).eMap();
-				else return getInvitedToMap();
+				if (coreType) return getInvitedToMap();
+				else return getInvitedToMap().map();
 			case RModelPackage.R4E_USER_REVIEWS__GROUP:
 				if (resolve) return getGroup();
 				return basicGetGroup();
@@ -241,7 +243,7 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 				setName((String)newValue);
 				return;
 			case RModelPackage.R4E_USER_REVIEWS__INVITED_TO_MAP:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, R4EReview>)getInvitedToMap()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getInvitedToMap()).set(newValue);
 				return;
 			case RModelPackage.R4E_USER_REVIEWS__GROUP:
 				setGroup((R4EReviewGroup)newValue);

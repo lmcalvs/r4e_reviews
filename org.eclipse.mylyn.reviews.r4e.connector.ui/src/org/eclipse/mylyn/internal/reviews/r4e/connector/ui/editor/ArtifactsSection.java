@@ -19,8 +19,8 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.internal.tasks.ui.editors.AbstractTaskEditorSection;
 import org.eclipse.mylyn.internal.tasks.ui.editors.EditorUtil;
-import org.eclipse.mylyn.reviews.core.model.IReview;
-import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.mylyn.reviews.frame.core.model.Item;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.swt.SWT;
@@ -92,8 +92,8 @@ public class ArtifactsSection extends AbstractTaskEditorSection {
 
 		composite = toolkit.createComposite(parent);
 		GridLayoutFactory.fillDefaults().extendedMargins(0, 0, 0, 5).applyTo(composite);
-		final IReview review = ((R4ETaskEditorPage) getTaskEditorPage()).getReview();
-		for (IReviewItem item : review.getItems()) {
+		final Review review = ((R4ETaskEditorPage) getTaskEditorPage()).getReview();
+		for (Item item : review.getReviewItems()) {
 			createSubSection((R4EItem) item, getSection());
 		}
 

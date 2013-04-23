@@ -1156,7 +1156,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * 
 	 * @return String
 	 */
-	public String getAuthor() {
+	public String getUser() {
 		return fUserIdTextField.getText();
 
 	}

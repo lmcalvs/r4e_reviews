@@ -199,7 +199,7 @@ public class OpenElementHandler extends AbstractHandler {
 				R4EUIReview upgradedUiReview = parentGroup.getReview(reviewName);
 				R4EReview upgradedReview = upgradedUiReview.getReview();
 
-				if (upgradedReview.getType().equals(R4EReviewType.FORMAL)) {
+				if (upgradedReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 					newUiReview = new R4EUIReviewExtended(parentGroup, upgradedReview, upgradedReview.getType(), false);
 					((R4EUIReviewExtended) newUiReview).setName(((R4EUIReviewExtended) newUiReview).getPhaseString(((R4EReviewState) upgradedReview.getState()).getState())
 							+ ": " + upgradedReview.getName());

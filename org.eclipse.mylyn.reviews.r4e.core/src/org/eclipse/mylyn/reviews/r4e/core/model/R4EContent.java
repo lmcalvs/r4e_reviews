@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,7 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.mylyn.reviews.core.model.ILocation;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Content</b></em>'. <!-- end-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.mylyn.reviews.core.model.ILocation;
  * @model abstract="true"
  * @generated
  */
-public interface R4EContent extends ILocation {
+public interface R4EContent extends Location {
 	/**
 	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

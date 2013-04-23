@@ -18,12 +18,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -495,7 +496,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 
 		int numAnomalies = 0;
 		int numComments = 0;
-		final List<R4EComment> comments = modelUser.getAddedComments();
+		final EList<R4EComment> comments = modelUser.getAddedComments();
 		final int commentsSize = comments.size();
 		for (int i = 0; i < commentsSize; i++) {
 			if (comments.get(i) instanceof R4EAnomaly) {
@@ -521,9 +522,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 
 		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 
-		Iterator<Entry<Date, Integer>> timeEntries = modelUser.getTimeLog().entrySet().iterator();
 		for (int i = 0; i < numTimeEntries; i++) {
-			timeEntry = timeEntries.next();
+			timeEntry = modelUser.getTimeLog().get(i);
 			if (i >= fTimeSpentDetailedList.getItemCount()) {
 				item = fTimeSpentDetailedList.addItem();
 			} else {
@@ -576,7 +576,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				|| fProperties.getElement().isReadOnly()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fIdText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fEmailText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fEmailText.setEditable(false);
@@ -621,7 +621,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				if (R4EUIModelController.getActiveReview()
 						.getReview()
 						.getType()
-						.equals(R4EReviewType.BASIC)) {
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 					fTimeSection.setVisible(false);
 					fRolesSection.setVisible(false);
 				} else {
@@ -652,12 +652,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 
 			if (1 == aInstanceId) {
 				//Update spent time
-				final Map<Date, Integer> timeMap = modelParticipant.getTimeLog();
+				final EMap<Date, Integer> timeMap = modelParticipant.getTimeLog();
 				final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 				Map<Date, Integer> newAddTimes = new HashMap<Date, Integer>();
 				Map<Date, Integer> newDeleteTimes = new HashMap<Date, Integer>();
 				Map<Date, Integer> storedTimes = new HashMap<Date, Integer>();
-				storedTimes.putAll(modelParticipant.getTimeLog());
+				storedTimes.putAll(modelParticipant.getTimeLog().map());
 				for (Item item : aItems) {
 					try {
 						newAddTimes.put(dateFormat.parse(((TableItem) item).getText(1)),

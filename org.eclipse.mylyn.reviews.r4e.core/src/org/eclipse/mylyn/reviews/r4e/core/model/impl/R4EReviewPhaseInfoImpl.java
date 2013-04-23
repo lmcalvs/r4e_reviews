@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -17,9 +17,12 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -68,7 +71,7 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EReviewPhase TYPE_EDEFAULT = R4EReviewPhase.STARTED;
+	protected static final R4EReviewPhase TYPE_EDEFAULT = R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc

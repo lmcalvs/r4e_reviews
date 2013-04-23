@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_xqeOYEkqEeK-F5EIGTlQdQ" name="user">
-  <invitedToMap xmi:id="_xqe1cUkqEeK-F5EIGTlQdQ" key="testReviewInf">
-    <value href="testReviewInf/testReviewInf_review.xrer#_xqTPQEkqEeK-F5EIGTlQdQ"/>
-  </invitedToMap>
-  <group href="nonCompatibleUpgradeTest_group_root.xrer#_U-_hYEkqEeK-F5EIGTlQdQ"/>
-  <createdReviews>testReviewInf</createdReviews>
-</r4ecore:R4EUserReviews>

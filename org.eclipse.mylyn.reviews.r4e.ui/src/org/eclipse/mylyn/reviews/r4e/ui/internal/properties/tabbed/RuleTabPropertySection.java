@@ -273,8 +273,8 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 			fRankCombo.setItems(UIUtils.getRanks());
 			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 			final int rankValue = modelRule.getRank().getValue();
-			fRankCombo.select(rankValue == R4EDesignRuleRank.DEPRECATED_VALUE
-					? R4EDesignRuleRank.MINOR_VALUE
+			fRankCombo.select(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 					: rankValue);
 
 			setEnabledFields();

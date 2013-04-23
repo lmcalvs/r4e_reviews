@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,8 +15,6 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,15 +28,16 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewGroup;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc
@@ -47,8 +46,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAssignedTo <em>Assigned To</em>}</li>
- * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getFragmentVersion <em>Fragment Version
- * </em>}</li>
  * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getFolder <em>Folder</em>}</li>
  * <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDefaultEntryCriteria <em>Default Entry
@@ -70,7 +67,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * 
  * @generated
  */
-public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
+public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGroup {
 	/**
 	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -80,26 +77,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * @ordered
 	 */
 	protected EList<String> assignedTo;
-
-	/**
-	 * The default value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @see #getFragmentVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String FRAGMENT_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @see #getFragmentVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fragmentVersion = FRAGMENT_VERSION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -250,30 +227,11 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAssignedTo() {
+	public EList<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO);
 		}
 		return assignedTo;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getFragmentVersion() {
-		return fragmentVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFragmentVersion(String newFragmentVersion) {
-		String oldFragmentVersion = fragmentVersion;
-		fragmentVersion = newFragmentVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION, oldFragmentVersion, fragmentVersion));
 	}
 
 	/**
@@ -337,7 +295,7 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAvailableProjects() {
+	public EList<String> getAvailableProjects() {
 		if (availableProjects == null) {
 			availableProjects = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_PROJECTS);
 		}
@@ -348,7 +306,7 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAvailableComponents() {
+	public EList<String> getAvailableComponents() {
 		if (availableComponents == null) {
 			availableComponents = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_COMPONENTS);
 		}
@@ -359,7 +317,7 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getDesignRuleLocations() {
+	public EList<String> getDesignRuleLocations() {
 		if (designRuleLocations == null) {
 			designRuleLocations = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS);
 		}
@@ -370,7 +328,7 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<R4EAnomalyType> getAvailableAnomalyTypes() {
+	public EList<R4EAnomalyType> getAvailableAnomalyTypes() {
 		if (availableAnomalyTypes == null) {
 			availableAnomalyTypes = new EObjectContainmentEList.Resolving<R4EAnomalyType>(R4EAnomalyType.class, this, RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES);
 		}
@@ -381,33 +339,33 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, R4EAnomalyType> getAnomalyTypeKeyToReference() {
+	public EMap<String, R4EAnomalyType> getAnomalyTypeKeyToReference() {
 		if (anomalyTypeKeyToReference == null) {
 			anomalyTypeKeyToReference = new EcoreEMap<String,R4EAnomalyType>(RModelPackage.Literals.MAP_TO_ANOMALY_TYPE, MapToAnomalyTypeImpl.class, this, RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE);
 		}
-		return anomalyTypeKeyToReference.map();
+		return anomalyTypeKeyToReference;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, R4EReview> getReviewsMap() {
+	public EMap<String, R4EReview> getReviewsMap() {
 		if (reviewsMap == null) {
 			reviewsMap = new EcoreEMap<String,R4EReview>(RModelPackage.Literals.MAP_NAME_TO_REVIEW, MapNameToReviewImpl.class, this, RModelPackage.R4E_REVIEW_GROUP__REVIEWS_MAP);
 		}
-		return reviewsMap.map();
+		return reviewsMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, R4EUserReviews> getUserReviews() {
+	public EMap<String, R4EUserReviews> getUserReviews() {
 		if (userReviews == null) {
 			userReviews = new EcoreEMap<String,R4EUserReviews>(RModelPackage.Literals.MAP_USER_ID_TO_USER_REVIEWS, MapUserIDToUserReviewsImpl.class, this, RModelPackage.R4E_REVIEW_GROUP__USER_REVIEWS);
 		}
-		return userReviews.map();
+		return userReviews;
 	}
 
 	/**
@@ -420,11 +378,11 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				return ((InternalEList<?>)getAvailableAnomalyTypes()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, R4EAnomalyType>)getAnomalyTypeKeyToReference()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getAnomalyTypeKeyToReference()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW_GROUP__REVIEWS_MAP:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, R4EReview>)getReviewsMap()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getReviewsMap()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW_GROUP__USER_REVIEWS:
-				return ((InternalEList<?>)((EMap.InternalMapView<String, R4EUserReviews>)getUserReviews()).eMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getUserReviews()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -438,8 +396,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
 				return getAssignedTo();
-			case RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION:
-				return getFragmentVersion();
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				return getName();
 			case RModelPackage.R4E_REVIEW_GROUP__FOLDER:
@@ -455,14 +411,14 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				return getAvailableAnomalyTypes();
 			case RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE:
-				if (coreType) return ((EMap.InternalMapView<String, R4EAnomalyType>)getAnomalyTypeKeyToReference()).eMap();
-				else return getAnomalyTypeKeyToReference();
+				if (coreType) return getAnomalyTypeKeyToReference();
+				else return getAnomalyTypeKeyToReference().map();
 			case RModelPackage.R4E_REVIEW_GROUP__REVIEWS_MAP:
-				if (coreType) return ((EMap.InternalMapView<String, R4EReview>)getReviewsMap()).eMap();
-				else return getReviewsMap();
+				if (coreType) return getReviewsMap();
+				else return getReviewsMap().map();
 			case RModelPackage.R4E_REVIEW_GROUP__USER_REVIEWS:
-				if (coreType) return ((EMap.InternalMapView<String, R4EUserReviews>)getUserReviews()).eMap();
-				else return getUserReviews();
+				if (coreType) return getUserReviews();
+				else return getUserReviews().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -478,9 +434,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
 				getAssignedTo().clear();
 				getAssignedTo().addAll((Collection<? extends String>)newValue);
-				return;
-			case RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION:
-				setFragmentVersion((String)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				setName((String)newValue);
@@ -508,13 +461,13 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 				getAvailableAnomalyTypes().addAll((Collection<? extends R4EAnomalyType>)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, R4EAnomalyType>)getAnomalyTypeKeyToReference()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getAnomalyTypeKeyToReference()).set(newValue);
 				return;
 			case RModelPackage.R4E_REVIEW_GROUP__REVIEWS_MAP:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, R4EReview>)getReviewsMap()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getReviewsMap()).set(newValue);
 				return;
 			case RModelPackage.R4E_REVIEW_GROUP__USER_REVIEWS:
-				((EStructuralFeature.Setting)((EMap.InternalMapView<String, R4EUserReviews>)getUserReviews()).eMap()).set(newValue);
+				((EStructuralFeature.Setting)getUserReviews()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -529,9 +482,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
 				getAssignedTo().clear();
-				return;
-			case RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION:
-				setFragmentVersion(FRAGMENT_VERSION_EDEFAULT);
 				return;
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				setName(NAME_EDEFAULT);
@@ -576,8 +526,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
 				return assignedTo != null && !assignedTo.isEmpty();
-			case RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION:
-				return FRAGMENT_VERSION_EDEFAULT == null ? fragmentVersion != null : !FRAGMENT_VERSION_EDEFAULT.equals(fragmentVersion);
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case RModelPackage.R4E_REVIEW_GROUP__FOLDER:
@@ -614,12 +562,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 				default: return -1;
 			}
 		}
-		if (baseClass == IModelVersioning.class) {
-			switch (derivedFeatureID) {
-				case RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION: return ReviewsPackage.MODEL_VERSIONING__FRAGMENT_VERSION;
-				default: return -1;
-			}
-		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -632,12 +574,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		if (baseClass == R4EReviewComponent.class) {
 			switch (baseFeatureID) {
 				case RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO;
-				default: return -1;
-			}
-		}
-		if (baseClass == IModelVersioning.class) {
-			switch (baseFeatureID) {
-				case ReviewsPackage.MODEL_VERSIONING__FRAGMENT_VERSION: return RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION;
 				default: return -1;
 			}
 		}
@@ -655,8 +591,6 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (assignedTo: ");
 		result.append(assignedTo);
-		result.append(", fragmentVersion: ");
-		result.append(fragmentVersion);
 		result.append(", name: ");
 		result.append(name);
 		result.append(", folder: ");
@@ -671,6 +605,24 @@ public class R4EReviewGroupImpl extends ReviewGroup implements R4EReviewGroup {
 		result.append(designRuleLocations);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getCompatibility()
+	 */
+	public int getCompatibility() {
+		return VersionUtils.compareVersions(Roots.GROUP.getVersion(), fragmentVersion);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getApplicationVersion()
+	 */
+	public String getApplicationVersion() {
+		return Persistence.Roots.GROUP.getVersion();
 	}
 
 } //R4EReviewGroupImpl

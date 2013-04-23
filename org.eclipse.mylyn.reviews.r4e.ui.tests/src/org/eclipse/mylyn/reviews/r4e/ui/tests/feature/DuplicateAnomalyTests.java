@@ -637,10 +637,10 @@ public class DuplicateAnomalyTests extends TestCase {
 				r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fLinkedAnomaly1.getAnomaly().getDueDate());
 				r4eAssert.assertEquals(
 						((R4EUITextPosition) content.getPosition()).getOffset(),
-						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 				r4eAssert.assertEquals(
 						((R4EUITextPosition) content.getPosition()).getLength(),
-						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
+						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
 				r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly1.getAnomaly()
 						.getAssignedTo()
 						.get(0));
@@ -665,10 +665,10 @@ public class DuplicateAnomalyTests extends TestCase {
 							.getDueDate());
 					r4eAssert.assertEquals(
 							((R4EUITextPosition) content.getPosition()).getOffset(),
-							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 					r4eAssert.assertEquals(
 							((R4EUITextPosition) content.getPosition()).getLength(),
-							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
+							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
 					r4eAssert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly2.getAnomaly()
 							.getAssignedTo()
 							.get(0));
@@ -739,11 +739,11 @@ public class DuplicateAnomalyTests extends TestCase {
 				((R4ECommentType) fExternalAnomaly.getAnomaly().getType()).getType());
 		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MINOR, fExternalAnomaly.getAnomaly().getRank());
 		r4eAssert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fExternalAnomaly.getAnomaly().getDueDate());
-		r4eAssert.assertEquals(0, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
-				.getLocations()
-				.get(0)).getLocation()).getStartPosition());
+		r4eAssert.assertEquals(
+				0,
+				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 		r4eAssert.assertEquals(764, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
-				.getLocations()
+				.getLocation()
 				.get(0)).getLocation()).getLength());
 
 	}

@@ -13,16 +13,16 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewState;
-import org.eclipse.mylyn.reviews.internal.core.model.TaskReference;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -86,7 +86,7 @@ public class ModelTransformImpl implements ModelTransform {
 		ReviewGroupRes group = fReader.deserializeTopElement(aResourcePath, ReviewGroupRes.class);
 
 		// Build the mapping references to anomaly types
-		List<R4EAnomalyType> anomTypes = group.getAvailableAnomalyTypes();
+		EList<R4EAnomalyType> anomTypes = group.getAvailableAnomalyTypes();
 		for (R4EAnomalyType r4eAnomalyType : anomTypes) {
 			group.getAnomalyTypeKeyToReference().put(r4eAnomalyType.getType(), r4eAnomalyType);
 		}
@@ -117,7 +117,7 @@ public class ModelTransformImpl implements ModelTransform {
 			return sb.toString();
 		}
 
-		List<Resource> resList = resSet.getResources();
+		EList<Resource> resList = resSet.getResources();
 
 		// unload then all
 		for (Resource res : resList) {
@@ -149,7 +149,7 @@ public class ModelTransformImpl implements ModelTransform {
 		String filePrefix = destGroup.getFilesPrefix();
 
 		//Make sure a review with this name does not already exists
-		List<ReviewRes> existingReviews = destGroup.getReviewsRes();
+		EList<ReviewRes> existingReviews = destGroup.getReviewsRes();
 		for (Object element : existingReviews) {
 			ReviewRes reviewRes = (ReviewRes) element;
 			if (reviewRes.getName().equals(aOigReviewName)) {
@@ -193,7 +193,7 @@ public class ModelTransformImpl implements ModelTransform {
 
 		Resource destResource = destReview.eResource();
 		R4EUser createdBy = origReview.getCreatedBy();
-		List<R4EUser> users = destReview.getUsersRes();
+		EList<R4EUser> users = destReview.getUsersRes();
 		//clone all users to new destination resource, this will make sure that back reference from children to any user will point to the updated resource
 		for (R4EUser oUser : origUsersList) {
 			R4EUser dUser = (R4EUser) copyToResource(destResource, oUser, copier);
@@ -213,11 +213,11 @@ public class ModelTransformImpl implements ModelTransform {
 		//The review is a new element extended from original review.
 		//Refresh all review references in the underneath structure to
 		//point to the extended one.
-		List<R4EUser> destUsers = destReview.getUsersRes();
+		EList<R4EUser> destUsers = destReview.getUsersRes();
 		for (R4EUser user : destUsers) {
 			//update it at the user 
 			user.setReviewInstance(destReview);
-			List<R4EComment> comments = user.getAddedComments();
+			EList<R4EComment> comments = user.getAddedComments();
 			for (R4EComment comment : comments) {
 				if (comment instanceof R4EAnomaly) {
 					R4EAnomaly anomaly = (R4EAnomaly) comment;
@@ -226,7 +226,7 @@ public class ModelTransformImpl implements ModelTransform {
 				}
 			}
 
-			List<R4EItem> items = user.getAddedItems();
+			EList<R4EItem> items = user.getAddedItems();
 			for (R4EItem item : items) {
 				//update of review instance at review item level
 				item.setReview(destReview);
@@ -306,7 +306,7 @@ public class ModelTransformImpl implements ModelTransform {
 		destReview.setFragmentVersion(origReview.getFragmentVersion());
 
 		//copy review components
-		List<String> components = origReview.getComponents();
+		EList<String> components = origReview.getComponents();
 		for (Object element : components) {
 			String component = (String) element;
 			destReview.getComponents().add(component);
@@ -314,7 +314,7 @@ public class ModelTransformImpl implements ModelTransform {
 
 		if (origReview instanceof R4EFormalReview) {
 			R4EFormalReview formalRevOrig = (R4EFormalReview) origReview;
-			List<R4EReviewPhaseInfo> phases = formalRevOrig.getPhases();
+			EList<R4EReviewPhaseInfo> phases = formalRevOrig.getPhases();
 			if (phases != null) {
 				R4EReviewPhaseInfo currentPhase = formalRevOrig.getCurrent();
 				R4EReviewPhaseInfo[] movingPhases = phases.toArray(new R4EReviewPhaseInfo[0]);

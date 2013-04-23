@@ -29,12 +29,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.ILocation;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
-import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
@@ -213,9 +214,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Anomaly from user and set it in model data
-		final List<IReviewComponent> tempAnomalies = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempAnomalies = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
 
 		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getNewAnomalyInputDialog();
@@ -304,18 +305,18 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 						|| R4EUIPlugin.getDefault()
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					//Do not set position for global List<E>lies
+					//Do not set position for global EList<E>lies
 					position = null;
-					List<ILocation> locations = anomalies.get(i).getLocations(); // $codepro.audit.disable variableDeclaredInLoop
+					EList<Location> locations = anomalies.get(i).getLocation(); // $codepro.audit.disable variableDeclaredInLoop
 					if (null != locations) {
 						if (null != locations.get(0)) {
 							int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
 							for (int j = 0; j < locationsSize; j++) {
 								position = new R4EUITextPosition(
-										((R4EContent) anomalies.get(i).getLocations().get(j)).getLocation()); // $codepro.audit.disable methodChainLength
+										((R4EContent) anomalies.get(i).getLocation().get(j)).getLocation()); // $codepro.audit.disable methodChainLength
 								if (((R4EUIReviewBasic) getParent().getParent().getParent()).getReview()
 										.getType()
-										.equals(R4EReviewType.BASIC)) {
+										.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 									uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), position);
 								} else {
 									uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), position);
@@ -340,7 +341,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 		} else if (parentElement instanceof R4EUIReviewBasic) {
 			//Get anomalies that do not have any location.  These are global anomalies
-			final List<ITopic> anomalies = ((R4EUIReviewBasic) parentElement).getReview().getTopics();
+			final EList<Topic> anomalies = ((R4EUIReviewBasic) parentElement).getReview().getTopics();
 			if (null != anomalies) {
 				final int anomaliesSize = anomalies.size();
 				R4EAnomaly anomaly = null;
@@ -354,10 +355,10 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 							|| R4EUIPlugin.getDefault()
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-						if (0 == anomaly.getLocations().size()) {
+						if (0 == anomaly.getLocation().size()) {
 							if (((R4EUIReviewBasic) getParent()).getReview()
 									.getType()
-									.equals(R4EReviewType.BASIC)) {
+									.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 								uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
 							} else {
 								uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, null);
@@ -431,7 +432,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(R4EUIModelController.getActiveReview()
@@ -440,17 +441,17 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		anomaly.setTitle(((R4EAnomaly) aModelComponent).getTitle()); //This is needed as the global anomaly title is displayed in the navigator view
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIAnomalyBasic addedChild = null;
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.BASIC)) {
+		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 			addedChild = new R4EUIAnomalyBasic(this, anomaly, null);
 		} else {
 			addedChild = new R4EUIAnomalyExtended(this, anomaly, null);
 			if (R4EUIModelController.getActiveReview()
 					.getReview()
 					.getType()
-					.equals(R4EReviewType.FORMAL)) {
-				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.CREATED);
-			} else { //R4EReviewType.INFORMAL
-				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.ASSIGNED);
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
+				((R4EUIAnomalyExtended) addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
 			}
 		}
 		addedChild.setModelData(aModelComponent);
@@ -665,14 +666,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Create and set UI model element
-		if (uiReview.getReview().getType().equals(R4EReviewType.BASIC)) {
+		if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 			uiAnomaly = new R4EUIAnomalyBasic(this, aAnomaly, aUiPosition);
 		} else {
 			uiAnomaly = new R4EUIAnomalyExtended(this, aAnomaly, aUiPosition);
-			if (uiReview.getReview().getType().equals(R4EReviewType.FORMAL)) {
-				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.CREATED);
-			} else { //R4EReviewType.INFORMAL
-				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.ASSIGNED);
+			if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
+				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
 			}
 		}
 		aUiPosition.setPositionInModel(position);
@@ -760,7 +761,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public boolean isNewChildElementCmd() {
 		if (!isReadOnly()
 				&& !((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) && getParent().isEnabled()
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) && getParent().isEnabled()
 				&& getParent() instanceof R4EUIReviewBasic) {
 			return true;
 		}
@@ -814,19 +815,19 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			//Test if the anomaly is disabled or not
 			if (anomaly.isEnabled()) {
 				//Anomaly is not disabled, should test for the completion
-				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.CREATED)) {
+				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
 					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
 							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
-				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.ASSIGNED)) {
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
 					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ASSIGNED"
 							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
-				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.ACCEPTED)) {
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
 					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ACCEPTED"
 							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
-				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.FIXED)) {
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 					if (null == anomaly.getAnomaly().getFixedByID() || ("").equals(anomaly.getAnomaly().getFixedByID())) {
 						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a fixer"
 								+ R4EUIConstants.LINE_FEED);
@@ -836,12 +837,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 							.getReview()
 							.getDecision()
 							.getValue()
-							.equals(R4EDecision.ACCEPTED_FOLLOWUP)) {
+							.equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
 						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state FIXED, but Review"
 								+ " Decision is set to Accepted with Followup" + R4EUIConstants.LINE_FEED);
 						resultOk = false;
 					}
-				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.VERIFIED)) {
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
 					if (null == anomaly.getAnomaly().getFollowUpByID()
 							|| ("").equals(anomaly.getAnomaly().getFollowUpByID())) {
 						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state VERIFIED and "
@@ -872,7 +873,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			//Test if the anomaly is disabled or not
 			if (anomaly.isEnabled()) {
 				//Anomaly is not disabled, should test for the next state REWORK
-				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.CREATED)) {
+				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
 					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
 							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;

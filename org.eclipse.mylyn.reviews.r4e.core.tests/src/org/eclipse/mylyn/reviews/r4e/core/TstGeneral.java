@@ -27,8 +27,6 @@ public class TstGeneral {
 	// ------------------------------------------------------------------------
 	public static final String GROUP_PATH_STR = "outGroupX";
 
-	//Pre common model fixes
-
 	public static final String GOLDEN_GROUP_DIR_STR = "stubs_model/" + GROUP_PATH_STR;
 
 	public static final String GOLDEN_GROUP_FILE_STR = GOLDEN_GROUP_DIR_STR + "/Golden_Group_group_root.xrer";

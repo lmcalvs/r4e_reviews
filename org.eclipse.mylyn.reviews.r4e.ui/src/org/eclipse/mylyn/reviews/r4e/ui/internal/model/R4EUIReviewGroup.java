@@ -28,8 +28,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.core.model.IReview;
-import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
@@ -289,7 +289,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setDescription(((R4EReviewGroup) aModelComponent).getDescription());
@@ -307,9 +307,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public List<IReviewComponent> createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		final List<IReviewComponent> tempReviews = new ArrayList<IReviewComponent>();
+		final List<ReviewComponent> tempReviews = new ArrayList<ReviewComponent>();
 
 		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog(this);
 		dialog.create();
@@ -319,7 +319,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 			//All reviews
 			final R4EReviewType type = dialog.getReviewTypeValue();
-			if (type.equals(R4EReviewType.FORMAL)) {
+			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 				tempReview = RModelFactory.eINSTANCE.createR4EFormalReview();
 			} else {
 				tempReview = RModelFactory.eINSTANCE.createR4EReview();
@@ -337,10 +337,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
 			//Set default exit decision for INFORMAL review
 			final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
-			if (type.equals(R4EReviewType.INFORMAL)) {
-				reviewDecision.setValue(R4EDecision.ACCEPTED);
+			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
 			} else {
-				reviewDecision.setValue(R4EDecision.NONE);
+				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
 			}
 
 			tempReview.setDecision(reviewDecision);
@@ -401,7 +401,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			fResolved = true;
 
 			//Stamp new version if an upgrade took place
-			if (!oldVersion.equals(newVersion)) {
+			if (!fReadOnly) {
 				try {
 					R4EUIModelController.stampVersion(fGroup, R4EUIModelController.getReviewer(), newVersion);
 				} catch (OutOfSyncException e) {
@@ -411,7 +411,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				}
 			}
 
-			final List<IReview> reviews = fGroup.getReviews();
+			final List<Review> reviews = fGroup.getReviews();
 			if (null != reviews) {
 				final int reviewsSize = reviews.size();
 				R4EReview review = null;
@@ -427,7 +427,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 						//Here we need to check if the review has a compatible version.  Otherwise, it will be displayed as an unknown type
 						if (checkChildReviewCompatibility(review)) {
-							if (review.getType().equals(R4EReviewType.FORMAL)) {
+							if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 								uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
 								((R4EUIReviewExtended) uiReview).setName(((R4EUIReviewExtended) uiReview).getPhaseString(((R4EReviewState) review.getState()).getState())
 										+ ": " + uiReview.getName());
@@ -592,7 +592,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 
 		final String reviewName = ((R4EReview) aModelComponent).getName();
@@ -614,14 +614,14 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		}
 
 		final R4EUIReviewBasic addedChild;
-		if (type.equals(R4EReviewType.FORMAL)) {
+		if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			addedChild = new R4EUIReviewExtended(this, R4EUIModelController.FModelExt.createR4EFormalReview(
 					getReviewGroup(), reviewName, R4EUIModelController.getReviewer()), type, true);
-			((R4EUIReviewExtended) addedChild).updatePhase(R4EReviewPhase.STARTED);
+			((R4EUIReviewExtended) addedChild).updatePhase(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		} else {
 			addedChild = new R4EUIReviewBasic(this, R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(),
 					reviewName, R4EUIModelController.getReviewer()), type, true);
-			addedChild.updatePhase(R4EReviewPhase.STARTED);
+			addedChild.updatePhase(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		}
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);

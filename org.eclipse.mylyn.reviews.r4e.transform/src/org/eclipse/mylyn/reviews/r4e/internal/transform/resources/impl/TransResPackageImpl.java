@@ -15,8 +15,11 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResFactory;

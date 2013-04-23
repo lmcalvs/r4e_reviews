@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,121 +29,124 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EReviewPhase implements Enumerator {
 	/**
-	 * The '<em><b>Started</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #STARTED_VALUE
+	 * The '<em><b>R4E REVIEW PHASE STARTED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_STARTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	STARTED(0, "Started", "STARTED"), /**
-	 * The '<em><b>Preparation</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #PREPARATION_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	PREPARATION(1, "Preparation", "PREPARATION"), /**
-	 * The '<em><b>Decision</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DECISION_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DECISION(2, "Decision", "DECISION"), /**
-	 * The '<em><b>Rework</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #REWORK_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	REWORK(3, "Rework", "REWORK"), /**
-	 * The '<em><b>Completed</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #COMPLETED_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	COMPLETED(4, "Completed", "COMPLETED");
+	R4E_REVIEW_PHASE_STARTED(0, "R4E_REVIEW_PHASE_STARTED", "R4E_REVIEW_PHASE_STARTED"),
 
 	/**
-	 * The '<em><b>Started</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Started</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #STARTED
-	 * @model name="Started" literal="STARTED"
+	 * The '<em><b>R4E REVIEW PHASE PREPARATION</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_PREPARATION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int STARTED_VALUE = 0;
+	R4E_REVIEW_PHASE_PREPARATION(1, "R4E_REVIEW_PHASE_PREPARATION", "R4E_REVIEW_PHASE_PREPARATION"),
 
 	/**
-	 * The '<em><b>Preparation</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Preparation</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #PREPARATION
-	 * @model name="Preparation" literal="PREPARATION"
+	 * The '<em><b>R4E REVIEW PHASE DECISION</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_DECISION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PREPARATION_VALUE = 1;
+	R4E_REVIEW_PHASE_DECISION(2, "R4E_REVIEW_PHASE_DECISION", "R4E_REVIEW_PHASE_DECISION"),
 
 	/**
-	 * The '<em><b>Decision</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Decision</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #DECISION
-	 * @model name="Decision" literal="DECISION"
+	 * The '<em><b>R4E REVIEW PHASE REWORK</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_REWORK_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DECISION_VALUE = 2;
+	R4E_REVIEW_PHASE_REWORK(3, "R4E_REVIEW_PHASE_REWORK", "R4E_REVIEW_PHASE_REWORK"),
 
 	/**
-	 * The '<em><b>Rework</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Rework</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #REWORK
-	 * @model name="Rework" literal="REWORK"
+	 * The '<em><b>R4E REVIEW PHASE COMPLETED</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_COMPLETED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int REWORK_VALUE = 3;
+	R4E_REVIEW_PHASE_COMPLETED(4, "R4E_REVIEW_PHASE_COMPLETED", "R4E_REVIEW_PHASE_COMPLETED");
 
 	/**
-	 * The '<em><b>Completed</b></em>' literal value.
+	 * The '<em><b>R4E REVIEW PHASE STARTED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Completed</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>R4E REVIEW PHASE STARTED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #COMPLETED
-	 * @model name="Completed" literal="COMPLETED"
+	 * @see #R4E_REVIEW_PHASE_STARTED
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COMPLETED_VALUE = 4;
+	public static final int R4E_REVIEW_PHASE_STARTED_VALUE = 0;
+
+	/**
+	 * The '<em><b>R4E REVIEW PHASE PREPARATION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW PHASE PREPARATION</b></em>' literal object isn't clear, there really should
+	 * be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_PREPARATION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_PHASE_PREPARATION_VALUE = 1;
+
+	/**
+	 * The '<em><b>R4E REVIEW PHASE DECISION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW PHASE DECISION</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_DECISION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_PHASE_DECISION_VALUE = 2;
+
+	/**
+	 * The '<em><b>R4E REVIEW PHASE REWORK</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW PHASE REWORK</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_REWORK
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_PHASE_REWORK_VALUE = 3;
+
+	/**
+	 * The '<em><b>R4E REVIEW PHASE COMPLETED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E REVIEW PHASE COMPLETED</b></em>' literal object isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_REVIEW_PHASE_COMPLETED
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_REVIEW_PHASE_COMPLETED_VALUE = 4;
 
 	/**
 	 * An array of all the '<em><b>R4E Review Phase</b></em>' enumerators.
@@ -151,11 +154,11 @@ public enum R4EReviewPhase implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EReviewPhase[] VALUES_ARRAY = new R4EReviewPhase[] {
-			STARTED,
-			PREPARATION,
-			DECISION,
-			REWORK,
-			COMPLETED,
+			R4E_REVIEW_PHASE_STARTED,
+			R4E_REVIEW_PHASE_PREPARATION,
+			R4E_REVIEW_PHASE_DECISION,
+			R4E_REVIEW_PHASE_REWORK,
+			R4E_REVIEW_PHASE_COMPLETED,
 		};
 
 	/**
@@ -206,11 +209,11 @@ public enum R4EReviewPhase implements Enumerator {
 	 */
 	public static R4EReviewPhase get(int value) {
 		switch (value) {
-			case STARTED_VALUE: return STARTED;
-			case PREPARATION_VALUE: return PREPARATION;
-			case DECISION_VALUE: return DECISION;
-			case REWORK_VALUE: return REWORK;
-			case COMPLETED_VALUE: return COMPLETED;
+			case R4E_REVIEW_PHASE_STARTED_VALUE: return R4E_REVIEW_PHASE_STARTED;
+			case R4E_REVIEW_PHASE_PREPARATION_VALUE: return R4E_REVIEW_PHASE_PREPARATION;
+			case R4E_REVIEW_PHASE_DECISION_VALUE: return R4E_REVIEW_PHASE_DECISION;
+			case R4E_REVIEW_PHASE_REWORK_VALUE: return R4E_REVIEW_PHASE_REWORK;
+			case R4E_REVIEW_PHASE_COMPLETED_VALUE: return R4E_REVIEW_PHASE_COMPLETED;
 		}
 		return null;
 	}

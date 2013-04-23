@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 2.6.2.r262_v20110209 Build &lt;2.6.2.v20110214-1523></property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_group" id="1966">
-            <property name="FILELIST">C:\git\openSrc\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\transformations_Cloning_1\transformations\Merged_group_root.xrer</property>
+            <property name="FILELIST">C:\git\org.eclipse.mylyn.reviews\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\transformations_Cloning_1\transformations\Merged_group_root.xrer</property>
         </oda-data-source>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_review" id="1967">
-            <property name="FILELIST">C:\git\openSrc\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\transformations_Cloning_1\transformations\Merged\Merged_review.xrer</property>
+            <property name="FILELIST">C:\git\org.eclipse.mylyn.reviews\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\transformations_Cloning_1\transformations\Merged\Merged_review.xrer</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -200,22 +200,31 @@
                     <property name="name">AnomalyType</property>
                     <expression name="expression">//Convert the anomaly type to a shorten string&#13;
 &#13;
+// All type start with R4E_CLASS_&#13;
+//Strip the beginning of the row type&#13;
+str = "R4E_CLASS_";&#13;
+&#13;
+//ret = row["type"];&#13;
 ret = row["xsi:type"]; // ??&#13;
+&#13;
 if (ret != null ) {&#13;
- 	ret = ret;&#13;
-} else {
-	ret = "";&#13;
+	ar = ret.split(str);&#13;
+	if (ar.length >1 ) {&#13;
+		ret = ar[1].toString();&#13;
+	 } else {&#13;
+	 	ret = "";&#13;
+	 }&#13;
 }</expression>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
                     <property name="name">IdentifyRankOther</property>
-                    <expression name="expression">rank = row["rank"];   ret =  (rank == null ||  BirtComp.equalTo(rank != null ? rank.toLowerCase():" -1", "NONE".toLowerCase()) ) ? 1: 0;</expression>
+                    <expression name="expression">rank = row["rank"];   ret =  (rank == null ||  BirtComp.equalTo(rank != null ? rank.toLowerCase():" -1", "R4E_RANK_NONE".toLowerCase()) ) ? 1: 0;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">IdentifyRankMinor</property>
-                    <expression name="expression">ret = (row["rank"] == "" || BirtComp.equalTo(row["rank"] != null ? rank.toLowerCase():"-1", "MINOR".toLowerCase()) ) ? 1: 0;</expression>
+                    <expression name="expression">ret = (row["rank"] == "" || BirtComp.equalTo(row["rank"] != null ? rank.toLowerCase():"-1", "R4E_RANK_MINOR".toLowerCase()) ) ? 1: 0;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -230,7 +239,7 @@ Total.sum ( row["IdentifyRankMinor"] );</expression>
                     <expression name="expression">//Count  how many were MAJOR&#13;
 //Adjust the final count&#13;
 &#13;
-Total.sum ( BirtComp.equalTo( row["rank"], "MAJOR" ));</expression>
+Total.sum ( BirtComp.equalTo( row["rank"], "R4E_RANK_MAJOR" ));</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -244,9 +253,9 @@ Total.sum (row["IdentifyRankOther"] );</expression>
                     <expression name="expression">//Check state equal to CREATED&#13;
 state = row["state"];&#13;
 if (state == null ) {&#13;
-  ret = "CREATED";&#13;
-} else if ( BirtComp.equalTo( row["state"], "CREATED")  ) {&#13;
- 	ret =  "CREATED";&#13;
+  ret = "R4E_ANOMALY_STATE_CREATED";&#13;
+} else if ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED")  ) {&#13;
+ 	ret =  "R4E_ANOMALY_STATE_CREATED";&#13;
 } else {&#13;
  	ret = "OtherThing"&#13;
 }</expression>
@@ -256,70 +265,70 @@ if (state == null ) {&#13;
                     <property name="name">CountStateCreated</property>
                     <expression name="expression">//Count all state equal to CREATED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["IdentifyStateCreated"], "CREATED") );</expression>
+Total.count ( BirtComp.equalTo( row["IdentifyStateCreated"], "R4E_ANOMALY_STATE_CREATED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateAssigned</property>
                     <expression name="expression">//Count all state equal to ASSIGNED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "ASSIGNED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ASSIGNED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateAccepted</property>
                     <expression name="expression">//Count all state equal to ACCEPTED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "ACCEPTED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ACCEPTED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateFixed</property>
                     <expression name="expression">//Count all state equal to FIXED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "FIXED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_FIXED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateDuplicated</property>
                     <expression name="expression">//Count all state equal to DUPLICATED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "DUPLICATED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DUPLICATED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateRejected</property>
                     <expression name="expression">//Count all state equal to REJECTED &#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "REJECTED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_REJECTED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateDeferred</property>
                     <expression name="expression">//Count all state equal to DEFERRED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "DEFERRED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DEFERRED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateVerified</property>
                     <expression name="expression">//Count all state equal to VERIFIED&#13;
 &#13;
-Total.count ( BirtComp.equalTo( row["state"], "VERIFIED") );</expression>
+Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountStateOthers</property>
                     <expression name="expression">//Count all state NOT equal to VERIFIED, Accepted, Assigned , ... or empty&#13;
 &#13;
-Total.count ( !BirtComp.equalTo( row["state"], "VERIFIED")  &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "DEFERRED") &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "REJECTED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "DUPLICATED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "FIXED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "ACCEPTED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "ASSIGNED") &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "CREATED")  &amp;&amp;&#13;
+Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DEFERRED") &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_REJECTED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DUPLICATED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_FIXED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ACCEPTED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ASSIGNED") &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED")  &amp;&amp;&#13;
 				   row["state"] != null //For the CREATED STATE     &#13;
                    );</expression>
                     <property name="dataType">integer</property>
@@ -362,6 +371,10 @@ if (dueDate != null &amp;&amp; dueDate != "" ) {&#13;
                     <property name="name">AnomalyState</property>
                     <expression name="expression">//Convert the anomaly state to a shorten string&#13;
 &#13;
+// All type start with R4E_Anomaly_State&#13;
+//Strip the beginning of the row type&#13;
+str = "R4E_ANOMALY_STATE_";&#13;
+&#13;
 ret = row["state"];&#13;
 if (ret != null ) {&#13;
 	ar = ret.split(str);&#13;
@@ -374,104 +387,6 @@ if (ret != null ) {&#13;
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
-            <list-property name="columnHints">
-                <structure>
-                    <property name="columnName">xmi:id</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">xmi:id</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">author</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">author</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">description</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">description</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">review</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">review</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">title</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">title</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">createdOn</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">createdOn</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">rank</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">rank</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">ruleID</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">ruleID</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">xsi:type</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">xsi:type</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">href</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">href</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">xsi:type_1</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">xsi:type_1</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">href_1</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">href_1</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">href_2</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">href_2</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">state</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">state</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">dueDate</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">dueDate</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">fixedInVersion</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">fixedInVersion</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">decidedByID</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">decidedByID</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">fixedByID</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">fixedByID</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">followUpByID</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="heading">followUpByID</text-property>
-                </structure>
-            </list-property>
-            <list-property name="parameters"/>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -481,7 +396,7 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -673,136 +588,117 @@ if (ret != null ) {&#13;
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
-                    <property name="name">author</property>
-                    <property name="nativeName">author</property>
+                    <property name="name">user</property>
+                    <property name="nativeName">user</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">description</property>
                     <property name="nativeName">description</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">review</property>
                     <property name="nativeName">review</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">title</property>
                     <property name="nativeName">title</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">createdOn</property>
                     <property name="nativeName">createdOn</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">rank</property>
                     <property name="nativeName">rank</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">ruleID</property>
                     <property name="nativeName">ruleID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">xsi:type</property>
                     <property name="nativeName">xsi:type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">href</property>
                     <property name="nativeName">href</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">xsi:type_1</property>
                     <property name="nativeName">xsi:type_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">href_1</property>
                     <property name="nativeName">href_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">href_2</property>
                     <property name="nativeName">href_2</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">state</property>
                     <property name="nativeName">state</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
                     <property name="name">dueDate</property>
                     <property name="nativeName">dueDate</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
                     <property name="name">fixedInVersion</property>
                     <property name="nativeName">fixedInVersion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
                     <property name="name">decidedByID</property>
                     <property name="nativeName">decidedByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">18</property>
                     <property name="name">fixedByID</property>
                     <property name="nativeName">fixedByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">19</property>
                     <property name="name">followUpByID</property>
                     <property name="nativeName">followUpByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EAnomaly]#:#{xmi:id;STRING;@xmi:id},{author;STRING;@author},{description;STRING;@description},{review;STRING;@review},{title;STRING;@title},{createdOn;STRING;@createdOn},{rank;STRING;@rank},{ruleID;STRING;@ruleID},{xsi:type;STRING;type/@xsi:type},{href;STRING;type/@href},{xsi:type_1;STRING;locations/@xsi:type},{href_1;STRING;locations/@href},{href_2;STRING;id/@href},{state;STRING;@state},{dueDate;STRING;@dueDate},{fixedInVersion;STRING;@fixedInVersion},{decidedByID;STRING;@decidedByID},{fixedByID;STRING;@fixedByID},{followUpByID;STRING;@followUpByID}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EAnomaly]#:#{xmi:id;STRING;@xmi:id},{user;STRING;@user},{description;STRING;@description},{review;STRING;@review},{title;STRING;@title},{createdOn;STRING;@createdOn},{rank;STRING;@rank},{ruleID;STRING;@ruleID},{xsi:type;STRING;type/@xsi:type},{href;STRING;type/@href},{xsi:type_1;STRING;location/@xsi:type},{href_1;STRING;location/@href},{href_2;STRING;id/@href},{state;STRING;@state},{dueDate;STRING;@dueDate},{fixedInVersion;STRING;@fixedInVersion},{decidedByID;STRING;@decidedByID},{fixedByID;STRING;@fixedByID},{followUpByID;STRING;@followUpByID}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -828,7 +724,7 @@ if (ret != null ) {&#13;
         <design:resultColumnDefinitions>
           <design:attributes>
             <design:identifier>
-              <design:name>author</design:name>
+              <design:name>user</design:name>
               <design:position>2</design:position>
             </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
@@ -837,7 +733,7 @@ if (ret != null ) {&#13;
             <design:nullability>Unknown</design:nullability>
           </design:attributes>
           <design:usageHints>
-            <design:label>author</design:label>
+            <design:label>user</design:label>
             <design:formattingHints/>
           </design:usageHints>
         </design:resultColumnDefinitions>
@@ -1372,10 +1268,10 @@ if (val == "true" ) {&#13;
                             <property name="name">Expression</property>
                             <expression name="value">//Test if the first role is an ORGANIZER. If so, let display his ID&#13;
 &#13;
-//ORGANIZER&#13;
+//R4E_ROLE_ORGANIZER&#13;
 &#13;
 if (row["roles"] != null) {&#13;
-	if ( BirtComp.anyOf(row["roles"],  "ORGANIZER" ) ) {&#13;
+	if ( BirtComp.anyOf(row["roles"],  "R4E_ROLE_ORGANIZER" ) ) {&#13;
 		ret = row["id"];&#13;
 	}&#13;
 }</expression>
@@ -2109,42 +2005,42 @@ lineRange = start + "-" + end;</expression>
                     <expression name="expression">//Identify  the ERRONEOUS class anomaly&#13;
                 &#13;
   //  row["type"]; //Default value, so the field type is not present&#13;
- Total.count (  (row["xmi:id"] != null  &amp;&amp; row["type"] == null) || BirtComp.equalTo( row["type"], "ERRONEOUS" ) )</expression>
+ Total.count (  (row["xmi:id"] != null  &amp;&amp; row["type"] == null) || BirtComp.equalTo( row["type"], "R4E_CLASS_ERRONEOUS" ) )</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">ClassSuperfluous</property>
                     <expression name="expression">//Identify  the SUPERFLUOUS class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "SUPERFLUOUS" ) );</expression>
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_SUPERFLUOUS" ) );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">ClassImprovement</property>
                     <expression name="expression">//Identify  the IMPROVEMENT class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "IMPROVEMENT" ) );</expression>
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_IMPROVEMENT" ) );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">ClassQuestion</property>
                     <expression name="expression">//Identify  the question class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "QUESTION" ) );</expression>
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_QUESTION" ) );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">ClassComment</property>
                     <expression name="expression">//Identify  the question class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "COMMENT" ) );</expression>
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_COMMENT" ) );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">ClassMissing</property>
                     <expression name="expression">//Identify  the question class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "MISSING" ) );</expression>
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_MISSING" ) );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -2163,6 +2059,10 @@ ret = "#" + row["xmi:id"]</expression>
                 <structure>
                     <property name="name">FormatCommentType</property>
                     <expression name="expression">//Convert the anomaly type to a shorten string&#13;
+&#13;
+// All type start with R4E_CLASS_&#13;
+//Strip the beginning of the row type&#13;
+str = "R4E_CLASS_";&#13;
 &#13;
 ret = row["type"];&#13;
 &#13;
@@ -4844,9 +4744,9 @@ ret = totalPrepTime + totalDecisionTime;</expression>
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Anomaly::review</property>
@@ -4873,7 +4773,7 @@ ret = totalPrepTime + totalDecisionTime;</expression>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -5291,9 +5191,9 @@ if ( totalTime == null || totalTime == 0) {&#13;
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Anomaly::review</property>
@@ -5320,7 +5220,7 @@ if ( totalTime == null || totalTime == 0) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">Comment Anomaly::author</property>
+                        <property name="name">Comment Anomaly::user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -5763,9 +5663,9 @@ if (loc == 0) {&#13;
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Anomaly::review</property>
@@ -5832,7 +5732,7 @@ if (loc == 0) {&#13;
                     </structure>
                     <structure>
                         <property name="position">10</property>
-                        <property name="name">Comment Anomaly::author</property>
+                        <property name="name">Comment Anomaly::user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -6538,9 +6438,9 @@ if (decisionTime == 0 ) {&#13;
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Anomaly::review</property>
@@ -6567,7 +6467,7 @@ if (decisionTime == 0 ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -6990,9 +6890,9 @@ if (decisionTime == 0 ) {&#13;
                     <text-property name="displayName">Join CommentAnomaly-TextContent::Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Join CommentAnomaly-TextContent::Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Join CommentAnomaly-TextContent::Comment Anomaly::author</text-property>
+                    <property name="columnName">Join CommentAnomaly-TextContent::Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Join CommentAnomaly-TextContent::Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Join CommentAnomaly-TextContent::Comment Anomaly::review</property>
@@ -7019,7 +6919,7 @@ if (decisionTime == 0 ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -7455,7 +7355,7 @@ if (decisionTime == 0 ) {&#13;
 &#13;
 ret = row["rank"];&#13;
 if (ret != null ) {&#13;
-	val = ret.replace("", "");&#13;
+	val = ret.replace("R4E_RANK_", "");&#13;
 }</expression>
                     <property name="dataType">string</property>
                 </structure>
@@ -7772,9 +7672,9 @@ if (ret != null ) {&#13;
                     <text-property name="displayName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::author</text-property>
+                    <property name="columnName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::user</text-property>
                 </structure>
             </list-property>
             <structure name="cachedMetaData">
@@ -7866,7 +7766,7 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -8514,9 +8414,9 @@ if (ret != null ) {&#13;
                     <text-property name="displayName">Comment Participant::CountAnomalies</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::author</text-property>
+                    <property name="columnName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Participant::isDecisionParticipant</property>
@@ -8613,7 +8513,7 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">author</property>
+                        <property name="name">user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -8943,7 +8843,7 @@ if (ret != null ) {&#13;
                     <property name="joinOperator">eq</property>
                     <property name="leftDataSet">Join FileVersion_TextPos_Anomaly_TextContent</property>
                     <property name="rightDataSet">Comment Participant</property>
-                    <expression name="leftExpression">dataSetRow["author"]</expression>
+                    <expression name="leftExpression">dataSetRow["user"]</expression>
                     <expression name="rightExpression">dataSetRow["xmi:id"]</expression>
                 </structure>
             </list-property>
@@ -8961,10 +8861,20 @@ ret = Total.count ( row["xmi:id"].length != 0 );</expression>
                     <property name="name">ReviewType</property>
                     <expression name="expression">//Convert the review type to a shorten string&#13;
 &#13;
+// All type start with R4E_REVIEW_TYPE_&#13;
+//Strip the beginning of the row type&#13;
+str = "R4E_REVIEW_TYPE_";&#13;
+&#13;
 ret = row["type"];&#13;
 &#13;
+&#13;
 if (ret != null ) {&#13;
-	 	ret = ret;&#13;
+	ar = ret.split(str);&#13;
+	if (ar.length >1 ) {&#13;
+		ret = ar[1].toString();&#13;
+	 } else {&#13;
+	 	ret = "";&#13;
+	 }&#13;
 } else {&#13;
 	//This is a BASIC review, so just print it&#13;
 	ret = "BASIC";&#13;
@@ -8972,7 +8882,6 @@ if (ret != null ) {&#13;
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
-            <list-property name="parameters"/>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -9084,126 +8993,108 @@ if (ret != null ) {&#13;
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">name</property>
                     <property name="nativeName">name</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">project</property>
                     <property name="nativeName">project</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">entryCriteria</property>
                     <property name="nativeName">entryCriteria</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">extraNotes</property>
                     <property name="nativeName">extraNotes</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">objectives</property>
                     <property name="nativeName">objectives</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">referenceMaterial</property>
                     <property name="nativeName">referenceMaterial</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">startDate</property>
                     <property name="nativeName">startDate</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">createdBy</property>
                     <property name="nativeName">createdBy</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">xsi:type</property>
                     <property name="nativeName">xsi:type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">href</property>
                     <property name="nativeName">href</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">components</property>
                     <property name="nativeName">components</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">href_1</property>
                     <property name="nativeName">href_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">href_2</property>
                     <property name="nativeName">href_2</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
                     <property name="name">href_3</property>
                     <property name="nativeName">href_3</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
                     <property name="name">type</property>
                     <property name="nativeName">type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
                     <property name="name">current</property>
                     <property name="nativeName">current</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
                 <structure>
                     <property name="position">18</property>
                     <property name="name">href_4</property>
                     <property name="nativeName">href_4</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">0</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//ResTrans:ReviewRes]#:#{xmi:id;STRING;@xmi:id},{name;STRING;@name},{project;STRING;@project},{entryCriteria;STRING;@entryCriteria},{extraNotes;STRING;@extraNotes},{objectives;STRING;@objectives},{referenceMaterial;STRING;@referenceMaterial},{startDate;STRING;@startDate},{createdBy;STRING;@createdBy},{xsi:type;STRING;state/@xsi:type},{href;STRING;state/@href},{components;STRING;components},{href_1;STRING;decision/@href},{href_2;STRING;activeMeeting/@href},{href_3;STRING;usersRes/@href},{type;STRING;@type},{current;STRING;@current},{href_4;STRING;phases/@href}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
@@ -9536,7 +9427,8 @@ if (ret != null ) {&#13;
 		ret = "PLANNING"; //No entry so ity is PLANNING phase here&#13;
 &#13;
 	} else {&#13;
-		ret = value;&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
 &#13;
 	}&#13;
    	&#13;
@@ -9619,7 +9511,7 @@ if ( nbReview == 1 ) {&#13;
 &#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
-if ( phase == "PREPARATION" ) {&#13;
+if ( phase == "R4E_REVIEW_PHASE_PREPARATION" ) {&#13;
 	startDate = row["PhaseInfo::startDate"];&#13;
 	 endDate = row["endDate"];&#13;
  &#13;
@@ -9644,7 +9536,7 @@ if ( phase == "PREPARATION" ) {&#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
 &#13;
-if ( (phase == "PLANNING" || phase == "" || phase == null)  ) {&#13;
+if ( (phase == "R4E_REVIEW_PHASE_PLANNING" || phase == "" || phase == null)  ) {&#13;
 	startDate = row["PhaseInfo::startDate"];&#13;
 	endDate = row["endDate"];&#13;
 &#13;
@@ -9668,7 +9560,7 @@ if ( (phase == "PLANNING" || phase == "" || phase == null)  ) {&#13;
 &#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
-if ( phase == "DECISION" ) {&#13;
+if ( phase == "R4E_REVIEW_PHASE_DECISION" ) {&#13;
 	startDate = row["PhaseInfo::startDate"];&#13;
 	 endDate = row["endDate"];&#13;
  &#13;
@@ -9692,7 +9584,7 @@ if ( phase == "DECISION" ) {&#13;
 &#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
-if ( phase == "REWORK" ) {&#13;
+if ( phase == "R4E_REVIEW_PHASE_REWORK" ) {&#13;
 	startDate = row["PhaseInfo::startDate"];&#13;
 	 endDate = row["endDate"];&#13;
  &#13;
@@ -9724,7 +9616,7 @@ row["PlanningPhase"]+ row["PreparationPhase"]+ row["DecisionPhase"] + row["Rewor
 &#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
-if ( phase == "COMPLETED" ) {&#13;
+if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
 	startDate = row["Reviews::startDate"];&#13;
 	 endDate = row["PhaseInfo::startDate"];&#13;
  &#13;
@@ -10767,7 +10659,9 @@ value = row["PhaseInfo::type"];&#13;
   if (value == null ) {&#13;
   		ret = "PLANNING";  //No entry so ity is PLANNING phase here&#13;
    } else {&#13;
-		ret = value;&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
+&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
    }&#13;
 &#13;
 }</expression>
@@ -11325,9 +11219,9 @@ value = row["PhaseInfo::type"];&#13;
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Anomaly::review</property>
@@ -11354,7 +11248,7 @@ value = row["PhaseInfo::type"];&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">Comment Anomaly::author</property>
+                        <property name="name">Comment Anomaly::user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -11854,21 +11748,21 @@ Total.countDistinct ( row["Item FileVersion::platformURI"]);</expression>
                     <expression name="expression">//For the Class Error, Check type Created&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11880,15 +11774,15 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class Error, Check  type  Assigned&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11900,15 +11794,15 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class Error, Check type Accepted&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11920,15 +11814,15 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type Fixed&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11940,15 +11834,15 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type Duplication&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11960,15 +11854,15 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type deferred&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -11980,15 +11874,15 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type Rejected&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12000,15 +11894,15 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type Verified&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_ERRONEOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12020,29 +11914,29 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "ERRONEOUS") ) {&#13;
                     <expression name="expression">//For the Class ERROR, Check type OTHERS&#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
-if ( (commentClass == "ERRONEOUS") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_ERRONEOUS") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -12111,15 +12005,15 @@ Total.count ( row["ClassErrorSateOthers"]);</expression>
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12133,7 +12027,7 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12147,7 +12041,7 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12161,7 +12055,7 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12175,7 +12069,7 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12189,7 +12083,7 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12203,7 +12097,7 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12217,7 +12111,7 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_SUPERFLUOUS") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12230,23 +12124,23 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "SUPERFLUOUS") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if ( (commentClass == "SUPERFLUOUS") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_SUPERFLUOUS") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -12314,15 +12208,15 @@ Total.count ( row["ClassSuperfluousStateOthers"] );</expression>
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12335,7 +12229,7 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12349,7 +12243,7 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12363,7 +12257,7 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12377,7 +12271,7 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12391,7 +12285,7 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12405,7 +12299,7 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12419,7 +12313,7 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_IMPROVEMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12432,23 +12326,23 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "IMPROVEMENT") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if ( (commentClass == "IMPROVEMENT") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_IMPROVEMENT") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -12515,15 +12409,15 @@ Total.count ( row["ClassImprovementSateOthers"]);</expression>
                     <expression name="expression">//For the Class QUESTION, Check  type state Created&#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12536,7 +12430,7 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12550,7 +12444,7 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12564,7 +12458,7 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12578,7 +12472,7 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12592,7 +12486,7 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12606,7 +12500,7 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12620,7 +12514,7 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_QUESTION") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12633,23 +12527,23 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "QUESTION") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if ( (commentClass == "QUESTION") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_QUESTION") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -12716,15 +12610,15 @@ Total.count ( row["ClassQuestionStateOthers"] );</expression>
                     <expression name="expression">//For the Class COMMENT, Check  type state Created&#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12737,7 +12631,7 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12751,7 +12645,7 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12765,7 +12659,7 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12779,7 +12673,7 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12793,7 +12687,7 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12807,7 +12701,7 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12821,7 +12715,7 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_COMMENT") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12834,23 +12728,23 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "COMMENT") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if ( (commentClass == "COMMENT") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_COMMENT") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -12917,15 +12811,15 @@ Total.count ( row["ClassCommentStateOthers"] );</expression>
                     <expression name="expression">//For the Class MISSING, Check  type state Created&#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12938,7 +12832,7 @@ if (( state == "CREATED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
-if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if  (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
   ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12952,7 +12846,7 @@ if  (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12966,7 +12860,7 @@ if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12980,7 +12874,7 @@ if (( state == "FIXED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -12994,7 +12888,7 @@ if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13008,7 +12902,7 @@ if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13022,7 +12916,7 @@ if (( state == "REJECTED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 state = row["Comment Anomaly::state"];&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_CLASS_MISSING") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13035,23 +12929,23 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "MISSING") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
-if ( (commentClass == "MISSING") &amp;&amp;&#13;
-		( ( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( (commentClass == "R4E_CLASS_MISSING") &amp;&amp;&#13;
+		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
     ) ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
@@ -13118,8 +13012,8 @@ Total.count ( row["ClassMissingStateOthers"] );</expression>
                     <expression name="expression">//For the Class OTHER, Check  type state Created&#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
@@ -13127,24 +13021,24 @@ if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly:
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "CREATED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13159,24 +13053,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "ASSIGNED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13192,24 +13086,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "ACCEPTED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13225,24 +13119,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "FIXED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13258,24 +13152,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "DUPLICATED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13291,24 +13185,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "REJECTED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13324,24 +13218,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "DEFERRED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13357,24 +13251,24 @@ state = row["Comment Anomaly::state"];&#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
 &#13;
-if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "other") ) {&#13;
+if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 	ret = 1;&#13;
 } else {&#13;
 	ret = 0;&#13;
@@ -13387,40 +13281,40 @@ if (( state == "VERIFIED" ) &amp;&amp; (commentClass == "other") ) {&#13;
 &#13;
 //Since the default anomaly state is CREATED, need extra testing&#13;
 if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Anomaly::state"], "CREATED" )  ) {&#13;
- 	state = "CREATED" ;&#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
  } else {&#13;
 	state = row["Comment Anomaly::state"];&#13;
 }&#13;
 &#13;
 //Test the state now&#13;
-if ( 	( state != "CREATED" ) &amp;&amp;&#13;
-		( state != "ASSIGNED" ) &amp;&amp;&#13;
-		( state != "ACCEPTED" ) &amp;&amp;&#13;
-		( state != "FIXED" ) &amp;&amp;&#13;
-		( state != "DUPLICATED" ) &amp;&amp;&#13;
-		( state != "REJECTED" ) &amp;&amp;&#13;
-		( state != "DEFERRED" ) &amp;&amp;&#13;
- 		( state != "VERIFIED" ) &#13;
+if ( 	( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ASSIGNED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_ACCEPTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_FIXED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DUPLICATED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_REJECTED" ) &amp;&amp;&#13;
+		( state != "R4E_ANOMALY_STATE_DEFERRED" ) &amp;&amp;&#13;
+ 		( state != "R4E_ANOMALY_STATE_VERIFIED" ) &#13;
      ) {&#13;
 	state = "other";&#13;
 } &#13;
 &#13;
 //Since the default class type is ERRONEOUS, need extra testing&#13;
 if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"] == null  )   ||  &#13;
-		BirtComp.equalTo( row["Comment Type::type"], "ERRONEOUS" )  ) {&#13;
- 	commentClass = "ERRONEOUS" ;&#13;
+		BirtComp.equalTo( row["Comment Type::type"], "R4E_CLASS_ERRONEOUS" )  ) {&#13;
+ 	commentClass = "R4E_CLASS_ERRONEOUS" ;&#13;
  } else {&#13;
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
 //Test the class for other now:&#13;
-if ( commentClass != "ERRONEOUS" &amp;&amp;&#13;
-	  commentClass != "SUPERFLUOUS" &amp;&amp;&#13;
-	  commentClass != "IMPROVEMENT" &amp;&amp;&#13;
-	  commentClass != "QUESTION" &amp;&amp;&#13;
-	  commentClass != "COMMENT" &amp;&amp;&#13;
-	  commentClass != "MISSING" ) {&#13;
+if ( commentClass != "R4E_CLASS_ERRONEOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_SUPERFLUOUS" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_IMPROVEMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_QUESTION" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_COMMENT" &amp;&amp;&#13;
+	  commentClass != "R4E_CLASS_MISSING" ) {&#13;
 	commentClass = "other";&#13;
 }&#13;
 &#13;
@@ -13728,9 +13622,9 @@ Total.count ( row["ClassOtherStateOther"] );</expression>
                     <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Anomaly::author</property>
-                    <property name="alias">author</property>
-                    <text-property name="displayName">Comment Anomaly::author</text-property>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">ClassImprovementStateCreated</property>
@@ -13886,7 +13780,7 @@ Total.count ( row["ClassOtherStateOther"] );</expression>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">Comment Anomaly::author</property>
+                        <property name="name">Comment Anomaly::user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>

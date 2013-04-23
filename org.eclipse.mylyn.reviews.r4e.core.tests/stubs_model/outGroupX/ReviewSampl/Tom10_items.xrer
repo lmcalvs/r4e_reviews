@@ -7,7 +7,7 @@
     <fileContextList href="#_pEt6cERPEeC0spkCnDexvg"/>
     <ProjectURIs>platform:resource/projX0</ProjectURIs>
   </r4ecore:R4EItem>
-  <r4ecore:R4EFileContext xmi:id="_pEt6cERPEeC0spkCnDexvg" type="ADDED">
+  <r4ecore:R4EFileContext xmi:id="_pEt6cERPEeC0spkCnDexvg" type="R4E_ADDED">
     <id xmi:id="_pEt6cURPEeC0spkCnDexvg" sequenceID="5" userID="Tom10"/>
     <deltas href="#_pE3EYURPEeC0spkCnDexvg"/>
     <base href="#_pEuhgERPEeC0spkCnDexvg"/>
@@ -35,7 +35,7 @@
     <fileContextList href="#_pFIKIERPEeC0spkCnDexvg"/>
     <ProjectURIs>platform:resource/projX1</ProjectURIs>
   </r4ecore:R4EItem>
-  <r4ecore:R4EFileContext xmi:id="_pFIKIERPEeC0spkCnDexvg" type="ADDED">
+  <r4ecore:R4EFileContext xmi:id="_pFIKIERPEeC0spkCnDexvg" type="R4E_ADDED">
     <id xmi:id="_pFIKIURPEeC0spkCnDexvg" sequenceID="8" userID="Tom10"/>
     <deltas href="#_pFL0gURPEeC0spkCnDexvg"/>
     <base href="#_pFJ_UERPEeC0spkCnDexvg"/>
@@ -63,7 +63,7 @@
     <fileContextList href="#_pFbsIERPEeC0spkCnDexvg"/>
     <ProjectURIs>platform:resource/projX2</ProjectURIs>
   </r4ecore:R4EItem>
-  <r4ecore:R4EFileContext xmi:id="_pFbsIERPEeC0spkCnDexvg" type="ADDED">
+  <r4ecore:R4EFileContext xmi:id="_pFbsIERPEeC0spkCnDexvg" type="R4E_ADDED">
     <id xmi:id="_pFbsIURPEeC0spkCnDexvg" sequenceID="11" userID="Tom10"/>
     <deltas href="#_pFhLsURPEeC0spkCnDexvg"/>
     <base href="#_pFfWgERPEeC0spkCnDexvg"/>
@@ -91,7 +91,7 @@
     <fileContextList href="#_pFv1MERPEeC0spkCnDexvg"/>
     <ProjectURIs>platform:resource/projX3</ProjectURIs>
   </r4ecore:R4EItem>
-  <r4ecore:R4EFileContext xmi:id="_pFv1MERPEeC0spkCnDexvg" type="ADDED">
+  <r4ecore:R4EFileContext xmi:id="_pFv1MERPEeC0spkCnDexvg" type="R4E_ADDED">
     <id xmi:id="_pFv1MURPEeC0spkCnDexvg" sequenceID="14" userID="Tom10"/>
     <deltas href="#_pF1UwURPEeC0spkCnDexvg"/>
     <base href="#_pFxDUERPEeC0spkCnDexvg"/>

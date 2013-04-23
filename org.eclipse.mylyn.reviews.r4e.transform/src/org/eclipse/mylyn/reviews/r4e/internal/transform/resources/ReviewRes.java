@@ -12,7 +12,9 @@
 package org.eclipse.mylyn.reviews.r4e.internal.transform.resources;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 
 /**

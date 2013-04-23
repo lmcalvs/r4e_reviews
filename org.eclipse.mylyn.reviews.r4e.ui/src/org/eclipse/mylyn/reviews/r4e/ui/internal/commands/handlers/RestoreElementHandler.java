@@ -138,10 +138,10 @@ public class RestoreElementHandler extends AbstractHandler {
 
 					//Send email notification if needed
 					if (null != review) {
-						if (0 < addedItems.size() && review.getType().equals(R4EReviewType.FORMAL)) {
+						if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 							if (((R4EFormalReview) review).getCurrent()
 									.getType()
-									.equals(R4EReviewPhase.PREPARATION)) {
+									.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 								try {
 									MailServicesProxy.sendItemsAddedNotification(addedItems);
 								} catch (CoreException e) {

@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -208,7 +209,7 @@ public class ParticipantUnassignDialog extends FormDialog implements IParticipan
 		});
 
 		//Populate table
-		List<String> assignedParticipants = null;
+		EList<String> assignedParticipants = null;
 		if (fElement instanceof R4EUIReviewItem) {
 			assignedParticipants = ((R4EUIReviewItem) fElement).getItem().getAssignedTo();
 		} else if (fElement instanceof R4EUIFileContext) {

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
  * @generated
  */
 public interface R4EDelta extends R4EIDComponent {
+
 	/**
 	 * Returns the value of the '<em><b>Base</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -79,5 +80,4 @@ public interface R4EDelta extends R4EIDComponent {
 	 * @generated
 	 */
 	void setTarget(R4EContent value);
-
 } // R4EDelta

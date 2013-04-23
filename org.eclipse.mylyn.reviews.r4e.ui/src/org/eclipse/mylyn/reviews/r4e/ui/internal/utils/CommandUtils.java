@@ -32,14 +32,15 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceRange;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.mylyn.reviews.core.model.ILocation;
-import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.mylyn.reviews.frame.core.model.Item;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -601,16 +602,16 @@ public class CommandUtils {
 		R4EContextType dtype = null;
 		switch (aChangeType) {
 		case ADDED:
-			dtype = R4EContextType.ADDED;
+			dtype = R4EContextType.R4E_ADDED;
 			break;
 		case DELETED:
-			dtype = R4EContextType.DELETED;
+			dtype = R4EContextType.R4E_DELETED;
 			break;
 		case MODIFIED:
-			dtype = R4EContextType.MODIFIED;
+			dtype = R4EContextType.R4E_MODIFIED;
 			break;
 		case REPLACED:
-			dtype = R4EContextType.REPLACED;
+			dtype = R4EContextType.R4E_REPLACED;
 			break;
 		default:
 			break;
@@ -739,7 +740,7 @@ public class CommandUtils {
 	 */
 	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
 		if (null != aAnomaly) {
-			final List<ILocation> location = aAnomaly.getLocations();
+			final EList<Location> location = aAnomaly.getLocation();
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
@@ -760,7 +761,7 @@ public class CommandUtils {
 	 */
 	public static R4EFileVersion getAnomalyParentFile(R4EAnomaly aAnomaly) {
 		if (null != aAnomaly) {
-			final List<ILocation> location = aAnomaly.getLocations();
+			final EList<Location> location = aAnomaly.getLocation();
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
@@ -902,7 +903,7 @@ public class CommandUtils {
 						if (anomaly instanceof R4EAnomaly) {
 							Integer id = Integer.valueOf(origIdTokens[1]);
 							if (null != id) {
-								if (id.intValue() == anomaly.getR4eId().getSequenceID()) {
+								if (id.intValue() == anomaly.getId().getSequenceID()) {
 									return (R4EAnomaly) anomaly;
 								}
 							}
@@ -922,7 +923,7 @@ public class CommandUtils {
 	 * @return String
 	 */
 	public static String buildOriginalAnomalyID(R4EAnomaly aOrigAnomaly) {
-		return aOrigAnomaly.getR4eId().getUserID() + R4EUIConstants.SEPARATOR + aOrigAnomaly.getR4eId().getSequenceID();
+		return aOrigAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR + aOrigAnomaly.getId().getSequenceID();
 	}
 
 	/**
@@ -933,7 +934,7 @@ public class CommandUtils {
 	 * @return String
 	 */
 	public static String buildOriginalCommentID(R4EComment aOrigComment) {
-		return aOrigComment.getR4eId().getUserID() + aOrigComment.getR4eId().getSequenceID();
+		return aOrigComment.getId().getUserID() + aOrigComment.getId().getSequenceID();
 	}
 
 	/**
@@ -955,7 +956,7 @@ public class CommandUtils {
 		if (null == participant) {
 			//Add the participant
 			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
-			role.add(R4EUserRole.REVIEWER);
+			role.add(R4EUserRole.R4E_ROLE_REVIEWER);
 			participant = R4EUIModelController.FModelExt.createR4EParticipant(aReview, aParticipantId, role);
 		}
 		return participant;
@@ -1059,10 +1060,10 @@ public class CommandUtils {
 	 *            R4EItem
 	 * @return String
 	 */
-	public static String getCommitPrefix(List<IReviewItem> aItems, R4EItem aCurrentItem) {
+	public static String getCommitPrefix(List<Item> aItems, R4EItem aCurrentItem) {
 		int commitIndex = 1;
 		boolean isManyPatchSets = false;
-		for (IReviewItem item : aItems) {
+		for (Item item : aItems) {
 			if (item.equals(aCurrentItem)) {
 				continue; //ignore the element itself
 			}

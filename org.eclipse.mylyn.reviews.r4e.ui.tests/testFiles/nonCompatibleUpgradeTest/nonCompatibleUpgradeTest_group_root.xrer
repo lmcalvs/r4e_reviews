@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<r4ecore:R4EReviewGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_U-_hYEkqEeK-F5EIGTlQdQ" description="testReviewGroup description" name="nonCompatibleUpgradeTest" defaultEntryCriteria="default entry criteria">
-  <availableProjects>ProjectX</availableProjects>
-  <availableProjects>ProjectY</availableProjects>
-  <availableComponents>ui</availableComponents>
-  <availableComponents>core</availableComponents>
-  <availableComponents>docs</availableComponents>
-</r4ecore:R4EReviewGroup>

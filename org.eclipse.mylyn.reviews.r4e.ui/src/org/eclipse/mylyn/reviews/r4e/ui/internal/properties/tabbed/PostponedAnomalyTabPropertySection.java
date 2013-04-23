@@ -389,10 +389,10 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
 						if (!newState.equals(((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly().getState())) {
 							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkOrigReviewCompatibility()) {
-								if (newState.equals(R4EAnomalyState.REJECTED)
+								if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
 										&& !((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
 												.getState()
-												.equals(R4EAnomalyState.REJECTED)) {
+												.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
 									//Force the user to enter a comment if the state is changed to REJECTED
 									final boolean commentResult = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment(true);
 									if (commentResult) {
@@ -1029,7 +1029,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 			fReviewNameText.setText(""); //$NON-NLS-1$
 		}
 		fTitleText.setText(modelAnomaly.getTitle());
-		fAuthorText.setText(modelAnomaly.getAuthor().getId());
+		fAuthorText.setText(modelAnomaly.getUser().getId());
 		fCreationDateText.setText(modelAnomaly.getCreatedOn().toString());
 		fPosition = ((R4EUIAnomalyBasic) fProperties.getElement()).getPosition();
 		if (null == fPosition) {
@@ -1063,8 +1063,8 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 		fRankCombo.setItems(UIUtils.getRanks());
 		//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 		int rankValue = modelAnomaly.getRank().getValue();
-		fRankCombo.select(rankValue == R4EDesignRuleRank.DEPRECATED_VALUE
-				? R4EDesignRuleRank.MINOR_VALUE
+		fRankCombo.select(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+				? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 				: rankValue);
 
 		if (null != modelAnomaly.getRuleID()) {
@@ -1125,7 +1125,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 				|| fProperties.getElement().isReadOnly()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fReviewNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fTitleText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fTitleText.setEditable(false);

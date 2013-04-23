@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- * 
+ *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,12 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.mylyn.reviews.internal.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
@@ -36,7 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *
  * @generated
  */
-public class R4EReviewComponentImpl extends ReviewComponent implements R4EReviewComponent {
+public class R4EReviewComponentImpl extends ReviewComponentImpl implements R4EReviewComponent {
 	/**
 	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -68,7 +66,7 @@ public class R4EReviewComponentImpl extends ReviewComponent implements R4EReview
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<String> getAssignedTo() {
+	public EList<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO);
 		}

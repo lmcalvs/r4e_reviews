@@ -14,12 +14,12 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResFactory;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
+
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.*;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
