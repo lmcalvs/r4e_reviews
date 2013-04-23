@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+
+ <!--
+   <extension
+         point="org.eclipse.ui.handlers">
+      <category
+            description="R4E Context-sensitive Commands"
+            id="org.eclipse.mylyn.reviews.r4e-gerrit.commands.reviewCategory"
+            name="R4E-Gerrit Context Commands">
+      </category>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e-gerrit.commands.reviewCategory"
+            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.FillReviewSiteHandler"
+            description="Search review site and fill the review table "
+            id="org.eclipse.mylyn.reviews.r4e-gerrit.internal.commands.FillReviewSiteHandler"
+            name="Select Gerrit site">
+      </command>
+   </extension>
+ -->
+ 
+ <!-- Define which command should be available in the R4E-Gerrit connector  
+ -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.FillReviewSiteHandler"
+            id="org.eclipse.mylyn.reviews.r4e-gerrit.selectCurrentGerrit"
+            name="selectCurrentGerrit">
+      </command>
+      <command
+            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSiteHandler"
+            id="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"
+            name="Add ...">
+      </command>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.bindings">
+   </extension>
+   
+	<!-- Define the menu for R4E-Gerrit pulldown menu
+	-->
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+          <toolbar
+               id="org.eclipse.ui.contributions.toolbars.r4eGerrit">
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.selectCurrentGerrit"
+                icon="icons/favicon.ico"
+                id="r4eGerrit.dropdown.toolbar.initiateGerrit"
+                label="R4E-Gerrit"
+                style="pulldown">
+          </command>
+         <separator
+                  name="additions"
+                  visible="false">
+            </separator>
+        </toolbar>
+      </menuContribution>
+ 
+	<!-- Add the menu item to the R4E-Gerrit pulldown menu
+	-->
+      <menuContribution
+            locationURI="menu:r4eGerrit.dropdown.toolbar.initiateGerrit">
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"
+                id="Jacques33"
+                label="Jacques 333"
+                style="push">
+          </command>
+          <separator
+                name="additions"
+                visible="true">
+          </separator>  
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"
+                id="Search.gerritSite"
+                label="Add..."
+                style="push">
+          </command>
+        </menuContribution>
+   </extension>
+
+</plugin>
+
