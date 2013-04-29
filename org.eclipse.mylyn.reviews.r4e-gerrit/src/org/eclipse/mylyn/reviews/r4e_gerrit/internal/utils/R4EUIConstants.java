@@ -13,7 +13,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   Jacques Bouthillier - Add definition for Report
+ *   Jacques Bouthillier - Add some definitions
  *   
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils;
@@ -42,6 +42,17 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field R4E_UI_JOB_FAMILY.
 	 */
 	public static final String R4E_UI_JOB_FAMILY = "R4EUI";
+
+	/**
+	 * Field DEFAULT_REPOSITORY. (value is ""https://"")
+	 */
+	public static final  String DEFAULT_REPOSITORY = "https://";
+	
+	
+	/**
+	 * Field ADD_GERRIT_SITE_COMMAND_ID. (value is ""org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"")
+	 */
+	public static final String ADD_GERRIT_SITE_COMMAND_ID = "org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite";
 
 
 }

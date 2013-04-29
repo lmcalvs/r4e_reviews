@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Ericsson
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 	This class implements the implementation of the R4E-Gerrit..
+ * 
+ * Contributors:
+ *   Jacques Bouthillier - Initial Implementation of the plug-in
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e_gerrit;
 
 import org.eclipse.core.runtime.IBundleGroup;
@@ -11,6 +26,12 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
+
+/**
+ * @author Jacques Bouthillier
+ * @version $Revision: 1.0 $
+ *
+ */
 
 /**
  * The activator class controls the plug-in life cycle
@@ -69,7 +90,6 @@ public class R4EGerritPlugin extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext aContext) throws Exception {
 		super.start(aContext);
-		Fplugin = this;
 		Fplugin = this;
 		Ftracer = new Tracer();
 		Ftracer.init(PLUGIN_ID);

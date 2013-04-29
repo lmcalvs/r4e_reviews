@@ -3,35 +3,16 @@
 <plugin>
 
 
- <!--
-   <extension
-         point="org.eclipse.ui.handlers">
-      <category
-            description="R4E Context-sensitive Commands"
-            id="org.eclipse.mylyn.reviews.r4e-gerrit.commands.reviewCategory"
-            name="R4E-Gerrit Context Commands">
-      </category>
-      <command
-            categoryId="org.eclipse.mylyn.reviews.r4e-gerrit.commands.reviewCategory"
-            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.FillReviewSiteHandler"
-            description="Search review site and fill the review table "
-            id="org.eclipse.mylyn.reviews.r4e-gerrit.internal.commands.FillReviewSiteHandler"
-            name="Select Gerrit site">
-      </command>
-   </extension>
- -->
- 
- <!-- Define which command should be available in the R4E-Gerrit connector  
+  <!-- Define which command should be available in the R4E-Gerrit connector  
  -->
    <extension
+         id="org.eclipse.mylyn.reviews.r4e-gerrit.commands.reviewCategory"
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.FillReviewSiteHandler"
             id="org.eclipse.mylyn.reviews.r4e-gerrit.selectCurrentGerrit"
             name="selectCurrentGerrit">
       </command>
       <command
-            defaultHandler="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSiteHandler"
             id="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"
             name="Add ...">
       </command>
@@ -67,12 +48,10 @@
 	-->
       <menuContribution
             locationURI="menu:r4eGerrit.dropdown.toolbar.initiateGerrit">
-          <command
-                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite"
-                id="Jacques33"
-                label="Jacques 333"
-                style="push">
-          </command>
+          <dynamic
+                class="org.eclipse.mylyn.reviews.r4e_gerrit.internal.menus.DynamicMenuAddition"
+                id="org.eclipse.mylyn.reviews.r4e-gerrit.dynamic1">
+          </dynamic>
           <separator
                 name="additions"
                 visible="true">
@@ -84,6 +63,17 @@
                 style="push">
           </command>
         </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSiteHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.addGerritSite">
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.SelectReviewSiteHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.selectCurrentGerrit">
+      </handler>
    </extension>
 
 </plugin>

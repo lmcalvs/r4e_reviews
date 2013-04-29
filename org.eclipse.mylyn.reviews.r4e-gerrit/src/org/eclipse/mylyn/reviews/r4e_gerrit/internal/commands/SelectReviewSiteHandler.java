@@ -17,9 +17,8 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -27,16 +26,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.handlers.IHandlerService;
 
 /**
  * @author Jacques Bouthillier
  * @version $Revision: 1.0 $
  */
-public class FillReviewSiteHandler extends AbstractHandler {
+public class SelectReviewSiteHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -46,6 +47,17 @@ public class FillReviewSiteHandler extends AbstractHandler {
 	 * Field COMMAND_MESSAGE. (value is ""Opening Element..."")
 	 */
 	private static final String COMMAND_MESSAGE = "Search Gerrit locations ...";
+	
+	
+	
+	// ------------------------------------------------------------------------
+	// Variables
+	// ------------------------------------------------------------------------
+
+	private R4EGerritServerUtility fServerUtil = null;
+	
+	private Map<Repository, String> fMapRepoServer = null;
+
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -76,29 +88,50 @@ public class FillReviewSiteHandler extends AbstractHandler {
 			public IStatus run(IProgressMonitor aMonitor) {
 				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
-				// Begin Test 1  
-				//This return me the list of GIT repos defined in the GIT Repositories view
-				//This is not exactly what we need, we need the GIT Repo defined in Preferences /team/Git/configuration/Repository setting
-				//If not, we need to open the configuration file for each of the following repository and read the gerrit  url
-				List<Repository> repositories;
-				repositories = new ArrayList<Repository>();
-				List<String> repoPaths = org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil().getConfiguredRepositories();
-				RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
-				for (String repoPath : repoPaths) {
-					R4EGerritPlugin.Ftracer.traceInfo("List Gerrit repository: " + repoPath);
-					File gitDir = new File(repoPath);
-					if (!gitDir.exists())
-						continue;
-				}
 
-				//End Test 1
+				//Map the Gerrit server
+				fServerUtil = new R4EGerritServerUtility();
+				
+				//Debug purpose, see which project have a gerrit server
+				fMapRepoServer = fServerUtil.getGerritMapping();
+				if (!fMapRepoServer.isEmpty()) {
+					Set<Repository> mapSet = fMapRepoServer.keySet();
+					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
+					for (Repository key: mapSet) {
+						R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " + key.getWorkTree().getName() + "\t URL: " + fMapRepoServer.get(key));
+					}
+				}
+				//End Debug
+				
+				String serverToUsed = fServerUtil.getLastSavedGerritServer();
+				if (serverToUsed!= null) {
+					//Initiate the request for the list of reviews
+					fServerUtil.getReviewListFromServer();
+				} else {
+					//Need to open the Dialogue to fill a Gerrit server
+					R4EGerritPlugin.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );
+					//Get the service
+					IWorkbench workbench = R4EGerritPlugin.getDefault().getWorkbench();
+					IHandlerService handlerService = (IHandlerService) workbench.getService(IHandlerService.class);
+					try {
+						
+						  handlerService.executeCommand(R4EUIConstants.ADD_GERRIT_SITE_COMMAND_ID, null);
+					  } catch (Exception ex) {
+						  R4EGerritPlugin.Ftracer.traceError("Exception: " + ex.toString());
+						  R4EGerritPlugin.getDefault().logError("Exception: ", ex);
+					  //  throw new RuntimeException("org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSite not found");
+					    
+					  }
+				}
+				
+				
 				aMonitor.done();
 				return Status.OK_STATUS;
 			}
+			
 		};
 		job.setUser(true);
 		job.schedule();
 		return null;
 	}
-
 }
