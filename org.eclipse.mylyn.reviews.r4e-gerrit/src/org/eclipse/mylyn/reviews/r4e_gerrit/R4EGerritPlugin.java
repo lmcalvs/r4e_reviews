@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Description:
- * 	This class implements the implementation of the R4E-Gerrit..
+ * 	This class implements the implementation of the R4E-Gerrit.
  * 
  * Contributors:
  *   Jacques Bouthillier - Initial Implementation of the plug-in
