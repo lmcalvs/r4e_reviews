@@ -1,0 +1,10 @@
+#
+#  R4E-Gerrit UI Debug options
+#
+org.eclipse.mylyn.reviews.r4e-gerrit.ui=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/error=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/warning=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/info=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/debug=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/consoleLog=true
+org.eclipse.mylyn.reviews.r4e-gerrit.ui/logfile=test.log

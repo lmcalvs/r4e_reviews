@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="R4E-Gerrit "
+            id="org.eclipse.mylyn.reviews.r4e-gerrit.ui">
+      </category>
+      <view
+            name="R4E-Gerrit table"
+            icon="icons/view16/revnav_misc.gif"
+            category="org.eclipse.mylyn.reviews.r4e-gerrit.ui"
+            class="org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView"
+            id="org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+   	<!-- Define the toolbar menu for R4E-Gerrit UI "with pulldown menu"
+	-->
+      <menuContribution
+            locationURI="toolbar:org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView?after=additions">
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allOpenReviews"
+                id="r4eGerritUI.dropdown.toolbar.AddAllOpenReviews"
+                label="All"
+                style="pulldown"
+                tooltip="Find all Opened Reviews for the selected repository">
+          </command>
+         <separator
+                name="addition1"
+                visible="true">
+            </separator>
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myWatchedChanges"
+                id="r4eGerritUI.dropdown.toolbar.MyWatchedChanges"
+                label="My"
+                style="pulldown"
+                tooltip="Find my watchedChanges reviews for the selected repository">
+          </command>
+         <separator
+                name="addition2"
+                visible="true">
+            </separator>
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.projectList"
+                id="r4eGerritUI.dropdown.toolbar.ProjectList"
+                label="Projects"
+                style="pulldown"
+                tooltip="Find projects list reviews for the selected repository">
+          </command>
+         <separator
+                name="addition3"
+                visible="true">
+            </separator>
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.groupList"
+                id="r4eGerritUI.dropdown.toolbar.GroupList"
+                label="Groups"
+                style="pulldown"
+                tooltip="Find groups list reviews for the selected repository">
+          </command>
+         <separator
+                name="addition4"
+                visible="true">
+            </separator>
+          <command
+                commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationIndex"
+                id="r4eGerritUI.dropdown.toolbar.Documentation"
+                label="Documentation"
+                style="pulldown"
+                tooltip="Find Gerrit documentation">
+          </command>
+         <separator
+                name="additions"
+               	visible="true">
+            </separator>
+
+      </menuContribution>
+      
+	<!-- Add sub-menu for the All menu
+	-->
+       <menuContribution
+            locationURI="menu:r4eGerritUI.dropdown.toolbar.AddAllOpenReviews">
+         <command
+               	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allOpenReviews"
+               	id="r4eGerritUI.dropdown.toolbar.addOpenReviews"
+               	label="Open"
+               	style="push"
+               	tooltip="Find all Openned Reviews for the selected repository">
+         </command>
+         <command
+               	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allMergedReviews"
+               	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allMergedReviews"
+               	label="Merged"
+               	style="push"
+               	tooltip="Find all Merged Review for the selected repository">
+         </command>
+         <command
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allAbandonnedReviews"
+	            id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allAbandonnedReviews"
+	            label="Abandonned"
+	            style="push"
+	            tooltip="Find all Abandoned Reviews for the selected repository">
+         </command>
+
+         <separator
+                name="additions"
+                visible="true">
+         </separator>
+      </menuContribution>
+   	<!-- Add sub-menu for the My menu
+	-->
+       <menuContribution
+            locationURI="menu:r4eGerritUI.dropdown.toolbar.MyWatchedChanges">
+         <command
+               	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myChanges"
+               	id="r4eGerritUI.dropdown.toolbar.myChanges"
+               	label="Changes"
+               	style="push"
+               	tooltip="Find my changes for the selected repository">
+         </command>
+         <command
+               	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDrafts"
+               	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDrafts"
+               	label="Drafts"
+               	style="push"
+               	tooltip="Find my draft changes for the selected repository">
+         </command>
+         <command
+            	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myWatchedChanges"
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myWatchedChanges"
+            	label="Watched Changes"
+            	style="push"
+            	tooltip="Find my watched changes for the selected repository">
+         </command>
+         <command
+            	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myStarredChanges"
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myStarredChanges"
+            	label="Starred Changes"
+            	style="push"
+            	tooltip="Find my starred changes for the selected repository">
+         </command>
+         <command
+            	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDraftComments"
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDraftComments"
+            	label="Draft Comments"
+            	style="push"
+            	tooltip="Find my draft comments for the selected repository">
+         </command>
+
+         <separator
+                name="additions"
+                visible="true">
+         </separator>
+      </menuContribution>
+   
+    <!-- Add sub-menu for the Projects menu
+	-->
+       <menuContribution
+            locationURI="menu:r4eGerritUI.dropdown.toolbar.ProjectList">
+         <command
+               	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.projectList"
+               	id="r4eGerritUI.dropdown.toolbar.projectList"
+               	label="List"
+               	style="push"
+               	tooltip="Find the project list for the selected repository">
+         </command>
+
+         <separator
+               name="additions"
+               visible="true">
+         </separator>
+      </menuContribution>  
+   
+    <!-- Add sub-menu for the Groups menu
+	-->
+       <menuContribution
+            locationURI="menu:r4eGerritUI.dropdown.toolbar.GroupList">
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.groupList"
+               id="r4eGerritUI.dropdown.toolbar.groupList"
+               label="List"
+               style="push"
+               tooltip="Find the groups list for the selected repository">
+         </command>
+
+         <separator
+               name="additions"
+               visible="true">
+         </separator>
+      </menuContribution>  
+   
+    <!-- Add sub-menu for the Documentation menu
+	-->
+       <menuContribution
+            locationURI="menu:r4eGerritUI.dropdown.toolbar.Documentation">
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationIndex"
+               id="r4eGerritUI.dropdown.toolbar.documentationIndex"
+               label="Index"
+               style="push"
+               tooltip="Find the index of the documentation">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationSearching"
+               id="r4eGerritUI.dropdown.toolbar.documentationSearching"
+               label="Searching"
+               style="push"
+               tooltip="Find the searching of the documentation">
+         </command>
+
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationUploading"
+               id="r4eGerritUI.dropdown.toolbar.documentationUploading"
+               label="Uploading"
+               style="push"
+               tooltip="Find the uploading of the documentation">
+         </command>
+
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationAccessControls"
+               id="r4eGerritUI.dropdown.toolbar.documentationAccessControls"
+               label="AccessControls"
+               style="push"
+               tooltip="Find the access controls of the documentation">
+         </command>
+
+
+         <separator
+               name="additions"
+               visible="true">
+         </separator>
+      </menuContribution>  
+   
+      documentationIndex
+  </extension>
+   
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+         <!-- The following are the commands under the "All" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allOpenReviews"
+            	name="AllOpen">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allMergedReviews"
+            	name="AllMerged">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allAbandonnedReviews"
+            	name="AllAbandonned">
+      </command>
+         <!-- The following are the commands under the "My" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myChanges"
+            	name="MyChanges">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDrafts"
+            	name="MyDraftsChanges">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myWatchedChanges"
+            	name="MyWatchedChanges">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myStarredChanges"
+            	name="MyStarredChanges">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDraftComments"
+            	name="MyDraftCommentsChanges">
+      </command>
+      
+         <!-- The following are the commands under the "Projects" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.projectList"
+            	name="ProjectLists">
+      </command>
+
+         <!-- The following are the commands under the "Groups" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.groupList"
+            	name="GroupLists">
+      </command>
+
+         <!-- The following are the commands under the "Documentation" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationIndex"
+            	name="DocumentationIndex">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationSearching"
+            	name="DocumentationSearching">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationUploading"
+            	name="DocumentationUploading">
+      </command>
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationAccessControls"
+            	name="DocumentationAccessControls">
+      </command>
+      
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.bindings">
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+         <!-- The following are the handlers under the "All" sub-menu
+         -->
+		 <handler
+		    	class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.all.AllOpenReviewsHandler"
+		    	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allOpenReviews">
+		  </handler>
+		  <handler
+		    	class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.all.AllMergedReviewsHandler"
+		    	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allMergedReviews">
+		  </handler>
+		  <handler
+		    	class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.all.AllAbandonnedReviewsHandler"
+		    	commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.allAbandonnedReviews">
+		  </handler>
+          <!-- The following are the handlers under the "My" sub-menu
+         -->
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my.MyChangesReviewsHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myChanges">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my.MyDraftsReviewsHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDrafts">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my.MyWatchedChangesReviewsHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myWatchedChanges">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my.MyStarredChangesReviewsHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myStarredChanges">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my.MyDraftCommentsReviewsHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.myDraftComments">
+	      </handler>
+          <!-- The following are the handlers under the "Projects" sub-menu
+         -->
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.projects.ProjectListHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.projectList">
+	      </handler>
+          <!-- The following are the handlers under the "Groups" sub-menu
+         -->
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.groups.GroupListHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.groupList">
+	      </handler>
+          <!-- The following are the handlers under the "Documentation" sub-menu
+         -->
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.documentation.IndexHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationIndex">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.documentation.SearchingHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationSearching">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.documentation.UploadingHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationUploading">
+	      </handler>
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.documentation.AccessControlHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationAccessControls">
+	      </handler>
+	      
+   </extension>
+
+</plugin>
