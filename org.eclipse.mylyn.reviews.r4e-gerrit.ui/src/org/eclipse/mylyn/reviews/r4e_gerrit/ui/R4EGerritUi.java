@@ -101,7 +101,7 @@ public class R4EGerritUi extends AbstractUIPlugin {
 	 * @param aPth the path
 	 * @return the image descriptor
 	 */
-	public static ImageDescriptor getImageDescriptor(String aPth) {
-		return imageDescriptorFromPlugin(fPLUGIN_ID, aPth);
+	public static ImageDescriptor getImageDescriptor(String aPath) {
+		return imageDescriptorFromPlugin(fPLUGIN_ID, aPath);
 	}
 }

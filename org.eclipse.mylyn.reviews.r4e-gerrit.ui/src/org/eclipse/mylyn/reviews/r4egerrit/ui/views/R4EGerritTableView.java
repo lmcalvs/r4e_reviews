@@ -15,9 +15,7 @@
 
 package org.eclipse.mylyn.reviews.r4egerrit.ui.views;
 
-
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -34,15 +32,28 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.UIReviewTable;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
 
 
 /**
@@ -52,68 +63,87 @@ import org.eclipse.ui.part.ViewPart;
  */
 
 /**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
+ * This class initiate a new workbench view. The view
+ * shows data obtained from R4E-Gerrit model. The view is connected to the
+ * model using a content provider.
  * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
+ * The view uses a label provider to define how model objects should be
+ * presented in the view. 
  */
 
 public class R4EGerritTableView extends ViewPart {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView";
 
-	private TableViewer viewer;
+	// Labels for the Search 
+	private final String SEARCH_LABEL = "Search for:";
+	private final String SEARCH_BTN = "Search";
+
+	private final int SEARCH_WIDTH = 150;
+	
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	//
+	private Label 	fSearchForLabel;
+	private Label	fSearchResulLabel;
+
+	private Text	fSearchRequestText;
+	private Button	fSearchRequestBtn;
+	private TableViewer fViewer;
+	
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
 
 	/*
-	 * The content provider class is responsible for
-	 * providing objects to the view. It can wrap
-	 * existing objects in adapters or simply return
-	 * objects as-is. These objects may be sensitive
-	 * to the current input of the view, or ignore
-	 * it and always show the same content 
-	 * (like Task List, for example).
+	 * The content provider class is responsible for providing objects to the
+	 * view. It can wrap existing objects in adapters or simply return objects
+	 * as-is. These objects may be sensitive to the current input of the view,
+	 * or ignore it and always show the same content (like Task List, for
+	 * example).
 	 */
-	 
+
 	class ViewContentProvider implements IStructuredContentProvider {
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
+
 		public void dispose() {
 		}
+
 		public Object[] getElements(Object parent) {
-			return new String[] { "One", "Two", "Three" };
+			return new String[] { "One", "Two", "Three" ,"Jacques", "Bouthillier"};
 		}
 	}
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
+
+	class ViewLabelProvider extends LabelProvider implements
+			ITableLabelProvider {
 		public String getColumnText(Object obj, int index) {
 			return getText(obj);
 		}
+
 		public Image getColumnImage(Object obj, int index) {
 			return getImage(obj);
 		}
+
 		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().
-					getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
+			return PlatformUI.getWorkbench().getSharedImages()
+					.getImage(ISharedImages.IMG_OBJ_ELEMENT);
 		}
 	}
+
 	class NameSorter extends ViewerSorter {
 	}
+
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
 
 	/**
 	 * The constructor.
@@ -121,25 +151,125 @@ public class R4EGerritTableView extends ViewPart {
 	public R4EGerritTableView() {
 	}
 
-	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
-	 */
-	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
-		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 
-		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.eclipse.mylyn.reviews.r4e-gerrit.ui.viewer");
+	/**
+	 * Method createPartControl. This is a callback that will allow us to create
+	 * the viewer and initialize it.
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @see org.eclipse.ui.IWorkbenchPart#createPartControl(Composite)
+	 */
+	public void createPartControl(Composite aParent) {
+
+		createSearchSection(aParent);
+		UIReviewTable reviewTable = new UIReviewTable();
+		fViewer = reviewTable.createTableViewerSection(aParent);
+		
+			
+		// Setup the view layout
+		createLayout(aParent);
+		
+		
+		fViewer.setContentProvider(new ViewContentProvider());
+		fViewer.setLabelProvider(new ViewLabelProvider());
+		fViewer.setSorter(new NameSorter());
+		fViewer.setInput(getViewSite());
+//
+//		// Create the help context id for the viewer's control
+//		PlatformUI
+//				.getWorkbench()
+//				.getHelpSystem()
+//				.setHelp(viewer.getControl(),
+//						"org.eclipse.mylyn.reviews.r4e-gerrit.ui.viewer");
 		makeActions();
 		hookContextMenu();
 		hookDoubleClickAction();
 		contributeToActionBars();
 	}
 
+	private void createLayout(Composite aParent) {
+
+		//Add a listener when the view is resized
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 1 ;
+		layout.makeColumnsEqualWidth = false;
+		
+		aParent.setLayout(layout);
+		
+	}
+
+	private void createSearchSection(Composite aParent) {
+		
+		final Group formGroup =  new Group(aParent, SWT.SHADOW_ETCHED_IN | SWT.H_SCROLL);
+		GridData gribDataGroup = new GridData(GridData.FILL_HORIZONTAL);
+//		gribDataGroup.minimumWidth = 260;
+		formGroup.setLayoutData(gribDataGroup);
+		
+		
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginHeight = 0;
+		layout.verticalSpacing = 1;
+		layout.makeColumnsEqualWidth = false;
+		
+		formGroup.setLayout(layout);
+
+
+		//Left side of the Group
+		//Create a form to maintain the search data
+		Composite leftSearchForm = UIUtils.createsGeneralComposite(formGroup, SWT.NONE);
+
+		GridData gribDataViewer = new GridData(GridData.FILL_HORIZONTAL);
+		leftSearchForm.setLayoutData(gribDataViewer);
+
+		GridLayout leftLyoutForm = new GridLayout();
+		leftLyoutForm.numColumns = 3;
+		leftLyoutForm.marginHeight = 0;
+		leftLyoutForm.makeColumnsEqualWidth = false;
+		
+		leftSearchForm.setLayout(leftLyoutForm);
+		
+		// Label for SEARCH for
+		fSearchForLabel = new Label(leftSearchForm, SWT.NONE);
+		fSearchForLabel.setText(SEARCH_LABEL);
+		
+		// Label for the SEARH request
+		fSearchResulLabel = new Label(leftSearchForm, SWT.NONE);
+		fSearchResulLabel.setLayoutData(new GridData(SEARCH_WIDTH, SWT.DEFAULT));
+
+		
+		//Right side of the Group
+
+		Composite rightSsearchForm = UIUtils.createsGeneralComposite(formGroup, SWT.NONE);
+		GridData gribDataViewer2 = new GridData(GridData.FILL_HORIZONTAL | GridData.HORIZONTAL_ALIGN_END);
+		rightSsearchForm.setLayoutData(gribDataViewer2);
+		GridLayout rightLayoutForm = new GridLayout();
+		rightLayoutForm.numColumns = 2;
+		rightLayoutForm.marginHeight = 0;
+		rightLayoutForm.makeColumnsEqualWidth = false;
+		
+		rightSsearchForm.setLayout(rightLayoutForm);
+
+		//Create a SEARCH text data entry
+		fSearchRequestText = new Text (rightSsearchForm, SWT.BORDER);
+		fSearchRequestText.setLayoutData(new GridData(SEARCH_WIDTH, SWT.DEFAULT));
+	
+		//Create a SEARCH button 
+		fSearchRequestBtn = new Button (rightSsearchForm, SWT.NONE);
+		fSearchRequestBtn.setText(SEARCH_BTN);
+
+	}
+
+
+	/**********************************************************/
+	/*                                                        */
+	/* DEFAULT METHODS, EITHER MOVE OR DELETED EVENTUALLY */
+	/*                                                        */
+	/**********************************************************/
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -148,9 +278,9 @@ public class R4EGerritTableView extends ViewPart {
 				R4EGerritTableView.this.fillContextMenu(manager);
 			}
 		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
+		Menu menu = menuMgr.createContextMenu(fViewer.getControl());
+		fViewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuMgr, fViewer);
 	}
 
 	private void contributeToActionBars() {
@@ -160,9 +290,9 @@ public class R4EGerritTableView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-//		manager.add(action1);
-//		manager.add(new Separator());
-//		manager.add(action2);
+		// manager.add(action1);
+		// manager.add(new Separator());
+		// manager.add(action2);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -171,11 +301,11 @@ public class R4EGerritTableView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
-//		manager.add(action1);
-//		manager.add(action2);	
-//		manager.add(action1);	
+		// manager.add(action1);
+		// manager.add(action2);
+		// manager.add(action1);
 	}
 
 	private void makeActions() {
@@ -186,9 +316,9 @@ public class R4EGerritTableView extends ViewPart {
 		};
 		action1.setText("Action 1");
 		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
+		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed");
@@ -196,35 +326,37 @@ public class R4EGerritTableView extends ViewPart {
 		};
 		action2.setText("Action 2");
 		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				ISelection selection = fViewer.getSelection();
+				Object obj = ((IStructuredSelection) selection)
+						.getFirstElement();
+				showMessage("Double-click detected on " + obj.toString());
 			}
 		};
 	}
 
 	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
+		fViewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				doubleClickAction.run();
 			}
 		});
 	}
+
 	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"R4E-Gerrit table",
-			message);
+		MessageDialog.openInformation(fViewer.getControl().getShell(),
+				"R4E-Gerrit table", message);
 	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		viewer.getControl().setFocus();
+		fViewer.getControl().setFocus();
 	}
+	
+
 }

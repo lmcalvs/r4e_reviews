@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -49,6 +51,24 @@ public class UIUtils {
 			}
 		});
 		// TODO later we will want to do this automatically
+	}
+
+	/**
+	 * Creates view preference frame and return the child composite.
+	 * 
+	 * @param aParent
+	 *            the parent composite.
+	 * @return the child composite.
+	 */
+	public static Composite createsGeneralComposite(Composite aParent, int style) {
+		Composite child = new Composite(aParent, style );
+		FormLayout layout = new FormLayout();
+		layout.marginWidth = 10;
+		layout.marginHeight = 1;
+		// child.setSize(WIDTH, HEIGHT);
+		child.setLayout(layout);
+		// child.minHeight = 100;
+		return child;
 	}
 
 }
