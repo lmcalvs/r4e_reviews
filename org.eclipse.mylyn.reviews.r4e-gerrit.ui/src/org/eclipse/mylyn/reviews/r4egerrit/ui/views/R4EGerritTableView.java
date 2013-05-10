@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableLabelProvider;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.UIReviewTable;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -122,21 +123,24 @@ public class R4EGerritTableView extends ViewPart {
 		}
 	}
 
-	class ViewLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-
-		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().getSharedImages()
-					.getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
+//	class ViewLabelProvider extends LabelProvider implements
+//			ITableLabelProvider {
+//		public String getColumnText(Object obj, int index) {
+//			R4EGerritPlugin.Ftracer.traceWarning("getColumnText column: " + index );
+//			return getText(obj);
+//		}
+//
+//		public Image getColumnImage(Object obj, int index) {
+//			R4EGerritPlugin.Ftracer.traceWarning("getColumnImage column: " + index );
+//			return getImage(obj);
+//		}
+//
+//		public Image getImage(Object obj) {
+//			R4EGerritPlugin.Ftracer.traceWarning("getImage column: " + obj.toString() );
+//			return PlatformUI.getWorkbench().getSharedImages()
+//					.getImage(ISharedImages.IMG_OBJ_ELEMENT);
+//		}
+//	}
 
 	class NameSorter extends ViewerSorter {
 	}
@@ -175,7 +179,9 @@ public class R4EGerritTableView extends ViewPart {
 		
 		
 		fViewer.setContentProvider(new ViewContentProvider());
-		fViewer.setLabelProvider(new ViewLabelProvider());
+//		fViewer.setLabelProvider(new ViewLabelProvider());
+		fViewer.setLabelProvider(new ReviewTableLabelProvider());
+		
 		fViewer.setSorter(new NameSorter());
 		fViewer.setInput(getViewSite());
 //

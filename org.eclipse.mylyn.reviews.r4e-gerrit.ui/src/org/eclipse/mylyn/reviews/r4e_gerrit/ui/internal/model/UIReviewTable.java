@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableDefinition;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
@@ -42,19 +43,6 @@ public class UIReviewTable {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	//Definition of the review table list {name, width of the column}
-	private final String[] ID = 		{"ID", "30"};
-	private final String[] SUBJECT = 	{"Subject", "200"};
-	private final String[] OWNER =		{"Owner", "100"};
-	private final String[] PROJECT = 	{"Project", "100"};
-	private final String[] BRANCH = 	{"Branch", "100"};
-	private final String[] UPDATED = 	{"Updated", "100"};
-	private final String[] CR = 		{"CR", "30"};
-	private final String[] IC = 		{"IC", "30"};
-	private final String[] VERIFY = 	{"V","30"};
-
-	private final String TITLES[][] = { ID, SUBJECT, OWNER, PROJECT , BRANCH, UPDATED, CR, IC,VERIFY};
-	
 	private TableViewer aViewer;
 
 	// ------------------------------------------------------------------------
@@ -81,7 +69,7 @@ public class UIReviewTable {
 	
 		//Add a listener when the view is resized
 		GridLayout layout = new GridLayout();
-		layout.numColumns = TITLES.length;
+		layout.numColumns = ReviewTableData.ReviewTableDefinition.values().length;
 		layout.makeColumnsEqualWidth = false;
 		
 		viewerForm.setLayout(layout);
@@ -117,19 +105,24 @@ public class UIReviewTable {
 	 */
 	private TableViewer buildAndLayoutTable(final TableViewer aViewer) {
 		final Table table = aViewer.getTable();
-
-		int size = TITLES.length;
-		for (int index = 0; index < size; index++) {
-			R4EGerritPlugin.Ftracer.traceInfo("index [ " + index + " ] :[0] : "
-					+ TITLES[index][0] + " \tvalue 1: " + TITLES[index][1]);
-			int width = Integer.valueOf(TITLES[index][1]);
-			TableViewerColumn col = createTableViewerColumn(TITLES[index][0],
-					width);
+		
+		//Get the review table definition
+		ReviewTableDefinition[] tableInfo = ReviewTableData.ReviewTableDefinition.values();
+		int size = tableInfo.length;
+		for  (int index = 0; index < size; index++) {
+			R4EGerritPlugin.Ftracer.traceInfo("index [ " + index + 
+					" ] "  + tableInfo[index].getName() + 
+					"\t: " + tableInfo[index].getWidth() +
+					"\t: " + tableInfo[index].getResize() +
+					"\t: " + tableInfo[index].getMoveable() );
+			TableViewerColumn col = createTableViewerColumn(tableInfo[index]);
 			GridData gribData = new GridData(GridData.FILL_BOTH);
-			gribData.minimumWidth = width;
+			gribData.minimumWidth = tableInfo[index].getWidth();
 			col.getColumn().getParent().setLayoutData(gribData);
 
 		}
+
+
 		TableLayout tableLayout = new TableLayout();
 		table.setLayout(tableLayout);
 		table.addControlListener(new ControlListener() {
@@ -157,22 +150,22 @@ public class UIReviewTable {
 		return aViewer;
 	}
 
+	
 	/**
-	 * Create each column 
-	 * @param aTitle
-	 * @param aWidth
+	 * Create each column in the review table list
+	 * @param ReviewTableDefinition
 	 * @return TableViewerColumn
 	 */
-	private TableViewerColumn createTableViewerColumn(String aTitle, int aWidth) {
+	private TableViewerColumn createTableViewerColumn(ReviewTableDefinition  aTableInfo) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(aViewer,
 				SWT.NONE);
 		final TableColumn column = viewerColumn.getColumn();
-		column.setText(aTitle);
-		column.setWidth(aWidth);
-		column.setResizable(true);
-		column.setMoveable(true);
+		column.setText(aTableInfo.getName());
+		column.setWidth(aTableInfo.getWidth());
+		column.setResizable(aTableInfo.getResize());
+		column.setMoveable(aTableInfo.getMoveable());
 		return viewerColumn;
 
 	}
-
+	
 }

@@ -45,8 +45,9 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	/**
 	 * Field SELECT_PICTURE_FILE. (value is ""icons/select.png"")
 	 */
-	private String SELECT_PICTURE_FILE = "icons/select.png";
-
+//	private String SELECT_PICTURE_FILE = "icons/select.png";
+	private String SELECT_PICTURE_FILE = "icons/select.gif";
+	
 	// ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
