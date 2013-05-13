@@ -67,7 +67,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	protected IContributionItem[] getContributionItems() {
 		
 		R4EGerritPlugin.Ftracer.traceInfo("\t\t DynamicMenuAddition .getContributionItems()" );
-		 CommandContributionItem[] contributionItems = null;
+		 CommandContributionItem[] contributionItems = new CommandContributionItem[0];
 		 if (fServer != null) {
 			 fMapServer = fServer.getGerritMapping();			 
 		 }

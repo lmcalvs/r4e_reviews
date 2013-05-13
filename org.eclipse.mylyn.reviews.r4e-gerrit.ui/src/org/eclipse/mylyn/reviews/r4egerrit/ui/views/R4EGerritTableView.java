@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableLabelProvider;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.UIReviewTable;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
@@ -57,6 +58,7 @@ import org.eclipse.ui.part.ViewPart;
 
 
 
+
 /**
  * @author Jacques Bouthillier
  * @version $Revision: 1.0 $
@@ -73,6 +75,7 @@ import org.eclipse.ui.part.ViewPart;
  */
 
 public class R4EGerritTableView extends ViewPart {
+
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -98,6 +101,7 @@ public class R4EGerritTableView extends ViewPart {
 	private Text	fSearchRequestText;
 	private Button	fSearchRequestBtn;
 	private TableViewer fViewer;
+	private ReviewTableData fReviewItem = new ReviewTableData();
 	
 	private Action action1;
 	private Action action2;
@@ -119,7 +123,8 @@ public class R4EGerritTableView extends ViewPart {
 		}
 
 		public Object[] getElements(Object parent) {
-			return new String[] { "One", "Two", "Three" ,"Jacques", "Bouthillier"};
+			return fReviewItem.getReviews();
+		//	return new String[] { "One", "Two", "Three" ,"Jacques", "Bouthillier"};
 		}
 	}
 
@@ -183,7 +188,13 @@ public class R4EGerritTableView extends ViewPart {
 		fViewer.setLabelProvider(new ReviewTableLabelProvider());
 		
 		fViewer.setSorter(new NameSorter());
-		fViewer.setInput(getViewSite());
+		
+		//Test to load the content provider
+		fReviewItem.TestLoad();
+		
+		fViewer.setInput(fReviewItem.getReviews());
+		
+//		fViewer.setInput(getViewSite());
 //
 //		// Create the help context id for the viewer's control
 //		PlatformUI
@@ -365,4 +376,6 @@ public class R4EGerritTableView extends ViewPart {
 	}
 	
 
+	
+	
 }

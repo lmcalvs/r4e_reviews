@@ -122,7 +122,6 @@ public class UIReviewTable {
 
 		}
 
-
 		TableLayout tableLayout = new TableLayout();
 		table.setLayout(tableLayout);
 		table.addControlListener(new ControlListener() {
