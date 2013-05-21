@@ -25,36 +25,31 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableLabelProvider;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.UIReviewTable;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGERRITUIConstants;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.IServiceLocator;
 
 
 
@@ -100,59 +95,12 @@ public class R4EGerritTableView extends ViewPart {
 
 	private Text	fSearchRequestText;
 	private Button	fSearchRequestBtn;
-	private TableViewer fViewer;
+	private static TableViewer fViewer;
 	private ReviewTableData fReviewItem = new ReviewTableData();
 	
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
-
-	/*
-	 * The content provider class is responsible for providing objects to the
-	 * view. It can wrap existing objects in adapters or simply return objects
-	 * as-is. These objects may be sensitive to the current input of the view,
-	 * or ignore it and always show the same content (like Task List, for
-	 * example).
-	 */
-
-	class ViewContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-
-		public void dispose() {
-		}
-
-		public Object[] getElements(Object parent) {
-			return fReviewItem.getReviews();
-		//	return new String[] { "One", "Two", "Three" ,"Jacques", "Bouthillier"};
-		}
-	}
-
-//	class ViewLabelProvider extends LabelProvider implements
-//			ITableLabelProvider {
-//		public String getColumnText(Object obj, int index) {
-//			R4EGerritPlugin.Ftracer.traceWarning("getColumnText column: " + index );
-//			return getText(obj);
-//		}
-//
-//		public Image getColumnImage(Object obj, int index) {
-//			R4EGerritPlugin.Ftracer.traceWarning("getColumnImage column: " + index );
-//			return getImage(obj);
-//		}
-//
-//		public Image getImage(Object obj) {
-//			R4EGerritPlugin.Ftracer.traceWarning("getImage column: " + obj.toString() );
-//			return PlatformUI.getWorkbench().getSharedImages()
-//					.getImage(ISharedImages.IMG_OBJ_ELEMENT);
-//		}
-//	}
-
-	class NameSorter extends ViewerSorter {
-	}
-
-	// ------------------------------------------------------------------------
-	// Constructors
-	// ------------------------------------------------------------------------
 
 	/**
 	 * The constructor.
@@ -183,17 +131,14 @@ public class R4EGerritTableView extends ViewPart {
 		createLayout(aParent);
 		
 		
-		fViewer.setContentProvider(new ViewContentProvider());
-//		fViewer.setLabelProvider(new ViewLabelProvider());
-		fViewer.setLabelProvider(new ReviewTableLabelProvider());
-		
-		fViewer.setSorter(new NameSorter());
+	
 		
 		//Test to load the content provider
 		fReviewItem.TestLoad();
 		
 		fViewer.setInput(fReviewItem.getReviews());
 		
+	
 //		fViewer.setInput(getViewSite());
 //
 //		// Create the help context id for the viewer's control
@@ -219,6 +164,10 @@ public class R4EGerritTableView extends ViewPart {
 		
 	}
 
+	/**
+	 * Create a group to show the search command and a search text
+	 * @param Composite aParent
+	 */
 	private void createSearchSection(Composite aParent) {
 		
 		final Group formGroup =  new Group(aParent, SWT.SHADOW_ETCHED_IN | SWT.H_SCROLL);
@@ -234,7 +183,6 @@ public class R4EGerritTableView extends ViewPart {
 		layout.makeColumnsEqualWidth = false;
 		
 		formGroup.setLayout(layout);
-
 
 		//Left side of the Group
 		//Create a form to maintain the search data
@@ -278,13 +226,19 @@ public class R4EGerritTableView extends ViewPart {
 		//Create a SEARCH button 
 		fSearchRequestBtn = new Button (rightSsearchForm, SWT.NONE);
 		fSearchRequestBtn.setText(SEARCH_BTN);
+		fSearchRequestBtn.addListener(SWT.Selection, new Listener()  {
+
+			@Override
+			public void handleEvent(Event event) {
+				UIUtils.notInplementedDialog("Search Button");
+			}});
 
 	}
 
 
 	/**********************************************************/
 	/*                                                        */
-	/* DEFAULT METHODS, EITHER MOVE OR DELETED EVENTUALLY */
+	/* DEFAULT METHODS, EITHER MOVE OR DELETED EVENTUALLY     */
 	/*                                                        */
 	/**********************************************************/
 	private void hookContextMenu() {
@@ -315,6 +269,10 @@ public class R4EGerritTableView extends ViewPart {
 	private void fillContextMenu(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(action2);
+		CommandContributionItem[] contribItems = buildContributions();
+		for (int index = 0; index < contribItems.length; index++) {
+			manager.add(contribItems[index]);			
+		}
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -376,6 +334,31 @@ public class R4EGerritTableView extends ViewPart {
 	}
 	
 
-	
+	/**
+	 * Create a list for commands to add to the table review list menu
+	 * @return CommandContributionItem[]
+	 */
+	private CommandContributionItem[] buildContributions() {
+		IServiceLocator serviceLocator = getViewSite().getActionBars()
+				.getServiceLocator();
+		CommandContributionItem[] contributionItems = new CommandContributionItem[1];
+		CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(
+				serviceLocator, R4EGERRITUIConstants.ADJUST_MY_STARRED_NAME,
+				R4EGERRITUIConstants.ADJUST_MY_STARRED_COMMAND_ID,
+				CommandContributionItem.STYLE_PUSH);
+
+		contributionParameter.label = R4EGERRITUIConstants.ADJUST_MY_STARRED_NAME;
+		contributionParameter.visibleEnabled = true;
+		contributionItems[0] = new CommandContributionItem(
+				contributionParameter);
+		
+
+		return contributionItems;
+
+	}
+
+	public static TableViewer getTableViewer() {
+		return fViewer;
+	}
 	
 }

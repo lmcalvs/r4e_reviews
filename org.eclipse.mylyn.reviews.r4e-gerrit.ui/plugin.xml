@@ -234,8 +234,8 @@
                visible="true">
          </separator>
       </menuContribution>  
-   
-      documentationIndex
+      
+      
   </extension>
    
    <extension
@@ -317,6 +317,13 @@
             	name="DocumentationAccessControls">
       </command>
       
+          <!-- The following are the commands under the "Review TableList" sub-menu
+         -->
+       <command
+            	id="org.eclipse.mylyn.reviews.r4e-gerrit.ui.adjustMyStarred"
+            	name="Toggle ID Selection">
+      </command>
+ 
    </extension>
 
    <extension
@@ -390,6 +397,12 @@
 	      <handler
 	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.documentation.AccessControlHandler"
 	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.documentationAccessControls">
+	      </handler>
+	     <!-- The following are the handlers under the "Table review list" sub-menu
+         -->
+	      <handler
+	            class="org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.table.AdjustMyStarredHandler"
+	            commandId="org.eclipse.mylyn.reviews.r4e-gerrit.ui.adjustMyStarred">
 	      </handler>
 	      
    </extension>

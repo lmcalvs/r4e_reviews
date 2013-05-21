@@ -32,61 +32,7 @@ public class ReviewTableData {
 	// ------------------------------------------------------------------------
 
 	private ArrayList<ReviewTableListItem> fReviewList = null;
-
-
-	// ------------------------------------------------------------------------
-	// Constants
-	// ------------------------------------------------------------------------
-	//Definition of the review table list {name, width of the column, Resizeable, Moveable}
-	public enum ReviewTableDefinition {
-		//           Name		Width	Resize	Moveable
-		ID 			("ID",		 25, 	false, 	true),
-		SUBJECT 	("Subject", 200, 	true, 	true),
-		OWNER 		("Owner", 	100, 	true, 	true),
-		PROJECT 	("Project", 100, 	true, 	true),
-		BRANCH 		("Branch",	100, 	true, 	true),
-		UPDATED 	("Updated", 100, 	true, 	true),
-		CR 			("CR", 		27, 	false, 	true),
-		IC 			("IC", 		27, 	false, 	true),
-		VERIFY 		("V", 		27, 	false, 	true);
-		
-	    private String fHeader;    
-	    private int fwidth;  
-	    private Boolean fResize;
-	    private Boolean fMoveable;
-	    
-	    private ReviewTableDefinition (String aName, int aWidth, Boolean aResize, Boolean aMove) {
-	    	fHeader = aName;
-	    	fwidth = aWidth;
-	    	fResize = aResize;
-	    	fMoveable = aMove;
-	    }
-	    
-	    public String getName () {
-	    	return fHeader;
-	    }
-	    
-	    public int getWidth () {
-	    	return fwidth;
-	    }
-	    
-	    public Boolean getResize() {
-	    	return fResize;
-	    }
-	    
-	    public Boolean getMoveable () {
-	    	return fMoveable;
-	    }
-	    
-	    public static String[] getColumnName () {
-	    	ArrayList<String> listName = new ArrayList<String>();
-	    	for (ReviewTableDefinition st: ReviewTableDefinition.values()) {
-	    		listName.add(st.getName());
-	    	}
-	    	return listName.toArray(new String[] {});
-	    }
-
-	}
+	// A dummy list
 	
 //	public ReviewTableDefinition[] REVIEW_TABLE_INFO = ReviewTableDefinition.values();
 	
@@ -142,6 +88,15 @@ public class ReviewTableData {
 	    public String getCr() {return fCr;}    
 	    public String getIc() {return fIc;}
 	    public String getVerify() {return fVerify;}
+	    
+	    public Boolean getIdValue() { 
+	    	return Boolean.valueOf(fId);
+	    }
+
+	    public void setIdValue(Boolean aSt) { 
+	    	fId = String.valueOf(aSt);
+	    }
+
 	}
 
 	/**
@@ -173,16 +128,22 @@ public class ReviewTableData {
 
 	/**
 	 * Provide the list of review available for the table list
-	 * @return ArrayList<ReviewTableListItem>
+	 * @return ReviewTableListItem[]
 	 */
 	public ReviewTableListItem[] getReviews () {
+		if (fReviewList != null) {
+			return fReviewList.toArray(new ReviewTableListItem[] {} );
+			
+		}
+		fReviewList = new ArrayList<ReviewTableListItem>();
 		return fReviewList.toArray(new ReviewTableListItem[] {} );
 	}
 
 	String[][] testTable = { 
 			{ "true", "Subject number 1", "HoHo 1" ,"proj 1", "branch 1", "updated 1", "1", "2", "1"}, 
-			{ "true", "Subject number 2", "HoHo 2" ,"proj 2", "branch 2", "updated 2", "2", "2", "2"},
-			{ "", "Subject number 3", "HoHo 3" ,"proj 3", "branch 3", "updated 3", "2", "1", "1"},
+			{ "true", "Subject number 2", "HoHo 2" ,"proj 2", "branch 2", "updated 2", "-2", "2", "2"},
+			{ "", "Subject number 3", "HoHo 3" ,"proj 3", "branch 3", "updated 3", "2", "1", "-1"},
+			{ "false", "Subject number 5", "HoHo 5" ,"proj 5", "branch 5", "updated 5", "3", "-1", "-2"},
 			{ "false", "Subject number 4", "HoHo 4" ,"proj 4", "branch 4", "updated 4", "", "1", ""}};
 
 	//Purpose to load the data into the table
