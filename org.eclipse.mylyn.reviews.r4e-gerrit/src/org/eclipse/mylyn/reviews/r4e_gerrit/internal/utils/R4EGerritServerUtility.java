@@ -32,7 +32,15 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
+import org.eclipse.mylyn.internal.tasks.core.IRepositoryConstants;
+import org.eclipse.mylyn.internal.tasks.core.RepositoryQuery;
+import org.eclipse.mylyn.internal.tasks.core.RepositoryTemplateManager;
+import org.eclipse.mylyn.internal.tasks.core.TaskRepositoryManager;
+import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.tasks.core.RepositoryTemplate;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 
 
 /**
@@ -74,12 +82,19 @@ public class R4EGerritServerUtility {
 	
 	private R4EGerritServerUtility instance = null;
 
+	private Map<TaskRepository, String> fResultTask = new HashMap<TaskRepository,String>();
+	
+	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 	public R4EGerritServerUtility() {
 		instance = this;
 		mapConfiguredGerritServer();
+		//Begin Test
+		testTaskRepo();
+		//End Test
 	}
 
 	// ------------------------------------------------------------------------
@@ -90,6 +105,7 @@ public class R4EGerritServerUtility {
 		List<String> repoPaths = repoUtil.getConfiguredRepositories();
 		RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
 		Repository repo = null;
+		RepositoryTemplateManager templateManager = TasksUiPlugin.getRepositoryTemplateManager();
 		
 		//Reset the list of Gerrit server
 		fResult.clear();
@@ -118,10 +134,32 @@ public class R4EGerritServerUtility {
 							ConfigConstants.CONFIG_KEY_URL);
 					R4EGerritPlugin.Ftracer.traceInfo("\t\t " + remote +" -> remoteURL: " + remoteURL );
 					
-					//Test if this is a Gerrit server
+					//Test if this is a Gerrit server and add it to the Dialogue cmbo
 					String convertedRemoteURL = getReformatGerritServer(remoteURL) ;
 					if (null != convertedRemoteURL  ) {
 						fResult.put(repo, convertedRemoteURL);
+						//Test Begin
+						//Verify to only add once
+						Boolean found = false;
+						for (RepositoryTemplate template : templateManager.getTemplates(GerritConnector.CONNECTOR_KIND)) {
+							R4EGerritPlugin.Ftracer.traceInfo("\t template.label: " + template.label
+									+" repo getname: " + repo.getWorkTree().getName() );
+							//Test the name and the remoteURL to reduce duplications
+							if (template.label.equals(repo.getWorkTree().getName()) ||
+							    template.repositoryUrl.equals(remoteURL) ) {
+								found = true;
+								break;
+							}
+						}
+						
+						if (!found) {
+							RepositoryTemplate templateTest = new RepositoryTemplate(repo.getWorkTree().getName(), convertedRemoteURL,
+									"", "", "", "", "", "", false, true);
+							templateManager.addTemplate(GerritConnector.CONNECTOR_KIND, templateTest);
+							
+						}
+						//Test END
+
 					}
 				}			
 			}
@@ -262,6 +300,90 @@ public class R4EGerritServerUtility {
 			R4EGerritPlugin.Ftracer.traceInfo("Need to open the dialogue to populate a gerrit server" ); 			
 		}
 		
+	}
+
+	/******************************************************************/
+	/******************************************************************/
+	/******************************************************************/
+	/******************************************************************/
+	/********  TEST   *************************************************/
+	/******************************************************************/
+	/******************************************************************/
+	/******************************************************************/
+	/******************************************************************/
+	
+	private void testTaskRepo () {
+	//	TaskRepository repository = new TaskRepository(GerritConnector.CONNECTOR_KIND, "http://repository"); //$NON-NLS-1$
+//		final TaskRepository repository = new TaskRepository(GerritConnector.CONNECTOR_KIND, "https://"); //$NON-NLS-1$
+		
+		final TaskRepository repository = getTaskRepository(); //$NON-NLS-1$
+		R4EGerritPlugin.Ftracer.traceInfo("repository:   " + repository.getUrl()); //$NON-NLS-1$
+//		int ret = TasksUiUtil.openEditRepositoryWizard(repository); //Generate a null pointer for the workbench window
+		
+		
+		R4EGerritPlugin.Ftracer.traceInfo("Before: repository:   " + repository.getUrl() ); //$NON-NLS-1$
+
+	}
+	
+	/**
+	 * Look at the current Gerrit repository and return a default value 
+	 * i.e the first Gerrit if found ???
+	 * @return TaskRepository
+	 */
+	private TaskRepository getTaskRepository () {
+		TaskRepository taskRepo = null;
+		/**
+		 * Field DEFAULT_REPOSITORY. (value is ""https://repository"")
+		 */
+		String DEFAULT_REPOSITORY = "https://";
+		//Reset the list of Gerrit server
+		fResultTask.clear();
+
+		//Begin search for the current Gerrit connector
+		final RepositoryTemplateManager templateManager = TasksUiPlugin.getRepositoryTemplateManager();
+		
+		for (RepositoryTemplate template : templateManager.getTemplates(GerritConnector.CONNECTOR_KIND)) {
+			R4EGerritPlugin.Ftracer.traceInfo("Gerrit repository: " + template.label + "\t URL: " + template.repositoryUrl);
+			taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, template.repositoryUrl);
+			taskRepo.setRepositoryLabel(template.label);
+			fResultTask.put(taskRepo, template.repositoryUrl);
+//			//Test Begin
+//			RepositoryTemplate templateTest = new RepositoryTemplate(template.label, template.repositoryUrl,
+//					"", "", "", "", "", "", false, true);
+//			templateManager.addTemplate(GerritConnector.CONNECTOR_KIND, templateTest);
+//			//Test END
+		}
+
+
+		if (taskRepo == null) {
+			//Create a default Task repo
+			taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, DEFAULT_REPOSITORY);
+			
+		}
+		
+		//Test to read the TaskRepositories
+		
+		TaskRepositoryManager repositoryManager = TasksUiPlugin.getRepositoryManager();
+		
+		//List all repositories in the the TaskRepositories view
+		List <TaskRepository>listallRepo = repositoryManager.getAllRepositories();
+		for (int i = 0;i < listallRepo.size(); i++) {
+			R4EGerritPlugin.Ftracer.traceInfo("TaskRepositoryManager repository: [ " + i + " ] : " + listallRepo.get(i).getRepositoryLabel() );
+		}
+		
+		//Only get the TaskRepository related to Gerrit review connnector
+		R4EGerritPlugin.Ftracer.traceInfo("--------Review repo ---------------");
+		Set<TaskRepository> reviewRepo = repositoryManager.getRepositories(GerritConnector.CONNECTOR_KIND);
+		for (TaskRepository tp: reviewRepo) {
+			R4EGerritPlugin.Ftracer.traceInfo("Only Gerrit Review repo: " + tp.getRepositoryLabel() + "\t url: " + tp.getRepositoryUrl());
+		}
+
+		//Testing bugzilla but need to add the mylyn bugzilla in plugin dependencies
+//		for (RepositoryTemplate template : templateManager.getTemplates(BugzillaCorePlugin.CONNECTOR_KIND)) {
+//			R4EGerritPlugin.Ftracer.traceInfo("Gerrit Bugzilla repository: " + template.label + "\t URL: " + template.repositoryUrl);
+//		}
+		
+		return taskRepo;
 	}
 
 }
