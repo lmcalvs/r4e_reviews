@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
 import org.eclipse.mylyn.internal.tasks.ui.wizards.EditRepositoryWizard;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
@@ -62,7 +61,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 
 	private R4EGerritServerUtility fServerUtil = null;
 	
-	private Map<Repository, String> fMapRepoServer = null;
+	private Map<TaskRepository, String> fMapRepoServer = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -91,17 +90,16 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			if (objWidget instanceof MenuItem) {
 				MenuItem menuItem = (MenuItem) objWidget;
 				menuItemText = menuItem.getText();
-//				R4EGerritPlugin.Ftracer.traceInfo("MenuItem: " + menuItemText );
 				R4EGerritPlugin.Ftracer.traceInfo("MenuItem: " + menuItemText + "\t value: " +
 						param.get(menuItemText) + " VS saved: "  + fServerUtil.getLastSavedGerritServer());
 				fMapRepoServer = fServerUtil.getGerritMapping();
 				String stURL = fServerUtil.getMenuSelectionURL(menuItemText);
 				R4EGerritPlugin.Ftracer.traceInfo("URL for the menuItemText: " + stURL);
 				if (!fMapRepoServer.isEmpty()) {
-					Set<Repository> mapSet = fMapRepoServer.keySet();
+					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
 					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
-					for (Repository key: mapSet) {
-						R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getWorkTree().getName() + "\t URL: " + fMapRepoServer.get(key));
+					for (TaskRepository key: mapSet) {
+						R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
 					}
 				}
 				
@@ -143,15 +141,11 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			public IStatus run(final IProgressMonitor aMonitor) {
 				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 						
-//				final TaskRepository repository = getTaskRepository(); 
-				final TaskRepository repository = getTaskRepository(fServerUtil.getLastSavedGerritServer()); 
+				final TaskRepository taskRepository = getTaskRepository(fServerUtil.getLastSavedGerritServer()); 
 				
-				R4EGerritPlugin.Ftracer.traceInfo("repository:   " + repository.getUrl()); //$NON-NLS-1$
-//				int ret = TasksUiUtil.openEditRepositoryWizard(repository); //Generate a null pointer for the workbench window
+				R4EGerritPlugin.Ftracer.traceInfo("repository:   " + taskRepository.getUrl()); //$NON-NLS-1$
 				
-				
-				R4EGerritPlugin.Ftracer.traceInfo("Before: repository:   " + repository.getUrl() ); //$NON-NLS-1$
-				final EditRepositoryWizard wizard = new EditRepositoryWizard(repository);
+				final EditRepositoryWizard wizard = new EditRepositoryWizard(taskRepository);
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 							WizardDialog dialog = new TaskRepositoryWizardDialog(wizard.getShell(), wizard);
@@ -162,13 +156,13 @@ public class AddGerritSiteHandler extends AbstractHandler {
 				});
 				
 				//When the wizard is closed
-				if (repository.getUrl().isEmpty() || 
-						repository.getUrl().endsWith(R4EUIConstants.DEFAULT_REPOSITORY)) {
+				if (taskRepository.getUrl().isEmpty() || 
+						taskRepository.getUrl().endsWith(R4EUIConstants.DEFAULT_REPOSITORY)) {
 					//User selected the Cancel button
 					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: CANCEL "  ); //$NON-NLS-1$
 				} else {
 					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  FINISH " ); //$NON-NLS-1$		
-					fServerUtil.saveLastGerritServer(repository.getUrl());
+					fServerUtil.saveLastGerritServer(taskRepository.getUrl());
 					/*****************************************************/
 					/*                                                   */
 					/*    Now, we need to get the Gerrit repo data       */
@@ -179,8 +173,8 @@ public class AddGerritSiteHandler extends AbstractHandler {
 					fServerUtil.getReviewListFromServer ();
 				}
 				
-				R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  " + repository.getUrl() + 
-						"\n\t repo: " + repository.getRepositoryUrl() ); //$NON-NLS-1$
+				R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  " + taskRepository.getUrl() + 
+						"\n\t repo: " + taskRepository.getRepositoryUrl() ); //$NON-NLS-1$
 				
 
 				aMonitor.done();
@@ -199,27 +193,21 @@ public class AddGerritSiteHandler extends AbstractHandler {
 	 * @param String default URL
 	 * @return TaskRepository
 	 */
-//	private TaskRepository getTaskRepository () {
 	private TaskRepository getTaskRepository (String aUrl) {
 		TaskRepository taskRepo = null;
-		//Begin search for the current Gerrit connector
-//		final RepositoryTemplateManager templateManager = TasksUiPlugin.getRepositoryTemplateManager();
-//		
-//		for (RepositoryTemplate template : templateManager.getTemplates(GerritConnector.CONNECTOR_KIND)) {
-//			R4EGerritPlugin.Ftracer.traceInfo("Gerrit repository: " + template.label + "\t URL: " + template.repositoryUrl);
-//			taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, template.repositoryUrl);
-//			taskRepo.setRepositoryLabel(template.label);
-//		}
-
-
+		//Search for the current Gerrit connector
+		taskRepo =  R4EGerritServerUtility.getDefault().getTaskRepo(aUrl);
+		
 		if (taskRepo == null) {
-			//Create a default Task repo
-//			taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, R4EUIConstants.DEFAULT_REPOSITORY);
 			if (aUrl != null) {
 				taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, aUrl);
 			} else {
+				//Create a default Task repo
 				taskRepo = new TaskRepository (GerritConnector.CONNECTOR_KIND, R4EUIConstants.DEFAULT_REPOSITORY);				
 			}
+			
+		} else {
+			R4EGerritPlugin.Ftracer.traceInfo("Repo already in list:  " + taskRepo.getRepositoryLabel()); 
 			
 		}
 		return taskRepo;

@@ -26,10 +26,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.handlers.IHandlerService;
 
@@ -56,7 +56,8 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 
 	private R4EGerritServerUtility fServerUtil = null;
 	
-	private Map<Repository, String> fMapRepoServer = null;
+//	private Map<Repository, String> fMapRepoServer = null;
+	private Map<TaskRepository, String> fMapRepoServer = null;
 
 
 	// ------------------------------------------------------------------------
@@ -95,10 +96,13 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 				//Debug purpose, see which project have a gerrit server
 				fMapRepoServer = fServerUtil.getGerritMapping();
 				if (!fMapRepoServer.isEmpty()) {
-					Set<Repository> mapSet = fMapRepoServer.keySet();
+					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
 					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
-					for (Repository key: mapSet) {
-						R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " + key.getWorkTree().getName() + "\t URL: " + fMapRepoServer.get(key));
+					for (TaskRepository key: mapSet) {
+						R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " 
+								+ key.getRepositoryLabel() 
+								+ "\t URL: " 
+								+ fMapRepoServer.get(key));
 					}
 				}
 				//End Debug

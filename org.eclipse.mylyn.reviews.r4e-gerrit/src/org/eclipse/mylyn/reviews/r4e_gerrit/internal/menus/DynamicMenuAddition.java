@@ -20,10 +20,10 @@ import java.util.Set;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
@@ -56,7 +56,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	
 	private R4EGerritServerUtility fServer = null;
 	
-	private Map<Repository, String> fMapServer = null;
+	private Map<TaskRepository, String> fMapServer = null;
 	
 	private ImageDescriptor fSelectPicture = null;
 	
@@ -65,37 +65,44 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	// ------------------------------------------------------------------------
 	@Override
 	protected IContributionItem[] getContributionItems() {
-		
-		R4EGerritPlugin.Ftracer.traceInfo("\t\t DynamicMenuAddition .getContributionItems()" );
-		 CommandContributionItem[] contributionItems = new CommandContributionItem[0];
-		 if (fServer != null) {
-			 fMapServer = fServer.getGerritMapping();			 
-		 }
-		 
+
+		R4EGerritPlugin.Ftracer
+				.traceInfo("\t\t DynamicMenuAddition .getContributionItems()");
+		CommandContributionItem[] contributionItems = new CommandContributionItem[0];
+		if (fServer != null) {
+			fMapServer = fServer.getGerritMapping();
+		}
+
 		if (fMapServer != null && !fMapServer.isEmpty()) {
-				Set<Repository> mapSet = fMapServer.keySet();
-				String lastSelected = fServer.getLastSavedGerritServer();
-				R4EGerritPlugin.Ftracer.traceInfo("-------------------");
-				int size = mapSet.size();
-				contributionItems = new CommandContributionItem[size];
+			Set<TaskRepository> mapSet = fMapServer.keySet();
+			String lastSelected = fServer.getLastSavedGerritServer();
+			R4EGerritPlugin.Ftracer.traceInfo("-------------------");
+			int size = mapSet.size();
+			contributionItems = new CommandContributionItem[size];
 
-				int count = 0;
-				for (Repository key: mapSet) {
-					R4EGerritPlugin.Ftracer.traceInfo("Map Key: " + key.getWorkTree().getName() + "\t URL: " + fMapServer.get(key));
-					CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(fServiceLocator, 
-									fMapServer.get(key), R4EUIConstants.ADD_GERRIT_SITE_COMMAND_ID,  
-									CommandContributionItem.STYLE_PUSH);  
-					contributionParameter.label = key.getWorkTree().getName(); 
-					contributionParameter.visibleEnabled = true; 
-					if (lastSelected != null && lastSelected.equals(fMapServer.get(key)) ) {
-						fSelectPicture = R4EGerritPlugin.getImageDescriptor(SELECT_PICTURE_FILE);
+			int count = 0;
+			for (TaskRepository key : mapSet) {
+				R4EGerritPlugin.Ftracer.traceInfo("Map Key: "
+						+ key.getRepositoryLabel() + "\t URL: "
+						+ fMapServer.get(key));
+				CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(
+						fServiceLocator, fMapServer.get(key),
+						R4EUIConstants.ADD_GERRIT_SITE_COMMAND_ID,
+						CommandContributionItem.STYLE_PUSH);
+				contributionParameter.label = key.getRepositoryLabel();
+				contributionParameter.visibleEnabled = true;
+				if (lastSelected != null
+						&& lastSelected.equals(fMapServer.get(key))) {
+					fSelectPicture = R4EGerritPlugin
+							.getImageDescriptor(SELECT_PICTURE_FILE);
 
-						contributionParameter.icon = fSelectPicture;
-						
-					}
-					contributionItems[count++] = new CommandContributionItem(contributionParameter) ;
+					contributionParameter.icon = fSelectPicture;
+
 				}
+				contributionItems[count++] = new CommandContributionItem(
+						contributionParameter);
 			}
+		}
 
 		return contributionItems;
 	}
