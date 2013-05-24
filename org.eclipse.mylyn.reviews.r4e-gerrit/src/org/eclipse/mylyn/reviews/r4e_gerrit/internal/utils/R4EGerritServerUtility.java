@@ -116,7 +116,7 @@ public class R4EGerritServerUtility {
 		R4EGerritPlugin.Ftracer.traceInfo("--------Review repo ---------------");
 		Set<TaskRepository> reviewRepo = repositoryManager.getRepositories(GerritConnector.CONNECTOR_KIND);
 		for (TaskRepository taskRepo: reviewRepo) {
-			R4EGerritPlugin.Ftracer.traceInfo("Only Gerrit Review repo: " + taskRepo.getRepositoryLabel() + "\t url: " + taskRepo.getRepositoryUrl());
+			R4EGerritPlugin.Ftracer.traceInfo("Add Gerrit Review repo: " + taskRepo.getRepositoryLabel() + "\t url: " + taskRepo.getRepositoryUrl());
 			fResultTask.put(taskRepo, taskRepo.getRepositoryUrl());
 			if (null != taskRepo.getRepositoryUrl()  ) {
 				adjustTemplatemanager(taskRepo);			
