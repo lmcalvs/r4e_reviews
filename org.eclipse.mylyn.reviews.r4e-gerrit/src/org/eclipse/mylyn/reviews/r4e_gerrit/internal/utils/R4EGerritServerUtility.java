@@ -421,7 +421,7 @@ public class R4EGerritServerUtility {
 //		int ret = TasksUiUtil.openEditRepositoryWizard(repository); //Generate a null pointer for the workbench window
 		
 		
-		R4EGerritPlugin.Ftracer.traceInfo("Before: repository:   " + repository.getUrl() ); //$NON-NLS-1$
+		R4EGerritPlugin.Ftracer.traceInfo("Before: repository url:   " + repository.getUrl() ); //$NON-NLS-1$
 
 	}
 	
