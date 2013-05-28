@@ -176,7 +176,7 @@ public class CloneAnomaliesCommentsTests extends R4ETestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		fTestMain = null;
+		super.tearDown();
 	}
 
 	// ------------------------------------------------------------------------
