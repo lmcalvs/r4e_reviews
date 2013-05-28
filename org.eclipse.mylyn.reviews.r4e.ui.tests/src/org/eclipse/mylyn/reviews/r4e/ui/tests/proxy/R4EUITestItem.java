@@ -114,7 +114,13 @@ public class R4EUITestItem extends R4EUITestElement {
 					fParentProxy.getCommandProxy().executeCommand(
 							"org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems", null);
 					TestUtils.waitForJobs();
-					item = (R4EUIReviewItem) getNavigatorSelectedElement();
+
+					IR4EUIModelElement element = getNavigatorSelectedElement();
+					R4EAssert r4eAssert = new R4EAssert("createCommitItem");
+					r4eAssert.setTest("getNavigatorSelectedElement");
+					r4eAssert.assertEquals(element.getClass(), R4EUIReviewItem.class);
+
+					item = (R4EUIReviewItem) element;
 				} catch (ExecutionException e) {
 					// ignore, test will fail later
 				} catch (NotDefinedException e) {
@@ -166,7 +172,13 @@ public class R4EUITestItem extends R4EUITestElement {
 					//Execute New Review Group Command
 					fParentProxy.getCommandProxy().executeCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND, null);
 					TestUtils.waitForJobs();
-					item = (R4EUIReviewItem) getNavigatorSelectedElement();
+
+					IR4EUIModelElement element = getNavigatorSelectedElement();
+					R4EAssert r4eAssert = new R4EAssert("createManualTreeItem");
+					r4eAssert.setTest("getNavigatorSelectedElement");
+					r4eAssert.assertEquals(element.getClass(), R4EUIReviewItem.class);
+
+					item = (R4EUIReviewItem) element;
 				} catch (ExecutionException e) {
 					// ignore, test will fail later
 				} catch (NotDefinedException e) {
@@ -243,7 +255,13 @@ public class R4EUITestItem extends R4EUITestElement {
 					//Close editor
 					closeEditor(editor);
 					TestUtils.waitForJobs();
-					item = (R4EUIReviewItem) getNavigatorSelectedElement();
+
+					IR4EUIModelElement element = getNavigatorSelectedElement();
+					R4EAssert r4eAssert = new R4EAssert("createManualTextItem");
+					r4eAssert.setTest("getNavigatorSelectedElement");
+					r4eAssert.assertEquals(element.getClass(), R4EUIReviewItem.class);
+
+					item = (R4EUIReviewItem) element;
 				} catch (ExecutionException e) {
 					// ignore, test will fail later
 				} catch (NotDefinedException e) {
