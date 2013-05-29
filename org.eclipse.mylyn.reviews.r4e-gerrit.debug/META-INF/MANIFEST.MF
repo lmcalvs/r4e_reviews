@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: R4EDebug
+Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e-gerrit.debug
+Bundle-Version: 0.2.0.qualifier
+Bundle-Activator: org.eclipse.mylyn.reviews.r4e_gerrit.debug.R4EGerritDebugActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.mylyn.reviews.r4e_gerrit.debug,
+ org.eclipse.mylyn.reviews.r4e_gerrit.debug.utils

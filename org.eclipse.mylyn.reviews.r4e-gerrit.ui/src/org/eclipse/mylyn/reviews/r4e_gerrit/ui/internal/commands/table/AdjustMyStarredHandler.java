@@ -21,7 +21,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
 import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 
@@ -42,7 +42,7 @@ public class AdjustMyStarredHandler extends AbstractHandler {
 		TableViewer viewer = R4EGerritTableView.getTableViewer();
 		ISelection tableSelection = viewer.getSelection();
 		if (tableSelection.isEmpty()) {
-			R4EGerritPlugin.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
+			R4EGerritUi.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
 			
 		} else {
 			if (tableSelection instanceof IStructuredSelection ) {

@@ -15,6 +15,8 @@
 
 package org.eclipse.mylyn.reviews.r4egerrit.ui.views;
 
+import java.util.List;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -27,15 +29,21 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.mylyn.internal.gerrit.core.GerritQuery;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewSummary;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.UIReviewTable;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGERRITUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EQueryUtil;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -44,7 +52,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
@@ -78,8 +91,8 @@ public class R4EGerritTableView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView";
-
+	public static final String VIEW_ID = "org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView";
+	
 	// Labels for the Search 
 	private final String SEARCH_LABEL = "Search for:";
 	private final String SEARCH_BTN = "Search";
@@ -90,6 +103,8 @@ public class R4EGerritTableView extends ViewPart {
 	// Member variables
 	// ------------------------------------------------------------------------
 	//
+	private static R4EGerritTableView rtv = null;
+
 	private Label 	fSearchForLabel;
 	private Label	fSearchResulLabel;
 
@@ -106,6 +121,8 @@ public class R4EGerritTableView extends ViewPart {
 	 * The constructor.
 	 */
 	public R4EGerritTableView() {
+		super();
+		rtv = this;
 	}
 
 	// ------------------------------------------------------------------------
@@ -361,4 +378,130 @@ public class R4EGerritTableView extends ViewPart {
 		return fViewer;
 	}
 	
+	public static R4EGerritTableView getActiveView() {
+		IViewPart viewPart = null;
+		if (rtv != null) {
+			return rtv;
+		} else {
+			IWorkbench workbench = R4EGerritUi.getDefault().getWorkbench();
+			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+			IWorkbenchPage  page = null;
+			if (window != null ) {
+				page = workbench.getActiveWorkbenchWindow()
+						.getActivePage();				
+			}
+			
+			if (page != null) {
+				viewPart = page.findView(VIEW_ID);
+				// The following can occurs in LINUX environment since
+				// killing the window call the dispose() method
+
+				if (viewPart == null) {
+					try {
+						viewPart = page.showView(VIEW_ID, null,
+								org.eclipse.ui.IWorkbenchPage.VIEW_CREATE);
+					} catch (PartInitException e) {
+						R4EGerritUi.Ftracer.traceWarning("PartInitException:   " 
+								+ e.getLocalizedMessage() ); //$NON-NLS-1$
+						e.printStackTrace();
+					}
+					R4EGerritUi.Ftracer.traceWarning("getActiveView() SHOULD (JUST) CREATED A NEW Table:"
+							+ viewPart ); //$NON-NLS-1$
+
+				}
+			} 
+			
+			return (R4EGerritTableView) viewPart;
+		}
+	}
+
+	/**
+	 * bring the R4E view visible to the current workbench
+	 * 
+	 */
+	public void openView() {
+		IWorkbench workbench = R4EGerritUi.getDefault().getWorkbench();
+		IWorkbenchPage page = workbench.getActiveWorkbenchWindow()
+				.getActivePage();
+		IViewPart viewPart = page.findView(VIEW_ID);
+		// if the review view is not showed yet,
+		if (viewPart == null) {
+			try {
+				viewPart = page.showView(VIEW_ID);
+			} catch (PartInitException e) {
+				R4EGerritUi.Ftracer.traceWarning("PartInitException:   " 
+						+ e.getLocalizedMessage() ); //$NON-NLS-1$
+			}
+		}
+		// if there exists the view, but if not on the top,
+		// then brings it to top when the view is already showed.
+		else if (!page.isPartVisible(viewPart)) {
+			page.bringToTop(viewPart);
+		}
+	}
+	
+	public void setviewRepository (TaskRepository aTaskRepo) {
+		if (aTaskRepo != null ) {
+			R4EGerritUi.Ftracer.traceWarning(" received URL: " + aTaskRepo.getRepositoryUrl() );
+//			if (aTaskRepo == fReviewItem.getCurrentTaskRepo()) {
+//				R4EGerritUi.Ftracer.traceWarning(" Table have the same taskRepo: " + aTaskRepo.getRepositoryUrl() );
+//				
+//			} else {
+				String query = GerritQuery.MY_WATCHED_CHANGES;
+				List<R4EGerritReviewSummary> list = R4EQueryUtil.getReviewListFromRepository(aTaskRepo, query);
+				//Reset the current data in the R4E-Gerrit table view
+				resetData();
+				int size = list.size();
+				for (int index = 0; index < size; index++) {
+					fReviewItem.createReviewItem(list.get(index), query, aTaskRepo );
+				}
+				Display.getDefault().syncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						fViewer.setInput(fReviewItem.getReviews());	
+						fViewer.refresh();
+					}
+				});
+				
+				
+//			}
+		}
+	}
+
+	/**
+	 * Reset the data in the table.
+	 * 
+	 */
+	private void resetData() {
+		//Reset the Search data
+		Display.getDefault().syncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				setSearchLabel("");
+				setSearchText ("");
+				// Reset the review table
+				fReviewItem.createReviewItem(null, null, null);
+				fViewer.setInput(fReviewItem.getReviews());	
+				fViewer.refresh();
+				
+			}
+		});
+
+	}
+
+	private void setSearchLabel (String aSt) {
+		if (!fSearchResulLabel.isDisposed() ) {
+			fSearchResulLabel.setText(aSt);
+		}
+	}
+
+	private void setSearchText (String aSt) {
+		if (!fSearchRequestText.isDisposed() ) {
+			fSearchRequestText.setText(aSt);
+		}
+	}
+	
+
 }

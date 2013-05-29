@@ -16,7 +16,7 @@
 package org.eclipse.mylyn.reviews.r4e_gerrit.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.r4e_gerrit.core.utils.Tracer;
+import org.eclipse.mylyn.reviews.r4e_gerrit.debug.utils.Tracer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -36,7 +36,7 @@ public class R4EGerritUi extends AbstractUIPlugin {
 	// ------------------------------------------------------------------------
 
 	// The plug-in ID
-	public static final String fPLUGIN_ID = "org.eclipse.mylyn.reviews.r4e-gerrit.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e-gerrit.ui"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -72,7 +72,7 @@ public class R4EGerritUi extends AbstractUIPlugin {
 		super.start(aContext);
 		fPlugin = this;
 		Ftracer = new Tracer();
-		Ftracer.init(fPLUGIN_ID);
+		Ftracer.init(PLUGIN_ID);
 		Ftracer.traceDebug("plugin started");
 	}
 
@@ -102,6 +102,6 @@ public class R4EGerritUi extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String aPath) {
-		return imageDescriptorFromPlugin(fPLUGIN_ID, aPath);
+		return imageDescriptorFromPlugin(PLUGIN_ID, aPath);
 	}
 }

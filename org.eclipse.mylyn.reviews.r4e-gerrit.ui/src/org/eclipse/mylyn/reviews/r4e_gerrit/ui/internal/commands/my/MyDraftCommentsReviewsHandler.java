@@ -19,7 +19,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 
 /**
@@ -36,9 +36,9 @@ public class MyDraftCommentsReviewsHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 		// TODO Auto-generated method stub
-		R4EGerritPlugin.Ftracer.traceInfo("Search the Gerrit reviews for My Drafts Comments  " ); //$NON-NLS-1$
+		R4EGerritUi.Ftracer.traceInfo("Search the Gerrit reviews for My Drafts Comments  " ); //$NON-NLS-1$
 
-		R4EGerritPlugin.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
+		R4EGerritUi.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
 		try {
 			UIUtils.notInplementedDialog(aEvent.getCommand().getName());
 		} catch (NotDefinedException e) {

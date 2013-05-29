@@ -32,6 +32,7 @@ import org.eclipse.mylyn.internal.tasks.ui.wizards.EditRepositoryWizard;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.wizards.TaskRepositoryWizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -83,6 +84,8 @@ public class AddGerritSiteHandler extends AbstractHandler {
 		fServerUtil = new R4EGerritServerUtility();
 		Object obj = aEvent.getTrigger();
 		Map<String, String> param = aEvent.getParameters();
+		R4EGerritTableView reviewTableView = R4EGerritTableView
+				.getActiveView();
 		
 		if (obj instanceof Event) {
 			Event ev = (Event) obj;
@@ -102,17 +105,26 @@ public class AddGerritSiteHandler extends AbstractHandler {
 						R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
 					}
 				}
+				// Open the review table first;
+				reviewTableView.openView(); 
 				
 				//Verify if we selected the "Add.." button or a pre=defined Gerrit
 				if (stURL != null) {
 					if (stURL.equals(fServerUtil.getLastSavedGerritServer())) {
 						R4EGerritPlugin.Ftracer.traceInfo("LAST SAVED server is the SAME ");
 						fServerUtil.getReviewListFromServer ();
+						
+						//Get the last saved repo
+						reviewTableView.setviewRepository(fServerUtil.getTaskRepo(stURL));
+
 						return Status.OK_STATUS; //For now , do not process the dialogue
 					} else {
 						//Store the new Gerrit server into a file
 						fServerUtil.saveLastGerritServer(stURL);
 						fServerUtil.getReviewListFromServer ();
+						//Get the last saved repo
+						reviewTableView.setviewRepository(fServerUtil.getTaskRepo(stURL));
+
 						return Status.OK_STATUS; //For now , do not process the dialogue
 					}
 				}
@@ -120,7 +132,11 @@ public class AddGerritSiteHandler extends AbstractHandler {
 		}
 
 		//Open the Dialogue to enter a new Gerrit URL
-		return openDialogue ();
+		Object dialogObj = openDialogue ();
+		//Set the table view with the last TaskRepo 
+		reviewTableView.setviewRepository(fServerUtil.getTaskRepo(fServerUtil.getLastSavedGerritServer()));
+		
+		return dialogObj;
 	}
 
 	/**

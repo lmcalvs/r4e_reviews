@@ -16,7 +16,9 @@ package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model;
 
 import java.util.ArrayList;
 
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewSummary;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
 
 
 
@@ -32,6 +34,11 @@ public class ReviewTableData {
 	// ------------------------------------------------------------------------
 
 	private ArrayList<ReviewTableListItem> fReviewList = null;
+	
+	private TaskRepository fTaskRepo = null;
+	
+	private String fQuery = null;
+	
 	// A dummy list
 	
 //	public ReviewTableDefinition[] REVIEW_TABLE_INFO = ReviewTableDefinition.values();
@@ -72,11 +79,24 @@ public class ReviewTableData {
 	    	fVerify =  null != aVerify ? aVerify : "";
 	    }
 	    
-	    public ReviewTableListItem (Object aObj) {
-	    	R4EGerritPlugin.Ftracer.traceInfo("ReviewTableListItem object: " + aObj );
-//	    	if (aObj instanceof ???) {
-//	    		
-//	    	}
+	    public ReviewTableListItem (Object aObj, String aQuery, TaskRepository aTaskRepo) {
+	    	R4EGerritUi.Ftracer.traceInfo("ReviewTableListItem object: " + aObj );
+	    	if (aObj instanceof R4EGerritReviewSummary) {
+	    		R4EGerritReviewSummary summary  = (R4EGerritReviewSummary) aObj;
+	    		fTaskRepo = aTaskRepo;
+	    		fQuery = aQuery;
+	    		//Fill data to display
+		    	fId = null != summary.getAttribute(R4EGerritReviewSummary.SHORT_CHANGE_ID) ? summary.getAttribute(R4EGerritReviewSummary.SHORT_CHANGE_ID) : "";
+		    	fSubject = null != summary.getAttribute(R4EGerritReviewSummary.SUBJECT) ? summary.getAttribute(R4EGerritReviewSummary.SUBJECT) : "";
+		    	fOwner =  null != summary.getAttribute(R4EGerritReviewSummary.OWNER) ? summary.getAttribute(R4EGerritReviewSummary.OWNER) : "";
+		    	fProject =  null != summary.getAttribute(R4EGerritReviewSummary.PROJECT) ? summary.getAttribute(R4EGerritReviewSummary.PROJECT) : "";     
+		    	fBranch =  null != summary.getAttribute(R4EGerritReviewSummary.BRANCH) ? summary.getAttribute(R4EGerritReviewSummary.BRANCH) : "";
+		    	fUpdated =  null != summary.getAttribute(R4EGerritReviewSummary.DATE_MODIFICATION) ? summary.getAttribute(R4EGerritReviewSummary.DATE_MODIFICATION) : "";
+		    	fCr =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CR) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CR) : "";
+		    	fIc =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CI) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CI) : "";
+		    	fVerify =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_V) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_V) : "";
+
+	    	}
 	    }
 
 	    public String getId() {return fId;}
@@ -104,17 +124,20 @@ public class ReviewTableData {
 	 * 
 	 * @param Object
 	 */
-	public void createReviewItem(Object aObj) {
+	public void createReviewItem(Object aObj, String aQuery, TaskRepository aTaskRepo) {
 
 		// Create the new object
 		ReviewTableListItem newItem = new ReviewTableListItem(
-				aObj);
+				aObj, aQuery, aTaskRepo);
 		if (null != newItem.getSubject()) {
 			// /We have a valid review, so need to add it to the list
 			if (fReviewList == null) {
 				fReviewList = new ArrayList<ReviewTableListItem>();
 			}
 			fReviewList.add(newItem);
+		} else {
+			//Need to reset the list, we just created a null entry
+			reset();
 		}
 	}
 	
@@ -138,6 +161,12 @@ public class ReviewTableData {
 		fReviewList = new ArrayList<ReviewTableListItem>();
 		return fReviewList.toArray(new ReviewTableListItem[] {} );
 	}
+	
+    public TaskRepository getCurrentTaskRepo () {
+    	return  fTaskRepo; 
+    }
+
+    
 
 	String[][] testTable = { 
 			{ "true", "Subject number 1", "HoHo 1" ,"proj 1", "branch 1", "updated 1", "1", "2", "1"}, 
@@ -166,6 +195,10 @@ public class ReviewTableData {
 					testTable[i][8] );
 			 fReviewList.add(item);
 		}
+	}
+	
+	private void reset() {
+		fReviewList.clear();
 	}
 
 //    public String[] getAttributeValues() {

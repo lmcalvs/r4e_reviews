@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +35,7 @@ import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
+import org.eclipse.mylyn.internal.gerrit.core.GerritQuery;
 import org.eclipse.mylyn.internal.tasks.core.RepositoryTemplateManager;
 import org.eclipse.mylyn.internal.tasks.core.TaskRepositoryManager;
 import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
@@ -81,8 +83,6 @@ public class R4EGerritServerUtility {
 
 	private static Map<TaskRepository, String> fResultTask = new HashMap<TaskRepository,String>();
 	
-	
-
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -394,13 +394,39 @@ public class R4EGerritServerUtility {
 		
 		if (urlToUsed != null) {
 			//Initiate the request to populate the list of Reviews
-			R4EGerritPlugin.Ftracer.traceInfo("use the following Gerrit URL to populate the list of reviews: " +  urlToUsed); 			
+			R4EGerritPlugin.Ftracer.traceInfo("use the following Gerrit URL to populate the list of reviews: " +  urlToUsed);
+			
+			// TODO: Make it pick the right repository
+			Set<TaskRepository> gerritRepositories = fResultTask.keySet();
+			Iterator<TaskRepository> it = gerritRepositories.iterator();
+			if (it.hasNext()) {
+	            TaskRepository repository = it.next();
+	     //       List<R4EGerritReviewSummary> reviews = getReviewListFromRepository(repository, GerritQuery.MY_WATCHED_CHANGES);
+	            // TODO: populate the Gerrit Dashboard with 'reviews'
+			}
 		} else {
 			//Open the dialogue to populate a Gerrit server, Should not happen here
 			R4EGerritPlugin.Ftracer.traceInfo("Need to open the dialogue to populate a gerrit server" ); 			
 		}
-		
 	}
+//
+//    /**
+//     * 
+//     */
+//    public static List<R4EGerritReviewSummary> getReviewListFromRepository(TaskRepository repository, String query) {
+//        List<R4EGerritReviewSummary> results = new ArrayList<R4EGerritReviewSummary>();
+//        R4EGerritQueryHandler handler = new R4EGerritQueryHandler(repository, query);
+//        IStatus status = handler.performQuery();
+//        if (status.isOK()) {
+//            for (R4EGerritReviewSummary summary : handler.getQueryResult()) {
+//                if (summary.getAttribute(R4EGerritReviewSummary.DATE_COMPLETION) == null) {
+//                    R4EGerritPlugin.Ftracer.traceInfo(summary.toString());
+//                    results.add(summary);
+//                }
+//            }
+//        }
+//        return results;
+//    }
 
 	/******************************************************************/
 	/******************************************************************/

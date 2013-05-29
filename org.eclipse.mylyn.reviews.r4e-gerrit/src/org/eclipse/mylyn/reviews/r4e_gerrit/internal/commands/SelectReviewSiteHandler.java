@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -76,6 +77,12 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 
 		R4EGerritPlugin.Ftracer.traceInfo("Collecting the gerrit review locations"); //$NON-NLS-1$
 
+		// Open the review table first;
+		final R4EGerritTableView reviewTableView = R4EGerritTableView
+				.getActiveView();
+		
+		reviewTableView.openView(); 
+
 		final Job job = new Job(COMMAND_MESSAGE) {
 
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
@@ -111,6 +118,8 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 				if (serverToUsed!= null) {
 					//Initiate the request for the list of reviews
 					fServerUtil.getReviewListFromServer();
+					reviewTableView.setviewRepository(fServerUtil.getTaskRepo(serverToUsed));
+
 				} else {
 					//Need to open the Dialogue to fill a Gerrit server
 					R4EGerritPlugin.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );

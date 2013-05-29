@@ -14,11 +14,8 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
 
 /**

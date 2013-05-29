@@ -17,21 +17,11 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.all;
 
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
 
 
 /**
@@ -54,9 +44,7 @@ public class AllOpenReviewsHandler extends AbstractHandler {
 	// Variables
 	// ------------------------------------------------------------------------
 
-	private R4EGerritServerUtility fServerUtil = null;
 	
-
 	
 	// ------------------------------------------------------------------------
 	// Methods
@@ -72,9 +60,9 @@ public class AllOpenReviewsHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		R4EGerritPlugin.Ftracer.traceInfo("Search the Gerrit reviews for All Open  " ); //$NON-NLS-1$
+		R4EGerritUi.Ftracer.traceInfo("Search the Gerrit reviews for All Open  " ); //$NON-NLS-1$
 
-		R4EGerritPlugin.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
+		R4EGerritUi.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
 		try {
 			UIUtils.notInplementedDialog(aEvent.getCommand().getName());
 		} catch (NotDefinedException e) {
