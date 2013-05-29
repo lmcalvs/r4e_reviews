@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+
 import org.eclipse.mylyn.reviews.r4e_gerrit.trace.Tracer;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -64,7 +65,7 @@ public class R4EGerritPlugin extends Plugin {
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer Ftracer;
+	public static Tracer Ftracer = new Tracer();
 
 	// ------------------------------------------------------------------------
 	// Constructors
