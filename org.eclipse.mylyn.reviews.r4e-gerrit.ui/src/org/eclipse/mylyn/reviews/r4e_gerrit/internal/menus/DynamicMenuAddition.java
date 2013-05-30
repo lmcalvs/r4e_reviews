@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.mylyn.reviews.r4e_gerrit.debug.R4EGerritDebugActivator;
+import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
@@ -97,7 +97,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	@Override
 	protected IContributionItem[] getContributionItems() {
 
-	    R4EGerritDebugActivator.Ftracer
+	    R4EGerritPlugin.Ftracer
 				.traceInfo("\t\t DynamicMenuAddition .getContributionItems()");
 		CommandContributionItem[] contributionItems = new CommandContributionItem[0];
 		if (fServer != null) {
@@ -107,13 +107,13 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 		if (fMapServer != null && !fMapServer.isEmpty()) {
 			Set<TaskRepository> mapSet = fMapServer.keySet();
 			String lastSelected = fServer.getLastSavedGerritServer();
-			R4EGerritDebugActivator.Ftracer.traceInfo("-------------------");
+			R4EGerritPlugin.Ftracer.traceInfo("-------------------");
 			int size = mapSet.size();
 			contributionItems = new CommandContributionItem[size];
 
 			int count = 0;
 			for (TaskRepository key : mapSet) {
-			    R4EGerritDebugActivator.Ftracer.traceInfo("Map Key: "
+			    R4EGerritPlugin.Ftracer.traceInfo("Map Key: "
 						+ key.getRepositoryLabel() + "\t URL: "
 						+ fMapServer.get(key));
 				CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(
@@ -144,7 +144,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 		
 		//Read the Gerrit potential servers
 		fServer = new R4EGerritServerUtility();
-		R4EGerritDebugActivator.Ftracer.traceInfo("\t\t DynamicMenuAddition .initialize()()" );
+		R4EGerritPlugin.Ftracer.traceInfo("\t\t DynamicMenuAddition .initialize()()" );
 		
 	}
 

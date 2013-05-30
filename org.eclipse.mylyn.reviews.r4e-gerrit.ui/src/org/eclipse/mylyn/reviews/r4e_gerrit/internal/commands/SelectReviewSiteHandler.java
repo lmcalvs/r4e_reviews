@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.mylyn.reviews.r4e_gerrit.debug.R4EGerritDebugActivator;
+import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
@@ -76,7 +76,7 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-	    R4EGerritDebugActivator.Ftracer.traceInfo("Collecting the gerrit review locations"); //$NON-NLS-1$
+	    R4EGerritPlugin.Ftracer.traceInfo("Collecting the gerrit review locations"); //$NON-NLS-1$
 
 		// Open the review table first;
 		final R4EGerritTableView reviewTableView = R4EGerritTableView
@@ -105,9 +105,9 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 				fMapRepoServer = fServerUtil.getGerritMapping();
 				if (!fMapRepoServer.isEmpty()) {
 					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
-					R4EGerritDebugActivator.Ftracer.traceInfo("-------------------");
+					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
 					for (TaskRepository key: mapSet) {
-					    R4EGerritDebugActivator.Ftracer.traceInfo("Map Key repo name : " 
+					    R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " 
 								+ key.getRepositoryLabel() 
 								+ "\t URL: " 
 								+ fMapRepoServer.get(key));
@@ -123,15 +123,15 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 
 				} else {
 					//Need to open the Dialogue to fill a Gerrit server
-				    R4EGerritDebugActivator.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );
+				    R4EGerritPlugin.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );
 					//Get the service
-					IWorkbench workbench = R4EGerritDebugActivator.getDefault().getWorkbench();
+					IWorkbench workbench = R4EGerritUi.getDefault().getWorkbench();
 					IHandlerService handlerService = (IHandlerService) workbench.getService(IHandlerService.class);
 					try {
 						
 						  handlerService.executeCommand(R4EUIConstants.ADD_GERRIT_SITE_COMMAND_ID, null);
 					  } catch (Exception ex) {
-					      R4EGerritDebugActivator.Ftracer.traceError("Exception: " + ex.toString());
+					      R4EGerritPlugin.Ftracer.traceError("Exception: " + ex.toString());
 //					      R4EGerritUi.getDefault().logError("Exception: ", ex);
 					  //  throw new RuntimeException("org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSite not found");
 					    

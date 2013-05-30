@@ -16,7 +16,7 @@
 package org.eclipse.mylyn.reviews.r4e_gerrit.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.r4e_gerrit.debug.utils.Tracer;
+import org.eclipse.mylyn.reviews.r4e_gerrit.trace.Tracer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
