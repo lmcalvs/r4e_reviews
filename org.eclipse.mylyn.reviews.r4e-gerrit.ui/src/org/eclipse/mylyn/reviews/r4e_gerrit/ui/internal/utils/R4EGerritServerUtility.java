@@ -13,7 +13,7 @@
  *   Jacques Bouthillier - Initial Implementation of the server selection
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils;
+package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -15,7 +15,7 @@
  *   Jacques Bouthillier - Created for Mylyn Review R4E-Gerrit project
  *   
  ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands;
+package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands;
 
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +30,8 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
 import org.eclipse.mylyn.internal.tasks.ui.wizards.EditRepositoryWizard;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGerritServerUtility;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.wizards.TaskRepositoryWizardDialog;

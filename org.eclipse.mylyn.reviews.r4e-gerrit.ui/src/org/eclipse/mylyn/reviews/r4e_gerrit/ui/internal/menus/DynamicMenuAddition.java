@@ -13,7 +13,7 @@
  * Contributors:
  *   Jacques Bouthillier - Initial Implementation of the dynamic menu selection
  ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e_gerrit.internal.menus;
+package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.menus;
 
 import java.net.URL;
 import java.util.Map;
@@ -27,9 +27,9 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGerritServerUtility;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
