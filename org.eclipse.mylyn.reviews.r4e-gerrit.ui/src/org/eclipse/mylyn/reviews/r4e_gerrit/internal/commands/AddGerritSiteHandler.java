@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
 import org.eclipse.mylyn.internal.tasks.ui.wizards.EditRepositoryWizard;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.debug.R4EGerritDebugActivator;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
@@ -79,7 +79,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		R4EGerritPlugin.Ftracer.traceInfo("Create the Add button to search the Gerrit location " ); //$NON-NLS-1$
+	    R4EGerritDebugActivator.Ftracer.traceInfo("Create the Add button to search the Gerrit location " ); //$NON-NLS-1$
 		String menuItemText = "";
 		fServerUtil = new R4EGerritServerUtility();
 		Object obj = aEvent.getTrigger();
@@ -93,16 +93,16 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			if (objWidget instanceof MenuItem) {
 				MenuItem menuItem = (MenuItem) objWidget;
 				menuItemText = menuItem.getText();
-				R4EGerritPlugin.Ftracer.traceInfo("MenuItem: " + menuItemText + "\t value: " +
+				R4EGerritDebugActivator.Ftracer.traceInfo("MenuItem: " + menuItemText + "\t value: " +
 						param.get(menuItemText) + " VS saved: "  + fServerUtil.getLastSavedGerritServer());
 				fMapRepoServer = fServerUtil.getGerritMapping();
 				String stURL = fServerUtil.getMenuSelectionURL(menuItemText);
-				R4EGerritPlugin.Ftracer.traceInfo("URL for the menuItemText: " + stURL);
+				R4EGerritDebugActivator.Ftracer.traceInfo("URL for the menuItemText: " + stURL);
 				if (!fMapRepoServer.isEmpty()) {
 					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
-					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
+					R4EGerritDebugActivator.Ftracer.traceInfo("-------------------");
 					for (TaskRepository key: mapSet) {
-						R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
+					    R4EGerritDebugActivator.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
 					}
 				}
 				// Open the review table first;
@@ -111,7 +111,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 				//Verify if we selected the "Add.." button or a pre=defined Gerrit
 				if (stURL != null) {
 					if (stURL.equals(fServerUtil.getLastSavedGerritServer())) {
-						R4EGerritPlugin.Ftracer.traceInfo("LAST SAVED server is the SAME ");
+					    R4EGerritDebugActivator.Ftracer.traceInfo("LAST SAVED server is the SAME ");
 						fServerUtil.getReviewListFromServer ();
 						
 						//Get the last saved repo
@@ -159,7 +159,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 						
 				final TaskRepository taskRepository = getTaskRepository(fServerUtil.getLastSavedGerritServer()); 
 				
-				R4EGerritPlugin.Ftracer.traceInfo("repository:   " + taskRepository.getUrl()); //$NON-NLS-1$
+				R4EGerritDebugActivator.Ftracer.traceInfo("repository:   " + taskRepository.getUrl()); //$NON-NLS-1$
 				
 				final EditRepositoryWizard wizard = new EditRepositoryWizard(taskRepository);
 				Display.getDefault().syncExec(new Runnable() {
@@ -175,9 +175,9 @@ public class AddGerritSiteHandler extends AbstractHandler {
 				if (taskRepository.getUrl().isEmpty() || 
 						taskRepository.getUrl().endsWith(R4EUIConstants.DEFAULT_REPOSITORY)) {
 					//User selected the Cancel button
-					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: CANCEL "  ); //$NON-NLS-1$
+				    R4EGerritDebugActivator.Ftracer.traceInfo("AFTER: repository: CANCEL "  ); //$NON-NLS-1$
 				} else {
-					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  FINISH " ); //$NON-NLS-1$		
+				    R4EGerritDebugActivator.Ftracer.traceInfo("AFTER: repository: :  FINISH " ); //$NON-NLS-1$		
 					fServerUtil.saveLastGerritServer(taskRepository.getUrl());
 					/*****************************************************/
 					/*                                                   */
@@ -189,7 +189,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 					fServerUtil.getReviewListFromServer ();
 				}
 				
-				R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  " + taskRepository.getUrl() + 
+				R4EGerritDebugActivator.Ftracer.traceInfo("AFTER: repository: :  " + taskRepository.getUrl() + 
 						"\n\t repo: " + taskRepository.getRepositoryUrl() ); //$NON-NLS-1$
 				
 
@@ -223,7 +223,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			}
 			
 		} else {
-			R4EGerritPlugin.Ftracer.traceInfo("Repo already in list:  " + taskRepo.getRepositoryLabel()); 
+		    R4EGerritDebugActivator.Ftracer.traceInfo("Repo already in list:  " + taskRepo.getRepositoryLabel()); 
 			
 		}
 		return taskRepo;

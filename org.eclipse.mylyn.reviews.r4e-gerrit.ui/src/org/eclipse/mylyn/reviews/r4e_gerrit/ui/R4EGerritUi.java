@@ -104,4 +104,5 @@ public class R4EGerritUi extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String aPath) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, aPath);
 	}
+
 }

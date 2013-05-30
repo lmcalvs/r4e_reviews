@@ -15,20 +15,28 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.internal.menus;
 
+import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.mylyn.reviews.r4e_gerrit.debug.R4EGerritDebugActivator;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
 import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.menus.IWorkbenchContribution;
 import org.eclipse.ui.services.IServiceLocator;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Jacques Bouthillier
@@ -46,9 +54,32 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	 * Field SELECT_PICTURE_FILE. (value is ""icons/select.png"")
 	 */
 //	private String SELECT_PICTURE_FILE = "icons/select.png";
-	private String SELECT_PICTURE_FILE = "icons/select.gif";
+	private static String SELECT_PICTURE_FILE = "icons/select.gif";
+    private static String IMAGE_ID = "imageId";
 	
-	// ------------------------------------------------------------------------
+    /**
+     * Note: An image registry owns all of the image objects registered with it,
+     * and automatically disposes of them the SWT Display is disposed.
+     */
+    // For the images
+    private static ImageRegistry fImageRegistry = new ImageRegistry();
+
+    static {
+      fImageRegistry
+      .put(SELECT_PICTURE_FILE,
+              R4EGerritUi.getImageDescriptor(SELECT_PICTURE_FILE));
+
+      /////////////////////
+        Bundle bundle = Platform.getBundle(R4EGerritUi.PLUGIN_ID);
+        IPath path = new Path("icons/favicon.ico");
+        URL url = FileLocator.find(bundle, path, null);
+        ImageDescriptor desc = ImageDescriptor.createFromURL(url);
+        desc.createImage();
+        fImageRegistry.put(IMAGE_ID, desc);
+
+    }
+
+    // ------------------------------------------------------------------------
 	// Variables
 	// ------------------------------------------------------------------------
 
@@ -66,7 +97,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 	@Override
 	protected IContributionItem[] getContributionItems() {
 
-		R4EGerritPlugin.Ftracer
+	    R4EGerritDebugActivator.Ftracer
 				.traceInfo("\t\t DynamicMenuAddition .getContributionItems()");
 		CommandContributionItem[] contributionItems = new CommandContributionItem[0];
 		if (fServer != null) {
@@ -76,13 +107,13 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 		if (fMapServer != null && !fMapServer.isEmpty()) {
 			Set<TaskRepository> mapSet = fMapServer.keySet();
 			String lastSelected = fServer.getLastSavedGerritServer();
-			R4EGerritPlugin.Ftracer.traceInfo("-------------------");
+			R4EGerritDebugActivator.Ftracer.traceInfo("-------------------");
 			int size = mapSet.size();
 			contributionItems = new CommandContributionItem[size];
 
 			int count = 0;
 			for (TaskRepository key : mapSet) {
-				R4EGerritPlugin.Ftracer.traceInfo("Map Key: "
+			    R4EGerritDebugActivator.Ftracer.traceInfo("Map Key: "
 						+ key.getRepositoryLabel() + "\t URL: "
 						+ fMapServer.get(key));
 				CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(
@@ -93,8 +124,8 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 				contributionParameter.visibleEnabled = true;
 				if (lastSelected != null
 						&& lastSelected.equals(fMapServer.get(key))) {
-					fSelectPicture = R4EGerritPlugin
-							.getImageDescriptor(SELECT_PICTURE_FILE);
+//					fSelectPicture = fImageRegistry.getDescriptor(SELECT_PICTURE_FILE);
+                    fSelectPicture = fImageRegistry.getDescriptor(IMAGE_ID);
 
 					contributionParameter.icon = fSelectPicture;
 
@@ -113,7 +144,7 @@ public class DynamicMenuAddition extends CompoundContributionItem implements IWo
 		
 		//Read the Gerrit potential servers
 		fServer = new R4EGerritServerUtility();
-		R4EGerritPlugin.Ftracer.traceInfo("\t\t DynamicMenuAddition .initialize()()" );
+		R4EGerritDebugActivator.Ftracer.traceInfo("\t\t DynamicMenuAddition .initialize()()" );
 		
 	}
 

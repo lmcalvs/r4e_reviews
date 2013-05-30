@@ -91,7 +91,7 @@ public class ReviewTableData {
 		    	fOwner =  null != summary.getAttribute(R4EGerritReviewSummary.OWNER) ? summary.getAttribute(R4EGerritReviewSummary.OWNER) : "";
 		    	fProject =  null != summary.getAttribute(R4EGerritReviewSummary.PROJECT) ? summary.getAttribute(R4EGerritReviewSummary.PROJECT) : "";     
 		    	fBranch =  null != summary.getAttribute(R4EGerritReviewSummary.BRANCH) ? summary.getAttribute(R4EGerritReviewSummary.BRANCH) : "";
-		    	fUpdated =  null != summary.getAttribute(R4EGerritReviewSummary.DATE_MODIFICATION) ? summary.getAttribute(R4EGerritReviewSummary.DATE_MODIFICATION) : "";
+		    	fUpdated =  null != summary.getAttribute(R4EGerritReviewSummary.DATE_MODIFICATION) ? summary.getAttributeAsDate(R4EGerritReviewSummary.DATE_MODIFICATION).toString() : "";
 		    	fCr =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CR) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CR) : "";
 		    	fIc =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CI) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_CI) : "";
 		    	fVerify =  null != summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_V) ? summary.getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_V) : "";

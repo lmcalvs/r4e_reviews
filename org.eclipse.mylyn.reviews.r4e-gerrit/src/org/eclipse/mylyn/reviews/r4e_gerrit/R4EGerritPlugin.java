@@ -19,10 +19,9 @@ import org.eclipse.core.runtime.IBundleGroup;
 import org.eclipse.core.runtime.IBundleGroupProvider;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e_gerrit.debug.utils.Tracer;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
@@ -38,7 +37,7 @@ import org.osgi.framework.Version;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class R4EGerritPlugin extends AbstractUIPlugin {
+public class R4EGerritPlugin extends Plugin {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -159,17 +158,6 @@ public class R4EGerritPlugin extends AbstractUIPlugin {
 		return Fplugin;
 	}
 
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String aPath) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, aPath);
-	}
-	
 	/**
 	 * Method logError.
 	 * 
