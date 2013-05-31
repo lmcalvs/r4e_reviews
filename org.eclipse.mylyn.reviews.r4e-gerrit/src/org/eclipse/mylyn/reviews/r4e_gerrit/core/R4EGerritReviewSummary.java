@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.mylyn.internal.gerrit.core.GerritQueryResultSchema;
+import org.eclipse.mylyn.internal.gerrit.core.GerritTaskSchema;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 
@@ -63,14 +64,12 @@ public class R4EGerritReviewSummary {
     /**
      * Gerrit Review owner
      */
-//    public static final String OWNER = GerritQueryResultSchema.getDefault().OWNER.getKey();
-    public static final String OWNER = "org.eclipse.gerrit.Owner";
+    public static final String OWNER = GerritTaskSchema.getDefault().OWNER.getKey();
 
     /**
      * Gerrit Review branch
      */
-//    public static final String BRANCH = GerritQueryResultSchema.getDefault().BRANCH.getKey();
-    public static final String BRANCH = "org.eclipse.gerrit.Branch";
+    public static final String BRANCH = GerritTaskSchema.getDefault().BRANCH.getKey();
 
     /**
      * Gerrit Review creation date

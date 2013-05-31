@@ -15,6 +15,8 @@ package org.eclipse.mylyn.reviews.r4e_gerrit.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
@@ -82,8 +84,14 @@ public class R4EGerritQueryHandler {
         List<R4EGerritReviewSummary> result = new ArrayList<R4EGerritReviewSummary>();
         List<TaskData> tasksData = fResultCollector.getResults();
         for (TaskData taskData : tasksData) {
-            R4EGerritReviewSummary review = new R4EGerritReviewSummary(taskData);
-            result.add(review);
+            GerritConnector connector = GerritCorePlugin.getDefault().getConnector();
+            try {
+                TaskData gerritTaskData = connector.getTaskData(fGerritRepository, taskData.getTaskId(), new NullProgressMonitor());
+                R4EGerritReviewSummary review = new R4EGerritReviewSummary(gerritTaskData);
+                result.add(review);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
