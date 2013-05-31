@@ -150,9 +150,7 @@ public class R4EGerritTableView extends ViewPart {
 		
 	
 		
-		//Test to load the content provider
-		fReviewItem.TestLoad();
-		
+	
 		fViewer.setInput(fReviewItem.getReviews());
 		
 	
@@ -451,10 +449,7 @@ public class R4EGerritTableView extends ViewPart {
 				List<R4EGerritReviewSummary> list = R4EQueryUtil.getReviewListFromRepository(aTaskRepo, query);
 				//Reset the current data in the R4E-Gerrit table view
 				resetData();
-				int size = list.size();
-				for (int index = 0; index < size; index++) {
-					fReviewItem.createReviewItem(list.get(index), query, aTaskRepo );
-				}
+				fReviewItem.createReviewItem(list, query, aTaskRepo );
 				Display.getDefault().syncExec(new Runnable() {
 
 					@Override
@@ -464,8 +459,6 @@ public class R4EGerritTableView extends ViewPart {
 					}
 				});
 				
-				
-//			}
 		}
 	}
 

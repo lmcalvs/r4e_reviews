@@ -12,6 +12,7 @@
 
 package org.eclipse.mylyn.reviews.r4e_gerrit.core;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +94,12 @@ public class R4EGerritReviewSummary {
     public static final String REVIEW_FLAG_CI   = "org.eclipse.gerrit.Checked";
     public static final String REVIEW_FLAG_CR   = "org.eclipse.gerrit.Reviewed";
     public static final String REVIEW_FLAG_V    = "org.eclipse.gerrit.Verified";
+    
+    /**
+     * Date format
+     */
+    private static SimpleDateFormat FORMAT_TODAY = new SimpleDateFormat("h:mm a");
+    private static SimpleDateFormat FORMAT_FULL = new SimpleDateFormat("MMM d");
 
     //-------------------------------------------------------------------------
     // Attributes
@@ -163,14 +170,43 @@ public class R4EGerritReviewSummary {
         return fReviewAttributes.get(key);
     }
 
-    /**
-     * @return the requested Gerrit Review attribute as a date
-     */
-    public Date getAttributeAsDate(String key) {
-        return new Date(Long.parseLong(fReviewAttributes.get(key)));
-    }
+	/**
+	 * @return the requested Gerrit Review attribute as a string formatted
+	 *         depending if the date is the same day or a different day
+	 */
+	public String getAttributeAsDate(String aKey) {
+		Date today = new Date();
+		// R4EGerritPlugin.Ftracer.traceInfo("Date today:   "
+		// + today );
+		Date keyDate = new Date(Long.parseLong(fReviewAttributes.get(aKey)));
+		if (keyDate.getDay() == today.getDay()) {
+			// Same Day, so just display the time
+			// R4EGerritPlugin.Ftracer.traceInfo("Format today:   "
+			// + FORMAT_TODAY.format(today) );
+			return FORMAT_TODAY.format(today);
+		} else {
+			// Another day, so display the day with the time
+			// R4EGerritPlugin.Ftracer.traceInfo("Format FULL:   "
+			// + FORMAT_FULL.format(keyDate) );
+			return FORMAT_FULL.format(keyDate);
+		}
+
+	}
 
     //-------------------------------------------------------------------------
+    // Setters
+    //-------------------------------------------------------------------------
+
+	/**
+	 * @Adjust the requested Gerrit Review attribute
+	 */
+	public void setAttribute(String aKey, String aValue) {
+		if (fReviewAttributes != null) {
+			fReviewAttributes.put(aKey, aValue);
+		}
+	}
+
+   //-------------------------------------------------------------------------
     // Object
     //-------------------------------------------------------------------------
 
@@ -194,5 +230,6 @@ public class R4EGerritReviewSummary {
               .append(", V  = ").append(getAttribute(R4EGerritReviewSummary.REVIEW_FLAG_V)).append("\n");
         return buffer.toString();
     }
+
 
 }

@@ -21,9 +21,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewSummary;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.table.AdjustMyStarredHandler;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
@@ -305,10 +305,10 @@ public class UIReviewTable {
 			if (tableSelection instanceof IStructuredSelection ) {
 				Object obj = ((IStructuredSelection) tableSelection).getFirstElement();
 				R4EGerritUi.Ftracer.traceInfo("Selected table selection class: " + obj.getClass() ); 
-				if (obj instanceof  ReviewTableListItem) {
-					ReviewTableListItem item = (ReviewTableListItem) obj;
-					R4EGerritUi.Ftracer.traceInfo("Selected table OBJECT selection ID: "  + item.getId() + 
-							"\t subject: " + item.getSubject()); 				
+				if (obj instanceof  R4EGerritReviewSummary) {
+					R4EGerritReviewSummary item = (R4EGerritReviewSummary) obj;
+					R4EGerritUi.Ftracer.traceInfo("Selected table OBJECT selection ID: "  + item.getAttribute(R4EGerritReviewSummary.SHORT_CHANGE_ID) + 
+							"\t subject: " + item.getAttribute(R4EGerritReviewSummary.SUBJECT)); 				
 					
 				}
 			}
