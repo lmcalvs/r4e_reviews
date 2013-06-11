@@ -324,10 +324,11 @@ public class ReportGeneration implements IR4EReport {
 		// Add BIRT log only for window for now
 		if (OSPLATFORM.FTYPE.isWindowsOS()) {
 			if (fLogConfigdir != null) {
-				File f = new File(fLogConfigdir);
-				File newFile = createReportDir(f, "");
-				Activator.FTracer.traceInfo("ReportGeneration.createBirtDebug() created:" + newFile.getAbsolutePath());
 				if (!fBIRT_LEVEL.equals(Level.OFF)) {
+					File f = new File(fLogConfigdir);
+					File newFile = createReportDir(f, "");
+					Activator.FTracer.traceInfo("ReportGeneration.createBirtDebug() created:"
+							+ newFile.getAbsolutePath());
 					aEngineConf.setLogConfig(newFile.getAbsolutePath(), fBIRT_LEVEL);
 				}
 			}
