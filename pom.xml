@@ -186,7 +186,7 @@
      <module>org.eclipse.mylyn.reviews.r4e.ui</module>
      <module>org.eclipse.mylyn.reviews.r4e.upgrade</module>
      <module>org.eclipse.mylyn.reviews.VCalendar</module>
-     <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
+     <!--  module>org.eclipse.mylyn.reviews.r4e.ui.tests</module -->
      <module>org.eclipse.mylyn.reviews.connector</module>
      <module>org.eclipse.mylyn.reviews.connector.ui</module>
      <module>org.eclipse.mylyn.reviews.connector.tests</module>
