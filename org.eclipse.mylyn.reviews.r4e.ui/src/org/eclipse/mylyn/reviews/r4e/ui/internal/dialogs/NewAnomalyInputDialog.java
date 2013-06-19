@@ -63,6 +63,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -75,6 +77,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.FormDialog;
@@ -341,6 +344,28 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		composite.setLayout(layout);
 		GridData textGridData = null;
 
+		//Add a listener to take care of the window resize
+		sform.addControlListener(new ControlListener() {
+
+			public void controlResized(ControlEvent e) {
+				Point ptScr = getShell().getSize();
+				ScrollBar scb = sform.getVerticalBar();
+
+				int scWidth = scb.getSize().x;
+				int width = ptScr.x - scWidth;
+
+				sform.setMinWidth(width);
+				sform.getBody().setSize(sform.getBody().computeSize(width, SWT.DEFAULT));
+				getShell().update();
+
+			}
+
+			public void controlMoved(ControlEvent e) {
+				// ignore
+
+			}
+		});
+
 		//Basic parameters section
 		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -352,7 +377,10 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//Keep the same width, but expand in height
+				int currentWidth = getShell().getSize().x;
+				getShell().setSize(currentWidth, getShell().computeSize(currentWidth, SWT.DEFAULT).y);
+
 			}
 		});
 
@@ -415,7 +443,10 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		extraSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//Keep the same width, but expand in height
+				int currentWidth = getShell().getSize().x;
+				getShell().setSize(currentWidth, getShell().computeSize(currentWidth, SWT.DEFAULT).y);
+
 			}
 		});
 
