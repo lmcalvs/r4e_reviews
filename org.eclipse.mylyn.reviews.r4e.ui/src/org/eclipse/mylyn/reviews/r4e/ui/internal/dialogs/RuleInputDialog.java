@@ -347,7 +347,8 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_DESCRIPTION_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
+		fDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER
+				| SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fDescriptionInputTextField.getLineHeight() * 3;

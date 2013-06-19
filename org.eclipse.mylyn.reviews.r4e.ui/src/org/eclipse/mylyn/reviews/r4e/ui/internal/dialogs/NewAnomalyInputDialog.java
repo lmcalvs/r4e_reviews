@@ -386,7 +386,7 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		label.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fAnomalyDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
-				| SWT.BORDER);
+				| SWT.BORDER | SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 7;

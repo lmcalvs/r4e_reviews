@@ -195,7 +195,8 @@ public class CommentInputDialog extends FormDialog implements ICommentInputDialo
 		final Label label = toolkit.createLabel(basicSectionClient, ADD_COMMENT_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fCommentInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
+		fCommentInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER
+				| SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fCommentInputTextField.getLineHeight() * 7;
