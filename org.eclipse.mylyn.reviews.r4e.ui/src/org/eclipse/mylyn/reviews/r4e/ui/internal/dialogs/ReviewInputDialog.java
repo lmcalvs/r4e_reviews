@@ -41,10 +41,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -52,6 +55,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.FormDialog;
@@ -418,6 +422,28 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 			}
 		});
 
+		//Add a listener to take care of the window resize
+		sform.addControlListener(new ControlListener() {
+
+			public void controlResized(ControlEvent e) {
+				Point ptScr = getShell().getSize();
+				ScrollBar scb = sform.getVerticalBar();
+
+				int scWidth = scb.getSize().x;
+				int width = ptScr.x - scWidth;
+
+				sform.setMinWidth(width);
+				sform.getBody().setSize(sform.getBody().computeSize(width, SWT.DEFAULT));
+				getShell().update();
+
+			}
+
+			public void controlMoved(ControlEvent e) {
+				// ignore
+
+			}
+		});
+
 		//Basic parameters section
 		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -429,7 +455,10 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//Keep the same width, but expand in height
+				int currentWidth = getShell().getSize().x;
+				getShell().setSize(currentWidth, getShell().computeSize(currentWidth, SWT.DEFAULT).y);
+
 			}
 		});
 
@@ -463,7 +492,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		label.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fReviewDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
-				| SWT.BORDER);
+				| SWT.BORDER | SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 6;
@@ -492,7 +521,9 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		extraSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				//Keep the same width, but expand in height
+				int currentWidth = getShell().getSize().x;
+				getShell().setSize(currentWidth, getShell().computeSize(currentWidth, SWT.DEFAULT).y);
 			}
 		});
 
@@ -811,4 +842,5 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	private String validateReviewExists(Text aReviewName, R4EUIReviewGroup aParentGroup) {
 		return ((R4EInputValidator) fValidator).isReviewExists(aReviewName.getText(), aParentGroup);
 	}
+
 }
