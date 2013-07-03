@@ -22,8 +22,8 @@ import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -36,6 +36,7 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 
 	private File file;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

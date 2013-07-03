@@ -32,6 +32,7 @@ import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.errors.UnmergedPathException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -39,7 +40,6 @@ import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
@@ -66,8 +66,9 @@ public class TestRepository {
 			workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		}
 		workdirPrefix = workdirPrefix.replace('\\', '/');
-		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$
+		if (!workdirPrefix.endsWith("/")) {
 			workdirPrefix += "/"; //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -84,8 +85,9 @@ public class TestRepository {
 			workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		}
 		workdirPrefix = workdirPrefix.replace('\\', '/');
-		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$
+		if (!workdirPrefix.endsWith("/")) {
 			workdirPrefix += "/"; //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -251,10 +253,11 @@ public class TestRepository {
 		Ref startRef = repository.getRef(refName);
 		ObjectId startAt = repository.resolve(refName);
 		String startBranch;
-		if (startRef != null)
+		if (startRef != null) {
 			startBranch = refName;
-		else
+		} else {
 			startBranch = startAt.name();
+		}
 		startBranch = Repository.shortenRefName(startBranch);
 		updateRef.setNewObjectId(startAt);
 		updateRef.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
@@ -350,8 +353,9 @@ public class TestRepository {
 			fw = new FileWriter(file, append);
 			fw.append(content);
 		} finally {
-			if (fw != null)
+			if (fw != null) {
 				fw.close();
+			}
 		}
 	}
 
@@ -372,8 +376,9 @@ public class TestRepository {
 		} finally {
 			rw.release();
 			rw.dispose();
-			if (tw != null)
+			if (tw != null) {
 				tw.release();
+			}
 		}
 	}
 
@@ -401,10 +406,11 @@ public class TestRepository {
 	public String getRepoRelativePath(String path) {
 		final int pfxLen = workdirPrefix.length();
 		final int pLen = path.length();
-		if (pLen > pfxLen)
+		if (pLen > pfxLen) {
 			return path.substring(pfxLen);
-		else if (path.length() == pfxLen - 1)
+		} else if (path.length() == pfxLen - 1) {
 			return ""; //$NON-NLS-1$
+		}
 		return null;
 	}
 

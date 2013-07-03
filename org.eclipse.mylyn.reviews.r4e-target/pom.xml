@@ -26,11 +26,6 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>r4e-dev-mylyn3.7.target</file>
-									<type>target</type>
-									<classifier>r4e-dev-mylyn3.7</classifier>
-								</artifact>
-								<artifact>
 									<file>r4e-dev-mylyn3.8.target</file>
 									<type>target</type>
 									<classifier>r4e-dev-mylyn3.8</classifier>
@@ -41,24 +36,14 @@
 									<classifier>r4e-dev-eclipse4.2</classifier>
 								</artifact>
 								<artifact>
-									<file>r4e-dev-eclipse4.2_staging.target</file>
+									<file>r4e-dev-eclipse4.3.target</file>
 									<type>target</type>
-									<classifier>r4e-dev-eclipse4.2_staging</classifier>
+									<classifier>r4e-dev-eclipse4.3</classifier>
 								</artifact>
 								<artifact>
-									<file>r4e-dev-eclipse3.7_mylyn3.9.target</file>
+									<file>r4e-dev-eclipse_staging.target</file>
 									<type>target</type>
-									<classifier>r4e-dev-eclipse3.7_mylyn3.9</classifier>
-								</artifact>
-								<artifact>
-									<file>r4e-dev-eclipse3.8-mylyn3.9.target</file>
-									<type>target</type>
-									<classifier>r4e-dev-eclipse3.8-mylyn3.9</classifier>
-								</artifact>
-								<artifact>
-									<file>r4e-dev-eclipse4.2-mylyn3.9.target</file>
-									<type>target</type>
-									<classifier>r4e-dev-eclipse4.2-mylyn3.9</classifier>
+									<classifier>r4e-dev-eclipse_staging</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>

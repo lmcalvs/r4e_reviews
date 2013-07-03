@@ -88,6 +88,15 @@
           <layout>p2</layout>
           <url>http://download.eclipse.org/r4e/updates/</url>
         </repository>
+        <repository>
+	      <id>egit-repository-url</id>
+<!--    	  <url>http://download.eclipse.org/egit/updates-3.0</url>
+			<url>http://download.eclipse.org/egit/updates-nightly</url>  	  
+-->    	  
+			<url>http://download.eclipse.org/egit/updates-3.0</url>  	  
+    	  <layout>p2</layout>
+    	</repository>
+        
       </repositories>
       <modules>
          <module>org.eclipse.mylyn.reviews.r4e-site</module>
