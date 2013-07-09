@@ -2,6 +2,17 @@
 <?pde version="3.8"?><target name="r4e-dev-eclipse4.3" sequenceNumber="23">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.jetty.client" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.continuation" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.http" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.io" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.security" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.server" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.servlet" version="7.6.0.v20120127"/>
+<unit id="org.eclipse.jetty.util" version="7.6.0.v20120127"/>
+<repository location="http://archive.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.0.v20120127/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.tigris.subversion.subclipse.feature.group" version="0.0.0"/>
 <unit id="org.tigris.subversion.subclipse.mylyn.feature.group" version="0.0.0"/>
 <unit id="org.tigris.subversion.clientadapter.feature.feature.group" version="0.0.0"/>
@@ -9,24 +20,24 @@
 <repository location="http://subclipse.tigris.org/update_1.8.x"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="javax.activation" version="0.0.0"/>
-<unit id="javax.mail" version="0.0.0"/>
-<unit id="org.apache.commons.io" version="0.0.0"/>
-<unit id="org.hamcrest" version="0.0.0"/>
-<unit id="org.hamcrest.core" version="0.0.0"/>
-<unit id="org.hamcrest.generator" version="0.0.0"/>
-<unit id="org.hamcrest.integration" version="0.0.0"/>
-<unit id="org.hamcrest.library" version="0.0.0"/>
-<unit id="org.hamcrest.text" version="0.0.0"/>
-<unit id="org.mockito" version="0.0.0"/>
-<unit id="org.objenesis" version="0.0.0"/>
-<unit id="org.junit" version="0.0.0"/>
-<unit id="org.junit.source" version="0.0.0"/>
-<unit id="com.google.guava" version="0.0.0"/>
-<unit id="javax.servlet" version="0.0.0"/>
-<unit id="javax.el" version="0.0.0"/>
-<unit id="org.antlr.runtime" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository/"/>
+<unit id="javax.activation" version="1.1.0.v201108011116"/>
+<unit id="javax.mail" version="1.4.0.v201005080615"/>
+<unit id="org.apache.commons.io" version="2.0.1.v201105210651"/>
+<unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.generator" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.integration" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
+<unit id="org.mockito" version="1.8.4.v201102171835"/>
+<unit id="org.objenesis" version="1.0.0.v201105211943"/>
+<unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="com.google.guava" version="10.0.1.v201203051515"/>
+<unit id="javax.servlet" version="2.5.0.v201103041518"/>
+<unit id="javax.el" version="2.2.0.v201108011116"/>
+<unit id="org.antlr.runtime" version="3.0.0.v200803061811"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.mylyn.gerrit.feature.feature.group" version="0.0.0"/>

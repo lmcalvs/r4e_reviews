@@ -19,13 +19,15 @@ import org.eclipse.core.runtime.IBundleGroup;
 import org.eclipse.core.runtime.IBundleGroupProvider;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.r4e_gerrit.core.utils.Tracer;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+
+import org.eclipse.mylyn.reviews.r4e_gerrit.trace.Tracer;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
+
+//import utils.Tracer;
 
 /**
  * @author Jacques Bouthillier
@@ -36,7 +38,7 @@ import org.osgi.framework.Version;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class R4EGerritPlugin extends AbstractUIPlugin {
+public class R4EGerritPlugin extends Plugin {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -63,7 +65,7 @@ public class R4EGerritPlugin extends AbstractUIPlugin {
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer Ftracer;
+	public static Tracer Ftracer = new Tracer();
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -91,7 +93,7 @@ public class R4EGerritPlugin extends AbstractUIPlugin {
 	public void start(BundleContext aContext) throws Exception {
 		super.start(aContext);
 		Fplugin = this;
-		Ftracer = new Tracer();
+		Ftracer =  new Tracer();
 		Ftracer.init(PLUGIN_ID);
 		Ftracer.traceDebug("plugin started");
 		verifyVersion (PLUGIN_ID);
@@ -157,17 +159,6 @@ public class R4EGerritPlugin extends AbstractUIPlugin {
 		return Fplugin;
 	}
 
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String aPath) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, aPath);
-	}
-	
 	/**
 	 * Method logError.
 	 * 

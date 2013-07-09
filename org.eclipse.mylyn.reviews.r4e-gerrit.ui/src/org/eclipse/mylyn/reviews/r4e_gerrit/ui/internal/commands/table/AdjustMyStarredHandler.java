@@ -21,8 +21,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewData;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 
 /**
@@ -38,22 +38,22 @@ public class AdjustMyStarredHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 		//R4EGerritPlugin.Ftracer.traceInfo("AdjustMyStarred  " ); //$NON-NLS-1$
-		ReviewTableListItem item = null;
+		R4EGerritReviewData item = null;
 		TableViewer viewer = R4EGerritTableView.getTableViewer();
 		ISelection tableSelection = viewer.getSelection();
 		if (tableSelection.isEmpty()) {
-			R4EGerritPlugin.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
+			R4EGerritUi.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
 			
 		} else {
 			if (tableSelection instanceof IStructuredSelection ) {
 				Object obj = ((IStructuredSelection) tableSelection).getFirstElement();
-				if (obj instanceof  ReviewTableListItem) {
-					item = (ReviewTableListItem) obj;
+				if (obj instanceof  R4EGerritReviewData) {
+					item = (R4EGerritReviewData) obj;
 					//R4EGerritPlugin.Ftracer.traceInfo("Selected table OBJECT selection ID: "  + item.getId() ); 				
-					if (item.getIdValue()) {
-						item.setIdValue(false);
-					} else if (!item.getIdValue()) {
-						item.setIdValue(true);
+					if (Boolean.valueOf(item.getAttribute(R4EGerritReviewData.REVIEW_FLAG_STAR))) {
+						item.setAttribute(R4EGerritReviewData.REVIEW_FLAG_STAR, Boolean.toString(false));
+					} else if (!Boolean.valueOf(item.getAttribute(R4EGerritReviewData.REVIEW_FLAG_STAR))) {
+						item.setAttribute(R4EGerritReviewData.REVIEW_FLAG_STAR, Boolean.toString(true));
 					}
 					viewer.update(item, null);
 				}

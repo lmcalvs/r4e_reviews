@@ -18,7 +18,7 @@ package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -32,19 +32,19 @@ import org.eclipse.swt.widgets.Display;
 public class UIUtils {
 
 	/**
-	 * Method displaySyncErrorDialog.
+	 * Method notInplementedDialog.
 	 * 
-	 * @param e
-	 *            OutOfSyncException
+	 * @param String
+	 *            
 	 */
 	public static void notInplementedDialog(String aSt) {
 		String msg = "Not Implemented yet !";
-		R4EGerritPlugin.Ftracer.traceWarning("Not Implemented yet");
+		R4EGerritUi.Ftracer.traceWarning("Not Implemented yet");
 		final ErrorDialog dialog = new ErrorDialog(
 				null,
 				"R4E-Information",
 				"This method [ " + aSt + " ] is not ready yet" ,
-				new Status(IStatus.INFO, R4EGerritPlugin.PLUGIN_ID, 0, "Not Implemented yet", null), IStatus.INFO);
+				new Status(IStatus.INFO, R4EGerritUi.PLUGIN_ID, 0, "Not Implemented yet", null), IStatus.INFO);
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				dialog.open();
@@ -52,6 +52,27 @@ public class UIUtils {
 		});
 		// TODO later we will want to do this automatically
 	}
+
+	/**
+	 * Method showErrorDialog.
+	 * 
+	 * @param String message
+	 * @param String reason
+	 */
+	public static void showErrorDialog(String aMsg, String aReason) {
+		R4EGerritUi.Ftracer.traceWarning(aMsg + "\t reason: " + aReason);
+		final ErrorDialog dialog = new ErrorDialog(
+				null,
+				"R4E-Info",
+				aMsg   ,
+				new Status(IStatus.INFO, R4EGerritUi.PLUGIN_ID, 0, aReason, null), IStatus.INFO);
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
+	}
+
 
 	/**
 	 * Creates view preference frame and return the child composite.

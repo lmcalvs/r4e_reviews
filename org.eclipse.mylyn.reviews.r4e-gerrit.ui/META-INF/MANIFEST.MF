@@ -6,7 +6,16 @@ Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.eclipse.mylyn.tasks.core;bundle-version="3.9.0",
+ org.eclipse.mylyn.gerrit.core;bundle-version="2.0.0",
+ org.eclipse.egit.core;bundle-version="2.1.0",
+ org.eclipse.jgit,
+ org.eclipse.mylyn.tasks.ui;bundle-version="3.9.0",
+ org.eclipse.mylyn.reviews.core;bundle-version="2.0.0",
+ org.eclipse.mylyn.commons.ui;bundle-version="3.9.0",
  org.eclipse.mylyn.reviews.r4e-gerrit;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %providerName
+Export-Package: org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands,
+ org.eclipse.mylyn.reviews.r4egerrit.ui.views

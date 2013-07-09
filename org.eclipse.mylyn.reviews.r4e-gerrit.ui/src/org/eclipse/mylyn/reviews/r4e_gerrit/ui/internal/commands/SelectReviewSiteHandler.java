@@ -15,7 +15,7 @@
  *   Jacques Bouthillier - Created for Mylyn Review R4E-Gerrit project
  *   
  ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands;
+package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,9 +26,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.mylyn.internal.gerrit.core.GerritQuery;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGerritServerUtility;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -56,7 +59,6 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 
 	private R4EGerritServerUtility fServerUtil = null;
 	
-//	private Map<Repository, String> fMapRepoServer = null;
 	private Map<TaskRepository, String> fMapRepoServer = null;
 
 
@@ -74,7 +76,13 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		R4EGerritPlugin.Ftracer.traceInfo("Collecting the gerrit review locations"); //$NON-NLS-1$
+	    R4EGerritPlugin.Ftracer.traceInfo("Collecting the gerrit review locations"); //$NON-NLS-1$
+
+		// Open the review table first;
+		final R4EGerritTableView reviewTableView = R4EGerritTableView
+				.getActiveView();
+		
+		reviewTableView.openView(); 
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -99,7 +107,7 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
 					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
 					for (TaskRepository key: mapSet) {
-						R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " 
+					    R4EGerritPlugin.Ftracer.traceInfo("Map Key repo name : " 
 								+ key.getRepositoryLabel() 
 								+ "\t URL: " 
 								+ fMapRepoServer.get(key));
@@ -109,20 +117,21 @@ public class SelectReviewSiteHandler extends AbstractHandler {
 				
 				String serverToUsed = fServerUtil.getLastSavedGerritServer();
 				if (serverToUsed!= null) {
-					//Initiate the request for the list of reviews
-					fServerUtil.getReviewListFromServer();
+					//Initiate the request for the list of reviews with a default query
+					reviewTableView.processCommands(GerritQuery.MY_WATCHED_CHANGES);
+
 				} else {
 					//Need to open the Dialogue to fill a Gerrit server
-					R4EGerritPlugin.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );
+				    R4EGerritPlugin.Ftracer.traceInfo("Need to open the Dialogue to fill a gerrit server " );
 					//Get the service
-					IWorkbench workbench = R4EGerritPlugin.getDefault().getWorkbench();
+					IWorkbench workbench = R4EGerritUi.getDefault().getWorkbench();
 					IHandlerService handlerService = (IHandlerService) workbench.getService(IHandlerService.class);
 					try {
 						
 						  handlerService.executeCommand(R4EUIConstants.ADD_GERRIT_SITE_COMMAND_ID, null);
 					  } catch (Exception ex) {
-						  R4EGerritPlugin.Ftracer.traceError("Exception: " + ex.toString());
-						  R4EGerritPlugin.getDefault().logError("Exception: ", ex);
+					      R4EGerritPlugin.Ftracer.traceError("Exception: " + ex.toString());
+//					      R4EGerritUi.getDefault().logError("Exception: ", ex);
 					  //  throw new RuntimeException("org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands.AddGerritSite not found");
 					    
 					  }

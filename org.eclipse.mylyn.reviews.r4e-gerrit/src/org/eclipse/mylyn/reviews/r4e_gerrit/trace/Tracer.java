@@ -9,7 +9,7 @@
  *     Ericsson AB - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e_gerrit.core.utils;
+package org.eclipse.mylyn.reviews.r4e_gerrit.trace;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

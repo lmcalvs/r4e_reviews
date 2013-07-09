@@ -15,7 +15,7 @@
  *   Jacques Bouthillier - Created for Mylyn Review R4E-Gerrit project
  *   
  ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e_gerrit.internal.commands;
+package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands;
 
 import java.util.Map;
 import java.util.Set;
@@ -28,10 +28,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.mylyn.internal.gerrit.core.GerritConnector;
+import org.eclipse.mylyn.internal.gerrit.core.GerritQuery;
 import org.eclipse.mylyn.internal.tasks.ui.wizards.EditRepositoryWizard;
 import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EGerritServerUtility;
-import org.eclipse.mylyn.reviews.r4e_gerrit.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EGerritServerUtility;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.wizards.TaskRepositoryWizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -78,11 +80,13 @@ public class AddGerritSiteHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		R4EGerritPlugin.Ftracer.traceInfo("Create the Add button to search the Gerrit location " ); //$NON-NLS-1$
+	    R4EGerritPlugin.Ftracer.traceInfo("Create the Add button to search the Gerrit location " ); //$NON-NLS-1$
 		String menuItemText = "";
 		fServerUtil = new R4EGerritServerUtility();
 		Object obj = aEvent.getTrigger();
 		Map<String, String> param = aEvent.getParameters();
+		R4EGerritTableView reviewTableView = R4EGerritTableView
+				.getActiveView();
 		
 		if (obj instanceof Event) {
 			Event ev = (Event) obj;
@@ -99,20 +103,30 @@ public class AddGerritSiteHandler extends AbstractHandler {
 					Set<TaskRepository> mapSet = fMapRepoServer.keySet();
 					R4EGerritPlugin.Ftracer.traceInfo("-------------------");
 					for (TaskRepository key: mapSet) {
-						R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
+					    R4EGerritPlugin.Ftracer.traceInfo("Map Key name: " + key.getRepositoryLabel() + "\t URL: " + fMapRepoServer.get(key));
 					}
 				}
+				// Open the review table first;
+				reviewTableView.openView(); 
 				
 				//Verify if we selected the "Add.." button or a pre=defined Gerrit
 				if (stURL != null) {
 					if (stURL.equals(fServerUtil.getLastSavedGerritServer())) {
-						R4EGerritPlugin.Ftracer.traceInfo("LAST SAVED server is the SAME ");
+					    R4EGerritPlugin.Ftracer.traceInfo("LAST SAVED server is the SAME ");
 						fServerUtil.getReviewListFromServer ();
+						
+						//Initiate the request for the list of reviews with a default query
+						reviewTableView.processCommands(GerritQuery.MY_WATCHED_CHANGES);
+
 						return Status.OK_STATUS; //For now , do not process the dialogue
 					} else {
 						//Store the new Gerrit server into a file
 						fServerUtil.saveLastGerritServer(stURL);
 						fServerUtil.getReviewListFromServer ();
+						
+						//Initiate the request for the list of reviews with a default query
+						reviewTableView.processCommands(GerritQuery.MY_WATCHED_CHANGES);
+
 						return Status.OK_STATUS; //For now , do not process the dialogue
 					}
 				}
@@ -120,7 +134,11 @@ public class AddGerritSiteHandler extends AbstractHandler {
 		}
 
 		//Open the Dialogue to enter a new Gerrit URL
-		return openDialogue ();
+		Object dialogObj = openDialogue ();
+//		//Set the table view with the last TaskRepo and the default query
+//		reviewTableView.processCommands(GerritQuery.MY_WATCHED_CHANGES);
+		
+		return dialogObj;
 	}
 
 	/**
@@ -141,7 +159,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			public IStatus run(final IProgressMonitor aMonitor) {
 				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 						
-				final TaskRepository taskRepository = getTaskRepository(fServerUtil.getLastSavedGerritServer()); 
+				TaskRepository taskRepository = getTaskRepository(fServerUtil.getLastSavedGerritServer()); 
 				
 				R4EGerritPlugin.Ftracer.traceInfo("repository:   " + taskRepository.getUrl()); //$NON-NLS-1$
 				
@@ -156,13 +174,20 @@ public class AddGerritSiteHandler extends AbstractHandler {
 				});
 				
 				//When the wizard is closed
+				taskRepository = wizard.getRepository();//Possibility the taskRepository has changed
 				if (taskRepository.getUrl().isEmpty() || 
 						taskRepository.getUrl().endsWith(R4EUIConstants.DEFAULT_REPOSITORY)) {
 					//User selected the Cancel button
-					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: CANCEL "  ); //$NON-NLS-1$
+				    R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: CANCEL "  ); //$NON-NLS-1$
 				} else {
-					R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  FINISH " ); //$NON-NLS-1$		
+				    R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  FINISH " ); //$NON-NLS-1$		
 					fServerUtil.saveLastGerritServer(taskRepository.getUrl());
+					//Test if we already have the Gerrit server in our internal map
+					TaskRepository taskRepositoryTmp = fServerUtil.getTaskRepo (taskRepository.getUrl());
+					if (taskRepositoryTmp == null) {
+						//Need to re-map our internal Gerrit Repo
+						fServerUtil.mapConfiguredGerritServer();
+					}
 					/*****************************************************/
 					/*                                                   */
 					/*    Now, we need to get the Gerrit repo data       */
@@ -171,6 +196,12 @@ public class AddGerritSiteHandler extends AbstractHandler {
 					/*                                                   */
 					/*****************************************************/
 					fServerUtil.getReviewListFromServer ();
+					R4EGerritTableView reviewTableView = R4EGerritTableView
+							.getActiveView();
+
+					//Set the table view with the last TaskRepo and the default query
+					reviewTableView.processCommands(GerritQuery.MY_WATCHED_CHANGES);
+
 				}
 				
 				R4EGerritPlugin.Ftracer.traceInfo("AFTER: repository: :  " + taskRepository.getUrl() + 
@@ -207,7 +238,7 @@ public class AddGerritSiteHandler extends AbstractHandler {
 			}
 			
 		} else {
-			R4EGerritPlugin.Ftracer.traceInfo("Repo already in list:  " + taskRepo.getRepositoryLabel()); 
+		    R4EGerritPlugin.Ftracer.traceInfo("Repo already in list:  " + taskRepo.getRepositoryLabel()); 
 			
 		}
 		return taskRepo;

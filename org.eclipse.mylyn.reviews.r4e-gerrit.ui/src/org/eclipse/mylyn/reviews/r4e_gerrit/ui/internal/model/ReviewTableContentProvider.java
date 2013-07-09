@@ -14,12 +14,9 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewData;
 
 /**
  * @author Jacques Bouthillier
@@ -61,14 +58,14 @@ public class ReviewTableContentProvider implements IStructuredContentProvider {
 	@Override
 	public Object[] getElements(Object aInputElement) {
 		//R4EGerritPlugin.Ftracer.traceInfo("getElements() content provider Object: " + aInputElement);
-		if (aInputElement instanceof ReviewTableListItem[]) {
-			ReviewTableListItem[] itemList = (ReviewTableListItem[]) aInputElement;
+		if (aInputElement instanceof R4EGerritReviewData[]) {
+			R4EGerritReviewData[] itemList = (R4EGerritReviewData[]) aInputElement;
 			return itemList;
 		}
 		//This null will generate an error if we reach this point, may be we should log an error and 
 		// initiate an empty structure to return
 		//return null;
-		return  new ReviewTableListItem[] {};
+		return  new R4EGerritReviewData[] {};
 	}
 
 }

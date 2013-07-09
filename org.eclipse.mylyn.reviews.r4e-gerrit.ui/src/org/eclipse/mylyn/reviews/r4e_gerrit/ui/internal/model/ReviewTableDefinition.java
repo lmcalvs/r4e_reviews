@@ -29,15 +29,16 @@ import java.util.ArrayList;
 // Moveable}
 public enum ReviewTableDefinition {
 	// 			Name 			Width 	Resize Moveable
-	   ID(		"ID", 			25, 	false,	true), 
+	   STARRED(	"", 			20, 	false,	true), 
+	   ID(		"ID", 			70, 	false,	true), 
 	   SUBJECT(	"Subject",	 	200, 	true,	true), 
 	   OWNER(	"Owner", 		100, 	true, 	true), 
-	   PROJECT(	"Project", 		100, 	true, 	true), 
+	   PROJECT(	"Project", 		200, 	true, 	true), 
 	   BRANCH(	"Branch", 		100, 	true, 	true), 
-	   UPDATED(	"Updated", 		100, 	true, 	true), 
-	   CR(		"CR", 			30, 	false, 	true), 
-	   IC(		"IC", 			30, 	false, 	true), 
-	   VERIFY(	"V", 			30,		false, 	true);
+	   UPDATED(	"Updated", 		65, 	true, 	true), 
+	   CR(		"CR", 			28, 	false, 	true), 
+	   IC(		"IC", 			25, 	false, 	true), 
+	   VERIFY(	"V", 			25,		false, 	true);
 
 	private String fHeader;
 	private int fwidth;

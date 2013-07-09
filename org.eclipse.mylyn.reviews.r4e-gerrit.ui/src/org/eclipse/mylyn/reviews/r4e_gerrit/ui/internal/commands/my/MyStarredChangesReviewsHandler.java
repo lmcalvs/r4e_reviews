@@ -18,9 +18,8 @@ package org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.my;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
+import org.eclipse.mylyn.reviews.r4egerrit.ui.views.R4EGerritTableView;
 
 /**
  * @author Jacques Bouthillier
@@ -35,16 +34,23 @@ public class MyStarredChangesReviewsHandler extends AbstractHandler {
 	 */
 	@Override
 	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
-		// TODO Auto-generated method stub
-		R4EGerritPlugin.Ftracer.traceInfo("Search the Gerrit reviews for My Starred Changes  " ); //$NON-NLS-1$
+		R4EGerritUi.Ftracer.traceInfo("Search the Gerrit reviews for My Starred Changes  " ); //$NON-NLS-1$
 
-		R4EGerritPlugin.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
-		try {
-			UIUtils.notInplementedDialog(aEvent.getCommand().getName());
-		} catch (NotDefinedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		R4EGerritTableView reviewTableView = R4EGerritTableView
+				.getActiveView();
+
+		// see http://gerrit-documentation.googlecode.com/svn/Documentation/2.5.2/user-search.html
+		//for My > Starred Changess--> is:starred
+		R4EGerritUi.Ftracer.traceInfo("Execute command :   "  +  "My > Starred Changes"); //$NON-NLS-1$
+		reviewTableView.processCommands("is:starred");
+
+//		R4EGerritUi.Ftracer.traceInfo("Execute:   "  ); //$NON-NLS-1$
+//		try {
+//			UIUtils.notInplementedDialog(aEvent.getCommand().getName());
+//		} catch (NotDefinedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return null;
 	}

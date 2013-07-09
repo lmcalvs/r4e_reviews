@@ -21,9 +21,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.mylyn.reviews.r4e_gerrit.R4EGerritPlugin;
+import org.eclipse.mylyn.reviews.r4e_gerrit.core.R4EGerritReviewData;
+import org.eclipse.mylyn.reviews.r4e_gerrit.ui.R4EGerritUi;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.commands.table.AdjustMyStarredHandler;
-import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.model.ReviewTableData.ReviewTableListItem;
 import org.eclipse.mylyn.reviews.r4e_gerrit.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
@@ -111,7 +111,7 @@ public class UIReviewTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				R4EGerritPlugin.Ftracer.traceInfo("Table selection: " + e.toString());
+				R4EGerritUi.Ftracer.traceInfo("Table selection: " + e.toString());
 			}
 			
 			@Override
@@ -143,9 +143,9 @@ public class UIReviewTable {
 		//Get the review table definition
 		ReviewTableDefinition[] tableInfo = ReviewTableDefinition.values();
 		int size = tableInfo.length;
-		R4EGerritPlugin.Ftracer.traceInfo("Table	Name	Width	Resize Moveable");
+		R4EGerritUi.Ftracer.traceInfo("Table	Name	Width	Resize Moveable");
 		for  (int index = 0; index < size; index++) {
-			R4EGerritPlugin.Ftracer.traceInfo("index [ " + index + 
+			R4EGerritUi.Ftracer.traceInfo("index [ " + index + 
 					" ] "  + tableInfo[index].getName() + 
 					"\t: " + tableInfo[index].getWidth() +
 					"\t: " + tableInfo[index].getResize() +
@@ -206,7 +206,7 @@ public class UIReviewTable {
 
 	private Listener mouseButtonListener = new Listener() {
 		public void handleEvent(Event aEvent) {
-			R4EGerritPlugin.Ftracer.traceInfo("mouseButtonListener() for " + aEvent.button);
+			R4EGerritUi.Ftracer.traceInfo("mouseButtonListener() for " + aEvent.button);
 			switch (aEvent.type) {
 			case SWT.MouseDown:
 				//Left Click
@@ -264,7 +264,7 @@ public class UIReviewTable {
 			int val = selecteditems[0];
 			if (e.keyCode == SWT.ARROW_UP) {
 				// So we need to reduce the selected item
-				R4EGerritPlugin.Ftracer.traceInfo("keyEventListener() for ARROW_UP " + e.keyCode);
+				R4EGerritUi.Ftracer.traceInfo("keyEventListener() for ARROW_UP " + e.keyCode);
 				if (val > 0) {
 					val--;
 					table.deselect(selecteditems[0]);
@@ -273,7 +273,7 @@ public class UIReviewTable {
 
 			if (e.keyCode == SWT.ARROW_DOWN) {
 				// So we need to increase the selected item
-				R4EGerritPlugin.Ftracer.traceInfo("keyEventListener() for ARROW_DOWN " + e.keyCode);
+				R4EGerritUi.Ftracer.traceInfo("keyEventListener() for ARROW_DOWN " + e.keyCode);
 				if (val < table.getItemCount() - 1) {
 					val++;
 					table.deselect(selecteditems[0]);
@@ -297,18 +297,18 @@ public class UIReviewTable {
 	 */
 	private void processItemSelection() {
 		ISelection tableSelection = fViewer.getSelection();
-		R4EGerritPlugin.Ftracer.traceInfo("Selected : " + tableSelection.getClass()); 
+		R4EGerritUi.Ftracer.traceInfo("Selected : " + tableSelection.getClass()); 
 		if (tableSelection.isEmpty()) {
-			R4EGerritPlugin.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
+			R4EGerritUi.Ftracer.traceInfo("Selected table selection is EMPTY " ); 
 			
 		} else {
 			if (tableSelection instanceof IStructuredSelection ) {
 				Object obj = ((IStructuredSelection) tableSelection).getFirstElement();
-				R4EGerritPlugin.Ftracer.traceInfo("Selected table selection class: " + obj.getClass() ); 
-				if (obj instanceof  ReviewTableListItem) {
-					ReviewTableListItem item = (ReviewTableListItem) obj;
-					R4EGerritPlugin.Ftracer.traceInfo("Selected table OBJECT selection ID: "  + item.getId() + 
-							"\t subject: " + item.getSubject()); 				
+				R4EGerritUi.Ftracer.traceInfo("Selected table selection class: " + obj.getClass() ); 
+				if (obj instanceof  R4EGerritReviewData) {
+					R4EGerritReviewData item = (R4EGerritReviewData) obj;
+					R4EGerritUi.Ftracer.traceInfo("Selected table OBJECT selection ID: "  + item.getAttribute(R4EGerritReviewData.SHORT_CHANGE_ID) + 
+							"\t subject: " + item.getAttribute(R4EGerritReviewData.SUBJECT)); 				
 					
 				}
 			}
