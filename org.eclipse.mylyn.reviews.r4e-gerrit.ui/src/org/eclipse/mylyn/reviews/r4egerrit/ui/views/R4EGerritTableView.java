@@ -83,7 +83,6 @@ import org.eclipse.ui.services.IServiceLocator;
 /**
  * @author Jacques Bouthillier
  * @version $Revision: 1.0 $
- *
  */
 
 /**
